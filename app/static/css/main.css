@@ -14,13 +14,15 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Josefin Sans",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --heading-font: 'Josefin Sans', sans-serif;
+  --nav-font: 'Poppins', sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
+:root {
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #40524d; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #0d1f1a; /* Color for headings, subheadings and title throughout the website */
@@ -31,7 +33,12 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: rgba(255, 255, 255, 0.6);  /* The default color of the main navmenu links */
+  --nav-color: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* The default color of the main navmenu links */
   --nav-hover-color: #ffffff; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
@@ -120,7 +127,7 @@ h6 {
 }
 
 .php-email-form .loading:before {
-  content: "";
+  content: '';
   display: inline-block;
   border-radius: 50%;
   width: 24px;
@@ -173,7 +180,6 @@ h6 {
 }
 
 @media (max-width: 575px) {
-
   .header .topbar .contact-info i a,
   .header .topbar .contact-info i span {
     font-size: 13px;
@@ -284,7 +290,7 @@ h6 {
     padding-right: 0;
   }
 
-  .navmenu li:hover>a,
+  .navmenu li:hover > a,
   .navmenu .active,
   .navmenu .active:focus {
     color: var(--nav-hover-color);
@@ -324,11 +330,11 @@ h6 {
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active,
   .navmenu .dropdown ul .active:hover,
-  .navmenu .dropdown ul li:hover>a {
+  .navmenu .dropdown ul li:hover > a {
     color: var(--nav-dropdown-hover-color);
   }
 
-  .navmenu .dropdown:hover>ul {
+  .navmenu .dropdown:hover > ul {
     opacity: 1;
     top: 100%;
     visibility: visible;
@@ -340,7 +346,7 @@ h6 {
     visibility: hidden;
   }
 
-  .navmenu .dropdown .dropdown:hover>ul {
+  .navmenu .dropdown .dropdown:hover > ul {
     opacity: 1;
     top: 0;
     left: -100%;
@@ -448,7 +454,7 @@ h6 {
     background-color: rgba(33, 37, 41, 0.1);
   }
 
-  .navmenu .dropdown>.dropdown-active {
+  .navmenu .dropdown > .dropdown-active {
     display: block;
     background-color: rgba(33, 37, 41, 0.03);
   }
@@ -475,7 +481,7 @@ h6 {
     transition: 0.3s;
   }
 
-  .mobile-nav-active .navmenu>ul {
+  .mobile-nav-active .navmenu > ul {
     display: block;
   }
 }
@@ -527,7 +533,7 @@ h6 {
 }
 
 .footer h4::after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   width: 20px;
@@ -624,7 +630,7 @@ h6 {
 }
 
 #preloader:before {
-  content: "";
+  content: '';
   position: fixed;
   top: calc(50% - 30px);
   left: calc(50% - 30px);
@@ -714,12 +720,12 @@ h6 {
   font-weight: 400;
 }
 
-.page-title .breadcrumbs ol li+li {
+.page-title .breadcrumbs ol li + li {
   padding-left: 10px;
 }
 
-.page-title .breadcrumbs ol li+li::before {
-  content: "/";
+.page-title .breadcrumbs ol li + li::before {
+  content: '/';
   display: inline-block;
   padding-right: 10px;
   color: color-mix(in srgb, var(--default-color), transparent 70%);
@@ -738,7 +744,6 @@ section,
 }
 
 @media (max-width: 1199px) {
-
   section,
   .section {
     scroll-margin-top: 66px;
@@ -918,7 +923,8 @@ section,
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 60px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 20px 60px
+    color-mix(in srgb, var(--default-color), transparent 85%);
 }
 
 .hotel-hero .hero-images .main-image img {
@@ -945,7 +951,8 @@ section,
   background: var(--surface-color);
   border-radius: 15px;
   padding: 1.5rem;
-  box-shadow: 0 15px 40px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 15px 40px
+    color-mix(in srgb, var(--default-color), transparent 85%);
   max-width: 280px;
   z-index: 10;
 }
@@ -1004,7 +1011,8 @@ section,
 .hotel-hero .hero-stats {
   margin-top: 4rem;
   padding: 2rem 0;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .hotel-hero .hero-stats .stat-item .stat-number {
@@ -1307,7 +1315,10 @@ section,
   transform: scale(1.03);
 }
 
-.rooms-showcase .hero-room-showcase .showcase-image-container .room-category-badge {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-image-container
+  .room-category-badge {
   position: absolute;
   top: 24px;
   left: 24px;
@@ -1322,20 +1333,32 @@ section,
   text-transform: uppercase;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-image-container .room-details-overlay {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-image-container
+  .room-details-overlay {
   position: absolute;
   bottom: 24px;
   left: 24px;
   right: 24px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-image-container .room-details-overlay .room-specs {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-image-container
+  .room-details-overlay
+  .room-specs {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-image-container .room-details-overlay .room-specs .spec-item {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-image-container
+  .room-details-overlay
+  .room-specs
+  .spec-item {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 8px 16px;
@@ -1348,7 +1371,13 @@ section,
   color: var(--heading-color);
 }
 
-.rooms-showcase .hero-room-showcase .showcase-image-container .room-details-overlay .room-specs .spec-item i {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-image-container
+  .room-details-overlay
+  .room-specs
+  .spec-item
+  i {
   color: var(--accent-color);
   font-size: 0.9rem;
 }
@@ -1373,18 +1402,32 @@ section,
   line-height: 1.2;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .room-title-section .room-rating {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .room-title-section
+  .room-rating {
   text-align: right;
   white-space: nowrap;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .room-title-section .room-rating .stars {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .room-title-section
+  .room-rating
+  .stars {
   color: #ffc107;
   font-size: 0.85rem;
   margin-bottom: 4px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .room-title-section .room-rating .rating-text {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .room-title-section
+  .room-rating
+  .rating-text {
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   font-size: 0.75rem;
   font-weight: 500;
@@ -1404,20 +1447,34 @@ section,
   margin-bottom: 40px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .amenities-grid .amenity-item {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .amenities-grid
+  .amenity-item {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 12px 0;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .amenities-grid .amenity-item i {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .amenities-grid
+  .amenity-item
+  i {
   color: var(--accent-color);
   font-size: 1.1rem;
   width: 20px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .amenities-grid .amenity-item span {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .amenities-grid
+  .amenity-item
+  span {
   color: color-mix(in srgb, var(--default-color), transparent 25%);
   font-size: 0.85rem;
   font-weight: 500;
@@ -1429,32 +1486,55 @@ section,
   align-items: center;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .booking-section .price-display {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .booking-section
+  .price-display {
   display: flex;
   align-items: baseline;
   gap: 4px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .booking-section .price-display .currency {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .booking-section
+  .price-display
+  .currency {
   color: var(--accent-color);
   font-size: 1.2rem;
   font-weight: 400;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .booking-section .price-display .amount {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .booking-section
+  .price-display
+  .amount {
   color: var(--accent-color);
   font-size: 2.5rem;
   font-weight: 200;
   letter-spacing: -1px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .booking-section .price-display .period {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .booking-section
+  .price-display
+  .period {
   color: color-mix(in srgb, var(--default-color), transparent 40%);
   font-size: 0.9rem;
   margin-left: 8px;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .booking-section .primary-booking-btn {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .booking-section
+  .primary-booking-btn {
   background-color: var(--accent-color);
   color: var(--contrast-color);
   padding: 14px 32px;
@@ -1466,7 +1546,11 @@ section,
   transition: all 0.4s ease;
 }
 
-.rooms-showcase .hero-room-showcase .showcase-content .booking-section .primary-booking-btn:hover {
+.rooms-showcase
+  .hero-room-showcase
+  .showcase-content
+  .booking-section
+  .primary-booking-btn:hover {
   background-color: color-mix(in srgb, var(--accent-color), black 15%);
   color: var(--contrast-color);
   transform: translateY(-1px);
@@ -1598,7 +1682,11 @@ section,
   transition: all 0.3s ease;
 }
 
-.rooms-showcase .standard-room-card .card-content .booking-row .book-link:hover {
+.rooms-showcase
+  .standard-room-card
+  .card-content
+  .booking-row
+  .book-link:hover {
   background-color: var(--accent-color);
   color: var(--contrast-color);
   border-color: var(--accent-color);
@@ -1752,7 +1840,11 @@ section,
     gap: 12px;
   }
 
-  .rooms-showcase .hero-room-showcase .showcase-content .room-title-section .room-rating {
+  .rooms-showcase
+    .hero-room-showcase
+    .showcase-content
+    .room-title-section
+    .room-rating {
     text-align: left;
   }
 
@@ -1772,11 +1864,20 @@ section,
     height: 280px;
   }
 
-  .rooms-showcase .hero-room-showcase .showcase-image-container .room-details-overlay .room-specs {
+  .rooms-showcase
+    .hero-room-showcase
+    .showcase-image-container
+    .room-details-overlay
+    .room-specs {
     gap: 8px;
   }
 
-  .rooms-showcase .hero-room-showcase .showcase-image-container .room-details-overlay .room-specs .spec-item {
+  .rooms-showcase
+    .hero-room-showcase
+    .showcase-image-container
+    .room-details-overlay
+    .room-specs
+    .spec-item {
     padding: 6px 12px;
     font-size: 0.75rem;
   }
@@ -1803,14 +1904,16 @@ section,
   border-radius: 16px;
   height: 100%;
   overflow: hidden;
-  box-shadow: 0 5px 25px color-mix(in srgb, var(--default-color), transparent 88%);
+  box-shadow: 0 5px 25px
+    color-mix(in srgb, var(--default-color), transparent 88%);
   transition: all 0.4s ease;
   position: relative;
 }
 
 .amenities-cards .facility-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 15px 40px color-mix(in srgb, var(--default-color), transparent 80%);
+  box-shadow: 0 15px 40px
+    color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
 .amenities-cards .facility-card:hover .facility-image .facility-overlay {
@@ -2119,7 +2222,11 @@ section,
 }
 
 .offer-cards .offer-card.featured .offer-badge .discount {
-  background: linear-gradient(135deg, var(--accent-color) 0%, color-mix(in srgb, var(--accent-color), #000 20%) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    color-mix(in srgb, var(--accent-color), #000 20%) 100%
+  );
 }
 
 .offer-cards .offer-card.featured .btn-book {
@@ -2200,13 +2307,23 @@ section,
   margin-bottom: 10px;
 }
 
-.offer-cards .offer-card .offer-content .offer-details .price-info .original-price {
+.offer-cards
+  .offer-card
+  .offer-content
+  .offer-details
+  .price-info
+  .original-price {
   color: color-mix(in srgb, var(--default-color), transparent 50%);
   text-decoration: line-through;
   font-size: 14px;
 }
 
-.offer-cards .offer-card .offer-content .offer-details .price-info .offer-price {
+.offer-cards
+  .offer-card
+  .offer-content
+  .offer-details
+  .price-info
+  .offer-price {
   color: var(--accent-color);
   font-size: 24px;
   font-weight: 700;
@@ -2255,7 +2372,11 @@ section,
 }
 
 .offer-cards .offer-banner {
-  background: linear-gradient(135deg, var(--accent-color) 0%, color-mix(in srgb, var(--accent-color), #000 30%) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--accent-color) 0%,
+    color-mix(in srgb, var(--accent-color), #000 30%) 100%
+  );
   color: var(--contrast-color);
   padding: 40px;
   border-radius: 12px;
@@ -2264,7 +2385,7 @@ section,
 }
 
 .offer-cards .offer-banner::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -2450,13 +2571,15 @@ section,
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px color-mix(in srgb, var(--accent-color), transparent 70%);
+  box-shadow: 0 4px 15px
+    color-mix(in srgb, var(--accent-color), transparent 70%);
 }
 
 .call-to-action .btn-primary:hover {
   background: color-mix(in srgb, var(--accent-color), black 10%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent-color), transparent 60%);
+  box-shadow: 0 6px 20px
+    color-mix(in srgb, var(--accent-color), transparent 60%);
   color: var(--contrast-color);
 }
 
@@ -2483,7 +2606,8 @@ section,
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 50px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 15px 50px
+    color-mix(in srgb, var(--default-color), transparent 85%);
 }
 
 .call-to-action .image-wrapper img {
@@ -2505,11 +2629,16 @@ section,
 }
 
 .call-to-action .image-wrapper .special-offer {
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), black 20%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), black 20%)
+  );
   padding: 15px 20px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 8px 25px color-mix(in srgb, var(--accent-color), transparent 60%);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--accent-color), transparent 60%);
 }
 
 .call-to-action .image-wrapper .special-offer .label {
@@ -2564,14 +2693,16 @@ section,
   background: var(--surface-color);
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 40px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 10px 40px
+    color-mix(in srgb, var(--default-color), transparent 85%);
   transition: all 0.4s ease;
   height: 100%;
 }
 
 .events-cards .event-item:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px color-mix(in srgb, var(--default-color), transparent 75%);
+  box-shadow: 0 20px 60px
+    color-mix(in srgb, var(--default-color), transparent 75%);
 }
 
 .events-cards .event-item .event-header {
@@ -2586,13 +2717,18 @@ section,
   right: 20px;
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), var(--heading-color) 30%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), var(--heading-color) 30%)
+  );
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  box-shadow: 0 5px 20px color-mix(in srgb, var(--accent-color), transparent 60%);
+  box-shadow: 0 5px 20px
+    color-mix(in srgb, var(--accent-color), transparent 60%);
 }
 
 .events-cards .event-item .event-header .event-icon i {
@@ -2608,13 +2744,17 @@ section,
 }
 
 .events-cards .event-item .event-header::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent 60%, color-mix(in srgb, var(--default-color), transparent 80%));
+  background: linear-gradient(
+    to bottom,
+    transparent 60%,
+    color-mix(in srgb, var(--default-color), transparent 80%)
+  );
   z-index: 1;
 }
 
@@ -2727,7 +2867,7 @@ section,
 }
 
 @media (max-width: 992px) {
-  .events-cards .row>div:nth-child(n+5) {
+  .events-cards .row > div:nth-child(n + 5) {
     margin-top: 2rem;
   }
 }
@@ -2746,7 +2886,8 @@ section,
 
 .location-cards .area-highlight:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 15px 35px
+    color-mix(in srgb, var(--default-color), transparent 85%);
   border-color: color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
@@ -2834,7 +2975,11 @@ section,
 }
 
 .location-cards .location-overview {
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), var(--heading-color) 30%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), var(--heading-color) 30%)
+  );
   border-radius: 20px;
   padding: 40px 30px;
   color: var(--contrast-color);
@@ -2844,7 +2989,7 @@ section,
 }
 
 .location-cards .location-overview::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -50%;
   right: -50%;
@@ -2924,19 +3069,34 @@ section,
   flex-shrink: 0;
 }
 
-.location-cards .location-overview .benefits-list .benefit-item .benefit-icon i {
+.location-cards
+  .location-overview
+  .benefits-list
+  .benefit-item
+  .benefit-icon
+  i {
   font-size: 18px;
   color: var(--accent-color);
 }
 
-.location-cards .location-overview .benefits-list .benefit-item .benefit-content h6 {
+.location-cards
+  .location-overview
+  .benefits-list
+  .benefit-item
+  .benefit-content
+  h6 {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 2px;
   color: var(--contrast-color);
 }
 
-.location-cards .location-overview .benefits-list .benefit-item .benefit-content span {
+.location-cards
+  .location-overview
+  .benefits-list
+  .benefit-item
+  .benefit-content
+  span {
   font-size: 12px;
   opacity: 0.8;
 }
@@ -3019,12 +3179,21 @@ section,
     padding: 10px 12px;
   }
 
-  .location-cards .location-overview .benefits-list .benefit-item .benefit-icon {
+  .location-cards
+    .location-overview
+    .benefits-list
+    .benefit-item
+    .benefit-icon {
     width: 35px;
     height: 35px;
   }
 
-  .location-cards .location-overview .benefits-list .benefit-item .benefit-icon i {
+  .location-cards
+    .location-overview
+    .benefits-list
+    .benefit-item
+    .benefit-icon
+    i {
     font-size: 16px;
   }
 }
@@ -3081,7 +3250,11 @@ section,
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 60%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), transparent 60%)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3095,7 +3268,11 @@ section,
 }
 
 .gallery-showcase .btn-gallery {
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), #000000 20%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), #000000 20%)
+  );
   color: var(--contrast-color);
   border: none;
   padding: 15px 35px;
@@ -3113,7 +3290,11 @@ section,
   transform: translateY(-2px);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
   color: var(--contrast-color);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), #000000 10%), color-mix(in srgb, var(--accent-color), #000000 30%));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-color), #000000 10%),
+    color-mix(in srgb, var(--accent-color), #000000 30%)
+  );
 }
 
 .gallery-showcase .btn-gallery i {
@@ -3264,7 +3445,8 @@ section,
   align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 85%);
 }
 
 .about .milestone-item:last-child {
@@ -3445,7 +3627,11 @@ section,
 .about .achievements-section {
   margin-top: 5rem;
   padding: 4rem 0;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 95%), color-mix(in srgb, var(--accent-color), transparent 90%));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-color), transparent 95%),
+    color-mix(in srgb, var(--accent-color), transparent 90%)
+  );
   border-radius: 25px;
 }
 
@@ -3508,7 +3694,8 @@ section,
   padding: 30px;
   border-radius: 10px;
   margin-bottom: 40px;
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--default-color), transparent 90%);
+  box-shadow: 0 4px 20px
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .rooms-2 .room-filters .form-label {
@@ -3530,21 +3717,24 @@ section,
 
 .rooms-2 .room-filters .form-select:focus {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent-color), transparent 75%);
+  box-shadow: 0 0 0 0.2rem
+    color-mix(in srgb, var(--accent-color), transparent 75%);
 }
 
 .rooms-2 .rooms-grid .room-card {
   background-color: var(--surface-color);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 88%);
+  box-shadow: 0 8px 30px
+    color-mix(in srgb, var(--default-color), transparent 88%);
   transition: all 0.3s ease;
   height: 100%;
 }
 
 .rooms-2 .rooms-grid .room-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 40px color-mix(in srgb, var(--default-color), transparent 80%);
+  box-shadow: 0 15px 40px
+    color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
 .rooms-2 .rooms-grid .room-card .room-image {
@@ -3581,31 +3771,66 @@ section,
   color: var(--contrast-color);
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.ocean {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.ocean {
   background-color: #007bff;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.popular {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.popular {
   background-color: #ff6b35;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.business {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.business {
   background-color: #6c757d;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.family {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.family {
   background-color: #28a745;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.garden {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.garden {
   background-color: #20c997;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.romantic {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.romantic {
   background-color: #e91e63;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.premium {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.premium {
   background-color: #ffc107;
   color: var(--default-color);
 }
@@ -3614,7 +3839,12 @@ section,
   background-color: #17a2b8;
 }
 
-.rooms-2 .rooms-grid .room-card .room-image .room-features .feature-badge.luxury {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-image
+  .room-features
+  .feature-badge.luxury {
   background-color: #6f42c1;
 }
 
@@ -3686,18 +3916,36 @@ section,
   gap: 5px;
 }
 
-.rooms-2 .rooms-grid .room-card .room-content .room-footer .room-price .price-from {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-content
+  .room-footer
+  .room-price
+  .price-from {
   font-size: 12px;
   color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
-.rooms-2 .rooms-grid .room-card .room-content .room-footer .room-price .price-amount {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-content
+  .room-footer
+  .room-price
+  .price-amount {
   font-size: 24px;
   font-weight: 700;
   color: var(--accent-color);
 }
 
-.rooms-2 .rooms-grid .room-card .room-content .room-footer .room-price .price-period {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-content
+  .room-footer
+  .room-price
+  .price-period {
   font-size: 14px;
   color: var(--default-color);
 }
@@ -3713,7 +3961,12 @@ section,
   transition: all 0.3s ease;
 }
 
-.rooms-2 .rooms-grid .room-card .room-content .room-footer .btn-room-details:hover {
+.rooms-2
+  .rooms-grid
+  .room-card
+  .room-content
+  .room-footer
+  .btn-room-details:hover {
   background-color: color-mix(in srgb, var(--accent-color), transparent 15%);
   transform: translateY(-2px);
 }
@@ -4106,7 +4359,11 @@ section,
 }
 
 .room-details .booking-cta .booking-card {
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), black 20%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), black 20%)
+  );
   color: var(--contrast-color);
   padding: 40px;
   border-radius: 15px;
@@ -4166,14 +4423,16 @@ section,
   background: var(--surface-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 5px 25px color-mix(in srgb, var(--default-color), transparent 90%);
+  box-shadow: 0 5px 25px
+    color-mix(in srgb, var(--default-color), transparent 90%);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 100%;
 }
 
 .amenities .amenity-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 15px 35px
+    color-mix(in srgb, var(--default-color), transparent 85%);
 }
 
 .amenities .amenity-card .amenity-image {
@@ -4190,13 +4449,17 @@ section,
 }
 
 .amenities .amenity-card .amenity-image::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 85%) 0%, color-mix(in srgb, var(--heading-color), transparent 85%) 100%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-color), transparent 85%) 0%,
+    color-mix(in srgb, var(--heading-color), transparent 85%) 100%
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -4255,7 +4518,8 @@ section,
   background: var(--surface-color);
   border-radius: 16px;
   padding: 50px 40px;
-  box-shadow: 0 10px 30px color-mix(in srgb, var(--default-color), transparent 90%);
+  box-shadow: 0 10px 30px
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .amenities .amenities-grid h3 {
@@ -4278,7 +4542,11 @@ section,
   width: 80px;
   height: 80px;
   margin: 0 auto 20px;
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), var(--heading-color) 30%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), var(--heading-color) 30%)
+  );
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -4288,12 +4556,16 @@ section,
 }
 
 .amenities .amenities-grid .service-item .service-icon::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), var(--heading-color) 30%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), var(--heading-color) 30%)
+  );
   opacity: 0;
   transform: scale(1.2);
   transition: all 0.3s ease;
@@ -4453,7 +4725,12 @@ section,
   font-size: 16px;
 }
 
-.offers .offer-card .offer-content .offer-details .price-info .discounted-price {
+.offers
+  .offer-card
+  .offer-content
+  .offer-details
+  .price-info
+  .discounted-price {
   font-size: 28px;
   font-weight: 700;
   color: var(--accent-color);
@@ -4551,7 +4828,12 @@ section,
     gap: 5px;
   }
 
-  .offers .offer-card .offer-content .offer-details .price-info .discounted-price {
+  .offers
+    .offer-card
+    .offer-content
+    .offer-details
+    .price-info
+    .discounted-price {
     font-size: 24px;
   }
 
@@ -4954,7 +5236,11 @@ section,
 # Booking Section
 --------------------------------------------------------------*/
 .booking {
-  background: color-mix(in srgb, var(--surface-color), var(--background-color) 50%);
+  background: color-mix(
+    in srgb,
+    var(--surface-color),
+    var(--background-color) 50%
+  );
 }
 
 .booking .reservation-wrapper {
@@ -5021,7 +5307,8 @@ section,
   font-weight: 600;
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
   color: var(--heading-color);
 }
 
@@ -5056,10 +5343,10 @@ section,
   letter-spacing: 0.5px;
 }
 
-.booking .reservation-form input[type=date],
-.booking .reservation-form input[type=text],
-.booking .reservation-form input[type=email],
-.booking .reservation-form input[type=tel],
+.booking .reservation-form input[type='date'],
+.booking .reservation-form input[type='text'],
+.booking .reservation-form input[type='email'],
+.booking .reservation-form input[type='tel'],
 .booking .reservation-form textarea,
 .booking .reservation-form select {
   color: var(--default-color);
@@ -5072,21 +5359,22 @@ section,
   width: 100%;
 }
 
-.booking .reservation-form input[type=date]:focus,
-.booking .reservation-form input[type=text]:focus,
-.booking .reservation-form input[type=email]:focus,
-.booking .reservation-form input[type=tel]:focus,
+.booking .reservation-form input[type='date']:focus,
+.booking .reservation-form input[type='text']:focus,
+.booking .reservation-form input[type='email']:focus,
+.booking .reservation-form input[type='tel']:focus,
 .booking .reservation-form textarea:focus,
 .booking .reservation-form select:focus {
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 0.125rem color-mix(in srgb, var(--accent-color), transparent 85%);
+  box-shadow: 0 0 0 0.125rem
+    color-mix(in srgb, var(--accent-color), transparent 85%);
   outline: none;
 }
 
-.booking .reservation-form input[type=date]::placeholder,
-.booking .reservation-form input[type=text]::placeholder,
-.booking .reservation-form input[type=email]::placeholder,
-.booking .reservation-form input[type=tel]::placeholder,
+.booking .reservation-form input[type='date']::placeholder,
+.booking .reservation-form input[type='text']::placeholder,
+.booking .reservation-form input[type='email']::placeholder,
+.booking .reservation-form input[type='tel']::placeholder,
 .booking .reservation-form textarea::placeholder,
 .booking .reservation-form select::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
@@ -5101,7 +5389,8 @@ section,
 .booking .reservation-form .form-actions {
   margin-top: 2rem;
   padding-top: 2rem;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .booking .reservation-form .btn-primary {
@@ -5125,7 +5414,8 @@ section,
 }
 
 .booking .reservation-form .btn-primary:focus {
-  box-shadow: 0 0 0 0.125rem color-mix(in srgb, var(--accent-color), transparent 75%);
+  box-shadow: 0 0 0 0.125rem
+    color-mix(in srgb, var(--accent-color), transparent 75%);
 }
 
 .booking .hotel-showcase .showcase-image {
@@ -5182,14 +5472,24 @@ section,
   color: var(--accent-color);
 }
 
-.booking .hotel-showcase .hotel-highlights .highlight-item .highlight-content h5 {
+.booking
+  .hotel-showcase
+  .hotel-highlights
+  .highlight-item
+  .highlight-content
+  h5 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
   color: var(--heading-color);
 }
 
-.booking .hotel-showcase .hotel-highlights .highlight-item .highlight-content p {
+.booking
+  .hotel-showcase
+  .hotel-highlights
+  .highlight-item
+  .highlight-content
+  p {
   font-size: 0.9rem;
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin: 0;
@@ -5243,11 +5543,21 @@ section,
     gap: 0.75rem;
   }
 
-  .booking .hotel-showcase .hotel-highlights .highlight-item .highlight-content h5 {
+  .booking
+    .hotel-showcase
+    .hotel-highlights
+    .highlight-item
+    .highlight-content
+    h5 {
     font-size: 0.95rem;
   }
 
-  .booking .hotel-showcase .hotel-highlights .highlight-item .highlight-content p {
+  .booking
+    .hotel-showcase
+    .hotel-highlights
+    .highlight-item
+    .highlight-content
+    p {
     font-size: 0.85rem;
   }
 
@@ -5387,7 +5697,11 @@ section,
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 25px;
-  background: linear-gradient(135deg, var(--heading-color), var(--accent-color));
+  background: linear-gradient(
+    135deg,
+    var(--heading-color),
+    var(--accent-color)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -5464,14 +5778,26 @@ section,
   color: var(--contrast-color);
 }
 
-.events .event-venues-grid .venue-card .venue-image .venue-overlay .venue-info h4 {
+.events
+  .event-venues-grid
+  .venue-card
+  .venue-image
+  .venue-overlay
+  .venue-info
+  h4 {
   font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--contrast-color);
 }
 
-.events .event-venues-grid .venue-card .venue-image .venue-overlay .venue-info .capacity {
+.events
+  .event-venues-grid
+  .venue-card
+  .venue-image
+  .venue-overlay
+  .venue-info
+  .capacity {
   font-size: 1rem;
   opacity: 0.9;
 }
@@ -5504,7 +5830,11 @@ section,
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), black 20%));
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    color-mix(in srgb, var(--accent-color), black 20%)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5549,20 +5879,34 @@ section,
   gap: 15px;
 }
 
-.events .features-section .features-gallery .gallery-thumbnails .thumbnail-item {
+.events
+  .features-section
+  .features-gallery
+  .gallery-thumbnails
+  .thumbnail-item {
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-.events .features-section .features-gallery .gallery-thumbnails .thumbnail-item img {
+.events
+  .features-section
+  .features-gallery
+  .gallery-thumbnails
+  .thumbnail-item
+  img {
   width: 100%;
   height: 140px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.events .features-section .features-gallery .gallery-thumbnails .thumbnail-item:hover img {
+.events
+  .features-section
+  .features-gallery
+  .gallery-thumbnails
+  .thumbnail-item:hover
+  img {
   transform: scale(1.05);
 }
 
@@ -5616,7 +5960,11 @@ section,
 
 .events .event-packages .package-item.featured {
   border-color: var(--accent-color);
-  background: linear-gradient(135deg, var(--surface-color), color-mix(in srgb, var(--accent-color), transparent 95%));
+  background: linear-gradient(
+    135deg,
+    var(--surface-color),
+    color-mix(in srgb, var(--accent-color), transparent 95%)
+  );
 }
 
 .events .event-packages .package-item.featured .featured-label {
@@ -5673,7 +6021,12 @@ section,
   margin-bottom: 25px;
 }
 
-.events .event-packages .package-item .package-content .package-highlights .highlight {
+.events
+  .event-packages
+  .package-item
+  .package-content
+  .package-highlights
+  .highlight {
   background: color-mix(in srgb, var(--accent-color), transparent 85%);
   color: var(--accent-color);
   font-size: 0.85rem;
@@ -5895,7 +6248,8 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent-color), transparent 85%);
+  box-shadow: 0 4px 20px
+    color-mix(in srgb, var(--accent-color), transparent 85%);
   flex-shrink: 0;
 }
 
@@ -5962,7 +6316,8 @@ section,
   height: 500px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 50px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 15px 50px
+    color-mix(in srgb, var(--default-color), transparent 85%);
 }
 
 .hotel-location .map-container iframe {
@@ -5989,7 +6344,8 @@ section,
   padding: 12px 20px;
   border-radius: 15px;
   font-weight: 600;
-  box-shadow: 0 8px 25px color-mix(in srgb, var(--accent-color), transparent 50%);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--accent-color), transparent 50%);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6028,14 +6384,16 @@ section,
   border-radius: 20px;
   padding: 30px;
   height: 100%;
-  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 90%);
+  box-shadow: 0 8px 30px
+    color-mix(in srgb, var(--default-color), transparent 90%);
   transition: all 0.3s ease;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
 }
 
 .hotel-location .transportation-hub .transport-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 60px color-mix(in srgb, var(--default-color), transparent 80%);
+  box-shadow: 0 20px 60px
+    color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
 .hotel-location .transportation-hub .transport-card .transport-header {
@@ -6045,7 +6403,11 @@ section,
   margin-bottom: 20px;
 }
 
-.hotel-location .transportation-hub .transport-card .transport-header .transport-icon-box {
+.hotel-location
+  .transportation-hub
+  .transport-card
+  .transport-header
+  .transport-icon-box {
   background: color-mix(in srgb, var(--accent-color), transparent 88%);
   width: 60px;
   height: 60px;
@@ -6056,18 +6418,33 @@ section,
   flex-shrink: 0;
 }
 
-.hotel-location .transportation-hub .transport-card .transport-header .transport-icon-box i {
+.hotel-location
+  .transportation-hub
+  .transport-card
+  .transport-header
+  .transport-icon-box
+  i {
   color: var(--accent-color);
   font-size: 24px;
 }
 
-.hotel-location .transportation-hub .transport-card .transport-header .transport-title h5 {
+.hotel-location
+  .transportation-hub
+  .transport-card
+  .transport-header
+  .transport-title
+  h5 {
   color: var(--heading-color);
   font-size: 20px;
   margin-bottom: 5px;
 }
 
-.hotel-location .transportation-hub .transport-card .transport-header .transport-title .transport-time {
+.hotel-location
+  .transportation-hub
+  .transport-card
+  .transport-header
+  .transport-title
+  .transport-time {
   color: var(--accent-color);
   font-size: 14px;
   font-weight: 500;
@@ -6079,13 +6456,22 @@ section,
   margin-bottom: 20px;
 }
 
-.hotel-location .transportation-hub .transport-card .transport-details .transport-features {
+.hotel-location
+  .transportation-hub
+  .transport-card
+  .transport-details
+  .transport-features {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.hotel-location .transportation-hub .transport-card .transport-details .transport-features .feature-tag {
+.hotel-location
+  .transportation-hub
+  .transport-card
+  .transport-details
+  .transport-features
+  .feature-tag {
   background: color-mix(in srgb, var(--accent-color), transparent 92%);
   color: var(--accent-color);
   padding: 6px 12px;
@@ -6116,16 +6502,22 @@ section,
   border-radius: 18px;
   overflow: hidden;
   margin-bottom: 30px;
-  box-shadow: 0 10px 40px color-mix(in srgb, var(--default-color), transparent 88%);
+  box-shadow: 0 10px 40px
+    color-mix(in srgb, var(--default-color), transparent 88%);
   transition: all 0.3s ease;
 }
 
 .hotel-location .attractions-section .attraction-item:hover {
   transform: translateY(-10px);
-  box-shadow: 0 25px 60px color-mix(in srgb, var(--default-color), transparent 80%);
+  box-shadow: 0 25px 60px
+    color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
-.hotel-location .attractions-section .attraction-item:hover .attraction-photo img {
+.hotel-location
+  .attractions-section
+  .attraction-item:hover
+  .attraction-photo
+  img {
   transform: scale(1.05);
 }
 
@@ -6142,7 +6534,11 @@ section,
   transition: transform 0.3s ease;
 }
 
-.hotel-location .attractions-section .attraction-item .attraction-photo .distance-badge {
+.hotel-location
+  .attractions-section
+  .attraction-item
+  .attraction-photo
+  .distance-badge {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -6152,13 +6548,19 @@ section,
   border-radius: 25px;
   font-size: 13px;
   font-weight: 600;
-  box-shadow: 0 4px 15px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 4px 15px
+    color-mix(in srgb, var(--default-color), transparent 85%);
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.hotel-location .attractions-section .attraction-item .attraction-photo .distance-badge i {
+.hotel-location
+  .attractions-section
+  .attraction-item
+  .attraction-photo
+  .distance-badge
+  i {
   font-size: 12px;
 }
 
@@ -6172,7 +6574,11 @@ section,
   margin-bottom: 10px;
 }
 
-.hotel-location .attractions-section .attraction-item .attraction-info .walk-time {
+.hotel-location
+  .attractions-section
+  .attraction-item
+  .attraction-info
+  .walk-time {
   color: var(--accent-color);
   font-weight: 500;
   font-size: 14px;
@@ -6182,11 +6588,20 @@ section,
   gap: 8px;
 }
 
-.hotel-location .attractions-section .attraction-item .attraction-info .walk-time i {
+.hotel-location
+  .attractions-section
+  .attraction-item
+  .attraction-info
+  .walk-time
+  i {
   font-size: 13px;
 }
 
-.hotel-location .attractions-section .attraction-item .attraction-info p:last-child {
+.hotel-location
+  .attractions-section
+  .attraction-item
+  .attraction-info
+  p:last-child {
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   line-height: 1.6;
   margin: 0;
@@ -6259,12 +6674,21 @@ section,
     gap: 15px;
   }
 
-  .hotel-location .transportation-hub .transport-card .transport-header .transport-icon-box {
+  .hotel-location
+    .transportation-hub
+    .transport-card
+    .transport-header
+    .transport-icon-box {
     width: 50px;
     height: 50px;
   }
 
-  .hotel-location .transportation-hub .transport-card .transport-header .transport-icon-box i {
+  .hotel-location
+    .transportation-hub
+    .transport-card
+    .transport-header
+    .transport-icon-box
+    i {
     font-size: 20px;
   }
 
@@ -6311,7 +6735,7 @@ section,
 }
 
 .contact .contact-form-wrapper h2:after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -6362,7 +6786,8 @@ section,
 .contact .contact-form-wrapper .btn-submit:hover {
   background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 70%);
+  box-shadow: 0 8px 20px
+    color-mix(in srgb, var(--accent-color), transparent 70%);
 }
 
 .contact .contact-info-card {
@@ -6562,7 +6987,7 @@ section,
 }
 
 .terms-of-service .tos-content .content-section .list-items li::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 10px;
@@ -6611,7 +7036,11 @@ section,
   }
 }
 
-.terms-of-service .tos-content .content-section .prohibited-list .prohibited-item {
+.terms-of-service
+  .tos-content
+  .content-section
+  .prohibited-list
+  .prohibited-item {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -6620,12 +7049,22 @@ section,
   border-radius: 12px;
 }
 
-.terms-of-service .tos-content .content-section .prohibited-list .prohibited-item i {
+.terms-of-service
+  .tos-content
+  .content-section
+  .prohibited-list
+  .prohibited-item
+  i {
   color: #dc3545;
   font-size: 1.2rem;
 }
 
-.terms-of-service .tos-content .content-section .prohibited-list .prohibited-item span {
+.terms-of-service
+  .tos-content
+  .content-section
+  .prohibited-list
+  .prohibited-item
+  span {
   font-size: 0.95rem;
   color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
@@ -6656,12 +7095,17 @@ section,
   font-size: 0.95rem;
 }
 
-.terms-of-service .tos-content .content-section .disclaimer-box ul li:last-child {
+.terms-of-service
+  .tos-content
+  .content-section
+  .disclaimer-box
+  ul
+  li:last-child {
   margin-bottom: 0;
 }
 
 .terms-of-service .tos-content .content-section .disclaimer-box ul li::before {
-  content: "•";
+  content: '•';
   position: absolute;
   left: 8px;
   color: var(--accent-color);
@@ -6693,7 +7137,11 @@ section,
 }
 
 .terms-of-service .tos-contact .contact-box {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 95%) 0%, color-mix(in srgb, var(--accent-color), transparent 98%) 100%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-color), transparent 95%) 0%,
+    color-mix(in srgb, var(--accent-color), transparent 98%) 100%
+  );
   border-radius: 20px;
   padding: 40px;
   display: flex;
@@ -6751,7 +7199,11 @@ section,
   transition: all 0.3s;
 }
 
-.terms-of-service .tos-contact .contact-box .contact-content .contact-link:hover {
+.terms-of-service
+  .tos-contact
+  .contact-box
+  .contact-content
+  .contact-link:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -6777,7 +7229,8 @@ section,
 .privacy .privacy-header {
   margin-bottom: 60px;
   text-align: center;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
   padding-bottom: 40px;
 }
 
@@ -6847,7 +7300,7 @@ section,
 }
 
 .privacy .privacy-content .content-section ul li::before {
-  content: "•";
+  content: '•';
   position: absolute;
   left: 8px;
   color: var(--accent-color);
@@ -6857,7 +7310,8 @@ section,
   max-width: 800px;
   margin: 0 auto;
   padding-top: 40px;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .privacy .privacy-contact h2 {
@@ -7071,6 +7525,99 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
+/*.starter-section {
+  Add your styles here 
+}*/
+
+/*--------------------------------------------------------------
+# Team Boxes - How it works?
+--------------------------------------------------------------*/
+.team-boxed {
+  color: #313437;
+  background-color: #eef4f7;
+}
+
+.team-boxed p {
+  color: #7d8285;
+}
+
+.team-boxed h2 {
+  font-weight: bold;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  color: inherit;
+}
+
+@media (max-width: 767px) {
+  .team-boxed h2 {
+    margin-bottom: 25px;
+    padding-top: 25px;
+    font-size: 24px;
+  }
+}
+
+.team-boxed .intro {
+  font-size: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.team-boxed .intro p {
+  margin-bottom: 0;
+}
+
+.team-boxed .people {
+  padding: 50px 0;
+}
+
+.team-boxed .item {
+  text-align: center;
+}
+
+.team-boxed .item .box {
+  text-align: center;
+  padding: 30px;
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+
+.team-boxed .item .name {
+  font-weight: bold;
+  margin-top: 28px;
+  margin-bottom: 8px;
+  color: inherit;
+}
+
+.team-boxed .item .title {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #d0d0d0;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+
+.team-boxed .item .description {
+  font-size: 15px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.team-boxed .item img {
+  max-width: 160px;
+}
+
+.team-boxed .social {
+  font-size: 18px;
+  color: #a2a8ae;
+}
+
+.team-boxed .social a {
+  color: inherit;
+  margin: 0 10px;
+  display: inline-block;
+  opacity: 0.7;
+}
+
+.team-boxed .social a:hover {
+  opacity: 1;
 }
