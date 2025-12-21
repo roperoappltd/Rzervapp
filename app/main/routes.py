@@ -10,4 +10,35 @@ main = Blueprint('main', __name__)
 def home():
     '''This function create a route to render the home page'''
     
-    return render_template('pages/homes.html')
+    return render_template('pages/homes.html',  title='Home')
+
+@main.route("/about") 
+def about():
+    '''This function create a route to render the about page'''
+    
+    return render_template('pages/aboutus.html', title='About us')
+
+@main.route("/contact") 
+def contact():
+    '''This function create a route to render the contact page'''
+    
+    return render_template('pages/getintouch.html', title='Contact')
+
+@main.route("/rooms") 
+def rooms():
+    '''This function create a route to render the rooms page'''
+    
+    return render_template('pages/rooms.html', title='Rooms List')
+
+@main.route("/booknow") 
+def booknow():
+    '''This function create a route to render the booking page'''
+    
+    return render_template('pages/booking.html', title='Booking')
+
+@main.route("/roomdetail") 
+def roomdetail():
+    '''This function create a route to render the booking page'''
+    
+    return render_template('pages/roomdetails.html', title='Room Details')
+

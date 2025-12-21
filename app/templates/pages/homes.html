@@ -58,11 +58,8 @@
     />
 
     <!-- =======================================================
-  * Template Name: Grandoria
-  * Template URL: https://bootstrapmade.com/grandoria-bootstrap-hotel-template/
+  * Template Name: Rezerva
   * Updated: Jul 29 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
   ======================================================== -->
   </head>
 
@@ -94,7 +91,10 @@
         <div
           class="container position-relative d-flex align-items-center justify-content-between"
         >
-          <a href="index.html" class="logo d-flex align-items-center">
+          <a
+            href="{{ url_for('main.home') }}"
+            class="logo d-flex align-items-center"
+          >
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.webp" alt=""> -->
             <h1 class="sitename">Rezerva</h1>
@@ -107,23 +107,39 @@
           <!--NAVBAR MENU------------------------------------------------------------->
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="index.html" class="active">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="rooms.html">Rooms</a></li>
+              <li>
+                <a href="{{ url_for('main.home') }}" class="active">Home</a>
+              </li>
+              <li><a href="{{ url_for('main.about') }}">About</a></li>
+              <!-- <li><a href="{{ url_for('main.rooms') }}">Rooms</a></li> -->
               <!-- <li><a href="amenities.html">Amenities</a></li> -->
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
 
               <li class="dropdown">
                 <a href="#"
-                  ><button type="button" class="btn btn-primary btn-sm">
+                  ><button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    style="
+                      background-image: linear-gradient(
+                        to right,
+                        #003366,
+                        #004080,
+                        #0059b3,
+                        #0073e6
+                      );
+                    "
+                  >
                     <b>Connect</b>
                   </button>
                   <i class="bi bi-chevron-down toggle-dropdown"></i
                 ></a>
                 <ul>
-                  <li><a href="room-details.html">Log in</a></li>
-                  <li><a href="restaurant.html">Register</a></li>
-                  <li><a href="offers.html">Booking</a></li>
+                  <li><a href="{{ url_for('users.login') }}">Log in</a></li>
+                  <li><a href="{{ url_for('users.signup') }}">Register</a></li>
+                  <li>
+                    <a href="{{ url_for('main.rooms') }}">Find a room</a>
+                  </li>
                   <li><a href="events.html">Events</a></li>
                 </ul>
               </li>
@@ -138,7 +154,7 @@
                   > -->
                   <img
                     class="rounded-circle"
-                    src="{{ url_for('static', filename='img/misc/flags/uk.png')}} "
+                    src="{{ url_for('static', filename='img/misc/flags/uk.png')}}"
                     width="20"
                     height="20" />
                   <!-- <g id="SVGRepo_iconCarrier">
@@ -159,7 +175,7 @@
                       <span>French</span>
                       <img
                         class="rounded-circle"
-                        src="{{ url_for('static', filename='img/misc/flags/fr.png')}} "
+                        src="{{ url_for('static', filename='img/misc/flags/fr.png')}}"
                         width="20"
                         height="20"
                       />
@@ -190,7 +206,7 @@
                 </ul>
               </li>
               <li>
-                <a href="location.html"
+                <a href="{{ url_for('users.signup') }}"
                   ><button
                     type="button"
                     class="btn rounded-pill btn-warning btn-sm"
@@ -236,16 +252,19 @@
                 </div>
                 <div class="hero-buttons">
                   <a href="booking.html" class="btn btn-primary">Register</a>
-                  <a href="rooms.html" class="btn btn-outline">View Rooms</a>
+                  <a href="{{ url_for('main.rooms') }}" class="btn btn-outline"
+                    >View Rooms</a
+                  >
                 </div>
               </div>
             </div>
-
+            <!-----------------------------HOME FIRST IMAGE------------------------------------>
+            <!-- src="{{url_for('static', filename='img/hotel/showcase-3-1.jpg')}}" -->
             <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
               <div class="hero-images">
                 <div class="main-image">
                   <img
-                    src="{{url_for('static', filename='img/hotel/showcase-3-1.jpg')}}"
+                    src="{{url_for('static', filename='img/misc/welco3.png')}}"
                     alt="Luxury Hotel"
                     class="img-fluid"
                   />
@@ -381,8 +400,12 @@
                 <!-- End Stats Row -->
 
                 <div class="about-actions">
-                  <a href="about.html" class="btn-primary">About us</a>
-                  <a href="rooms.html" class="btn-secondary">Contact us</a>
+                  <a href="{{ url_for('main.about') }}" class="btn-primary"
+                    >About us</a
+                  >
+                  <a href="{{ url_for('main.contact') }}" class="btn-secondary"
+                    >Contact us</a
+                  >
                 </div>
               </div>
             </div>
@@ -493,12 +516,16 @@
               </div>
             </div>
             <!--BUTTONS---------------------------------------------->
-            <div class="text-center">
+            <!-- <div class="text-center">
               <a href="about.html" class="btn btn-link text-danger"
-                ><h4>Click here now! to become a host.</h4></a
+                ><h4>Click here to become a host.</h4></a
               >
-              <!-- &nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="rooms.html" class="btn btn-dark btn-lg">Register now</a> -->
+            </div> -->
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+              <a href="{{ url_for('main.rooms') }}" class="explore-all-link">
+                <span>Click here to become a host</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
             </div>
             <!--END BUTTONS---------------------------------------------->
           </div>
@@ -593,8 +620,10 @@
                       <span class="amount">649</span>
                       <span class="period">per night</span>
                     </div>
-                    <a href="room-details.html" class="primary-booking-btn"
-                      >Reserve Suite</a
+                    <a
+                      href="{{ url_for('main.booknow') }}"
+                      class="primary-booking-btn"
+                      >Reserve now</a
                     >
                   </div>
                 </div>
@@ -631,7 +660,11 @@
                     </div>
                     <div class="booking-row">
                       <div class="price">$329<small>/night</small></div>
-                      <a href="room-details.html" class="book-link">Book</a>
+                      <a
+                        href="{{ url_for('main.roomdetail') }}"
+                        class="book-link"
+                        >Book</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -666,7 +699,11 @@
                     </div>
                     <div class="booking-row">
                       <div class="price">$269<small>/night</small></div>
-                      <a href="room-details.html" class="book-link">Book</a>
+                      <a
+                        href="{{ url_for('main.roomdetail') }}"
+                        class="book-link"
+                        >Book</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -699,7 +736,11 @@
                     </div>
                     <div class="booking-row">
                       <div class="price">$419<small>/night</small></div>
-                      <a href="room-details.html" class="book-link">Book</a>
+                      <a
+                        href="{{ url_for('main.roomdetail') }}"
+                        class="book-link"
+                        >Book</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -722,7 +763,10 @@
                     class="img-fluid"
                   />
                   <div class="hover-overlay">
-                    <a href="room-details.html" class="view-room">
+                    <a
+                      href="{{ url_for('main.roomdetail') }}"
+                      class="view-room"
+                    >
                       <i class="bi bi-eye"></i>
                     </a>
                   </div>
@@ -753,7 +797,10 @@
                     class="img-fluid"
                   />
                   <div class="hover-overlay">
-                    <a href="room-details.html" class="view-room">
+                    <a
+                      href="{{ url_for('main.roomdetail') }}"
+                      class="view-room"
+                    >
                       <i class="bi bi-eye"></i>
                     </a>
                   </div>
@@ -784,7 +831,10 @@
                     class="img-fluid"
                   />
                   <div class="hover-overlay">
-                    <a href="room-details.html" class="view-room">
+                    <a
+                      href="{{ url_for('main.roomdetail') }}"
+                      class="view-room"
+                    >
                       <i class="bi bi-eye"></i>
                     </a>
                   </div>
@@ -815,7 +865,10 @@
                     class="img-fluid"
                   />
                   <div class="hover-overlay">
-                    <a href="room-details.html" class="view-room">
+                    <a
+                      href="{{ url_for('main.roomdetail') }}"
+                      class="view-room"
+                    >
                       <i class="bi bi-eye"></i>
                     </a>
                   </div>
@@ -835,8 +888,8 @@
           </div>
 
           <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-            <a href="rooms.html" class="explore-all-link">
-              <span>Explore All Accommodations</span>
+            <a href="{{ url_for('main.rooms') }}" class="explore-all-link">
+              <span>Explore All Rooms</span>
               <i class="bi bi-arrow-right"></i>
             </a>
           </div>
@@ -1252,7 +1305,9 @@
                       <span>Valid until Dec 31, 2024</span>
                     </div>
                   </div>
-                  <a href="#" class="btn-book">Book Now</a>
+                  <a href="{{ url_for('main.booknow') }}" class="btn-book"
+                    >Reserve Now</a
+                  >
                 </div>
               </div>
             </div>
@@ -1291,7 +1346,9 @@
                       <span>Book by Jan 15, 2025</span>
                     </div>
                   </div>
-                  <a href="#" class="btn-book">Reserve Today</a>
+                  <a href="{{ url_for('main.booknow') }}" class="btn-book"
+                    >Reserve Now</a
+                  >
                 </div>
               </div>
             </div>
@@ -1326,7 +1383,9 @@
                       <span>Available year-round</span>
                     </div>
                   </div>
-                  <a href="#" class="btn-book">Book Early</a>
+                  <a href="{{ url_for('main.booknow') }}" class="btn-book"
+                    >Reserve Now</a
+                  >
                 </div>
               </div>
             </div>
@@ -1409,8 +1468,12 @@
                   </li>
                 </ul>
                 <div class="cta-buttons">
-                  <a href="#" class="btn-primary">Book Your Stay</a>
-                  <a href="#" class="btn-secondary">View Rooms</a>
+                  <a href="{{ url_for('main.booknow') }}" class="btn-primary"
+                    >Book Your Stay</a
+                  >
+                  <a href="{{ url_for('main.rooms') }}" class="btn-secondary"
+                    >View Rooms</a
+                  >
                 </div>
               </div>
             </div>
@@ -2045,8 +2108,11 @@
         <div class="container">
           <div class="row gy-4">
             <div class="col-lg-4 col-md-6 footer-about">
-              <a href="index.html" class="logo d-flex align-items-center">
-                <span class="sitename">Rezerva.com</span>
+              <a
+                href="{{ url_for('main.home') }}"
+                class="logo d-flex align-items-center"
+              >
+                <span class="sitename">Rezerva</span>
               </a>
               <div class="footer-contact pt-3">
                 <p>A108 Adam Street</p>

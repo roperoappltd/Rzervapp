@@ -1,16 +1,13 @@
 /**
-* Template Name: Grandoria
-* Template URL: https://bootstrapmade.com/grandoria-bootstrap-hotel-template/
+* Template Name: Rezerva
 * Updated: Jul 29 2025 with Bootstrap v5.3.7
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
+* Author: Rezerva.com
 */
 
 @charset "UTF-8";
 
 /*--------------------------------------------------------------
 # Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
@@ -7621,3 +7618,4 @@ section,
 .team-boxed .social a:hover {
   opacity: 1;
 }
+/*-------------------------------------------------------------------------------------*/

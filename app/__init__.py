@@ -47,7 +47,7 @@ def create_app(config_name='default'):
 
         # Imports our route blueprints
         #from app.enrolls.routes import enrolls
-        #from app.users.routes import users
+        from app.users.routes import users
         from app.main.routes import main
         #from app.posts.routes import posts
         from app.errors.handlers import errors
@@ -61,7 +61,7 @@ def create_app(config_name='default'):
 
         # Register our blueprints
         #app.register_blueprint(enrolls)
-        #app.register_blueprint(users)
+        app.register_blueprint(users)
         app.register_blueprint(main)
         #app.register_blueprint(posts)
         app.register_blueprint(errors)
