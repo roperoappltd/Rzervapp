@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Home - Rezerva</title>
+    {% if title %}
+    <title>Rezerva - {{ title }}</title>
+    {% else %}
+    <title>Rezerva</title>
+    {% endif %}
+    <!-- <title>Home - Rezerva</title> -->
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
     <!-- Favicons -->
-    <link href="{{url_for('static', filename='img/favicon.png')}}" rel="icon" />
+    <link href="{{url_for('static', filename='img/fab.ico')}}" rel="icon" />
     <link
       href="{{url_for('static', filename='img/apple-touch-icon.png ')}}"
       rel="apple-touch-icon"
@@ -62,10 +67,10 @@
       href="{{url_for('static', filename='login/css/stylelogin.css')}}"
     />
     <!-- Sigup Style -->
-    <link
+    <!-- <link
       rel="stylesheet"
       href="{{url_for('static', filename='signup/css/stylesignup.css')}}"
-    />
+    /> -->
     <!---------------------------------------------------------------------------->
 
     <!-- =======================================================
@@ -86,7 +91,7 @@
               ><a href="mailto:contact@example.com">contact@rezerva.com</a></i
             >
             <i class="bi bi-phone d-flex align-items-center ms-4"
-              ><span>+1 5589 55488 55</span></i
+              ><span>+44 78 18 295 292</span></i
             >
           </div>
           <div class="social-links d-none d-md-flex align-items-center">
@@ -109,12 +114,12 @@
           >
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="assets/img/logo.webp" alt=""> -->
-            <h1 class="sitename">Rezerva</h1>
-            <!-- <img
-              src="{{ url_for('static', filename='img/misc/logo/Rlogo.png')}} "
+            <!-- <h1 class="sitename">Rezerva</h1> -->
+            <img
+              src="{{ url_for('static', filename='udash/assets/img/Rlogo.png')}} "
               width="200"
-              height="200"
-            /> -->
+              height="40"
+            />
           </a>
           <!--NAVBAR MENU------------------------------------------------------------->
           <nav id="navmenu" class="navmenu">
@@ -123,10 +128,72 @@
                 <a href="{{ url_for('main.home') }}" class="active">Home</a>
               </li>
               <li><a href="{{ url_for('main.about') }}">About</a></li>
-              <!-- <li><a href="{{ url_for('main.rooms') }}">Rooms</a></li> -->
+              <li><a href="{{ url_for('main.rooms') }}">Rooms</a></li>
               <!-- <li><a href="amenities.html">Amenities</a></li> -->
               <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
 
+              <li class="dropdown">
+                <a href="#english">
+                  <svg
+                    class="icon"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4 0H6V2H10V4H8.86807C8.57073 5.66996 7.78574 7.17117 6.6656 8.35112C7.46567 8.73941 8.35737 8.96842 9.29948 8.99697L10.2735 6H12.7265L15.9765 16H13.8735L13.2235 14H9.77647L9.12647 16H7.0235L8.66176 10.9592C7.32639 10.8285 6.08165 10.3888 4.99999 9.71246C3.69496 10.5284 2.15255 11 0.5 11H0V9H0.5C1.5161 9 2.47775 8.76685 3.33437 8.35112C2.68381 7.66582 2.14629 6.87215 1.75171 6H4.02179C4.30023 6.43491 4.62904 6.83446 4.99999 7.19044C5.88743 6.33881 6.53369 5.23777 6.82607 4H0V2H4V0ZM12.5735 12L11.5 8.69688L10.4265 12H12.5735Z"
+                        fill="currentColor"
+                      ></path>
+                    </g>
+                  </svg>
+                  <span>&nbsp;English</span>
+                  <i class="bi bi-chevron-down toggle-dropdown"></i
+                ></a>
+                <ul>
+                  <li>
+                    <a href="#french"><span>French</span> </a>
+                  </li>
+                  <li>
+                    <a href="#deutsch"><span>Deutsch</span></a>
+                  </li>
+                  <li>
+                    <a href="#spanish"><span>Spanish</span></a>
+                  </li>
+                </ul>
+              </li>
+              {% if current_user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#">
+                  <img
+                    class="rounded-circle article-img zoom"
+                    src="{{ url_for('static', filename='userpics/' + current_user.image_file) }}"
+                    width="22"
+                    height="22" />
+                  &nbsp;Hi {{ current_user.username|capitalize }}
+                  <i class="bi bi-chevron-down toggle-dropdown"></i
+                ></a>
+                <ul>
+                  <li>
+                    <a href="{{ url_for('users.uaccount') }}">My profile</a>
+                  </li>
+                  <li>
+                    <a href="{{ url_for('users.uaccount') }}">My Booking</a>
+                  </li>
+                  <li><a href="{{ url_for('users.logout') }}">Log out</a></li>
+                  <!-- <li><a href="events.html">Events</a></li> -->
+                </ul>
+              </li>
+              <li>
+                <a href="{{ url_for('users.logout') }}"
+                  ><i class="bi bi-box-arrow-right fs-4"></i>&nbsp;
+                  <b>Log out</b>
+                </a>
+              </li>
+
+              {% else %}
               <li class="dropdown">
                 <a href="#"
                   ><button
@@ -149,84 +216,13 @@
                 <ul>
                   <li><a href="{{ url_for('users.login') }}">Log in</a></li>
                   <li><a href="{{ url_for('users.signup') }}">Register</a></li>
-                  <li>
+                  <!-- <li>
                     <a href="{{ url_for('main.rooms') }}">Book a Room</a>
-                  </li>
+                  </li> -->
                   <li><a href="events.html">Events</a></li>
                 </ul>
               </li>
-
-              <li class="dropdown">
-                <a href="#english">
-                  <!-- <svg
-                    class="icon"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  > -->
-                  <img
-                    class="rounded-circle"
-                    src="{{ url_for('static', filename='img/misc/flags/uk.png')}} "
-                    width="20"
-                    height="20" />
-                  <!-- <g id="SVGRepo_iconCarrier">
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M4 0H6V2H10V4H8.86807C8.57073 5.66996 7.78574 7.17117 6.6656 8.35112C7.46567 8.73941 8.35737 8.96842 9.29948 8.99697L10.2735 6H12.7265L15.9765 16H13.8735L13.2235 14H9.77647L9.12647 16H7.0235L8.66176 10.9592C7.32639 10.8285 6.08165 10.3888 4.99999 9.71246C3.69496 10.5284 2.15255 11 0.5 11H0V9H0.5C1.5161 9 2.47775 8.76685 3.33437 8.35112C2.68381 7.66582 2.14629 6.87215 1.75171 6H4.02179C4.30023 6.43491 4.62904 6.83446 4.99999 7.19044C5.88743 6.33881 6.53369 5.23777 6.82607 4H0V2H4V0ZM12.5735 12L11.5 8.69688L10.4265 12H12.5735Z"
-                        fill="currentColor"
-                      ></path>
-                    </g>
-                  </svg> -->
-                  <span>&nbsp;English</span>
-                  <i class="bi bi-chevron-down toggle-dropdown"></i
-                ></a>
-                <ul>
-                  <li>
-                    <a href="#french">
-                      <span>French</span>
-                      <img
-                        class="rounded-circle"
-                        src="{{ url_for('static', filename='img/misc/flags/fr.png')}} "
-                        width="20"
-                        height="20"
-                      />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#deutsch">
-                      <span>Deutsch</span>
-                      <img
-                        class="rounded-circle"
-                        src="{{ url_for('static', filename='img/misc/flags/de.png')}} "
-                        width="20"
-                        height="20"
-                      />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#spanish">
-                      <span>Spanish</span>
-                      <img
-                        class="rounded-circle"
-                        src="{{ url_for('static', filename='img/misc/flags/sp.png')}} "
-                        width="20"
-                        height="20"
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{ url_for('users.uaccount') }}"
-                  ><button
-                    type="button"
-                    class="btn rounded-pill btn-warning btn-sm"
-                  >
-                    Become host
-                  </button>
-                </a>
-              </li>
+              {% endif %}
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
@@ -236,15 +232,24 @@
     </header>
 
     <main role="main" class="container">
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %}
-      <div>&emsp;</div>
-      <div>&emsp;</div>
-      <div>&emsp;</div>
+      <div class="row">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div
+          class="alert alert-{{ category }} alert-dismissible fade show text-center fw-bold mt-3 mb-0"
+        >
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
 
-      {% endblock content %}
+        {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock
+        content %}
+      </div>
     </main>
 
     <footer id="footer" class="footer position-relative dark-background">
