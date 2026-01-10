@@ -4,7 +4,6 @@ An online platform that connects travelers seeking an affordable and friendly pl
 ### **Feature**
 - Html pages
 - User Dashbord
-- Admin Dashbord
 - User authentication system
 - Password reset with secure cookies
 - Email Notification
