@@ -17,7 +17,7 @@ def save_picture(form_picture):
     # combine the random hex with the file extension in order set the name of the new uploaded file
     uploaded_PicName = random_hex + file_ext 
     # extract and define the path where to save the file
-    picture_path = os.path.join(current_app.root_path, 'static/userpics/', uploaded_PicName)
+    picture_path = os.path.join(current_app.root_path, 'static/profile/', uploaded_PicName)
     # Resizing the  picture before saving
     img_sizer = (125, 125)
     new_img = Image.open(form_picture)

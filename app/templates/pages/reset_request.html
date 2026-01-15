@@ -20,15 +20,15 @@
         </svg>
       </div>
       <h1>Password <b class="text-danger">Reset</b></h1>
-      <p>Let's set you up, please enter your sign up email.</p>
+      <p>Let's set you up, please enter signup email!</p>
     </div>
 
     <form method="post">
       {{ form.hidden_tag() }}
       <div class="form-group">
-        {{ form.email.label(class="form-control-label pb-4 fs-6" ) }} {% if
-        form.email.errors %} {{ form.email(class="form-control form-control-lg
-        is-invalid") }}
+        {{ form.email.label(class="form-control-label pb-4 fs-6") }} {% if
+        form.email.errors %} {{ form.email(class="form-control
+        form-control-lg is-invalid") }}
         <div class="invalid-feedback">
           {% for error in form.email.errors %}
           <span>{{ error }}</span>
@@ -36,8 +36,7 @@
         </div>
         {% else %} {{ form.email(class="form-control form-control-lg") }} {%
         endif %}
-      </div>
-
+    
       <button
         type="submit"
         class="login-btn"
@@ -52,7 +51,6 @@
         "
       >
     
-
         <div class="btn-loader">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <circle

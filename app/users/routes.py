@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request,
 from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
 from app.models.usermodel import User
-from .forms import (LoginForm, RegistrationForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm)
+from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm, UpdateAccountForm)
 from .usermails.resetrequest import send_reset_email
+from .utils import save_picture
 
 users = Blueprint('users', __name__)
 
@@ -61,66 +62,6 @@ def logout():
     flash('You are now logged out of the system', 'success' )
     return redirect(url_for('users.login')) 
 
-@users.route("/uaccount", methods=['GET', 'POST']) 
-@login_required 
-def uaccount():
-    '''This function create a route to render user account page''' 
-    
-    
-    return render_template('userdash/useraccount.html',  title='User Account')
-
-@users.route("/myprofile", methods=['GET', 'POST']) 
-@login_required 
-def myprofile():
-    '''This function create a route to render user profile page''' 
-    form = UpdateAccountForm()
-    
-    if form.validate_on_submit():
-        if form.picture.data:    # check if profile picture has been uploaded
-            picture_file = save_picture(form.picture.data) # Process the image
-            # set the profile image file
-            current_user.image_file = picture_file
-        # allow update if username & email is valid
-        current_user.company_name = form.company_name.data
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        current_user.first_name = form.first_name.data
-        current_user.last_name = form.last_name.data
-        current_user.gender = form.gender.data
-        current_user.phone = form.phone.data
-        current_user.address = form.address.data
-        current_user.city = form.city.data
-        current_user.country = form.country.data
-        current_user.zip_code = form.zip_code.data
-        current_user.aboutme = form.aboutme.data
-
-        # save the db entry
-        db.session.commit()
-        # Displaying an update message
-        flash('Your profile has been successfully updated', 'success')
-        # redirect after update to the account page
-        return redirect(url_for('users.myprofile'))
-    # populate the form field with the user data
-    elif request.method == 'GET':
-        form.company_name.data = current_user.company_name
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-        form.first_name.data = current_user.first_name
-        form.last_name.data = current_user.last_name
-        form.gender.data = current_user.gender
-        form.phone.data = current_user.phone
-        form.address.data = current_user.address
-        form.city.data = current_user.city
-        form.country.data = current_user.country
-        form.zip_code.data = current_user.zip_code
-        form.aboutme.data = current_user.aboutme
-        
-    # set cuurent user profile pictures to pass to the account template
-    image_file = url_for('static', filename='userpics/' + current_user.image_file) 
-    
-    return render_template('userdash/userprofile.html',  title='My Profile', image_file=image_file,
-                            form=form)
-
 @users.route("/reset_password", methods=['GET', 'POST'])             # Creating a reset password request route                                            
 def reset_request():
     '''This function enable users to send password reset request'''
@@ -128,13 +69,13 @@ def reset_request():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     # Creating a request password reset form
-    form = RequestResetForm()
+    form = RequestResetForm() 
     if form.validate_on_submit():
         # validate if user email enter in form is same email in record
         user = User.query.filter_by(email=form.email.data).first()
         # call funtion that send a reset email to the user 
         send_reset_email(user)
-        flash('An email has been sent with instructions to reset your password!', 'info')
+        flash(f'An email has been sent to {user} with instructions to reset your password!', 'info')
         return redirect(url_for('users.login'))
     return render_template('pages/reset_request.html', title='Reset Password', form=form)
 
@@ -151,14 +92,71 @@ def reset_token(token):
         return redirect(url_for('users.reset_request'))
 
     form = ResetPasswordForm()
-    if form.validate_on_submit():                                                         # form validation
-        hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")   # Hashing user password
-        user.password = hashed_pass                                                       # setting the user new password
-        db.session.commit()                                                               # saving the changes 
-        flash("Your Password has been Updated!. You can now Log in." , 'success')         # display validation message [ f'Account created for {form.username.data}!' ]
+    if form.validate_on_submit():                                                          # form validation
+        hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")    # Hashing user password
+        user.password = hashed_pass                                                        # setting the user new password
+        db.session.commit()                                                                # saving the changes 
+        flash("Your Password has been Updated!. You can now Log in. " , 'success')         # display validation message [ f'Account created for {form.username.data}!' ]
         return redirect(url_for('users.login'))
     return render_template('pages/reset_token.html', title='Reset Password', form=form)
 
+@users.route("/uaccount") 
+def uaccount():
+    '''This function create a route to render user account page''' 
+    
+    return render_template('userdash/useraccount.html',  title='User Account')
+
+@users.route("/myprofile", methods=['GET', 'POST'])
+@login_required 
+def myprofile():
+    '''This function create a route to render user profile page''' 
+    form = UpdateAccountForm()
+    
+    if form.validate_on_submit():
+        if form.picture.data:    # check if profile picture has been uploaded
+            picture_file = save_picture(form.picture.data)
+            # set the profile image file
+            current_user.image_file = picture_file
+        # allow update if username & email is valid
+        current_user.company_name = form.company_name.data
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.gender = form.gender.data
+        current_user.phone = form.phone.data
+        current_user.address = form.address.data
+        current_user.city = form.city.data
+        current_user.country = form.country.data
+        current_user.zip_code = form.zip_code.data
+        current_user.aboutme = form.aboutme.data
+       
+        # save the db entry
+        db.session.commit()
+        # Displaying an update message
+        flash('Your profile has been successfully updated', 'success')
+        # redirect after update to the account page
+        return redirect(url_for('users.uaccount'))
+    # populate the form field with the user data
+    elif request.method == 'GET':
+        form.company_name.data =  current_user.company_name 
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.first_name.data = current_user.first_name
+        form.last_name.data = current_user.last_name
+        form.gender.data = current_user.gender
+        form.phone.data = current_user.phone
+        form.address.data = current_user.address
+        form.city.data = current_user.city
+        form.country.data = current_user.country
+        form.zip_code.data = current_user.zip_code
+        form.aboutme.data = current_user.aboutme
+            
+    
+    # set cuurent user profile pictures to pass to the current default image
+    image_file = url_for('static', filename='userpics/' + current_user.image_file) 
+        
+    return render_template('userdash/userprofile.html', title='Account', image_file=image_file, form=form )
 
 @users.route("/bookings") 
 def bookings():

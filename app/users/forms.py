@@ -62,27 +62,21 @@ class RegistrationForm(FlaskForm):
 # Create an update account form class
 class UpdateAccountForm(FlaskForm):
     '''This class enable to model the user account update forms'''
-    # Connection info
+    # Defining some field that can be updated with necessary validators
     company_name =  StringField('', validators=[Length(min=3, max=30)])
-    username = StringField('', validators=[DataRequired(), Length(min=5, max=20)]) 
-    email = StringField('', validators=[DataRequired(), Length(max=100), Email()]) 
-    
-    # Personal details
+    username = StringField('', validators=[DataRequired(), Length(min=5, max=15)]) 
+    email = StringField('', validators=[DataRequired(), Email()]) 
     first_name = StringField('', validators=[DataRequired(), Length(max=40)])
     last_name = StringField('', validators=[DataRequired(), Length(max=40)])
     gender = SelectField('', choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
-    #dob = DateField('', validators=[DataRequired()])
-
-    # Contact info
+    phone = StringField('', validators=[Length(max=30)])
     address = StringField('', validators=[Length(max=100)])
     city =  StringField('', validators=[Length(min=2, max=40)])
-    zip_code =  StringField('', validators=[Length(min=2, max=10)])
     country = SelectField('', choices = [(country.alpha_2, country.name) for country in pycountry.countries])
-    phone = StringField('', validators=[Length(max=30)])
-    aboutme = TextAreaField('', validators=[Length(max=200)])
-    # Enabling profile picture update and allowed image extensions
-    picture = FileField('Update Picture', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
-
+    zip_code =  StringField('', validators=[Length(min=2, max=10)])
+    aboutme = TextAreaField('', validators=[DataRequired(), Length(min=30, max=150)])
+    #Enabling profile picture update and allowed image extensions
+    picture = FileField('Upload picture', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
     submit = SubmitField('Update')
 
     # defining a form validation function for username
