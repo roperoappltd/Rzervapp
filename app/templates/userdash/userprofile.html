@@ -6,43 +6,92 @@ head_css %} {% block content %}
   <div class="row">
     <div class="col-md-8">
       <div class="card">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div
+          class="alert alert-{{ category }} fw-bold"
+        >
+          {{ message }}
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        {% endfor %} {% endif %} {% endwith %}
+
         <div class="card-header">
-          <h5 class="title">Edit Profile</h5>
+          <h5 class="title">Update your Profile</h5>
         </div>
         <div class="card-body">
-          <form>
+          <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
             <div class="row">
-              <div class="col-md-5 pr-1">
+              <div class="col-md-4 pr-1">
                 <div class="form-group">
-                  <label>Company</label>
-                  <input
+                  <label>Company Name</label>
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="Company"
                     value="Rezerva.com"
-                  />
+                  /> -->
+                  {{ form.company_name.label(class="form-control-label") }} {%
+                  if form.company_name.errors %} {{
+                  form.company_name(class="form-control form-control-lg
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.company_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.company_name(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
               <div class="col-md-3 px-1">
                 <div class="form-group">
                   <label>Username</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="Username"
                     value="doncurt04"
-                  />
+                  /> -->
+                  {{ form.username.label(class="form-control-label" )
+                  }} {% if form.username.errors %} {{
+                  form.username(class="form-control form-control-lg is-invalid")
+                  }}
+                  <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.username(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
-              <div class="col-md-4 pl-1">
+              <div class="col-md-5 pl-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input
+                  <!-- <input
                     type="email"
                     class="form-control"
                     placeholder="Email"
                     value="doncurt04@bbk.ac.uk"
-                  />
+                  /> -->
+                  {{ form.email.label(class="form-control-label" ) }}
+                  {% if form.email.errors %} {{ form.email(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.email(class="form-control form-control-lg")
+                  }} {% endif %}
                 </div>
               </div>
             </div>
@@ -50,47 +99,88 @@ head_css %} {% block content %}
               <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label>First Name</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="First Name"
                     value="Don"
-                  />
+                  /> -->
+                  {{ form.first_name.label(class="form-control-label" ) }} {% if
+                  form.first_name.errors %} {{
+                  form.first_name(class="form-control form-control-lg
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.first_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.first_name(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Last Name</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="Last Name"
                     value="Curtis"
-                  />
+                  /> -->
+                  {{ form.last_name.label(class="form-control-label" ) }} {% if
+                  form.last_name.errors %} {{ form.last_name(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.last_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.last_name(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 pr-1">
                 <div class="form-group">
-                  <label>Date of Birth</label>
-                  <input
-                    type="date"
+                  <label>Gender</label>
+                  <!-- <input
+                    type="text"
                     class="form-control"
-                    placeholder="Dob"
-                    value=""
-                  />
+                    placeholder="Male"
+                    value="Male"
+                  /> -->
+                  {{ form.gender.label(class="form-control-label") }} {% if
+                  form.gender.errors %} {{ form.gender(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.gender.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.gender(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Phone Number</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="Phone"
                     value="+447818295293"
-                  />
+                  /> -->
+                  {{ form.phone.label(class="form-control-label") }} {% if
+                  form.phone.errors %} {{ form.phone(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.phone.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.phone(class="form-control form-control-lg")
+                  }} {% endif %}
                 </div>
               </div>
             </div>
@@ -98,12 +188,22 @@ head_css %} {% block content %}
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Address</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="Address"
                     value="88 Bld Mihail Kogalniceanu"
-                  />
+                  /> -->
+                  {{ form.address.label(class="form-control-label") }} {% if
+                  form.address.errors %} {{ form.address(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.address.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.address(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
             </div>
@@ -111,33 +211,63 @@ head_css %} {% block content %}
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label>City</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="City"
                     value="London"
-                  />
+                  /> -->
+                  {{ form.city.label(class="form-control-label") }} {% if
+                  form.city.errors %} {{ form.city(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.city.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.city(class="form-control form-control-lg")
+                  }} {% endif %}
                 </div>
               </div>
               <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label>Country</label>
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control"
                     placeholder="Country"
                     value="United Kingdom"
-                  />
+                  /> -->
+                  {{ form.country.label(class="form-control-label") }} {% if
+                  form.country.errors %} {{ form.country(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.country.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.country(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
               <div class="col-md-4 pl-1">
                 <div class="form-group">
                   <label>Postal Code</label>
-                  <input
+                  <!-- <input
                     type="number"
                     class="form-control"
                     placeholder="SE7 9PTZ"
-                  />
+                  /> -->
+                  {{ form.zip_code.label(class="form-control-label") }} {% if
+                  form.zip_code.errors %} {{ form.zip_code(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.zip_code.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.zip_code(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
             </div>
@@ -145,7 +275,7 @@ head_css %} {% block content %}
               <div class="col-md-12">
                 <div class="form-group">
                   <label>About Me</label>
-                  <textarea
+                  <!-- <textarea
                     rows="4"
                     cols="80"
                     class="form-control"
@@ -153,9 +283,45 @@ head_css %} {% block content %}
                     value="about you or your business"
                   >
 Our place is a safer, welcoming and affordable place to stay.</textarea
-                  >
+                  > -->
+                  {{ form.aboutme.label(class="form-control-label") }} {% if
+                  form.aboutme.errors %} {{ form.aboutme(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.aboutme.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.aboutme(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
+            </div>
+
+            <!-- <div class="mb-3">
+              <label for="formFile" class="form-label">Update Picture</label>
+              <input class="form-control" type="file" id="formFile" />
+              {{ form.picture.label() }}
+              {{ form.picture(class="form-control-file") }}
+              {% if form.picture.errors %}
+                  {% for error in form.picture.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                  {% endfor %}
+              {% endif %}
+            </div> -->
+
+            <div class="mb-3">
+              {{ form.picture.label() }}
+              {{ form.picture(class="form-control-file") }}
+              {% if form.picture.errors %}
+                  {% for error in form.picture.errors %}
+                    <span class="text-danger">{{ error }}</span></br>
+                  {% endfor %}
+              {% endif %}
+            </div>
+
+            <div class="form-group text-right">
+              {{form.submit(class="btn btn-info")}}
             </div>
           </form>
         </div>
@@ -174,19 +340,30 @@ Our place is a safer, welcoming and affordable place to stay.</textarea
             <a href="#">
               <img
                 class="avatar border-gray"
-                src="{{ url_for('static', filename='udash/assets/img/default.jpg')}}"
+                src="{{ image_file }}"
                 alt="..."
               />
-              <h5 class="title">Don Curtis</h5>
+              
+              <h5 class="title">
+                <button type="button" class="btn btn-success btn-sm">Take a pic</button> </br>
+                {{ current_user.first_name }} {{ current_user.last_name }}
+              </h5>
             </a>
-            <p class="description">doncurt04</p>
+            <p class="description">
+              <h7><b>Username:</b> {{ current_user.username }}</h7></br>
+              <h8><b>Email:</b> {{ current_user.email }} </h8>
+            </p>
+            
           </div>
           <p class="description text-center">
-            Our place is a safer,<br />
+            <!-- Our place is a safer,<br />
             welcoming and affordable <br />
-            place to stay. 100% satisfaction.
+            place to stay. 100% satisfaction. -->
+            <strong>About me:</strong> <br />
+            {{ current_user.aboutme }}
           </p>
         </div>
+
         <hr />
         <div class="button-container">
           <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">

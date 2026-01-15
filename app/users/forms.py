@@ -58,3 +58,64 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('That email is taken!. Please choose a different one.') 
+
+# Create an update account form class
+class UpdateAccountForm(FlaskForm):
+    '''This class enable to model the user account update forms'''
+    # Connection info
+    company_name =  StringField('', validators=[Length(min=3, max=30)])
+    username = StringField('', validators=[DataRequired(), Length(min=5, max=20)]) 
+    email = StringField('', validators=[DataRequired(), Length(max=100), Email()]) 
+    
+    # Personal details
+    first_name = StringField('', validators=[DataRequired(), Length(max=40)])
+    last_name = StringField('', validators=[DataRequired(), Length(max=40)])
+    gender = SelectField('', choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
+    #dob = DateField('', validators=[DataRequired()])
+
+    # Contact info
+    address = StringField('', validators=[Length(max=100)])
+    city =  StringField('', validators=[Length(min=2, max=40)])
+    zip_code =  StringField('', validators=[Length(min=2, max=10)])
+    country = SelectField('', choices = [(country.alpha_2, country.name) for country in pycountry.countries])
+    phone = StringField('', validators=[Length(max=30)])
+    aboutme = TextAreaField('', validators=[Length(max=200)])
+    # Enabling profile picture update and allowed image extensions
+    picture = FileField('Update Picture', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
+
+    submit = SubmitField('Update')
+
+    # defining a form validation function for username
+    def validate_username(self, username):
+        '''This function validate the user username if username update different from the previous'''
+        if username.data != current_user.username:
+            user = User.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError('That username is taken. Please choose a different one.') 
+        
+    # defining a form validation function for email
+    def validate_email(self, email):
+        '''This function validate the user Email if the email update from previous'''
+        if email.data != current_user.email:
+            user = User.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError('That email is taken!. Please choose a different one.') 
+
+# Create a form to request password reset form
+class RequestResetForm(FlaskForm):
+    '''This class enable to generate request password reset form'''
+    email = StringField('Email', validators=[DataRequired(), Email()])  
+    submit = SubmitField('Request Password Reset')
+     # defining a form validation function for email
+    def validate_email(self, email):
+        '''This function validate the user email'''
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('No account with that email. Please, Register Now!') 
+
+# Create a reset password form 
+class ResetPasswordForm(FlaskForm):
+    '''This class enable to generate password reset form'''
+    password =  PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
+    confirm_password =  PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Password Reset')

@@ -80,7 +80,7 @@
             <li>
               <a href="{{url_for('users.myprofile')}}">
                 <i class="now-ui-icons users_single-02"></i>
-                <p>User Profile</p>
+                <p>My Profile</p>
               </a>
             </li>
             <li>
@@ -209,7 +209,11 @@
                     <a class="dropdown-item" href="{{ url_for('main.rooms') }}"
                       >Book a Room</a
                     >
-                    <a class="dropdown-item" href="#">Events</a>
+                    <a
+                      class="dropdown-item"
+                      href="{{ url_for('main.contact') }}"
+                      >Contact Rezerva</a
+                    >
                   </div>
                 </li>
                 <li class="nav-item">
@@ -222,7 +226,7 @@
                   >
                     <!-- i class="now-ui-icons users_single-02"></i -->
                     <img
-                      class="rounded-circle article-img"
+                      class="rounded-circle article-img zoom"
                       src="{{ url_for('static', filename='userpics/' + current_user.image_file)}}"
                       width="22"
                       height="22"
@@ -246,15 +250,9 @@
         </nav>
         <!-- End Navbar -->
 
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %} {% endif %} {% endwith %} {% block content %}
-        <div>&emsp;</div>
-        <div>&emsp;</div>
-        <div>&emsp;</div>
-
-        {% endblock content %}
+        <!-- <div class="row"> -->
+        {% block content %} {% endblock content %}
+        <!-- </div> -->
 
         <footer class="footer">
           <div class="container-fluid">
@@ -312,6 +310,7 @@
     ></script>
     <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
     <script src="{{ url_for('static', filename='udash/assets/demo/demo.js')}}"></script>
+
     <script>
       $(document).ready(function () {
         // Javascript method's body can be found in assets/js/demos.js
