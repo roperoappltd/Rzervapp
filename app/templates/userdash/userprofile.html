@@ -6,11 +6,21 @@ head_css %} {% block content %}
   <div class="row">
     <div class="col-md-8">
       <div class="card">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %} 
         <div class="card-header">
           <h5 class="title">Edit Profile</h5>
-        </div>
+        </div> 
         <div class="card-body">
-          <form>
+          <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
             <div class="row">
               <div class="col-md-4 pr-1">
                 <div class="form-group">
@@ -115,15 +125,15 @@ head_css %} {% block content %}
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Phone Number</label>
-                  {{ form.gender.label(class="form-control-label") }} {% if
-                  form.gender.errors %} {{ form.gender(class="form-control
+                  {{ form.phone.label(class="form-control-label") }} {% if
+                  form.phone.errors %} {{ form.phone(class="form-control
                   form-control-lg is-invalid") }}
                   <div class="invalid-feedback">
-                    {% for error in form.gender.errors %}
+                    {% for error in form.phone.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                   </div>
-                  {% else %} {{ form.gender(class="form-control form-control-lg") }}
+                  {% else %} {{ form.phone(class="form-control form-control-lg") }}
                   {% endif %}
                 </div>
               </div>
@@ -220,8 +230,8 @@ head_css %} {% block content %}
                   {% endfor %}
               {% endif %}
             </div>
-            <div class="form-group text-right fw-bold">
-               {{form.submit(class="btn btn-info")}}
+            <div class="form-group text-right">
+              {{ form.submit(class="btn btn-info") }}
             </div>
           </form>
         </div>
@@ -240,18 +250,23 @@ head_css %} {% block content %}
           <div class="author">
             <a href="#">
               <img
-                class="avatar border-gray rounded-circle"
-                src="{{ url_for('static', filename='userpics/default.jpg')}}"
+                class="avatar border-gray"
+                src="{{ image_file }}"
                 alt="..."
-              />
+              /> </br>
+              <h6 ><button type="button" class="btn btn-dark">Take a selfie</button></h6>
               <h5 class="title">{{ current_user.first_name }} {{ current_user.last_name }}</h5>
+              
             </a>
-            <p class="description"><b>Username:</b> {{ current_user.username }}</p>
+            <p class="description">
+              <b>Username:</b> {{ current_user.username }} </br>
+              <b>Email:</b> {{ current_user.email }}
+            </p>
+            
           </div>
-          <p class="description text-center">
-            Our place is a safer,<br />
-            welcoming and affordable <br />
-            place to stay. 100% satisfaction.
+          <p class="description text-center text-justify">
+            <b>About Me:</b> </br>
+            {{ current_user.aboutme }}
           </p>
         </div>
         <hr />

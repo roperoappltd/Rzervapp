@@ -38,7 +38,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(20), nullable=False)
     terms = db.Column(db.String(5), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='member') # member / admin
-    aboutme = db.Column(db.String(150), nullable=True)
+    aboutme = db.Column(db.String(150), nullable=False, default='Change me')
     # posts = db.relationship('Post', backref='author', lazy=True)
 
     # REsetting a web signature token

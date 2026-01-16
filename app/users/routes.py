@@ -136,7 +136,7 @@ def myprofile():
         # Displaying an update message
         flash('Your profile has been successfully updated', 'success')
         # redirect after update to the account page
-        return redirect(url_for('users.uaccount'))
+        return redirect(url_for('users.myprofile'))
     # populate the form field with the user data
     elif request.method == 'GET':
         form.company_name.data =  current_user.company_name 

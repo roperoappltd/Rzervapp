@@ -114,7 +114,9 @@
           {{ form.remember(class="form-check-input")}} {{
           form.remember.label(class="form-check-label")}}
         </label>
-        <a href="#" class="forgot-link">Forgot password?</a>
+        <a href="{{ url_for('users.reset_request')}}" class="forgot-link"
+          >Forgot password?</a
+        >
       </div>
 
       <button

@@ -246,15 +246,7 @@
         </nav>
         <!-- End Navbar -->
 
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %} {% endif %} {% endwith %} {% block content %}
-        <div>&emsp;</div>
-        <div>&emsp;</div>
-        <div>&emsp;</div>
-
-        {% endblock content %}
+        {% block content %} {% endblock content %}
 
         <footer class="footer">
           <div class="container-fluid">
