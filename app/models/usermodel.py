@@ -22,23 +22,23 @@ class User(db.Model, UserMixin):
     # Personal detail
     first_name = db.Column(db.String(40), nullable=False)
     last_name = db.Column(db.String(40), nullable=False)
-    gender = db.Column(db.String, nullable=False, default='Change me')
+    gender = db.Column(db.String, nullable=True, default='Change me')
     dob = db.Column(db.Date, nullable=False)
     # Location
-    address = db.Column(db.String(100), nullable=False, default='Change me')
-    city = db.Column(db.String(40), nullable=False, default='Change me')
-    zip_code = db.Column(db.String(10), nullable=False, default='Change me')
-    country = db.Column(db.String(40), nullable=False, default='Change me')
+    address = db.Column(db.String(100), nullable=True, default='Change me')
+    city = db.Column(db.String(40), nullable=True, default='Change me')
+    zip_code = db.Column(db.String(10), nullable=True, default='Change me')
+    country = db.Column(db.String(40), nullable=True, default='Change me')
     #Contact info
     company_name = db.Column(db.String(30), nullable=True, default='Change me')
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    phone = db.Column(db.String(30), nullable=False, default='Change me')
+    phone = db.Column(db.String(30), nullable=True, default='Change me')
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(20), nullable=False)
     terms = db.Column(db.String(5), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='member') # member / admin
-    aboutme = db.Column(db.String(150), nullable=False, default='Change me')
+    aboutme = db.Column(db.String(150), nullable=True, default='Tell the word something nice about yourself')
     # posts = db.relationship('Post', backref='author', lazy=True)
 
     # REsetting a web signature token
@@ -62,4 +62,4 @@ class User(db.Model, UserMixin):
         return f"User('{self.first_name}','{self.last_name}','{self.gender}','{self.dob}'\
                       '{self.address}','{self.city}','{self.zip_code}','{self.country}'\
                       '{self.company_name}, {self.phone}','{self.username}','{self.email}'\
-                      '{self.image_file}', {self.terms}','{self.role}')"  
+                      '{self.image_file}', {self.terms}','{self.role}', '{self.aboutme}')"  

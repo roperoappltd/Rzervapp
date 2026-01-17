@@ -165,7 +165,21 @@
                 </ul>
               </li>
               {% if current_user.is_authenticated %}
-              <li class="dropdown">
+              <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
+
+              <li>
+                <a class="nav-link" href="{{ url_for('users.uaccount') }}"
+                  ><img
+                    class="rounded-circle article-img zoom"
+                    src="{{ url_for('static', filename='userpics/' + current_user.image_file) }}"
+                    width="20"
+                    height="20"
+                  />
+                  &nbsp;My account
+                </a>
+              </li>
+
+              <!-- <li class="dropdown">
                 <a href="#">
                   <img
                     class="rounded-circle article-img zoom"
@@ -183,9 +197,9 @@
                     <a href="{{ url_for('users.uaccount') }}">My Booking</a>
                   </li>
                   <li><a href="{{ url_for('users.logout') }}">Log out</a></li>
-                  <!-- <li><a href="events.html">Events</a></li> -->
                 </ul>
-              </li>
+              </li> -->
+
               <li>
                 <a href="{{ url_for('users.logout') }}"
                   ><i class="bi bi-box-arrow-right fs-4"></i>&nbsp;
@@ -219,7 +233,7 @@
                   <!-- <li>
                     <a href="{{ url_for('main.rooms') }}">Book a Room</a>
                   </li> -->
-                  <li><a href="events.html">Events</a></li>
+                  <li><a href="#">Events</a></li>
                 </ul>
               </li>
               {% endif %}
@@ -231,7 +245,18 @@
       </div>
     </header>
 
-    <main role="main" class="container">
+    <main role="main">
+      <!--Floating Action Button-->
+      {% if current_user.is_authenticated %}
+      <div class="floating-parent">
+        <div class="right-button">
+          <span class="widgetlabel">
+            <a href="{{ url_for('users.myprofile') }}">View Profile</a>
+            <img class="emodji" src="/static/userpics/eye-emoji.png" />
+          </span>
+        </div>
+      </div>
+      {% endif %}
       <div class="row">
         {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %} {% for category, message in messages %}

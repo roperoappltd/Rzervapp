@@ -11,12 +11,12 @@ app = create_app()
 app.app_context().push
 
 # Implementing a session timeout after 1 minute of inactivity
-# @app.before_request
-# def before_request():
-#     session.permanent = True
-#     app.permanent_session_lifetime = timedelta(minutes=1)
-#     session.modified = True
-#     g.user = current_user
+@app.before_request
+def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1)
+    session.modified = True
+    g.user = current_user
 
 if __name__ == '__main__':
     app.run(debug=True) 

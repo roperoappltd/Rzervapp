@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock
-head_css %}{% block content %}
+head_css %} {% block content %}
 
 <div
   class="login-container parent container justify-content-center align-items-center h-100"
@@ -18,12 +18,25 @@ head_css %}{% block content %}
           <circle cx="20" cy="20" r="3" fill="white" />
         </svg>
       </div>
-      <h1>Your new <b class="text-success">Password</b></h1>
-      <p>Nearly done, please enter your brand new password!</p>
+      <h1>User Dashboard</h1>
+      <p><b class="text-success">Authenticate</b> to access your dashboard!</p>
     </div>
 
     <form method="post">
       {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.username.label(class="form-control-label pb-4 fs-6" ) }} {% if
+        form.username.errors %} {{ form.username(class="form-control
+        form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.username.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% else %} {{ form.username(class="form-control form-control-lg") }} {%
+        endif %}
+      </div>
+
       <div class="form-group">
         {{ form.password.label(class="form-control-label pb-4 fs-6") }} {% if
         form.password.errors %} {{ form.password(class="form-control
@@ -56,19 +69,23 @@ head_css %}{% block content %}
         </button>
       </div>
 
-      <div class="form-group">
-        {{ form.confirm_password.label(class="form-control-label pb-4 fs-6" ) }}
-        {% if form.confirm_password.errors %} {{
-        form.confirm_password(class="form-control form-control-lg is-invalid")
-        }}
-        <div class="invalid-feedback">
-          {% for error in form.confirm_password.errors %}
-          <span>{{ error }}</span>
-          {% endfor %}
-        </div>
-        {% else %} {{ form.confirm_password(class="form-control
-        form-control-lg") }} {% endif %}
-        <!-- <span class="error-message" id="emailError"></span> -->
+      <div class="form-options">
+        <label class="checkbox-wrapper">
+          <input type="checkbox" id="remember" name="remember" />
+          <span class="checkmark">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M2 6l2.5 2.5L10 3"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          {{ form.remember(class="form-check-input")}} {{
+          form.remember.label(class="form-check-label")}}
+        </label>
       </div>
 
       <button
@@ -109,14 +126,10 @@ head_css %}{% block content %}
         link-underline-opacity-0 text-white pb-0 pt-0 fw-bold") }}
       </button>
     </form>
-
-    <div class="signup-link">
-      <p>
-        New to Rezerva?
-        <a href="{{ url_for('users.signup')}}">Create an account</a>
-      </p>
-    </div>
   </div>
 </div>
+
+<script src="{{ url_for('static', filename='login/shared/js/form-utils.js')}}"></script>
+<script src="{{ url_for('static', filename='login/js/script.js')}}"></script>
 
 {% endblock content %}

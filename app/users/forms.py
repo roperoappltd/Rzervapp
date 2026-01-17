@@ -19,6 +19,16 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember me')
     submit = SubmitField('Sign In')
 
+# Create a login form class
+class UserDashLoginForm(FlaskForm):
+    '''This class enable to model the userdash login forms'''
+    # Difining some data field with necessary validators
+    username = StringField('Username', validators=[DataRequired(), Length(min=5, max=15)]) 
+    #email = StringField('Email address', validators=[DataRequired(), Email()]) 
+    password =  PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember me')
+    submit = SubmitField('Submit')
+
 
 # Create a registration form class
 class RegistrationForm(FlaskForm):
@@ -27,18 +37,9 @@ class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired(), Length(max=40)])
     last_name = StringField('Surname', validators=[DataRequired(), Length(max=40)])
     #gender = SelectField("Gender", choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
-    dob = DateField('Date of birth', validators=[DataRequired()])
-    
-    # Contact info
-    #company_name =  StringField('Company Name ', validators=[Length(min=3, max=30)])
-    #address = StringField('Addresse', validators=[Length(max=100)])
-    #city =  StringField('City', validators=[Length(min=2, max=40)])
-    #zip_code =  StringField('Zip code ', validators=[Length(min=2, max=10)])
-    #country = SelectField('Country', choices = [(country.alpha_2, country.name) for country in pycountry.countries])
-    #phone = StringField('Phone number', validators=[Length(max=30)])
-    
-    # Connection info
     username = StringField('Username', validators=[DataRequired(), Length(min=5, max=20)]) 
+    dob = DateField('Date of birth', validators=[DataRequired()])
+    # Connection info
     email = StringField('Email', validators=[DataRequired(), Length(max=100), Email()]) 
     password =  PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
     confirm_password =  PasswordField('Retype password', validators=[DataRequired(), EqualTo('password')])
@@ -51,7 +52,7 @@ class RegistrationForm(FlaskForm):
         '''This function validate the user username'''
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('That username is taken. Please choose a different one.') 
+            raise ValidationError('Username is taken. Please change.') 
     # defining a form validation function for email
     def validate_email(self, email):
         '''This function validate the user email'''
@@ -85,7 +86,7 @@ class UpdateAccountForm(FlaskForm):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
-                raise ValidationError('That username is taken. Please choose a different one.') 
+                raise ValidationError('Username is taken. Please change.') 
         
     # defining a form validation function for email
     def validate_email(self, email):
@@ -93,7 +94,7 @@ class UpdateAccountForm(FlaskForm):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
-                raise ValidationError('That email is taken!. Please choose a different one.') 
+                raise ValidationError('Email is taken!. Please change.') 
 
 # Create a form to request password reset form
 class RequestResetForm(FlaskForm):

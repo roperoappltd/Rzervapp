@@ -1,6 +1,7 @@
 <!-- End Navbar -->
 {% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
 head_css %} {% block content %}
+
 <div class="panel-header panel-header-sm"></div>
 <div class="content">
   <div class="row">
@@ -25,12 +26,6 @@ head_css %} {% block content %}
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label>Company</label>
-                  <!-- <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Company"
-                    value="Rezerva.com"
-                  /> -->
                   {{ form.company_name.label(class="form-control-label") }} {% if
                   form.company_name.errors %} {{ form.company_name(class="form-control
                   form-control-lg is-invalid") }}
@@ -254,8 +249,8 @@ head_css %} {% block content %}
                 src="{{ image_file }}"
                 alt="..."
               /> </br>
-              <h6 ><button type="button" class="btn btn-dark">Take a selfie</button></h6>
-              <h5 class="title">{{ current_user.first_name }} {{ current_user.last_name }}</h5>
+              <h6><a href="{{ url_for('users.capture_image') }}"><button type="button" class="btn btn-dark">Take a selfie</button></a></h6>
+              <h5 class="title text-primary">{{ current_user.first_name }} {{ current_user.last_name }}</h5>
               
             </a>
             <p class="description">

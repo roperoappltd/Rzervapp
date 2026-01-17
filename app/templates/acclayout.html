@@ -69,6 +69,7 @@
             />
           </a>
         </div>
+        {% if current_user.is_authenticated %}
         <div class="sidebar-wrapper" id="sidebar-wrapper">
           <ul class="nav">
             <li class="active">
@@ -108,7 +109,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{{ url_for('users.logout') }}">
                 <i class="now-ui-icons media-1_button-power"></i>
                 <p>Log out</p>
               </a>
@@ -128,8 +129,11 @@
             </li>
           </ul>
         </div>
+        {% endif %}
       </div>
+
       <div class="main-panel" id="main-panel">
+        {% if current_user.is_authenticated %}
         <!-- Navbar -->
         <nav
           class="navbar navbar-expand-lg navbar-transparent bg-primary navbar-absolute"
@@ -223,7 +227,7 @@
                     <!-- i class="now-ui-icons users_single-02"></i -->
                     <img
                       class="rounded-circle article-img"
-                      src="{{ url_for('static', filename='userpics/' + current_user.image_file)}}"
+                      src="{{ url_for('static', filename='userpics/' + current_user.image_file) }}"
                       width="22"
                       height="22"
                     />
@@ -244,6 +248,7 @@
             </div>
           </div>
         </nav>
+        {% endif %}
         <!-- End Navbar -->
 
         {% block content %} {% endblock content %}

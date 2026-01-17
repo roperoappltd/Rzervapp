@@ -7618,4 +7618,63 @@ section,
 .team-boxed .social a:hover {
   opacity: 1;
 }
-/*-------------------------------------------------------------------------------------*/
+/*-----IMAGE HOVER ZOOM EFFECT ---------------------------------*/
+.zoom {
+  transition: transform 0.2s; /* Animation */
+  width: 30px;
+  height: 30px;
+}
+
+.zoom:hover {
+  transform: scale(
+    1.5
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+/*-----FLOATING ACTION BUTTON---------------------------------*/
+.floating-parent {
+  position: fixed;
+  top: 30%;
+  right: 18px;
+  text-align: center;
+  color: rgb(144, 2, 160);
+}
+
+.floating-parent .right-button {
+  width: 60px;
+  height: 60px;
+  background: url(/static/userpics/profile.png);
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-color: rgb(144, 2, 160);
+  background-size: 70px;
+  background-position: center;
+  float: right;
+  margin: 0 auto;
+  cursor: pointer;
+  box-shadow: 0 -2px 3px -1px rgb(144, 2, 160);
+}
+
+.floating-parent .widgetlabel {
+  position: relative;
+  right: 185px;
+  top: 3px;
+  white-space: nowrap;
+  border: 0px;
+  font-size: 17px;
+  font-family: Verdana;
+  color: navy;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
+  background: rgb(255, 255, 255);
+  /*display: flex;*/
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgb(0 18 46 / 24%) 0px 6px 32px 8px;
+}
+
+.floating-parent .emodji {
+  width: 50px;
+  margin: 0px 2px 2px;
+  user-select: none;
+}
