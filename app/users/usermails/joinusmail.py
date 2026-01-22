@@ -55,7 +55,7 @@ def member_regismail(user):
         <h2>Hello {user.username},</h2>
 
         <p style="font-size: 18px; text-align:justify;"> We would like to thank you for your registration
-        received today {date}. We wish you a warn Welcome to the Rezervation plateform where you can reserve
+        received today {date}. We wish you a warn Welcome to the "Rezerva plateform" where you can reserve
         short stay safer, happier and cheaper. Click on the button below to activate your acount and start
         experiencing the wonders of this world.
         </p>

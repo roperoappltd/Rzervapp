@@ -226,6 +226,7 @@ head_css %} {% block content %}
               {% endif %}
             </div>
             <div class="form-group text-right">
+              <!-- <label>Upload picture</label> -->
               {{ form.submit(class="btn btn-info") }}
             </div>
           </form>
@@ -249,10 +250,12 @@ head_css %} {% block content %}
                 src="{{ image_file }}"
                 alt="..."
               /> </br>
-              <h6><a href="{{ url_for('users.capture_image') }}"><button type="button" class="btn btn-dark">Take a selfie</button></a></h6>
+              <h6><a href="{{ url_for('users.capture_image') }}">
+                <button type="button" class="btn btn-success" style="border-radius: 16px; cursor: pointer;">
+                  <b>Take a selfie</b>
+                </button></a></h6>
               <h5 class="title text-primary">{{ current_user.first_name }} {{ current_user.last_name }}</h5>
-              
-            </a>
+      
             <p class="description">
               <b>Username:</b> {{ current_user.username }} </br>
               <b>Email:</b> {{ current_user.email }}
@@ -263,7 +266,8 @@ head_css %} {% block content %}
             <b>About Me:</b> </br>
             {{ current_user.aboutme }}
           </p>
-        </div>
+        </div>    
+
         <hr />
         <div class="button-container">
           <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">

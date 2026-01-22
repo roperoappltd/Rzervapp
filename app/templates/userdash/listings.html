@@ -1,5 +1,6 @@
 {% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
 head_css %} {% block content %}
+
 <div class="panel-header panel-header-sm"></div>
 <div class="content">
   <div class="row">
@@ -8,56 +9,185 @@ head_css %} {% block content %}
         <div class="card-header">
           <h4 class="card-title"><b>Room Listings</b></h4>
         </div>
+
+        <!-- Large modal -->
+        <div class="text-right pr-3">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target=".bd-example-modal-lg"
+          >
+            Add Listing
+          </button>
+        </div>
+        <div
+          class="modal fade bd-example-modal-lg"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form>
+                <!--START FORM FIELDS-->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group pl-3 pr-1 mt-2">
+                      <label for="formGroupExampleInput1">Title</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext1"
+                        placeholder="Enter a title"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group pl-1 pr-3 mt-2">
+                      <label for="formGroupExampleInput2">Location</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext2"
+                        placeholder="Enter room location"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group pl-3 pr-1">
+                      <label for="formGroupExampleInput3">Room Price</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext3"
+                        placeholder="Enter price / night"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pl-1 pr-1">
+                      <label for="formGroupExampleInput4">Room category</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext4"
+                        placeholder="Select room category"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pl-1 pr-3">
+                      <label for="formGroupExampleInput5">Status</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext5"
+                        placeholder="Select room status"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group pl-3 pr-3">
+                  <label for="exampleFormControlTextarea1">Description</label>
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                    placeholder="Enter a description"
+                  ></textarea>
+                </div>
+                <div class="mb-3 pl-3 pr-3">
+                  <label for="formFileMultiple" class="form-label"
+                    >Upload multiple files</label
+                  >
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="formFileMultiple"
+                    multiple
+                  />
+                </div>
+                <!--END FORM FIELD-->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary">
+                    Save changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--End Modal-->
+
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
               <thead class="text-primary">
-                <th>Name</th>
-                <th>Country</th>
-                <th>City</th>
-                <th class="text-right">Salary</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th class="text-right">Price</th>
               </thead>
               <tbody>
                 <tr>
                   <td>Dakota Rice</td>
                   <td>Niger</td>
                   <td>Oud-Turnhout</td>
+                  <td>Occupied</td>
                   <td class="text-right">$36,738</td>
                 </tr>
                 <tr>
                   <td>Minerva Hooper</td>
                   <td>Curaçao</td>
                   <td>Sinaai-Waas</td>
+                  <td>Available</td>
                   <td class="text-right">$23,789</td>
                 </tr>
                 <tr>
                   <td>Sage Rodriguez</td>
                   <td>Netherlands</td>
                   <td>Baileux</td>
+                  <td>Occupied</td>
                   <td class="text-right">$56,142</td>
                 </tr>
                 <tr>
                   <td>Philip Chaney</td>
                   <td>Korea, South</td>
                   <td>Overland Park</td>
+                  <td>Occupied</td>
                   <td class="text-right">$38,735</td>
                 </tr>
                 <tr>
                   <td>Doris Greene</td>
                   <td>Malawi</td>
                   <td>Feldkirchen in Kärnten</td>
+                  <td>Available</td>
                   <td class="text-right">$63,542</td>
                 </tr>
                 <tr>
                   <td>Mason Porter</td>
                   <td>Chile</td>
                   <td>Gloucester</td>
+                  <td>Available</td>
                   <td class="text-right">$78,615</td>
                 </tr>
                 <tr>
                   <td>Jon Porter</td>
                   <td>Portugal</td>
                   <td>Gloucester</td>
+                  <td><span>Occupied</span></td>
                   <td class="text-right">$98,615</td>
                 </tr>
               </tbody>
