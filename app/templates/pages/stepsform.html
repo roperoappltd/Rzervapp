@@ -1,0 +1,84 @@
+{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+
+<form id="regForm" action="">
+  <h1>Update Listing:</h1>
+
+  <!-- One "tab" for each step in the form: -->
+  <div class="tab">
+    Listing ID:
+    <p><input placeholder="Room ID..." oninput="this.className = ''" /></p>
+  </div>
+
+  <div class="tab">
+    Room Info:
+    <p><input placeholder="Room title..." oninput="this.className = ''" /></p>
+    <p>
+      <input placeholder="Room category..." oninput="this.className = ''" />
+    </p>
+    <p>
+      <input placeholder="Short description..." oninput="this.className = ''" />
+    </p>
+    <p>
+      <input placeholder="max occupancy..." oninput="this.className = ''" />
+    </p>
+    <p><input placeholder="Rent..." oninput="this.className = ''" /></p>
+    <p><input placeholder="Overview..." oninput="this.className = ''" /></p>
+    <p><input placeholder="Room status..." oninput="this.className = ''" /></p>
+  </div>
+
+  <div class="tab">
+    Room pictures:
+    <div class="mb-3 pl-3 pr-3">
+      <label for="formFileSm" class="form-label" oninput="this.className = ''"
+        >Image 1</label
+      >
+      <input class="form-control form-control-sm" type="file" id="formFileSm" />
+    </div>
+    <div class="mb-3 pl-3 pr-3">
+      <label for="formFileSm" class="form-label" oninput="this.className = ''"
+        >Image 2</label
+      >
+      <input class="form-control form-control-sm" type="file" id="formFileSm" />
+    </div>
+    <div class="mb-3 pl-3 pr-3">
+      <label for="formFileSm" class="form-label" oninput="this.className = ''"
+        >Image 3</label
+      >
+      <input class="form-control form-control-sm" type="file" id="formFileSm" />
+    </div>
+    <!-- <p><input placeholder="Image 1" oninput="this.className = ''" /></p>
+    <p><input placeholder="Image 2" oninput="this.className = ''" /></p>
+    <p><input placeholder="Image 3" oninput="this.className = ''" /></p> -->
+  </div>
+
+  <div style="overflow: auto">
+    <div style="float: right">
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="prevBtn"
+        onclick="nextPrev(-1)"
+      >
+        Previous
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="nextBtn"
+        onclick="nextPrev(1)"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Circles which indicates the steps of the form: -->
+  <div style="text-align: center; margin-top: 40px">
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+  </div>
+</form>
+
+{% endblock content %}

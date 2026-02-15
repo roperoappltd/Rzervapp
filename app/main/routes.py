@@ -1,4 +1,3 @@
-# Creating a home route 
 from flask import Blueprint, render_template, flash, redirect, url_for, current_app
 #from app import db
 
@@ -23,22 +22,3 @@ def contact():
     '''This function create a route to render the contact page'''
     
     return render_template('pages/getintouch.html', title='Contact')
-
-@main.route("/rooms") 
-def rooms():
-    '''This function create a route to render the rooms page'''
-    
-    return render_template('pages/rooms.html', title='Rooms List')
-
-@main.route("/booknow") 
-def booknow():
-    '''This function create a route to render the booking page'''
-    
-    return render_template('pages/booking.html', title='Booking')
-
-@main.route("/roomdetail") 
-def roomdetail():
-    '''This function create a route to render the booking page'''
-    
-    return render_template('pages/roomdetails.html', title='Room Details')
-

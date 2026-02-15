@@ -11,9 +11,10 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --default-font:
+    'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --heading-font: 'Josefin Sans', sans-serif;
   --nav-font: 'Poppins', sans-serif;
 }
@@ -4422,7 +4423,9 @@ section,
   overflow: hidden;
   box-shadow: 0 5px 25px
     color-mix(in srgb, var(--default-color), transparent 90%);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   height: 100%;
 }
 
@@ -5043,7 +5046,9 @@ section,
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   height: 100%;
   background-color: var(--surface-color);
 }

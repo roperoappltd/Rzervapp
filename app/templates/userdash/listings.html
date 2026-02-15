@@ -6,6 +6,10 @@ head_css %} {% block content %}
   <div class="row">
     <div class="col-md-12">
       <div class="card">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
         <div class="card-header">
           <h4 class="card-title"><b>Room Listings</b></h4>
         </div>
@@ -14,45 +18,84 @@ head_css %} {% block content %}
         <div class="text-right pr-3">
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn btn-info"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            data-whatever="@mdo"
+          >
+            <h8><b>&#x2b; Add Room</b></h8>
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
           >
-            Add Listing
+            <h8><b>Update</b></h8>
           </button>
+          <!--------------------------------->
+          <!-- <a href="{{ url_for('rooms.stepsform') }}">
+          <button type="button" class="btn btn-info" style="border-radius: 16px; cursor: pointer;">
+            <b>Steps</b>
+          </button></a> -->
+          <!-------------------------------------->
         </div>
         <div
-          class="modal fade bd-example-modal-lg"
+          class="modal fade"
+          id="exampleModal"
           tabindex="-1"
           role="dialog"
-          aria-labelledby="myLargeModalLabel"
+          aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
-              <form>
+              <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
                 <!--START FORM FIELDS-->
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group pl-3 pr-1 mt-2">
-                      <label for="formGroupExampleInput1">Title</label>
-                      <input
+                      <label for="formGroupExampleInput1">Room name</label>
+                      <!-- <input
                         type="text"
                         class="form-control"
                         id="exampleInputtext1"
                         placeholder="Enter a title"
-                      />
+                      /> -->
+                      {{ form.room_name.label(class="form-control-label") }} {%
+                      if form.room_name.errors %} {{
+                      form.room_name(class="form-control form-control-lg
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.room_name.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.room_name(class="form-control
+                      form-control-lg") }} {% endif %}
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group pl-1 pr-3 mt-2">
-                      <label for="formGroupExampleInput2">Location</label>
-                      <input
+                      <label for="formGroupExampleInput2">Room Location</label>
+                      <!-- <input
                         type="text"
                         class="form-control"
                         id="exampleInputtext2"
                         placeholder="Enter room location"
-                      />
+                      /> -->
+                      {{ form.room_location.label(class="form-control-label") }}
+                      {% if form.room_location.errors %} {{
+                      form.room_location(class="form-control form-control-lg
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.room_location.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.room_location(class="form-control
+                      form-control-lg") }} {% endif %}
                     </div>
                   </div>
                 </div>
@@ -60,49 +103,119 @@ head_css %} {% block content %}
                   <div class="col-md-4">
                     <div class="form-group pl-3 pr-1">
                       <label for="formGroupExampleInput3">Room Price</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext3"
-                        placeholder="Enter price / night"
-                      />
+                      {{ form.price.label(class="form-control-label") }} {% if
+                      form.price.errors %} {{ form.price(class="form-control
+                      form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.price.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.price(class="form-control
+                      form-control-lg") }} {% endif %}
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group pl-1 pr-1">
                       <label for="formGroupExampleInput4">Room category</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext4"
-                        placeholder="Select room category"
-                      />
+                      {{ form.room_category.label(class="form-control-label") }}
+                      {% if form.room_category.errors %} {{
+                      form.room_category(class="form-control form-control-lg
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.room_category.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.room_category(class="form-control
+                      form-control-lg") }} {% endif %}
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group pl-1 pr-3">
                       <label for="formGroupExampleInput5">Status</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext5"
-                        placeholder="Select room status"
-                      />
+                      {{ form.status.label(class="form-control-label") }} {% if
+                      form.status.errors %} {{ form.status(class="form-control
+                      form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.status.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.status(class="form-control
+                      form-control-lg") }} {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group pl-3 pr-1">
+                      <label for="formGroupExampleInput6"
+                        >Short Description</label
+                      >
+                      {{ form.short_desc.label(class="form-control-label") }} {%
+                      if form.short_desc.errors %} {{
+                      form.short_desc(class="form-control form-control-lg
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.short_desc.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.short_desc(class="form-control
+                      form-control-lg") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group pl-1 pr-1">
+                      <label for="formGroupExampleInput7">Room Size (m2)</label>
+                      {{ form.room_size.label(class="form-control-label") }} {%
+                      if form.room_size.errors %} {{
+                      form.room_size(class="form-control form-control-lg
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.room_size.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.room_size(class="form-control
+                      form-control-lg") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group pl-1 pr-3">
+                      <label for="formGroupExampleInput8">Max Occupancy</label>
+                      {{ form.max_occupancy.label(class="form-control-label") }}
+                      {% if form.max_occupancy.errors %} {{
+                      form.max_occupancy(class="form-control form-control-lg
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.max_occupancy.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.max_occupancy(class="form-control
+                      form-control-lg") }} {% endif %}
                     </div>
                   </div>
                 </div>
                 <div class="form-group pl-3 pr-3">
                   <label for="exampleFormControlTextarea1">Description</label>
-                  <textarea
-                    class="form-control"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
-                    placeholder="Enter a description"
-                  ></textarea>
+                  {{ form.description.label(class="form-control-label lh-sm") }}
+                  {% if form.description.errors %} {{
+                  form.description(class="form-control form-control-lg
+                  is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.description.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.description(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
-                <div class="mb-3 pl-3 pr-3">
+                <!-- <div class="mb-3 pl-3 pr-3">
                   <label for="formFileMultiple" class="form-label"
-                    >Upload multiple files</label
+                    >Upload picture 1</label
                   >
                   <input
                     class="form-control"
@@ -110,8 +223,181 @@ head_css %} {% block content %}
                     id="formFileMultiple"
                     multiple
                   />
+                </div> -->
+
+                <!--FILES UPLOAD------------------------------->
+                <div class="mb-3 pl-3 pr-3">
+                  <label for="formFileSm" class="form-label">Upload image 1</label>
+                  {{ form.picture1.label(for="formFile") }}
+                  {{ form.picture1(class="form-control-file") }}
+                  {% if form.picture1.errors %}
+                      {% for error in form.picture1.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                      {% endfor %}
+                  {% endif %}
+                  <label for="formFileSm" class="form-label">Upload image 2</label>
+                  {{ form.picture2.label(for="formFile") }}
+                  {{ form.picture2(class="form-control-file") }}
+                  {% if form.picture2.errors %}
+                      {% for error in form.picture2.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                      {% endfor %}
+                  {% endif %}
+                  <label for="formFileSm" class="form-label">Upload image 3</label>
+                  {{ form.picture3.label(for="formFile") }}
+                  {{ form.picture3(class="form-control-file") }}
+                  {% if form.picture3.errors %}
+                      {% for error in form.picture3.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                      {% endfor %}
+                  {% endif %}
                 </div>
                 <!--END FORM FIELD-->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <div class="form-group text-right">
+                    {{ form.submit(class="btn btn-info") }}
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!---SECOND MODAL------------------------------------->
+        <div
+          class="modal fade bd-example-modal-lg"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel2"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <!-- <form>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group pl-3 pr-1 mt-2">
+                      <label for="formGroupExampleInput-a">Title</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-a"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group pl-1 pr-3 mt-2">
+                      <label for="formGroupExampleInput-b">Location</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-b"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group pl-3 pr-1">
+                      <label for="formGroupExampleInput-c">Room Price</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-c"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pl-1 pr-1">
+                      <label for="formGroupExampleInput-d">Room category</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-d"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pl-1 pr-3">
+                      <label for="formGroupExampleInput-e">Status</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-e"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group pl-3 pr-1">
+                      <label for="formGroupExampleInput-f"
+                        >Short Description</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-f"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group pl-1 pr-1">
+                      <label for="formGroupExampleInput-g">Room Size</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-g"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group pl-1 pr-3">
+                      <label for="formGroupExampleInput-h">Max Occupancy</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="exampleInputtext-h"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group pl-3 pr-3">
+                  <label for="exampleFormControlTextarea2">Description</label>
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea2"
+                    rows="3"
+                  ></textarea>
+                </div>
+                
+                <div class="mb-3 pl-3 pr-3">
+                  <label for="formFileSm" class="form-label">Image 1</label>
+                  <input
+                    class="form-control form-control-sm"
+                    type="file"
+                    id="formFileSm"
+                  />
+                  <label for="formFileSm" class="form-label">Image 2</label>
+                  <input
+                    class="form-control form-control-sm"
+                    type="file"
+                    id="formFileSm"
+                  />
+                  <label for="formFileSm" class="form-label">Image 3</label>
+                  <input
+                    class="form-control form-control-sm"
+                    type="file"
+                    id="formFileSm"
+                  />
+                </div> 
+            
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -123,6 +409,145 @@ head_css %} {% block content %}
                   <button type="button" class="btn btn-primary">
                     Save changes
                   </button>
+                </div>
+              </form> -->
+              <form id="regForm" action="">
+                <h2>Update Room Listing:</h2>
+
+                <!-- One "tab" for each step in the form: -->
+                <div class="tab">
+                  Listing ID:
+                  <p>
+                    <input
+                      placeholder="Room ID..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                </div>
+
+                <div class="tab">
+                  Room Info:
+                  <p>
+                    <input
+                      placeholder="Room title..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                  <p>
+                    <input
+                      placeholder="Room category..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                  <p>
+                    <input
+                      placeholder="Short description..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                </div>
+
+                <div class="tab">
+                  More room Info:
+                  <p>
+                    <input
+                      placeholder="max occupancy..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                  <p>
+                    <input
+                      placeholder="Rent per day..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                  <p>
+                    <input
+                      placeholder="Room status..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                  <p>
+                    <input
+                      placeholder="Room Description..."
+                      oninput="this.className = ''"
+                    />
+                  </p>
+                </div>
+
+                <div class="tab">
+                  Room pictures:
+                  <div class="mb-3 pl-3 pr-3">
+                    <label
+                      for="formFileSm"
+                      class="form-label"
+                      oninput="this.className = ''"
+                      >Image 1</label
+                    >
+                    <input
+                      class="form-control form-control-sm"
+                      type="file"
+                      id="formFileSm"
+                    />
+                  </div>
+                  <div class="mb-3 pl-3 pr-3">
+                    <label
+                      for="formFileSm"
+                      class="form-label"
+                      oninput="this.className = ''"
+                      >Image 2</label
+                    >
+                    <input
+                      class="form-control form-control-sm"
+                      type="file"
+                      id="formFileSm"
+                    />
+                  </div>
+                  <div class="mb-3 pl-3 pr-3">
+                    <label
+                      for="formFileSm"
+                      class="form-label"
+                      oninput="this.className = ''"
+                      >Image 3</label
+                    >
+                    <input
+                      class="form-control form-control-sm"
+                      type="file"
+                      id="formFileSm"
+                    />
+                  </div>
+                  <!-- <p><input placeholder="Image 1" oninput="this.className = ''" /></p>
+                  <p><input placeholder="Image 2" oninput="this.className = ''" /></p>
+                  <p><input placeholder="Image 3" oninput="this.className = ''" /></p> -->
+                </div>
+
+                <div style="overflow: auto">
+                  <div style="float: right">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="prevBtn"
+                      onclick="nextPrev(-1)"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="nextBtn"
+                      onclick="nextPrev(1)"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Circles which indicates the steps of the form: -->
+                <div style="text-align: center; margin-top: 40px">
+                  <span class="step"></span>
+                  <span class="step"></span>
+                  <span class="step"></span>
+                  <span class="step"></span>
                 </div>
               </form>
             </div>
@@ -152,7 +577,11 @@ head_css %} {% block content %}
                   <td>Minerva Hooper</td>
                   <td>Curaçao</td>
                   <td>Sinaai-Waas</td>
-                  <td>Available</td>
+                  <td>
+                    <mark style="background-color: green; color: white"
+                      >Available</mark
+                    >
+                  </td>
                   <td class="text-right">$23,789</td>
                 </tr>
                 <tr>
@@ -166,7 +595,11 @@ head_css %} {% block content %}
                   <td>Philip Chaney</td>
                   <td>Korea, South</td>
                   <td>Overland Park</td>
-                  <td>Occupied</td>
+                  <td>
+                    <mark style="background-color: red; color: white"
+                      >Occupied</mark
+                    >
+                  </td>
                   <td class="text-right">$38,735</td>
                 </tr>
                 <tr>
@@ -187,7 +620,11 @@ head_css %} {% block content %}
                   <td>Jon Porter</td>
                   <td>Portugal</td>
                   <td>Gloucester</td>
-                  <td><span>Occupied</span></td>
+                  <td>
+                    <mark style="background-color: red; color: white"
+                      >Occupied</mark
+                    >
+                  </td>
                   <td class="text-right">$98,615</td>
                 </tr>
               </tbody>

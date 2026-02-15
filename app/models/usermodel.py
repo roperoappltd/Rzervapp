@@ -39,6 +39,7 @@ class User(db.Model, UserMixin):
     terms = db.Column(db.String(5), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='member') # member / admin
     aboutme = db.Column(db.String(150), nullable=True, default='Tell the word something nice about yourself')
+    roomads = db.relationship('Rooms', backref='listings', lazy=True)
     # posts = db.relationship('Post', backref='author', lazy=True)
 
     # REsetting a web signature token

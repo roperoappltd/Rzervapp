@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -128,7 +128,7 @@
                 <a href="{{ url_for('main.home') }}" class="active">Home</a>
               </li>
               <li><a href="{{ url_for('main.about') }}">About</a></li>
-              <li><a href="{{ url_for('main.rooms') }}">Rooms</a></li>
+              <li><a href="{{ url_for('rooms.room') }}">Rooms</a></li>
               <!-- <li><a href="amenities.html">Amenities</a></li> -->
               <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
 
@@ -230,9 +230,6 @@
                 <ul>
                   <li><a href="{{ url_for('users.login') }}">Log in</a></li>
                   <li><a href="{{ url_for('users.signup') }}">Register</a></li>
-                  <!-- <li>
-                    <a href="{{ url_for('main.rooms') }}">Book a Room</a>
-                  </li> -->
                   <li><a href="#">Events</a></li>
                 </ul>
               </li>

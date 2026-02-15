@@ -49,6 +49,7 @@ def create_app(config_name='default'):
         #from app.enrolls.routes import enrolls
         from app.users.routes import users
         from app.main.routes import main
+        from app.rooms.routes import rooms
         #from app.posts.routes import posts
         from app.errors.handlers import errors
         #from app.models import Controller_AdminView
@@ -63,6 +64,7 @@ def create_app(config_name='default'):
         #app.register_blueprint(enrolls)
         app.register_blueprint(users)
         app.register_blueprint(main)
+        app.register_blueprint(rooms)
         #app.register_blueprint(posts)
         app.register_blueprint(errors)
 
