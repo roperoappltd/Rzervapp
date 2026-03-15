@@ -213,12 +213,11 @@ head_css %} {% block content %}
                   {% endif %}
                 </div>
               </div>
-            </div>
-            
+            </div>  
             <div class="mb-3">
               <!-- <label>Upload picture</label> -->
-              {{ form.picture.label(for="formFile") }}
-              {{ form.picture(class="form-control-file") }}
+              {{ form.picture.label(for="formFileSm") }}
+              {{ form.picture(class="form-control-file form-control-sm") }}
               {% if form.picture.errors %}
                   {% for error in form.picture.errors %}
                     <span class="text-danger">{{ error }}</span></br>
@@ -260,7 +259,6 @@ head_css %} {% block content %}
               <b>Username:</b> {{ current_user.username }}</br>
               <b>Email:</b> {{ current_user.email }}
             </p>
-            
           </div>
           <p class="description text-center text-justify">
             <b>About Me:</b> </br>

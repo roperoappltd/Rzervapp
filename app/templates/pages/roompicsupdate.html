@@ -1,0 +1,89 @@
+{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<div class="panel-header panel-header-sm"></div>
+<!--Breadcrumb-->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item pl-3">
+      <a href="{{url_for('users.listings')}}">My Listings</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Room images update</li>
+  </ol>
+</nav>
+<!--End Breadcrumb-->
+<!-- <div class="page-wrapper bg-blue p-t-100 p-b-100 pt-3 font-robo"> -->
+<div class="content mt-3">
+  <div class="card-p card-1">
+    <div class="card-heading"></div>
+    <div class="card-body">
+      <!--Flash alerts-->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+      <!----------------->
+      <h2 class="title mt-1 text-center">Update Room images</h2>
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <!------------------------UPLOAD IMAGES----------------------------------->
+        <div class="mb-3">
+          {{ form.picture1.label(for="formFileSm") }}
+          {{ form.picture1(class="form-control-file form-control-sm") }}
+          {% if form.picture1.errors %}
+              {% for error in form.picture1.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+          <!------------->
+          {{ form.picture2.label(for="formFileSm") }}
+          {{ form.picture2(class="form-control-file form-control-sm") }}
+          {% if form.picture2.errors %}
+              {% for error in form.picture2.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+          <!------------->
+          {{ form.picture3.label(for="formFileSm") }}
+          {{ form.picture3(class="form-control-file form-control-sm") }}
+          {% if form.picture3.errors %}
+              {% for error in form.picture3.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+          <!------------->
+          {{ form.picture4.label(for="formFileSm") }}
+          {{ form.picture4(class="form-control-file form-control-sm") }}
+          {% if form.picture4.errors %}
+              {% for error in form.picture4.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+          <!------------->
+          {{ form.picture5.label(for="formFileSm") }}
+          {{ form.picture5(class="form-control-file form-control-sm") }}
+          {% if form.picture5.errors %}
+              {% for error in form.picture5.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+          <!------------->
+          {{ form.picture6.label(for="formFileSm") }}
+          {{ form.picture6(class="form-control-file form-control-sm") }}
+          {% if form.picture6.errors %}
+              {% for error in form.picture6.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+        </div>
+        <!------------------------------------------------------------------------>
+        <div class="form-group text-right">
+          <!-- <button type="submit" class="btn btn-success">Update</button> -->
+           {{ form.submit(class="btn btn-info") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+
+{% endblock content %}

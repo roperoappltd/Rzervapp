@@ -75,7 +75,7 @@ class UpdateAccountForm(FlaskForm):
     city =  StringField('', validators=[Length(min=2, max=40)])
     country = SelectField('', choices = [(country.alpha_2, country.name) for country in pycountry.countries])
     zip_code =  StringField('', validators=[Length(min=2, max=10)])
-    aboutme = TextAreaField('', validators=[DataRequired(), Length(min=30, max=150)])
+    aboutme = TextAreaField('', validators=[DataRequired(), Length(min=30, max=200)])
     #Enabling profile picture update and allowed image extensions
     picture = FileField('Upload picture', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
     submit = SubmitField('Update')

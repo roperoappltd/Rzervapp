@@ -12,29 +12,20 @@ class Rooms(db.Model):
     room_name = db.Column(db.String(30), nullable=False, unique=True)
     room_location = db.Column(db.String(30), nullable=False)
     room_category = db.Column(db.String(30), nullable=False)
-    image1 = db.Column(db.String(30), nullable=False, default='roomdef1.jpeg')
-    image2 = db.Column(db.String(30), nullable=False, default='roomdef2.jpg')
-    image3 = db.Column(db.String(30), nullable=False, default='roomdef3.jpeg')
+    image1 = db.Column(db.String(30), nullable=False, default='roomdef1.jpg')
+    image2 = db.Column(db.String(30), nullable=False, default='roomdef1.jpg')
+    image3 = db.Column(db.String(30), nullable=False, default='roomdef1.jpg')
+    image4 = db.Column(db.String(30), nullable=False, default='roomdef1.jpg')
+    image5 = db.Column(db.String(30), nullable=True, default='roomdef1.jpg')
+    image6 = db.Column(db.String(30), nullable=True, default='roomdef1.jpg')
     short_desc = db.Column(db.String(100), nullable=False)
     room_size = db.Column(db.String(20), nullable=False)
-    max_occupancy = db.Column(db.Integer)
+    max_occupancy = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), nullable=False, default="available")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # def __init__(self, room_name, room_location, room_category, image1, image2, image3, short_desc, room_size, max_occupancy, price, description, status="available"):
-    #     self.room_name = room_name
-    #     self.room_location = room_location
-    #     self.room_category = room_category
-    #     self.image1 = image1
-    #     self.image2 = image2
-    #     self.image3 = image3
-    #     self.short_desc = short_desc
-    #     self.room_size = room_size
-    #     self.max_occupancy = max_occupancy
-    #     self.price = price
-    #     self.description = description
-    #     self.status = status
+    room_extra = db.relationship('Roomextra', backref='rooms', uselist=False)
 
     def get_all(cls):
         rooms = cls.query.all()
@@ -45,22 +36,33 @@ class Rooms(db.Model):
         return room
 
     def __repr__(self):
-        return f"Rooms('{self.room_name}','{self.room_location}','{self.room_category}','{self.short_desc}'\
+        return f"Rooms('{self.room_name}','{self.room_location}','{self.room_category}'\
+                      '{self.short_desc}','{self.image1}','{self.image2}','{self.image3}'\
                       '{self.room_size}','{self.max_occupancy}','{self.price}','{self.status}'\
                       '{self.description}')"
 
-    # def data(self): # room_category
-    #     return {
-    #     "room_name": self.room_name,  
-    #     "room_location": self.room_location,
-    #     "room_category": self.room_category,  
-    #     "image1": self.image1,
-    #     "image2": self.image2,
-    #     "image3": self.image3,
-    #     "short_desc": self.short_desc,
-    #     "room_size": self.room_size,
-    #     "max_occupancy": self.max_occupancy,
-    #     "price": self.price,
-    #     "description": self.description,
-    #     "status": self.status,
-    #     }
+class Roomextra(db.Model):
+    __tablename__ = 'roomextra'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True) 
+    # services  
+    resto = db.Column(db.String(20), nullable=False)
+    bar = db.Column(db.String(10), nullable=False)
+    spa = db.Column(db.String(10), nullable=False)
+    shop = db.Column(db.String(10), nullable=False)
+    concierge = db.Column(db.String(10), nullable=False)
+    car = db.Column(db.String(10), nullable=False)
+    # Amenities
+    sleeping = db.Column(db.String(20), nullable=False)
+    hot_water = db.Column(db.String(10), nullable=False)
+    tv = db.Column(db.String(10), nullable=False)
+    internet = db.Column(db.String(10), nullable=False)
+    kitchen = db.Column(db.String(10), nullable=False)
+    towels = db.Column(db.String(10), nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), unique=True)
+
+    def __repr__(self):
+        return f"Roomextra('{self.resto}','{self.bar}','{self.spa}'\
+                      '{self.shop}', '{self.concierge}', '{self.sleeping}'\
+                      '{self.hot_water}','{self.tv}', '{self.kitchen}'\
+                      '{self.towels}')"
+

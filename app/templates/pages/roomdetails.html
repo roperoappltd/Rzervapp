@@ -23,10 +23,11 @@ head_css %} {% block content %}
       <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
         <div class="room-header-image">
           <img
-            src="{{ url_for('static', filename='img/hotel/room-15.webp')}}"
+            src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image1 ) }}"
             alt="Deluxe Ocean View Suite"
             class="img-fluid rounded"
           />
+          <!-- src="{{ url_for('static', filename='img/hotel/room-15.webp')}}" -->
           <div class="room-badge">
             <span class="text-white">Premium Suite</span>
           </div>
@@ -46,19 +47,20 @@ head_css %} {% block content %}
             </div>
             <span class="reviews-count">(127 reviews)</span>
           </div>
-          <h1 class="room-title">Deluxe Ocean View Suite</h1>
+          <h1 class="room-title">{{ roominfo.room_name }}</h1>
           <p class="room-tagline">
-            Experience luxury with breathtaking ocean views and premium
-            amenities
+            {{ roominfo.short_desc }}
+            <!-- Experience luxury with breathtaking ocean views and premium
+            amenities -->
           </p>
           <div class="room-capacity mb-4">
             <div class="capacity-item">
               <i class="bi bi-people"></i>
-              <span>Up to 4 guests</span>
+              <span>Up to {{ roominfo.max_occupancy }} guests</span>
             </div>
             <div class="capacity-item">
               <i class="bi bi-grid"></i>
-              <span>850 sq ft</span>
+              <span>{{ roominfo.room_size }} sq ft</span>
             </div>
             <div class="capacity-item">
               <i class="bi bi-bed"></i>
@@ -66,10 +68,13 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="room-price">
-            <span class="price-amount">$395</span>
+            <span class="price-amount"
+              >{{ roominfo.price }}
+              <!-- $395 -->
+            </span>
             <span class="price-period">per night</span>
           </div>
-          <a href="{{ url_for('main.booknow') }}" class="btn btn-book-now"
+          <a href="{{ url_for('rooms.booknow') }}" class="btn btn-book-now"
             >Book Now</a
           >
         </div>
@@ -398,7 +403,7 @@ head_css %} {% block content %}
               <span class="period">per night</span>
             </div>
             <a
-              href="{{ url_for('main.booknow') }}"
+              href="{{ url_for('rooms.booknow') }}"
               class="btn btn-primary btn-lg"
               >Check Availability</a
             >

@@ -25,20 +25,7 @@ head_css %} {% block content %}
           >
             <h8><b>&#x2b; Add Room</b></h8>
           </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <h8><b>Update</b></h8>
-          </button>
           <!--------------------------------->
-          <!-- <a href="{{ url_for('rooms.stepsform') }}">
-          <button type="button" class="btn btn-info" style="border-radius: 16px; cursor: pointer;">
-            <b>Steps</b>
-          </button></a> -->
-          <!-------------------------------------->
         </div>
         <div
           class="modal fade"
@@ -50,19 +37,13 @@ head_css %} {% block content %}
         >
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
-              <form method="POST" action="" enctype="multipart/form-data">
+              <form method="POST" action="">
                 {{ form.hidden_tag() }}
                 <!--START FORM FIELDS-->
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="form-group pl-3 pr-1 mt-2">
+                    <div class="form-group pl-3 pr-0 mt-2">
                       <label for="formGroupExampleInput1">Room name</label>
-                      <!-- <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext1"
-                        placeholder="Enter a title"
-                      /> -->
                       {{ form.room_name.label(class="form-control-label") }} {%
                       if form.room_name.errors %} {{
                       form.room_name(class="form-control form-control-lg
@@ -77,14 +58,8 @@ head_css %} {% block content %}
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group pl-1 pr-3 mt-2">
+                    <div class="form-group pl-0 pr-3 mt-2">
                       <label for="formGroupExampleInput2">Room Location</label>
-                      <!-- <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext2"
-                        placeholder="Enter room location"
-                      /> -->
                       {{ form.room_location.label(class="form-control-label") }}
                       {% if form.room_location.errors %} {{
                       form.room_location(class="form-control form-control-lg
@@ -101,7 +76,7 @@ head_css %} {% block content %}
                 </div>
                 <div class="row">
                   <div class="col-md-4">
-                    <div class="form-group pl-3 pr-1">
+                    <div class="form-group pl-3 pr-0">
                       <label for="formGroupExampleInput3">Room Price</label>
                       {{ form.price.label(class="form-control-label") }} {% if
                       form.price.errors %} {{ form.price(class="form-control
@@ -116,7 +91,7 @@ head_css %} {% block content %}
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="form-group pl-1 pr-1">
+                    <div class="form-group pl-0 pr-0">
                       <label for="formGroupExampleInput4">Room category</label>
                       {{ form.room_category.label(class="form-control-label") }}
                       {% if form.room_category.errors %} {{
@@ -132,7 +107,7 @@ head_css %} {% block content %}
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="form-group pl-1 pr-3">
+                    <div class="form-group pl-0 pr-3">
                       <label for="formGroupExampleInput5">Status</label>
                       {{ form.status.label(class="form-control-label") }} {% if
                       form.status.errors %} {{ form.status(class="form-control
@@ -149,7 +124,7 @@ head_css %} {% block content %}
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="form-group pl-3 pr-1">
+                    <div class="form-group pl-3 pr-0">
                       <label for="formGroupExampleInput6"
                         >Short Description</label
                       >
@@ -167,7 +142,7 @@ head_css %} {% block content %}
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="form-group pl-1 pr-1">
+                    <div class="form-group pl-0 pr-0">
                       <label for="formGroupExampleInput7">Room Size (m2)</label>
                       {{ form.room_size.label(class="form-control-label") }} {%
                       if form.room_size.errors %} {{
@@ -183,7 +158,7 @@ head_css %} {% block content %}
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="form-group pl-1 pr-3">
+                    <div class="form-group pl-0 pr-3">
                       <label for="formGroupExampleInput8">Max Occupancy</label>
                       {{ form.max_occupancy.label(class="form-control-label") }}
                       {% if form.max_occupancy.errors %} {{
@@ -213,45 +188,23 @@ head_css %} {% block content %}
                   {% else %} {{ form.description(class="form-control
                   form-control-lg") }} {% endif %}
                 </div>
-                <!-- <div class="mb-3 pl-3 pr-3">
-                  <label for="formFileMultiple" class="form-label"
-                    >Upload picture 1</label
-                  >
-                  <input
-                    class="form-control"
-                    type="file"
-                    id="formFileMultiple"
-                    multiple
-                  />
+                <!-------------MULTI-CHECKBOX------------------------------------------------>
+                <!-- <div class="pl-3 text-center">
+                  <small> Select room services:</small>
                 </div> -->
 
-                <!--FILES UPLOAD------------------------------->
-                <div class="mb-3 pl-3 pr-3">
-                  <label for="formFileSm" class="form-label">Upload image 1</label>
-                  {{ form.picture1.label(for="formFile") }}
-                  {{ form.picture1(class="form-control-file") }}
-                  {% if form.picture1.errors %}
-                      {% for error in form.picture1.errors %}
-                        <span class="text-danger">{{ error }}</span></br>
-                      {% endfor %}
-                  {% endif %}
-                  <label for="formFileSm" class="form-label">Upload image 2</label>
-                  {{ form.picture2.label(for="formFile") }}
-                  {{ form.picture2(class="form-control-file") }}
-                  {% if form.picture2.errors %}
-                      {% for error in form.picture2.errors %}
-                        <span class="text-danger">{{ error }}</span></br>
-                      {% endfor %}
-                  {% endif %}
-                  <label for="formFileSm" class="form-label">Upload image 3</label>
-                  {{ form.picture3.label(for="formFile") }}
-                  {{ form.picture3(class="form-control-file") }}
-                  {% if form.picture3.errors %}
-                      {% for error in form.picture3.errors %}
-                        <span class="text-danger">{{ error }}</span></br>
-                      {% endfor %}
-                  {% endif %}
+                <div>
+                  {% for subfield in form.resto %}
+                  <tr>
+                    <td class="pl-3 pt-0 pb-0">{{ subfield.label }}</td>
+                    <td class="pt-0 pr-5 pb-0">{{ subfield }}</td>
+                  </tr>
+                  {% endfor %}
                 </div>
+                <!------------------->
+
+                <!--FILES UPLOAD------------------------------------------------>
+
                 <!--END FORM FIELD-->
                 <div class="modal-footer">
                   <button
@@ -261,373 +214,85 @@ head_css %} {% block content %}
                   >
                     Close
                   </button>
-                  <div class="form-group text-right">
-                    {{ form.submit(class="btn btn-info") }}
-                  </div>
+                  <button>{{ form.submit(class="btn btn-info") }}</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
         <!---SECOND MODAL------------------------------------->
-        <div
-          class="modal fade bd-example-modal-lg"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="myLargeModalLabel2"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <!-- <form>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group pl-3 pr-1 mt-2">
-                      <label for="formGroupExampleInput-a">Title</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-a"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group pl-1 pr-3 mt-2">
-                      <label for="formGroupExampleInput-b">Location</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-b"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group pl-3 pr-1">
-                      <label for="formGroupExampleInput-c">Room Price</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-c"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group pl-1 pr-1">
-                      <label for="formGroupExampleInput-d">Room category</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-d"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group pl-1 pr-3">
-                      <label for="formGroupExampleInput-e">Status</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-e"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group pl-3 pr-1">
-                      <label for="formGroupExampleInput-f"
-                        >Short Description</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-f"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group pl-1 pr-1">
-                      <label for="formGroupExampleInput-g">Room Size</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-g"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group pl-1 pr-3">
-                      <label for="formGroupExampleInput-h">Max Occupancy</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleInputtext-h"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group pl-3 pr-3">
-                  <label for="exampleFormControlTextarea2">Description</label>
-                  <textarea
-                    class="form-control"
-                    id="exampleFormControlTextarea2"
-                    rows="3"
-                  ></textarea>
-                </div>
-                
-                <div class="mb-3 pl-3 pr-3">
-                  <label for="formFileSm" class="form-label">Image 1</label>
-                  <input
-                    class="form-control form-control-sm"
-                    type="file"
-                    id="formFileSm"
-                  />
-                  <label for="formFileSm" class="form-label">Image 2</label>
-                  <input
-                    class="form-control form-control-sm"
-                    type="file"
-                    id="formFileSm"
-                  />
-                  <label for="formFileSm" class="form-label">Image 3</label>
-                  <input
-                    class="form-control form-control-sm"
-                    type="file"
-                    id="formFileSm"
-                  />
-                </div> 
-            
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Save changes
-                  </button>
-                </div>
-              </form> -->
-              <form id="regForm" action="">
-                <h2>Update Room Listing:</h2>
 
-                <!-- One "tab" for each step in the form: -->
-                <div class="tab">
-                  Listing ID:
-                  <p>
-                    <input
-                      placeholder="Room ID..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                </div>
-
-                <div class="tab">
-                  Room Info:
-                  <p>
-                    <input
-                      placeholder="Room title..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                  <p>
-                    <input
-                      placeholder="Room category..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                  <p>
-                    <input
-                      placeholder="Short description..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                </div>
-
-                <div class="tab">
-                  More room Info:
-                  <p>
-                    <input
-                      placeholder="max occupancy..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                  <p>
-                    <input
-                      placeholder="Rent per day..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                  <p>
-                    <input
-                      placeholder="Room status..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                  <p>
-                    <input
-                      placeholder="Room Description..."
-                      oninput="this.className = ''"
-                    />
-                  </p>
-                </div>
-
-                <div class="tab">
-                  Room pictures:
-                  <div class="mb-3 pl-3 pr-3">
-                    <label
-                      for="formFileSm"
-                      class="form-label"
-                      oninput="this.className = ''"
-                      >Image 1</label
-                    >
-                    <input
-                      class="form-control form-control-sm"
-                      type="file"
-                      id="formFileSm"
-                    />
-                  </div>
-                  <div class="mb-3 pl-3 pr-3">
-                    <label
-                      for="formFileSm"
-                      class="form-label"
-                      oninput="this.className = ''"
-                      >Image 2</label
-                    >
-                    <input
-                      class="form-control form-control-sm"
-                      type="file"
-                      id="formFileSm"
-                    />
-                  </div>
-                  <div class="mb-3 pl-3 pr-3">
-                    <label
-                      for="formFileSm"
-                      class="form-label"
-                      oninput="this.className = ''"
-                      >Image 3</label
-                    >
-                    <input
-                      class="form-control form-control-sm"
-                      type="file"
-                      id="formFileSm"
-                    />
-                  </div>
-                  <!-- <p><input placeholder="Image 1" oninput="this.className = ''" /></p>
-                  <p><input placeholder="Image 2" oninput="this.className = ''" /></p>
-                  <p><input placeholder="Image 3" oninput="this.className = ''" /></p> -->
-                </div>
-
-                <div style="overflow: auto">
-                  <div style="float: right">
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      id="prevBtn"
-                      onclick="nextPrev(-1)"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      id="nextBtn"
-                      onclick="nextPrev(1)"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Circles which indicates the steps of the form: -->
-                <div style="text-align: center; margin-top: 40px">
-                  <span class="step"></span>
-                  <span class="step"></span>
-                  <span class="step"></span>
-                  <span class="step"></span>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <!--End Modal-->
+        <!---------------------------------------------------->
 
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
               <thead class="text-primary">
+                <th><i class="fa fa-plus" style="font-size: 20px"></i> Add</th>
                 <th>Title</th>
                 <th>Location</th>
                 <th>Category</th>
                 <th>Status</th>
-                <th class="text-right">Price</th>
+                <th>Price</th>
+                <th>Action</th>
               </thead>
+              {% for roo in roomlist %}
               <tbody>
                 <tr>
-                  <td>Dakota Rice</td>
-                  <td>Niger</td>
-                  <td>Oud-Turnhout</td>
-                  <td>Occupied</td>
-                  <td class="text-right">$36,738</td>
-                </tr>
-                <tr>
-                  <td>Minerva Hooper</td>
-                  <td>Curaçao</td>
-                  <td>Sinaai-Waas</td>
                   <td>
-                    <mark style="background-color: green; color: white"
-                      >Available</mark
-                    >
+                    <a
+                      href="{{ url_for('rooms.update_roompics', room_id=roo.id)}}"
+                      class="dropdown-item pt-0 mt-0"
+                      ><img
+                        class="rounded-circle article-img zoomer"
+                        src="{{ url_for('static', filename='/userpics/roompics/'+ roo.image1 ) }}"
+                        width="40"
+                        height="40"
+                      />
+                    </a>
                   </td>
-                  <td class="text-right">$23,789</td>
-                </tr>
-                <tr>
-                  <td>Sage Rodriguez</td>
-                  <td>Netherlands</td>
-                  <td>Baileux</td>
-                  <td>Occupied</td>
-                  <td class="text-right">$56,142</td>
-                </tr>
-                <tr>
-                  <td>Philip Chaney</td>
-                  <td>Korea, South</td>
-                  <td>Overland Park</td>
-                  <td>
-                    <mark style="background-color: red; color: white"
-                      >Occupied</mark
-                    >
+                  <td>{{ roo.room_name }}</td>
+                  <td>{{ roo.room_location }}</td>
+                  <td>{{ roo.room_category }}</td>
+                  <td>{{ roo.status }}</td>
+                  <td class="text-right">£ {{ roo.price }}</td>
+                  <td class="text-right">
+                    <!-- Example single danger button -->
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Action
+                      </button>
+                      <div class="dropdown-menu">
+                        <!-- <a class="dropdown-item pt-0 mt-0" href="#">View</a> -->
+                        <a
+                          href="{{ url_for('rooms.roomextra', room_id=roo.id)}}"
+                          class="dropdown-item pt-0 mt-0"
+                          >Add room extra</a
+                        >
+                        <a
+                          href="{{ url_for('rooms.update_room', room_id=roo.id)}}"
+                          class="dropdown-item pt-0 mt-0"
+                          href="#"
+                          >Update</a
+                        >
+                        <a
+                          href="{{ url_for('rooms.delete_room', room_id=roo.id)}}"
+                          class="dropdown-item pt-0 mt-0"
+                          href="#"
+                          >Delete</a
+                        >
+                      </div>
+                    </div>
                   </td>
-                  <td class="text-right">$38,735</td>
-                </tr>
-                <tr>
-                  <td>Doris Greene</td>
-                  <td>Malawi</td>
-                  <td>Feldkirchen in Kärnten</td>
-                  <td>Available</td>
-                  <td class="text-right">$63,542</td>
-                </tr>
-                <tr>
-                  <td>Mason Porter</td>
-                  <td>Chile</td>
-                  <td>Gloucester</td>
-                  <td>Available</td>
-                  <td class="text-right">$78,615</td>
-                </tr>
-                <tr>
-                  <td>Jon Porter</td>
-                  <td>Portugal</td>
-                  <td>Gloucester</td>
-                  <td>
-                    <mark style="background-color: red; color: white"
-                      >Occupied</mark
-                    >
-                  </td>
-                  <td class="text-right">$98,615</td>
                 </tr>
               </tbody>
+              {% endfor %}
             </table>
           </div>
         </div>

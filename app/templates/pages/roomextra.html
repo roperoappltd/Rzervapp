@@ -1,0 +1,206 @@
+{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<div class="panel-header panel-header-sm"></div>
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item pl-3">
+      <a href="{{url_for('users.listings')}}">My Listings</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Add Room Extra</li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<!-- <div class="page-wrapper bg-blue p-t-100 p-b-100 pt-3 font-robo"> -->
+<div class="content mt-3">
+  <div class="card-p card-1">
+    <div class="card-heading"></div>
+    <div class="card-body">
+      <!--Flash alerts-->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+      <!----------------->
+      <h2 class="title mt-1 text-center">Add Room Extra</h2>
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <hr style="background-color: darkgrey" />
+        <legend>Room Amenities</legend>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Bed type</label>
+            {{ form.sleeping.label(class="form-control-label") }} {% if
+            form.sleeping.errors %} {{ form.sleeping(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.sleeping.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.sleeping(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Hot water</label>
+            {{ form.hot_water.label(class="form-control-label") }} {% if
+            form.hot_water.errors %} {{ form.hot_water(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.hot_water.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.hot_water(class="form-control form-control-lg")
+            }} {% endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Smart Tv</label>
+            {{ form.tv.label(class="form-control-label") }} {% if form.tv.errors
+            %} {{ form.tv(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.tv.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.tv(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Internet</label>
+            {{ form.internet.label(class="form-control-label") }} {% if
+            form.internet.errors %} {{ form.internet(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.internet.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.internet(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Kitchen</label>
+            {{ form.kitchen.label(class="form-control-label") }} {% if
+            form.kitchen.errors %} {{ form.kitchen(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.kitchen.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.kitchen(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Towels</label>
+            {{ form.towels.label(class="form-control-label") }} {% if
+            form.towels.errors %} {{ form.towels(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.towels.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.towels(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+        </div>
+        <hr style="background-color: darkgrey" />
+        <legend>Room Services</legend>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Restaurant</label>
+            {{ form.resto.label(class="form-control-label") }} {% if
+            form.resto.errors %} {{ form.resto(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.resto.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.resto(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Bar</label>
+            {{ form.bar.label(class="form-control-label") }} {% if
+            form.bar.errors %} {{ form.bar(class="form-control form-control-lg
+            is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.bar.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.bar(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Spa</label>
+            {{ form.spa.label(class="form-control-label") }} {% if
+            form.spa.errors %} {{ form.spa(class="form-control form-control-lg
+            is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.spa.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.spa(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Shop</label>
+            {{ form.shop.label(class="form-control-label") }} {% if
+            form.shop.errors %} {{ form.shop(class="form-control form-control-lg
+            is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.shop.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.shop(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Concierge</label>
+            {{ form.concierge.label(class="form-control-label") }} {% if
+            form.concierge.errors %} {{ form.concierge(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.concierge.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.concierge(class="form-control form-control-lg")
+            }} {% endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Car rental</label>
+            {{ form.car.label(class="form-control-label") }} {% if
+            form.car.errors %} {{ form.car(class="form-control form-control-lg
+            is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.car.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.car(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+        </div>
+        <hr style="background-color: darkgrey" />
+        <!------------------------------------------------------------------------>
+        <div class="form-group text-right">
+          {{ form.submit(class="btn btn-info") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+
+{% endblock content %}

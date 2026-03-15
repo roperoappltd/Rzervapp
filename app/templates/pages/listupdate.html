@@ -1,0 +1,138 @@
+{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<div class="panel-header panel-header-sm"></div>
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item pl-3">
+      <a href="{{url_for('users.listings')}}">My Listings</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      Room listing update
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<!-- <div class="page-wrapper bg-blue p-t-100 p-b-100 pt-3 font-robo"> -->
+<div class="content mt-3">
+  <div class="card-p card-1">
+    <div class="card-heading"></div>
+    <div class="card-body">
+      <!--Flash alerts-->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+      <!----------------->
+      <h2 class="title mt-1 text-center">Update Room Listing</h2>
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Room name</label>
+            {{ form.room_name.label(class="form-control-label") }} {% if
+            form.room_name.errors %} {{ form.room_name(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.room_name.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.room_name(class="form-control form-control-lg")
+            }} {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            <label>Category</label>
+            {{ form.room_category.label(class="form-control-label") }} {% if
+            form.room_category.errors %} {{
+            form.room_category(class="form-control form-control-lg is-invalid")
+            }}
+            <div class="invalid-feedback">
+              {% for error in form.room_category.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.room_category(class="form-control
+            form-control-lg") }} {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Short description</label>
+          {{ form.short_desc.label(class="form-control-label") }} {% if
+          form.short_desc.errors %} {{ form.short_desc(class="form-control
+          form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.short_desc.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %} {{ form.short_desc(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Max occupancy</label>
+            {{ form.max_occupancy.label(class="form-control-label") }} {% if
+            form.max_occupancy.errors %} {{
+            form.max_occupancy(class="form-control form-control-lg is-invalid")
+            }}
+            <div class="invalid-feedback">
+              {% for error in form.max_occupancy.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.max_occupancy(class="form-control
+            form-control-lg") }} {% endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Price per night</label>
+            {{ form.price.label(class="form-control-label") }} {% if
+            form.price.errors %} {{ form.price(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.price.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.price(class="form-control form-control-lg") }} {%
+            endif %}
+          </div>
+          <div class="form-group col-md-4">
+            <label>Status</label>
+            {{ form.status.label(class="form-control-label") }} {% if
+            form.status.errors %} {{ form.status(class="form-control
+            form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.status.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.status(class="form-control form-control-lg") }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          {{ form.description.label(class="form-control-label lh-sm") }} {% if
+          form.description.errors %} {{ form.description(class="form-control
+          form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.description.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %} {{ form.description(class="form-control form-control-lg")
+          }} {% endif %}
+        </div>
+        <!------------------------------------------------------------------------>
+        <div class="form-group text-right">
+          <!-- <button type="submit" class="btn btn-success">Update</button> -->
+          {{ form.submit(class="btn btn-info") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+
+{% endblock content %}

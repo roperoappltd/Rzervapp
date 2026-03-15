@@ -24,6 +24,40 @@
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
+
+    <!-- Icons font CSS for listing update form-->
+    <link
+      href="{{ url_for('static', filename='roupdate/vendor/mdi-font/css/material-design-iconic-font.min.css')}}"
+      rel="stylesheet"
+      media="all"
+    />
+    <link
+      href="{{ url_for('static', filename='roupdate/vendor/font-awesome-4.7/css/font-awesome.min.css')}}"
+      rel="stylesheet"
+      media="all"
+    />
+    <!-- Font special for pages-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+      rel="stylesheet"
+    />
+    <!-- Vendor CSS for listing update-->
+    <link
+      href="{{ url_for('static', filename='roupdate/vendor/select2/select2.min.css')}}"
+      rel="stylesheet"
+      media="all"
+    />
+    <link
+      href="{{ url_for('static', filename='roupdate/vendor/datepicker/daterangepicker.css')}}"
+      rel="stylesheet"
+      media="all"
+    />
+    <!-- Main CSS for listing update form-->
+    <link
+      href="{{ url_for('static', filename='roupdate/css/mainf.css')}}"
+      rel="stylesheet"
+      media="all"
+    />
     <!--Favicon------>
     <link
       rel="apple-touch-icon"
@@ -102,8 +136,8 @@
             </li>
             <li>
               <a href="{{url_for('users.earnings')}}">
-                <i class="now-ui-icons shopping_shop"></i>
-                <p>My Earnings</p>
+                <i class="now-ui-icons business_money-coins"></i>
+                <p>My Piggybank</p>
               </a>
             </li>
             <li>
@@ -324,5 +358,15 @@
         demo.initDashboardPageCharts();
       });
     </script>
+
+    <!-- Jquery JS for listing update-->
+    <script src="{{ url_for('static', filename='roupdate/vendor/jquery/jquery.min.js')}}"></script>
+    <!-- Vendor JS for listing update-->
+    <script src="{{ url_for('static', filename='roupdate/vendor/select2/select2.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='roupdate/vendor/datepicker/moment.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='roupdate/vendor/datepicker/daterangepicker.js')}}"></script>
+
+    <!-- Main JS for listing update-->
+    <script src="{{ url_for('static', filename='roupdate/js/global.js')}}"></script>
   </body>
 </html>

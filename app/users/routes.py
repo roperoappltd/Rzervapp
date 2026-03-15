@@ -200,24 +200,16 @@ def bookings():
 def listings():
     '''This function create a route to render user listings page'''    
     form = AddRoomForm()
-    formupdate = UpdateRoomForm()
-    # fetch a room by id if exist or return 404 if doesnt 
-    #room = Rooms.query.get_or_404(post_id)
+    roomlist = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).all()
+    #userads = Rooms.query.filter_by(user_id=current_user.id).first()
 
     if form.validate_on_submit():
-        # if form.picture.data:    # check if profile picture has been uploaded
-        #     picture_file1 = save_picture(form.picture1.data)
-        #     picture_file2 = save_picture(form.picture2.data)
-        #     picture_file3 = save_picture(form.picture3.data)
-        #     # set the profile image file
-        #     image1 = picture_file1
-        #     image2 = picture_file3 
-        #     image3 = picture_file3   
-        # room listing info                                                           # form validation
+        # room listing info   
         room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
                         price=form.price.data, room_category=form.room_category.data, status=form.status.data,
                         short_desc=form.short_desc.data, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 
-                        description=form.description.data, user_id=current_user.id)
+                        description=form.description.data,
+                        user_id=current_user.id)
 
                     # picture1=form.picture1.data, picture2=form.picture2.data, picture3=form.picture3.data
         db.session.add(room_info)                                                               # adding the user to the database
@@ -227,21 +219,9 @@ def listings():
         #adslive_msg(user)
 
         return redirect(url_for('users.listings'))
-    # elif request.methods == 'GET':
-    #     if form.room.id.data == current_user.room.id:
-    #         form.room_name.data =  current_user.room_name 
-    #         form.room_category.data = current_user.room_category
-    #         form.short_desc.data = current_user.short_desc
-    #         form.max_occupancy.data = current_user.max_occupancy
-    #         form.price.data = current_user.price
-    #         form.description.data = current_user.description
-    #         form.status.data = current_user.status
-
-         
-    # set cuurent user profile pictures to pass to the current default image
-    #image1= url_for('static', filename='userpics/roompics' + current_user.image1)
     
-    return render_template('userdash/listings.html',  title='Listings', form=form)
+    return render_template('userdash/listings.html',  title='Listings', form=form,
+                            roomlist=roomlist)
 
 @users.route("/earnings") 
 @login_required
