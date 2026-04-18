@@ -174,6 +174,53 @@ head_css %} {% block content %}
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group pl-3 pr-0">
+                      <label>Unique Selling point 1</label>
+                      {{ form.usp1.label(class="form-control-label") }} {% if
+                      form.usp1.errors %} {{ form.usp1(class="form-control
+                      form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.usp1.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.usp1(class="form-control
+                      form-control-lg") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pl-0 pr-0">
+                      <label>Unique Selling Point 2</label>
+                      {{ form.usp2.label(class="form-control-label") }} {% if
+                      form.usp2.errors %} {{ form.usp2(class="form-control
+                      form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.usp2.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.usp2(class="form-control
+                      form-control-lg") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group pl-0 pr-3">
+                      <label>Unique Selling Point 3</label>
+                      {{ form.usp3.label(class="form-control-label") }} {% if
+                      form.usp3.errors %} {{ form.usp3(class="form-control
+                      form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.usp3.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.usp3(class="form-control
+                      form-control-lg") }} {% endif %}
+                    </div>
+                  </div>
+                </div>
                 <div class="form-group pl-3 pr-3">
                   <label for="exampleFormControlTextarea1">Description</label>
                   {{ form.description.label(class="form-control-label lh-sm") }}
@@ -276,16 +323,21 @@ head_css %} {% block content %}
                           >Add room extra</a
                         >
                         <a
+                          href="{{ url_for('rooms.roomdetail', room_id=roo.id)}}"
+                          class="dropdown-item pt-0 mt-0"
+                          >View room</a
+                        >
+                        <a
                           href="{{ url_for('rooms.update_room', room_id=roo.id)}}"
                           class="dropdown-item pt-0 mt-0"
                           href="#"
-                          >Update</a
+                          >Update listing</a
                         >
                         <a
                           href="{{ url_for('rooms.delete_room', room_id=roo.id)}}"
                           class="dropdown-item pt-0 mt-0"
                           href="#"
-                          >Delete</a
+                          >Delete listing</a
                         >
                       </div>
                     </div>

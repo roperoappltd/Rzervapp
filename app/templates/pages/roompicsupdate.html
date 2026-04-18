@@ -27,7 +27,7 @@ head_css %} {% block content %}
         {{ form.hidden_tag() }}
         <!------------------------UPLOAD IMAGES----------------------------------->
         <div class="mb-3">
-          {{ form.picture1.label(for="formFileSm") }}
+          {{ form.picture1.label() }}
           {{ form.picture1(class="form-control-file form-control-sm") }}
           {% if form.picture1.errors %}
               {% for error in form.picture1.errors %}
@@ -35,7 +35,7 @@ head_css %} {% block content %}
               {% endfor %}
           {% endif %}
           <!------------->
-          {{ form.picture2.label(for="formFileSm") }}
+          {{ form.picture2.label() }}
           {{ form.picture2(class="form-control-file form-control-sm") }}
           {% if form.picture2.errors %}
               {% for error in form.picture2.errors %}
@@ -43,7 +43,7 @@ head_css %} {% block content %}
               {% endfor %}
           {% endif %}
           <!------------->
-          {{ form.picture3.label(for="formFileSm") }}
+          {{ form.picture3.label() }}
           {{ form.picture3(class="form-control-file form-control-sm") }}
           {% if form.picture3.errors %}
               {% for error in form.picture3.errors %}
@@ -51,7 +51,7 @@ head_css %} {% block content %}
               {% endfor %}
           {% endif %}
           <!------------->
-          {{ form.picture4.label(for="formFileSm") }}
+          {{ form.picture4.label() }}
           {{ form.picture4(class="form-control-file form-control-sm") }}
           {% if form.picture4.errors %}
               {% for error in form.picture4.errors %}
@@ -59,7 +59,7 @@ head_css %} {% block content %}
               {% endfor %}
           {% endif %}
           <!------------->
-          {{ form.picture5.label(for="formFileSm") }}
+          {{ form.picture5.label() }}
           {{ form.picture5(class="form-control-file form-control-sm") }}
           {% if form.picture5.errors %}
               {% for error in form.picture5.errors %}
@@ -67,7 +67,7 @@ head_css %} {% block content %}
               {% endfor %}
           {% endif %}
           <!------------->
-          {{ form.picture6.label(for="formFileSm") }}
+          {{ form.picture6.label() }}
           {{ form.picture6(class="form-control-file form-control-sm") }}
           {% if form.picture6.errors %}
               {% for error in form.picture6.errors %}

@@ -26,10 +26,14 @@ head_css %} {% block content %}
             src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image1 ) }}"
             alt="Deluxe Ocean View Suite"
             class="img-fluid rounded"
+            width="1024"
+            height="683"
           />
           <!-- src="{{ url_for('static', filename='img/hotel/room-15.webp')}}" -->
           <div class="room-badge">
-            <span class="text-white">Premium Suite</span>
+            <span class="text-white"
+              >Located in {{roominfo.room_location}}<!--Premium Room--></span
+            >
           </div>
         </div>
       </div>
@@ -37,15 +41,53 @@ head_css %} {% block content %}
       <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
         <div class="room-header-content">
           <div class="room-rating mb-3">
-            <span class="rating-score">4.8</span>
+            {% if revscore >= 5 %}
+            <span class="rating-score">{{ revscore }}<!--4.8--></span>
             <div class="stars">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
             </div>
-            <span class="reviews-count">(127 reviews)</span>
+            {% elif revscore >= 4 and revscore < 5 %}
+            <span class="rating-score">{{ revscore }}<!--4.8--></span>
+            <div class="stars">
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+            </div>
+            {% elif revscore >= 3 and revscore < 4 %}
+            <span class="rating-score">{{ revscore }}</span>
+            <div class="stars">
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+            </div>
+            {% elif revscore >= 2 and revscore < 3 %}
+            <span class="rating-score">{{ revscore }}</span>
+            <div class="stars">
+              <i style="color: gold" class="bi bi-star-fill"></i>
+              <i style="color: gold" class="bi bi-star-fill"></i>
+            </div>
+            {% elif revscore >= 1 and revscore < 2 %}
+            <span class="rating-score">{{ revscore }}</span>
+            <div class="stars">
+              <i style="color: gold" class="bi bi-star-fill"></i>
+            </div>
+            {% elif revscore == 0 %}
+            <span class="rating-score">{{ revscore }}</span>
+            <div class="stars"><span>Room has no review yet!</span></div>
+            {% endif %}
+            <!-- <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div> -->
+            <span class="reviews-count">({{totalrev}} reviews)</span>
           </div>
           <h1 class="room-title">{{ roominfo.room_name }}</h1>
           <p class="room-tagline">
@@ -64,17 +106,19 @@ head_css %} {% block content %}
             </div>
             <div class="capacity-item">
               <i class="bi bi-bed"></i>
-              <span>King bed + Sofa bed</span>
+              <span>{{roomextra.sleeping}} bed + Sofa bed</span>
             </div>
           </div>
           <div class="room-price">
             <span class="price-amount"
-              >{{ roominfo.price }}
+              >£ {{ roominfo.price }}
               <!-- $395 -->
             </span>
             <span class="price-period">per night</span>
           </div>
-          <a href="{{ url_for('rooms.booknow') }}" class="btn btn-book-now"
+          <a
+            href="{{ url_for('rooms.booknow', room_id=roominfo.id) }}"
+            class="btn btn-book-now"
             >Book Now</a
           >
         </div>
@@ -86,54 +130,64 @@ head_css %} {% block content %}
       <h3 class="section-subtitle mb-4">Room Gallery</h3>
       <div class="gallery-grid">
         <div class="gallery-main">
+          <!-- href="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
           <a
-            href="{{ url_for('static', filename='img/hotel/room-12.webp')}}"
+            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image2 ) }}"
             class="glightbox"
           >
+            <!-- src="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='img/hotel/room-12.webp')}}"
+              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image2 ) }}"
               alt="Suite Interior"
               class="img-fluid"
             />
           </a>
         </div>
         <div class="gallery-thumbnails">
+          <!-- href="{{ url_for('static', filename='img/hotel/room-8.webp')}}" -->
           <a
-            href="{{ url_for('static', filename='img/hotel/room-8.webp')}}"
+            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image3 )}}"
             class="glightbox"
           >
+            <!-- src="{{ url_for('static', filename='img/hotel/room-8.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='img/hotel/room-8.webp')}}"
+              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image3 )}}"
               alt="Bedroom View"
               class="img-fluid"
             />
           </a>
+          <!-- href="{{ url_for('static', filename='img/hotel/room-6.webp')}}" -->
           <a
-            href="{{ url_for('static', filename='img/hotel/room-6.webp')}}"
+            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image4 )}}"
             class="glightbox"
           >
+            <!-- src="{{ url_for('static', filename='img/hotel/room-6.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='img/hotel/room-6.webp')}}"
+              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image4 )}}"
               alt="Living Area"
               class="img-fluid"
             />
           </a>
+          <!-- href="{{ url_for('static', filename='img/hotel/room-18.webp')}}" -->
           <a
-            href="{{ url_for('static', filename='img/hotel/room-18.webp')}}"
+            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image5 )}}"
             class="glightbox"
           >
+            <!-- src="{{ url_for('static', filename='img/hotel/room-18.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='img/hotel/room-18.webp')}}"
+              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image5 )}}"
               alt="Ocean View"
               class="img-fluid"
             />
           </a>
+          <!-- href="{{ url_for('static', filename='img/hotel/dining-4.webp')}}" -->
           <a
-            href="{{ url_for('static', filename='img/hotel/dining-4.webp')}}"
+            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image6 )}}"
             class="glightbox"
           >
+            <!-- src="{{ url_for('static', filename='img/hotel/dining-4.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='img/hotel/dining-4.webp')}}"
+              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image6 )}}"
               alt="Bathroom"
               class="img-fluid"
             />
@@ -144,28 +198,29 @@ head_css %} {% block content %}
 
     <!-- Room Description -->
     <div class="row mb-5">
-      <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+      <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
         <div class="room-description">
           <h3 class="section-subtitle">Room Overview</h3>
           <p>
-            Indulge in the ultimate luxury experience with our Deluxe Ocean View
+            <!-- Indulge in the ultimate luxury experience with our Deluxe Ocean View
             Suite. This spacious retreat features floor-to-ceiling windows
             showcasing panoramic ocean vistas, creating a serene atmosphere
             perfect for romantic getaways or family vacations. The elegantly
             appointed living space seamlessly blends modern comfort with coastal
-            charm, featuring premium furnishings and thoughtful design elements.
+            charm, featuring premium furnishings and thoughtful design elements. -->
+            {{ roominfo.description }}
           </p>
-          <p>
+          <!-- <p>
             The suite includes a separate living area with comfortable seating,
             a work desk for business travelers, and a private balcony where you
             can enjoy your morning coffee while watching the sunrise over the
             ocean. The bedroom features a plush king-size bed with luxury
             linens, ensuring a restful night's sleep, while the sofa bed in the
             living area provides additional accommodation for up to two guests.
-          </p>
+          </p> -->
         </div>
       </div>
-      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+      <!-- <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
         <div class="highlight-box">
           <div class="highlight-icon">
             <i class="bi bi-star"></i>
@@ -179,7 +234,7 @@ head_css %} {% block content %}
             <span>- Sarah M., Verified Guest</span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Amenities and Features -->
@@ -190,10 +245,15 @@ head_css %} {% block content %}
           <div class="amenity-category">
             <h5>Sleeping</h5>
             <ul>
-              <li><i class="bi bi-check2"></i> King size bed</li>
-              <li><i class="bi bi-check2"></i> Premium linens</li>
-              <li><i class="bi bi-check2"></i> Memory foam pillows</li>
-              <li><i class="bi bi-check2"></i> Blackout curtains</li>
+              <li>
+                <i class="bi bi-check2"></i> Bed size: {{roomextra.sleeping}}
+              </li>
+              <li><i class="bi bi-check2"></i> Sitting area: Yes</li>
+              <li>
+                <i class="bi bi-check2"></i>Access to kitchen:
+                {{roomextra.kitchen}}
+              </li>
+              <!-- <li><i class="bi bi-check2"></i> Blackout curtains</li> -->
             </ul>
           </div>
         </div>
@@ -201,10 +261,12 @@ head_css %} {% block content %}
           <div class="amenity-category">
             <h5>Technology</h5>
             <ul>
-              <li><i class="bi bi-check2"></i> High-speed WiFi</li>
-              <li><i class="bi bi-check2"></i> 55" Smart TV</li>
-              <li><i class="bi bi-check2"></i> Bluetooth speakers</li>
-              <li><i class="bi bi-check2"></i> USB charging ports</li>
+              <li>
+                <i class="bi bi-check2"></i> Internet: {{roomextra.internet}}
+              </li>
+              <li><i class="bi bi-check2"></i> Smart TV: {{roomextra.tv}}</li>
+              <li><i class="bi bi-check2"></i> Electric Sockets: Yes</li>
+              <!-- <li><i class="bi bi-check2"></i> USB charging ports</li> -->
             </ul>
           </div>
         </div>
@@ -212,10 +274,10 @@ head_css %} {% block content %}
           <div class="amenity-category">
             <h5>Comfort</h5>
             <ul>
-              <li><i class="bi bi-check2"></i> Climate control</li>
-              <li><i class="bi bi-check2"></i> Mini refrigerator</li>
-              <li><i class="bi bi-check2"></i> Coffee machine</li>
-              <li><i class="bi bi-check2"></i> Safe deposit box</li>
+              <li><i class="bi bi-check2"></i> Climate control: Yes</li>
+              <li><i class="bi bi-check2"></i> Noise reduction: Yes</li>
+              <!-- <li><i class="bi bi-check2"></i> Coffee machine</li> -->
+              <li><i class="bi bi-check2"></i> Safe deposit box: No</li>
             </ul>
           </div>
         </div>
@@ -223,10 +285,14 @@ head_css %} {% block content %}
           <div class="amenity-category">
             <h5>Bathroom</h5>
             <ul>
-              <li><i class="bi bi-check2"></i> Marble bathroom</li>
-              <li><i class="bi bi-check2"></i> Rain shower</li>
-              <li><i class="bi bi-check2"></i> Luxury toiletries</li>
-              <li><i class="bi bi-check2"></i> Heated floors</li>
+              <li><i class="bi bi-check2"></i> Clean bathroom: Yes</li>
+              <li>
+                <i class="bi bi-check2"></i> Hot water: {{roomextra.hot_water}}
+              </li>
+              <li>
+                <i class="bi bi-check2"></i> Clean towels: {{roomextra.towels}}
+              </li>
+              <!-- <li><i class="bi bi-check2"></i> Heated floors</li> -->
             </ul>
           </div>
         </div>
@@ -257,7 +323,7 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Location
+            Trust
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -269,7 +335,7 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Services
+            Hosts
           </button>
         </li>
       </ul>
@@ -287,7 +353,7 @@ head_css %} {% block content %}
               </div>
               <div class="col-md-4">
                 <h6>Cancellation</h6>
-                <p>Free cancellation up to 24 hours before arrival</p>
+                <p>Free cancellation up to 48 hours before arrival</p>
               </div>
               <div class="col-md-4">
                 <h6>Pets</h6>
@@ -300,21 +366,21 @@ head_css %} {% block content %}
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-6">
-                <h6>Nearby Attractions</h6>
+                <h6>Establishing trust between us</h6>
                 <ul>
-                  <li>Beach access - 2 minutes walk</li>
-                  <li>Marina District - 0.5 miles</li>
-                  <li>Historic Downtown - 1.2 miles</li>
-                  <li>Shopping Center - 0.8 miles</li>
+                  <li>Identities checking is crucial</li>
+                  <li>Step-based identity check process</li>
+                  <li>Ensure that everybody are confident</li>
+                  <li>Host, co-host & guest's identity is checked.</li>
                 </ul>
               </div>
               <div class="col-md-6">
-                <h6>Transportation</h6>
+                <h6>Why we verify identity?</h6>
                 <ul>
-                  <li>Airport shuttle available</li>
-                  <li>Valet parking - $25/night</li>
-                  <li>Public transportation nearby</li>
-                  <li>Car rental desk in lobby</li>
+                  <li>Promote trust between guests & hosts</li>
+                  <li>Reduce fraudulent behaviour</li>
+                  <li>Carry out lawfully background checks</li>
+                  <li>Investigate safety and security issues</li>
                 </ul>
               </div>
             </div>
@@ -324,18 +390,16 @@ head_css %} {% block content %}
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-4">
-                <h6>Concierge</h6>
-                <p>
-                  24/7 concierge service for reservations and recommendations
-                </p>
+                <h6>Before you book</h6>
+                <p>Any questions about a listing, plz contact us.</p>
               </div>
               <div class="col-md-4">
-                <h6>Room Service</h6>
-                <p>Available 6:00 AM - 11:00 PM daily</p>
+                <h6>When reservation is confirmed</h6>
+                <p>Message your host immediately</p>
               </div>
               <div class="col-md-4">
-                <h6>Housekeeping</h6>
-                <p>Daily housekeeping and turndown service</p>
+                <h6>After your trip</h6>
+                <p>Review trip to help the community</p>
               </div>
             </div>
           </div>
@@ -344,7 +408,7 @@ head_css %} {% block content %}
     </div>
 
     <!-- Optional Add-ons -->
-    <div class="room-addons mb-5" data-aos="fade-up" data-aos-delay="200">
+    <!-- <div class="room-addons mb-5" data-aos="fade-up" data-aos-delay="200">
       <h3 class="section-subtitle mb-4">Enhance Your Stay</h3>
       <div class="row">
         <div class="col-lg-4 col-md-6 mb-4">
@@ -384,7 +448,7 @@ head_css %} {% block content %}
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Booking CTA -->
     <div class="booking-cta" data-aos="fade-up" data-aos-delay="200">
@@ -393,19 +457,21 @@ head_css %} {% block content %}
           <div class="col-lg-8">
             <h4>Ready to book your stay?</h4>
             <p>
-              Experience luxury and comfort in our Deluxe Ocean View Suite. Book
-              now and create unforgettable memories.
+              Enjoy comfortable, peaceful, and affordable accommodations for
+              your short gateway and holidays. Book now with confidence and
+              create memories that will last forever.
             </p>
           </div>
           <div class="col-lg-4 text-center text-lg-end">
             <div class="price-display">
-              <span class="price">$395</span>
+              <span class="price">£ {{ roominfo.price }}</span>
+              <!--$395-->
               <span class="period">per night</span>
             </div>
             <a
-              href="{{ url_for('rooms.booknow') }}"
+              href="{{ url_for('rooms.booknow', room_id=roominfo.id) }}"
               class="btn btn-primary btn-lg"
-              >Check Availability</a
+              >Book now !</a
             >
           </div>
         </div>
@@ -414,4 +480,160 @@ head_css %} {% block content %}
   </div>
 </section>
 <!-- /Room Details Section -->
+<!---------------------------READ REVIEWS----------------------------------->
+<section id="contact" class="contact section pt-1 pb-1">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div
+      class="row justify-content-center mb-2"
+      data-aos="fade-up"
+      data-aos-delay="200"
+    >
+      <div class="col-lg-10">
+        <div class="contact-form-wrapper">
+          <!-- Read comments -->
+          <p>
+            <button
+              class="btn btn-dark dropdown-toggle"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseReview"
+              aria-expanded="false"
+              aria-controls="collapseReview"
+            >
+              {% if totalrev <= 1 %} {{ totalrev }} Review to read {% elif
+              totalrev > 1 %} {{ totalrev }} Reviews to read {% endif %}
+            </button>
+          </p>
+          <div class="collapse" id="collapseReview">
+            <div class="card card-body">
+              {% if totalrev <= 1 %}
+              <h4 class="mb-0">{{ totalrev }} Review for this room.</h4>
+              <p class="fw-light mb-4 pb-2">Latest user Review</p>
+              {% elif totalrev > 1 %}
+              <h4 class="mb-0">{{ totalrev }} Reviews for this room.</h4>
+              <p class="fw-light mb-4 pb-2">Latest users Reviews</p>
+              {% endif %} {% for review in reviews %}
+              <div class="d-flex flex-start">
+                <img
+                  class="rounded-circle shadow-1-strong me-3"
+                  src="{{ url_for('static', filename='userpics/' + review.user.image_file) }}"
+                  alt="avatar"
+                  width="60"
+                  height="60"
+                />
+                <div>
+                  <h6 class="fw-bold mb-1">{{ review.user.first_name }}</h6>
+                  <div class="d-flex align-items-center mb-3">
+                    <p class="mb-0">
+                      {{ review.date_posted.strftime('%d %B %Y') }} {% if
+                      review.status == 'Unverified' %}
+                      <span class="badge bg-danger">{{ review.status }}</span>
+                      &nbsp; {% elif review.status == 'Verified' %}
+                      <span class="badge bg-success">{{ review.status }}</span>
+                      &nbsp; {% endif %}
+                    </p>
+                    {% if review.rate_us == 5 %}
+                    <div class="stars">
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                    </div>
+                    {% elif review.rate_us == 4 %}
+                    <div class="stars">
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                    </div>
+                    {% elif review.rate_us == 3 %}
+                    <div class="stars">
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                    </div>
+                    {% elif review.rate_us == 2 %}
+                    <div class="stars">
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                    </div>
+                    {% elif review.rate_us == 1 %}
+                    <div class="stars">
+                      <i style="color: gold" class="bi bi-star-fill"></i>
+                    </div>
+                    {% endif %}
+                  </div>
+                  <p class="mb-3">{{ review.message}}</p>
+                  <hr class="my-0 mb-2" style="height: 1px" />
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!---------------------------ROOM REVIEWS FORM-------------------------------------->
+<section id="contact" class="contact section pt-1 pb-1">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!-- Contact Form -->
+    <div
+      class="row justify-content-center mb-2"
+      data-aos="fade-up"
+      data-aos-delay="200"
+    >
+      <div class="col-lg-10">
+        <div class="contact-form-wrapper">
+          <h2 class="text-center mb-4">Review this Room</h2>
+
+          <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="form-group">
+                  <label class="form-label"
+                    >Select a score over 5 <i class="bi bi-stars"></i
+                  ></label>
+                  {{ form.rate_us.label(class="form-control-label") }} {% if
+                  form.rate_us.errors %} {{ form.rate_us(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.rate_us.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.rate_us(class="form-control
+                  form-control-lg") }} {% endif %}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label>Please review this room</label>
+                  {{ form.message.label(class="form-control-label") }} {% if
+                  form.message.errors %} {{ form.message(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.message.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.message(class="form-control
+                  form-control-lg") }} {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-12 text-center">
+              {{form.submit(class="btn btn-primary")}}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock content %}

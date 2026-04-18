@@ -67,6 +67,7 @@
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
+
 body {
   color: var(--default-color);
   background-color: var(--background-color);
@@ -7682,4 +7683,81 @@ section,
   width: 40px;
   margin: 0px 2px 2px;
   user-select: none;
+}
+/*=== Payment cart */
+@media (min-width: 1025px) {
+  .h-custom {
+    height: 100vh !important;
+  }
+}
+/*================= Accordion checkout page */
+:root {
+  --primary-color: #b9ff66;
+  --secondary-color: #191a23;
+  --body-color: #f3f3f3;
+}
+.working-process .accordion-item {
+  border: 1px solid var(--secondary-color);
+  border-bottom: 3px solid var(--secondary-color);
+  border-radius: 10px;
+  overflow: hidden;
+  /* padding: 20px; */
+  background-color: var(--body-color);
+}
+
+.working-process .accordion-item .accordion-button {
+  background-color: var(--body-color);
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.working-process .accordion-item .accordion-collapse.collapse.show,
+.working-process .accordion-item .accordion-collapse.collapse.show {
+  background-color: var(--primary-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.working-process .accordion-item .accordion-button:not(.collapsed) {
+  color: var(--secondary-color);
+  transition: all 0.2s ease-in-out;
+  background-color: var(--primary-color) !important;
+  box-shadow: none;
+}
+
+.working-process .accordion-item .accordion-button:focus {
+  box-shadow: none;
+}
+
+.working-process .accordion-item .accordion-collapse .accordion-body {
+  padding: 20px 40px;
+}
+
+.working-process .accordion-item .accordian-numbers {
+  font-size: 23px;
+  padding-right: 20px;
+}
+
+.accordion-button::after {
+  background-image: none;
+  font-family: 'Font Awesome 6 Free';
+  content: '\f068';
+  height: 35px;
+  width: 35px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--secondary-color);
+  background-color: var(--body-color);
+  color: var(--secondary-color);
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: none;
+  content: '\f067';
+}
+
+.working-process .accordion-item .collapsing {
+  transition: all 0.3s ease-in-out;
 }

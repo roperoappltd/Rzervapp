@@ -159,14 +159,10 @@
                   <li>
                     <a href="#deutsch"><span>Deutsch</span></a>
                   </li>
-                  <li>
-                    <a href="#spanish"><span>Spanish</span></a>
-                  </li>
                 </ul>
               </li>
               {% if current_user.is_authenticated %}
-              <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
-
+              <!-- <li><a href="{{ url_for('main.contact') }}">Contact</a></li> -->
               <li>
                 <a class="nav-link" href="{{ url_for('users.uaccount') }}"
                   ><img
@@ -230,7 +226,6 @@
                 <ul>
                   <li><a href="{{ url_for('users.login') }}">Log in</a></li>
                   <li><a href="{{ url_for('users.signup') }}">Register</a></li>
-                  <li><a href="#">Events</a></li>
                 </ul>
               </li>
               {% endif %}

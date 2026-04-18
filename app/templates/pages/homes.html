@@ -401,11 +401,7 @@
                 <span class="amount">649</span>
                 <span class="period">per night</span>
               </div>
-              <a
-                href="{{ url_for('rooms.booknow') }}"
-                class="primary-booking-btn"
-                >Reserve now</a
-              >
+              <a href="#" class="primary-booking-btn">Reserve now</a>
             </div>
           </div>
         </div>
@@ -420,64 +416,80 @@
             data-aos-delay="250"
           >
             <div class="card-image">
-              <img
-                src="{{url_for('static', filename='img/hotel/room-6.webp')}}"
-                alt="Executive Room"
-                class="img-fluid"
-              />
+              <img src="{{ image1 }}" alt="Executive Room" class="img-fluid" />
+              <!-- src="{{url_for('static', filename='img/hotel/room-6.webp')}}" -->
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
             </div>
             <div class="card-content">
-              <h4>Executive Business Room</h4>
+              <!-- <h4>Executive Business Room</h4> -->
+              <h4>{{spotlight.room_name}}</h4>
               <p>
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                aut fugit, sed quia consequuntur magni dolores.
+                <!--Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+                aut fugit, sed quia consequuntur magni dolores.-->
+                {{spotlight.short_desc}}
               </p>
               <div class="features-list">
-                <span><i class="bi bi-briefcase"></i>Work Space</span>
-                <span><i class="bi bi-building"></i>City Views</span>
+                <!--Work Space-->
+                <span><i class="bi bi-building"></i>{{spotlight.status}}</span>
+                &nbsp; &nbsp; &nbsp;
+                <!--City Views-->
+                <span
+                  ><i class="bi bi-geo-alt"></i>
+                  {{spotlight.room_location}}
+                </span>
               </div>
               <div class="booking-row">
-                <div class="price">$329<small>/night</small></div>
-                <a href="{{ url_for('rooms.roomdetail') }}" class="book-link"
-                  >Book</a
+                <div class="price">
+                  <!-- $329-->
+                  {{spotlight.price}}<small>/night</small>
+                </div>
+                <a
+                  href="{{ url_for('rooms.roomdetail', room_id=2) }}"
+                  class="book-link"
+                  >View</a
                 >
               </div>
             </div>
           </div>
           <!-- End Standard Room -->
-
           <div
             class="standard-room-card"
             data-aos="slide-left"
             data-aos-delay="300"
           >
             <div class="card-image">
-              <img
-                src="{{url_for('static', filename='img/hotel/room-19.webp')}}"
-                alt="Garden View"
-                class="img-fluid"
-              />
+              <!-- {{url_for('static', filename='img/hotel/room-19.webp')}} -->
+              <img src="{{ image2 }}" alt="Garden View" class="img-fluid" />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
             </div>
             <div class="card-content">
-              <h4>Garden View Deluxe</h4>
-              <p>
-                At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                blanditiis praesentium voluptatum deleniti atque.
-              </p>
+              <!-- Garden View Deluxe -->
+              <h4>{{spotlight2.room_name}}</h4>
+              <!-- At vero eos et accusamus et iusto odio dignissimos ducimus qui
+              blanditiis praesentium voluptatum deleniti atque. -->
+              <p>{{spotlight2.short_desc}}</p>
               <div class="features-list">
-                <span><i class="bi bi-tree"></i>Garden View</span>
-                <span><i class="bi bi-door-open"></i>Private Terrace</span>
+                <!-- Garden View -->
+                <span><i class="bi bi-building"></i>{{spotlight2.status}}</span>
+                <!-- Private Terrace -->
+                &nbsp; &nbsp; &nbsp;
+                <span
+                  ><i class="bi bi-geo-alt"></i
+                  >{{spotlight2.room_location}}</span
+                >
               </div>
               <div class="booking-row">
-                <div class="price">$269<small>/night</small></div>
-                <a href="{{ url_for('rooms.roomdetail') }}" class="book-link"
-                  >Book</a
+                <div class="price">
+                  £ {{spotlight2.price}}<small>/night</small>
+                </div>
+                <a
+                  href="{{ url_for('rooms.roomdetail', room_id=5) }}"
+                  class="book-link"
+                  >View</a
                 >
               </div>
             </div>
@@ -490,29 +502,40 @@
             data-aos-delay="350"
           >
             <div class="card-image">
-              <img
-                src="{{url_for('static', filename='img/hotel/room-12.webp')}}"
-                alt="Family Suite"
-                class="img-fluid"
-              />
+              <!--src="{{url_for('static', filename='img/hotel/room-12.webp')}}"-->
+              <img src="{{ image3 }}" alt="Family Suite" class="img-fluid" />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
             </div>
             <div class="card-content">
-              <h4>Family Comfort Suite</h4>
+              <!-- Family Comfort Suite -->
+              <h4>{{spotlight3.room_name}}</h4>
               <p>
-                Temporibus autem quibusdam et aut officiis debitis aut rerum
-                necessitatibus saepe eveniet ut et voluptates.
+                {{spotlight3.short_desc}}
+                <!-- Temporibus autem quibusdam et aut officiis debitis aut rerum
+                necessitatibus saepe eveniet ut et voluptates. -->
               </p>
               <div class="features-list">
-                <span><i class="bi bi-people"></i>Family Space</span>
-                <span><i class="bi bi-controller"></i>Kids Area</span>
+                <span
+                  ><i class="bi bi-building"></i
+                  ><!--Family Space-->{{spotlight3.status}}</span
+                >
+                &nbsp; &nbsp; &nbsp;
+                <span
+                  ><i class="bi bi-geo-alt"></i
+                  ><!--Kids Area-->
+                  {{spotlight3.room_location}}</span
+                >
               </div>
               <div class="booking-row">
-                <div class="price">$419<small>/night</small></div>
-                <a href="{{ url_for('rooms.roomdetail') }}" class="book-link"
-                  >Book</a
+                <div class="price">
+                  £ {{spotlight3.price}}<small>/night</small>
+                </div>
+                <a
+                  href="{{ url_for('rooms.roomdetail', room_id=1) }}"
+                  class="book-link"
+                  >View</a
                 >
               </div>
             </div>
@@ -532,7 +555,7 @@
               class="img-fluid"
             />
             <div class="hover-overlay">
-              <a href="{{ url_for('rooms.roomdetail') }}" class="view-room">
+              <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
               </a>
             </div>
@@ -559,7 +582,7 @@
               class="img-fluid"
             />
             <div class="hover-overlay">
-              <a href="{{ url_for('rooms.roomdetail') }}" class="view-room">
+              <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
               </a>
             </div>
@@ -586,7 +609,7 @@
               class="img-fluid"
             />
             <div class="hover-overlay">
-              <a href="{{ url_for('rooms.roomdetail') }}" class="view-room">
+              <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
               </a>
             </div>
@@ -613,7 +636,7 @@
               class="img-fluid"
             />
             <div class="hover-overlay">
-              <a href="{{ url_for('rooms.roomdetail') }}" class="view-room">
+              <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
               </a>
             </div>
@@ -1047,9 +1070,7 @@
                 <span>Valid until Dec 31, 2024</span>
               </div>
             </div>
-            <a href="{{ url_for('rooms.booknow') }}" class="btn-book"
-              >Reserve Now</a
-            >
+            <a href="#" class="btn-book">Reserve Now</a>
           </div>
         </div>
       </div>
@@ -1087,9 +1108,7 @@
                 <span>Book by Jan 15, 2025</span>
               </div>
             </div>
-            <a href="{{ url_for('rooms.booknow') }}" class="btn-book"
-              >Reserve Now</a
-            >
+            <a href="#" class="btn-book">Reserve Now</a>
           </div>
         </div>
       </div>
@@ -1123,9 +1142,7 @@
                 <span>Available year-round</span>
               </div>
             </div>
-            <a href="{{ url_for('rooms.booknow') }}" class="btn-book"
-              >Reserve Now</a
-            >
+            <a href="#" class="btn-book">Reserve Now</a>
           </div>
         </div>
       </div>
@@ -1203,9 +1220,7 @@
             </li>
           </ul>
           <div class="cta-buttons">
-            <a href="{{ url_for('rooms.booknow') }}" class="btn-primary"
-              >Book Your Stay</a
-            >
+            <a href="#" class="btn-primary">Book Your Stay</a>
             <a href="{{ url_for('rooms.room') }}" class="btn-secondary"
               >View Rooms</a
             >

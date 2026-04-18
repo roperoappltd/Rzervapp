@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request,
 from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
 from app.models.usermodel import User
-from app.models.roommodel import Rooms
+from app.models.roommodel import Rooms, Roomreviews
 from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm, 
                     UpdateAccountForm, UserDashLoginForm)
 from app.rooms.forms import AddRoomForm, UpdateRoomForm
@@ -112,26 +112,11 @@ def reset_token(token):
 @login_required
 def uaccount():
     '''This function create a route to render user account page''' 
-    
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('users.uaccount'))
-    
-    # form = UserDashLoginForm()
+    # find the user total listing
+    totrooms = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).count()
 
-    # if form.validate_on_submit():
-    #     user = User.query.filter_by(username=form.username.data).first()
-
-    #     if user and bcrypt.check_password_hash(user.password, form.password.data):
-    #         login_user(user, remember=form.remember.data)
-    #         next_page = request.args.get('next')
-    #         # redirecting to the right page after been force to authenticate
-    #         return redirect(next_page) if next_page else redirect(url_for('users.uaccount'))
-    #     else:
-    #         flash('Login unsuccessful, Please check username and password!', 'danger')
-    
-    # return render_template('pages/dashlogin.html',  title='Userdash Login', form=form)
-
-    return render_template('userdash/useraccount.html',  title='User Account')
+    return render_template('userdash/useraccount.html',  title='User Account',
+                            totrooms=totrooms)
     
 
 @users.route("/myprofile", methods=['GET', 'POST'])
@@ -188,13 +173,6 @@ def myprofile():
     return render_template('userdash/userprofile.html', title='Account', image_file=image_file, 
                            form=form)
 
-@users.route("/bookings") 
-@login_required
-def bookings():
-    '''This function create a route to render user bookings page''' 
-    
-    return render_template('userdash/bookings.html',  title='Bookings')
-
 @users.route("/listings", methods=['GET', 'POST']) 
 @login_required
 def listings():
@@ -208,7 +186,7 @@ def listings():
         room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
                         price=form.price.data, room_category=form.room_category.data, status=form.status.data,
                         short_desc=form.short_desc.data, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 
-                        description=form.description.data,
+                        description=form.description.data, usp1=form.usp1.data, usp2=form.usp2.data, usp3=form.usp3.data,
                         user_id=current_user.id)
 
                     # picture1=form.picture1.data, picture2=form.picture2.data, picture3=form.picture3.data
@@ -229,6 +207,16 @@ def earnings():
     '''This function create a route to render user earnings page''' 
     
     return render_template('userdash/earnings.html',  title='Earnings')
+
+@users.route("/reviews") 
+@login_required
+def reviews():
+    '''This function create a route to render user reviews page''' 
+    # query the db about specific user reviews
+    myrevs = db.session.query(Roomreviews).filter(Roomreviews.user_id==current_user.id).all()
+
+    return render_template('userdash/myreviews.html',  title='Reviews', myrevs=myrevs)
+
 
 
 # =======================================================================================

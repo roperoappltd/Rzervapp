@@ -3,6 +3,7 @@ from app import db, login_manager
 from flask_login import UserMixin, current_user
 from flask import current_app, render_template
 from itsdangerous import URLSafeTimedSerializer as Serializer
+#from .bookmodel import Bookings
 
 
 # defining a function decorator that fectch the user by id 
@@ -39,7 +40,9 @@ class User(db.Model, UserMixin):
     terms = db.Column(db.String(5), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='member') # member / admin
     aboutme = db.Column(db.String(200), nullable=True, default='Tell the word something nice about yourself')
-    roomads = db.relationship('Rooms', backref='listings', lazy=True)
+    roomads = db.relationship('Rooms', backref='user', lazy=True)
+    mybooking = db.relationship('Bookings', backref='user', lazy=True)
+    mypayment = db.relationship('Payments', backref='user', lazy=True)
     # posts = db.relationship('Post', backref='author', lazy=True)
 
     # REsetting a web signature token

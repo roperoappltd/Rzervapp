@@ -52,21 +52,38 @@ head_css %} {% block content %}
               <i class="now-ui-icons loader_gear"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="#">Add a room</a>
-              <a class="dropdown-item" href="#">View Listing</a>
+              <a class="dropdown-item" href="#">Room pool</a>
+              <a class="dropdown-item" href="#">My Listing</a>
               <!-- <a class="dropdown-item" href="#">Delete ads</a> -->
-              <a class="dropdown-item text-danger" href="#">Remove Ads</a>
+              <!-- <a class="dropdown-item text-danger" href="#">My Bookings</a> -->
             </div>
           </div>
         </div>
         <div class="card-body">
-          <div class="chart-area">
+          <!---Line chart-->
+          <!-- <div class="chart-area">
             <canvas id="lineChartExampleWithNumbersAndGrid"></canvas>
-          </div>
+          </div> -->
+          <!-- <h1 class="display-1 text-center fw-bolder">{{ totrooms }}</h1> -->
+          {% if totrooms <= 9 %}
+          <h1
+            class="text-center"
+            style="color: rgb(51, 2, 104); font-weight: bold; font-size: 130px"
+          >
+            0{{ totrooms }}
+          </h1>
+          {% else %}
+          <h1
+            class="text-center"
+            style="color: rgb(51, 2, 104); font-weight: bold; font-size: 130px"
+          >
+            {{ totrooms }}
+          </h1>
+          {% endif %}
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+            <i class="now-ui-icons arrows-1_refresh-69"></i> Latest Update
           </div>
         </div>
       </div>
@@ -94,8 +111,8 @@ head_css %} {% block content %}
     <div class="col-md-6">
       <div class="card card-tasks">
         <div class="card-header">
-          <h5 class="card-category">Backend development</h5>
-          <h4 class="card-title">Tasks</h4>
+          <h5 class="card-category">News feed</h5>
+          <h4 class="card-title">Latest News</h4>
         </div>
         <div class="card-body">
           <div class="table-full-width table-responsive">
@@ -227,8 +244,8 @@ head_css %} {% block content %}
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h5 class="card-category">All Persons List</h5>
-          <h4 class="card-title">Employees Stats</h4>
+          <h5 class="card-category">Rezerva Community</h5>
+          <h4 class="card-title">My network</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -237,38 +254,38 @@ head_css %} {% block content %}
                 <th>Name</th>
                 <th>Country</th>
                 <th>City</th>
-                <th class="text-right">Salary</th>
+                <!-- <th class="text-right">Salary</th> -->
               </thead>
               <tbody>
                 <tr>
                   <td>Dakota Rice</td>
                   <td>Niger</td>
                   <td>Oud-Turnhout</td>
-                  <td class="text-right">$36,738</td>
+                  <!-- <td class="text-right">$36,738</td> -->
                 </tr>
                 <tr>
                   <td>Minerva Hooper</td>
                   <td>Curaçao</td>
                   <td>Sinaai-Waas</td>
-                  <td class="text-right">$23,789</td>
+                  <!-- <td class="text-right">$23,789</td> -->
                 </tr>
                 <tr>
                   <td>Sage Rodriguez</td>
                   <td>Netherlands</td>
                   <td>Baileux</td>
-                  <td class="text-right">$56,142</td>
+                  <!-- <td class="text-right">$56,142</td> -->
                 </tr>
                 <tr>
                   <td>Doris Greene</td>
                   <td>Malawi</td>
                   <td>Feldkirchen in Kärnten</td>
-                  <td class="text-right">$63,542</td>
+                  <!-- <td class="text-right">$63,542</td> -->
                 </tr>
                 <tr>
                   <td>Mason Porter</td>
                   <td>Chile</td>
                   <td>Gloucester</td>
-                  <td class="text-right">$78,615</td>
+                  <!-- <td class="text-right">$78,615</td> -->
                 </tr>
               </tbody>
             </table>

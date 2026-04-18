@@ -8,7 +8,9 @@ from wtforms.validators import (DataRequired, Optional, Length, Email, EqualTo,
                                 ValidationError, NoneOf)
 from flask_login import current_user
 from app.models.usermodel import User 
-from app.models.roommodel import Rooms, Roomextra
+from app.models.roommodel import Rooms, Roomextra, Roomreviews
+from app.models.bookmodel import Bookings, Vouchers
+from datetime import date
 #import pycountry
 
 # class MultiCheckboxField(SelectMultipleField):
@@ -28,10 +30,13 @@ class AddRoomForm(FlaskForm):
                                ('30–45', '30–45'), ('40–60', '40–60')], validators=[DataRequired()]) 
     max_occupancy = SelectField('', choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
                                               ('5', '5')], validators=[DataRequired()])
-    price = FloatField('', validators=[DataRequired()])
+    price = IntegerField('', validators=[DataRequired()])
     description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=350)])
     status =  SelectField('', choices=[(' ', ' '), ('Occupied', 'Occupied'), ('Available', 'Available')], 
                                 validators=[DataRequired()])
+    usp1 =  StringField('', validators=[Length(min=5, max=20)])
+    usp2 =  StringField('', validators=[Length(min=5, max=20)])
+    usp3 =  StringField('', validators=[Length(min=5, max=20)])
     #services = MultiCheckboxField('', choices=[('Resto','Resto'), ('Bar','Bar'),
     #                                          ('Spa','Spa'), ('Shopping','Shopping')])
     #amenities = MultiCheckboxField('', choices=[('Tv','Tv'), ('Hot water','Hot water'),
@@ -87,20 +92,85 @@ class UpdateRoomForm(FlaskForm):
     #max_occupancy = SelectField('',choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
     #                                          ('5', '5')], validators=[DataRequired()])
     max_occupancy = IntegerField('', validators=[DataRequired()])
-    price = FloatField('', validators=[DataRequired()])
+    price = IntegerField('', validators=[DataRequired()])
     description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=350)])
     status =  SelectField('', choices=[(' ', ' '), ('Occupied', 'Occupied'), ('Available', 'Available')], 
                         validators=[DataRequired()])
+    usp1 =  StringField('', validators=[Length(min=5, max=20)])
+    usp2 =  StringField('', validators=[Length(min=5, max=20)])
+    usp3 =  StringField('', validators=[Length(min=5, max=20)])
+
     submit = SubmitField('Update')
 
 
 # Update room picture form class 
 class UpdateRoomPictureForm(FlaskForm):
     '''This class enable to model the room picture update process'''
-    picture1 = FileField('Upload image 1', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
-    picture2 = FileField('Upload image 2', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
-    picture3 = FileField('Upload image 3', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
-    picture4 = FileField('Upload image 4', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
-    picture5 = FileField('Upload image 5', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
-    picture6 = FileField('Upload image 6', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
+    picture1 = FileField('Image 1', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
+    picture2 = FileField('Image 2', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
+    picture3 = FileField('Image 3', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
+    picture4 = FileField('Image 4', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
+    picture5 = FileField('Image 5', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
+    picture6 = FileField('Image 6', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
     submit = SubmitField('Update')
+
+# Create an review form class
+class RoomReviewsForm(FlaskForm):
+    '''This class enable to generate Room reviews form'''
+    # Define the field and the validators
+    rate_us = SelectField('', choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'),
+                                         ('4', '4'), ('5', '5')], validators=[DataRequired()]) 
+    message = TextAreaField('', validators=[DataRequired(), Length(min=20, max=200)])
+    submit = SubmitField('Send')
+
+# ============================================================== BOOKING
+# Create a booking form class
+class BookingForm(FlaskForm):
+    '''This class enable to generate room booking form'''
+    # Define the field and the validators
+    arrival = DateField('Arrival Date', validators=[DataRequired()])
+    departure = DateField('Departure Date', validators=[DataRequired()])
+    num_guests = StringField('Total Guest', validators=[DataRequired()])
+    #num_rooms = SelectField('', choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'),('4', '4'), 
+    #                                     ('5', '5')], validators=[DataRequired()]) 
+    room_type = SelectField('Room category',choices=[(' ', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
+                               ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
+    ad_info = TextAreaField('Additional Information', default="What would you like?")
+    primary_guest = StringField('', validators=[DataRequired()])
+    pguest_email = StringField('', validators=[DataRequired()])
+    pguest_phone = StringField('', validators=[DataRequired()])
+    submit = SubmitField('Proceed to checkout')
+
+    def validate_arrival(self, arrival):
+        if arrival.data < date.today():
+            raise ValidationError('Arrival must be today or later.')
+
+    def validate_departure(self, departure):
+        if departure.data < self.arrival.data:
+            raise ValidationError('Departure must be after Arrival.')
+
+# Create an payments form class
+class PaymentForm(FlaskForm):
+    '''This class enable to generate payment form'''
+    # Define the field and the validators
+    pay_method = RadioField('Select a payment option: ', choices=[('Debit/Credit Card',
+                            'Debit/Credit Card'), ('Paypal', 'Paypal'), ('Cash on Arrival', 'Cash on Arrival')],  
+                            validators=[DataRequired()])
+    #amount_paid = IntegerField('', validators=[DataRequired()])
+    #discount = IntegerField('', validators=[DataRequired()], default=0.00)
+    #serv_charge = IntegerField('', validators=[DataRequired()], default=0.00)
+    #rzerv_points = IntegerField('', validators=[DataRequired()], default=20)
+    submit = SubmitField('Checkout now!')
+
+class VouchersForm(FlaskForm):
+    '''This class enable to generate voucher form'''
+    # Define the field and the validators
+    code = StringField('Enter a voucher code: ')
+    submit = SubmitField('Redeem')
+
+    def validate_code(self, code):
+        voucher = Vouchers.query.filter_by(code=code.data).first()
+        if not voucher:
+            raise ValidationError('Invalid voucher code.')
+        else:
+            raise ValidationError(f'£{voucher.value} discount has been applied!')

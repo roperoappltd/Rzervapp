@@ -63,22 +63,35 @@ head_css %} {% block content %}
 
     <div class="rooms-grid" data-aos="fade-up" data-aos-delay="300">
       <div class="row g-4">
+        {% for room in allrooms %}
         <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
+              <!-- src="{{ url_for('static', filename='img/hotel/room-1.webp')}}" -->
               <img
-                src="{{ url_for('static', filename='img/hotel/room-1.webp')}}"
+                src="{{ url_for('static', filename='userpics/roompics/' + room.image1) }}"
                 alt="Deluxe Ocean Suite"
                 class="img-fluid"
               />
               <div class="room-features">
-                <span class="feature-badge ocean">Ocean View</span>
-                <span class="feature-badge popular">Popular</span>
+                {% if room.status == 'Available' %}
+                <span class="badge text-bg-warning">{{room.status}}</span>
+                <span class="feature-badge ocean">{{room.room_location}}</span>
+                {% else %}
+                <span class="badge text-bg-danger">{{room.status}}</span>
+                <span class="feature-badge ocean">{{room.room_location}}</span>
+                {% endif %}
+                <!-- <span class="feature-badge garden">Green</span>
+                <span class="feature-badge ocean">Blue</span> -->
+                <!-- <span class="feature-badge popular">Popular</span> -->
               </div>
             </div>
             <div class="room-content">
               <div class="room-header">
-                <h3>Deluxe Ocean Suite</h3>
+                <h3>
+                  {{room.room_name}}
+                  <!--Deluxe Ocean Suite-->
+                </h3>
                 <div class="room-rating">
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
@@ -88,21 +101,30 @@ head_css %} {% block content %}
                 </div>
               </div>
               <p class="room-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. -->
+                {{ room.short_desc }}
               </p>
               <div class="room-amenities">
-                <span><i class="bi bi-people"></i> Up to 4 guests</span>
+                <span
+                  ><i class="bi bi-people"></i> Up to {{ room.max_occupancy }}
+                  guests</span
+                >
                 <span><i class="bi bi-wifi"></i> Free WiFi</span>
                 <span><i class="bi bi-tv"></i> Smart TV</span>
               </div>
               <div class="room-footer">
                 <div class="room-price">
                   <span class="price-from">From</span>
-                  <span class="price-amount">$289</span>
+                  <span class="price-amount"
+                    ><!--$289-->
+                    {{ room.price }}</span
+                  >
                   <span class="price-period">/ night</span>
                 </div>
-                <a href="room-details.html" class="btn-room-details"
+                <a
+                  href="{{ url_for('rooms.roomdetail', room_id=room.id) }}"
+                  class="btn-room-details"
                   >View Details</a
                 >
               </div>
@@ -111,7 +133,7 @@ head_css %} {% block content %}
         </div>
         <!-- End Room Card -->
 
-        <div class="col-xl-4 col-lg-6">
+        <!-- <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
               <img
@@ -155,10 +177,10 @@ head_css %} {% block content %}
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- End Room Card -->
 
-        <div class="col-xl-4 col-lg-6">
+        <!-- <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
               <img
@@ -203,10 +225,10 @@ head_css %} {% block content %}
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- End Room Card -->
 
-        <div class="col-xl-4 col-lg-6">
+        <!-- <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
               <img
@@ -251,10 +273,10 @@ head_css %} {% block content %}
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- End Room Card -->
 
-        <div class="col-xl-4 col-lg-6">
+        <!-- <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
               <img
@@ -298,10 +320,10 @@ head_css %} {% block content %}
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- End Room Card -->
 
-        <div class="col-xl-4 col-lg-6">
+        <!-- <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
               <img
@@ -346,8 +368,9 @@ head_css %} {% block content %}
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- End Room Card -->
+        {% endfor %}
       </div>
     </div>
 

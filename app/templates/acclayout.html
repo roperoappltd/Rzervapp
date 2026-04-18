@@ -123,7 +123,7 @@
               </a>
             </li>
             <li>
-              <a href="{{url_for('users.bookings')}}">
+              <a href="{{url_for('rooms.bookings')}}">
                 <i class="now-ui-icons design_bullet-list-67"></i>
                 <p>My Bookings</p>
               </a>
@@ -141,7 +141,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="{{url_for('users.reviews')}}">
                 <i class="now-ui-icons emoticons_satisfied"></i>
                 <p>My Reviews</p>
               </a>
@@ -249,9 +249,13 @@
                       >Home</a
                     >
                     <a class="dropdown-item" href="{{ url_for('rooms.room') }}"
-                      >Book a Room</a
+                      >Rooms</a
                     >
-                    <a class="dropdown-item" href="#">Events</a>
+                    <a
+                      class="dropdown-item"
+                      href="{{ url_for('main.contact') }}"
+                      >Need help</a
+                    >
                   </div>
                 </li>
                 <li class="nav-item">
@@ -277,8 +281,16 @@
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdownMenuLink"
                   >
-                    <a class="dropdown-item" href="#">My Profile</a>
-                    <a class="dropdown-item" href="#">My Bookings</a>
+                    <a
+                      class="dropdown-item"
+                      href="{{url_for('users.myprofile')}}"
+                      >My Profile</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      href="{{url_for('rooms.bookings')}}"
+                      >My Bookings</a
+                    >
                     <a class="dropdown-item" href="#">My Reviews</a>
                   </div>
                 </li>
