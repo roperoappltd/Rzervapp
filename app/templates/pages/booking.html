@@ -38,7 +38,7 @@ head_css %} {% block content %}
         >
           <div class="form-container">
             <form method="POST" action="" class="reservation-form">
-              {{ form.hidden_tag() }}
+              {{ form.hidden_tag() }} {{ form.csrf_token }}
               <div class="form-section">
                 <h4>Booking Details</h4>
                 <div class="form-grid">
@@ -256,9 +256,9 @@ head_css %} {% block content %}
               </h5> -->
               <p class="card-text" style="text-align: justify">
                 By clicking you are agreeing to our terms and conditions. Please
-                ontact the host before your travel on the the host's contact
+                contact the host before your travel on the host's contact
                 provided. Rezerva will follow up the booking to make sure that
-                everything goes well. Do no hesitate to get in touch with for
+                everything goes well. Do no hesitate to get in touch with us for
                 any support. We wish you a pleasant stay. <br />
                 &nbsp; <br />
                 HR Team <br />

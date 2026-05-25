@@ -52,17 +52,31 @@ def member_regismail(user):
     </head>
     <body>
 
-        <h2>Hello {user.username},</h2>
+        <div style="font-size: 0px; display: flex; justify-content: center">
+            <img
+                class="t18"
+                style=" display: block; border: 0; height: auto; width: 20%; margin: 20px; max-width: 100%;"
+                width="188"
+                height="100"
+                alt=""
+                src="{url_for('static', filename='/userpics/Modlogo.png')}"
+            />
+        </div>
+        &nbsp;<br>
+
+        <h2>Hello {user.first_name},</h2>
 
         <p style="font-size: 18px; text-align:justify;"> We would like to thank you for your registration
-        received today {date}. We wish you a warn Welcome to the "Rezerva plateform" where you can reserve
-        short stay safer, happier and cheaper. Click on the button below to activate your acount and start
-        experiencing the wonders of this world.
+        received today {date}. We wish you a warn Welcome to the "Rezerva community" where you can reserve
+        short stay safer, happier and cheaper. Also, you can confidently add a room to start generating
+        passive income. <br>
+        &nbsp;<br>
+        Click on the button below to activate your acount and start your Rezerva adventure.
         </p>
 
         <div>&nbsp; &nbsp;</div>
         
-        <a href="{ url_for('main.home', _external=True)}">
+        <a href="{ url_for('users.login', _external=True)}">
         <button class="favorite styled" type="button">Activate your account</button></a>
 
         <div>&nbsp;</div>

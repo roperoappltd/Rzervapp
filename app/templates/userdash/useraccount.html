@@ -8,7 +8,7 @@ head_css %} {% block content %}
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Rent Transaction</h5>
+          <h5 class="card-category">As a Host</h5>
           <h4 class="card-title">Total Bookings</h4>
           <div class="dropdown">
             <button
@@ -27,9 +27,24 @@ head_css %} {% block content %}
           </div>
         </div>
         <div class="card-body">
-          <div class="chart-area">
+          <!-- <div class="chart-area">
             <canvas id="lineChartExample"></canvas>
-          </div>
+          </div> -->
+          {% if totbook <= 9 %}
+          <h1
+            class="text-center"
+            style="color: rgb(155, 4, 105); font-weight: bold; font-size: 100px"
+          >
+            0{{ totbook }}
+          </h1>
+          {% else %}
+          <h1
+            class="text-center"
+            style="color: rgb(155, 4, 105); font-weight: bold; font-size: 100px"
+          >
+            {{ totbook }}
+          </h1>
+          {% endif %}
         </div>
         <div class="card-footer">
           <div class="stats">
@@ -41,8 +56,8 @@ head_css %} {% block content %}
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Room Listing</h5>
-          <h4 class="card-title">Total Room Added</h4>
+          <h5 class="card-category">Room Listings</h5>
+          <h4 class="card-title">Total Rooms</h4>
           <div class="dropdown">
             <button
               type="button"
@@ -68,14 +83,14 @@ head_css %} {% block content %}
           {% if totrooms <= 9 %}
           <h1
             class="text-center"
-            style="color: rgb(51, 2, 104); font-weight: bold; font-size: 130px"
+            style="color: rgb(51, 2, 104); font-weight: bold; font-size: 100px"
           >
             0{{ totrooms }}
           </h1>
           {% else %}
           <h1
             class="text-center"
-            style="color: rgb(51, 2, 104); font-weight: bold; font-size: 130px"
+            style="color: rgb(51, 2, 104); font-weight: bold; font-size: 100px"
           >
             {{ totrooms }}
           </h1>
@@ -91,17 +106,32 @@ head_css %} {% block content %}
     <div class="col-lg-4 col-md-6">
       <div class="card card-chart">
         <div class="card-header">
-          <h5 class="card-category">Income Revenu</h5>
-          <h4 class="card-title">Total Earnings</h4>
+          <h5 class="card-category">Income Generated</h5>
+          <h4 class="card-title">Total Earnings (£)</h4>
         </div>
         <div class="card-body">
-          <div class="chart-area">
+          <!-- <div class="chart-area">
             <canvas id="barChartSimpleGradientsNumbers"></canvas>
-          </div>
+          </div> -->
+          {% if available_balance <= 9 %}
+          <h1
+            class="text-center"
+            style="color: rgb(13, 149, 3); font-weight: bold; font-size: 100px"
+          >
+            0{{ available_balance }}
+          </h1>
+          {% else %}
+          <h1
+            class="text-center"
+            style="color: rgb(13, 149, 3); font-weight: bold; font-size: 100px"
+          >
+            {{ available_balance|int }}
+          </h1>
+          {% endif %}
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+            <i class="now-ui-icons ui-2_time-alarm"></i> Up to date
           </div>
         </div>
       </div>

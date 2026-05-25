@@ -14,9 +14,10 @@ app.app_context().push
 @app.before_request
 def before_request():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=1)
+    app.permanent_session_lifetime = timedelta(minutes=10)
     session.modified = True
     g.user = current_user
+
 
 if __name__ == '__main__':
     app.run(debug=True) 

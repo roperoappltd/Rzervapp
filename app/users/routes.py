@@ -1,14 +1,16 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request, current_app
+from flask import Blueprint, render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, current_user, logout_user, login_required
 from app import db, bcrypt
 from app.models.usermodel import User
 from app.models.roommodel import Rooms, Roomreviews
+from app.models.bookmodel import Bookings, HostEarning, Withdrawal
 from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm, 
                     UpdateAccountForm, UserDashLoginForm)
 from app.rooms.forms import AddRoomForm, UpdateRoomForm
 from .usermails.resetrequest import send_reset_email
 from .usermails.joinusmail import member_regismail
 from .utils import save_picture
+from ..rooms.roomutils import sanitize_input
 import cv2
 
 users = Blueprint('users', __name__)
@@ -114,15 +116,29 @@ def uaccount():
     '''This function create a route to render user account page''' 
     # find the user total listing
     totrooms = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).count()
+    #totbook = db.session.query(Bookings).filter(Bookings.user_id==current_user.id).count()
+    totbook = Bookings.query.join(Rooms).filter(Rooms.user_id==current_user.id).count()
+
+    total_earnings = db.session.query(db.func.sum(HostEarning.net_earning)
+                                     ).filter_by(user_id=current_user.id
+                                     ).scalar() or 0
+    total_withdrawals = db.session.query(db.func.sum(Withdrawal.amount)
+                                        ).filter_by(user_id=current_user.id,
+                                        status='Completed'
+                                        ).scalar() or 0
+    available_balance = total_earnings - total_withdrawals
+
 
     return render_template('userdash/useraccount.html',  title='User Account',
-                            totrooms=totrooms)
+                            totrooms=totrooms, totbook=totbook, 
+                            available_balance=available_balance)
     
 
 @users.route("/myprofile", methods=['GET', 'POST'])
 @login_required 
 def myprofile():
     '''This function create a route to render user profile page''' 
+    
     #func = capture_image()
     form = UpdateAccountForm()
     
@@ -182,31 +198,29 @@ def listings():
     #userads = Rooms.query.filter_by(user_id=current_user.id).first()
 
     if form.validate_on_submit():
-        # room listing info   
-        room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
-                        price=form.price.data, room_category=form.room_category.data, status=form.status.data,
-                        short_desc=form.short_desc.data, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 
-                        description=form.description.data, usp1=form.usp1.data, usp2=form.usp2.data, usp3=form.usp3.data,
-                        user_id=current_user.id)
+        if current_user.address or current_user.phone or current_user.zip_code != 'Change me':  
+            clean_short_desc = sanitize_input(form.short_desc.data)
+            clean_description = sanitize_input(form.description.data)
+            # room listing info   
+            room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
+                            price=form.price.data, room_category=form.room_category.data, status=form.status.data,
+                            short_desc=clean_short_desc, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 
+                            description=clean_description, usp1=form.rule1.data, usp2=form.rule2.data, usp3=form.rule3.data,
+                            user_id=current_user.id)
 
-                    # picture1=form.picture1.data, picture2=form.picture2.data, picture3=form.picture3.data
-        db.session.add(room_info)                                                               # adding the user to the database
-        db.session.commit()                                                                # saving the changes                                                               
-        flash(f"Your room listing is now pending and will be active live soon after validation.", 'success')     # display validation message [ f'Account created for {form.username.data}!' ]
-        # send account verification email to user
-        #adslive_msg(user)
+                        # picture1=form.picture1.data, picture2=form.picture2.data, picture3=form.picture3.data
+            db.session.add(room_info)                                                               # adding the user to the database
+            db.session.commit()                                                                # saving the changes                                                               
+            flash(f"Your room listing is now pending and will be active live soon after validation.", 'success')     # display validation message [ f'Account created for {form.username.data}!' ]
+            # send account verification email to user
+            #adslive_msg(user)
 
-        return redirect(url_for('users.listings'))
+            return redirect(url_for('users.listings'))
+        else:
+            flash('You need to fully complete your profile before you can make a room listing!', 'warning')
     
     return render_template('userdash/listings.html',  title='Listings', form=form,
                             roomlist=roomlist)
-
-@users.route("/earnings") 
-@login_required
-def earnings():
-    '''This function create a route to render user earnings page''' 
-    
-    return render_template('userdash/earnings.html',  title='Earnings')
 
 @users.route("/reviews") 
 @login_required
@@ -216,8 +230,6 @@ def reviews():
     myrevs = db.session.query(Roomreviews).filter(Roomreviews.user_id==current_user.id).all()
 
     return render_template('userdash/myreviews.html',  title='Reviews', myrevs=myrevs)
-
-
 
 # =======================================================================================
 @users.route("/capture_image") 

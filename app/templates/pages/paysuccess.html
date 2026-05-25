@@ -17,13 +17,16 @@ head_css %} {% block content %}
 
 <!-- Contact Section -->
 <section id="contact" class="contact section">
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="container" data-aos="fade-up" data-aos-delay="300">
     <div
       class="row g-4 text-center pb-0 mb-0"
       data-aos="fade-up"
       data-aos-delay="300"
     >
-      <h4>Thanks for your booking... See you soon!</h4>
+      <h4>
+        Payment successful .... We wish you a pleasant stay. See you very soon!
+        {{ current_user.first_name}}
+      </h4>
     </div>
 
     <!-- Lottie animation -->
@@ -32,38 +35,27 @@ head_css %} {% block content %}
       data-aos="fade-up"
       data-aos-delay="200"
     >
-      <!-- <script
-        src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js"
-        type="module"
-      ></script>
-
-      <dotlottie-wc
-        src="https://lottie.host/7a75d95d-14b9-491c-9bc3-8b207939ba65/I9xOanhqTw.lottie"
-        style="width: 500px; height: 500px"
-        autoplay
-        loop
-      ></dotlottie-wc> -->
-      <script
-        src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js"
-        type="module"
-      ></script>
-      <dotlottie-wc
-        src="https://lottie.host/d68083eb-3dd6-4380-a0a4-85ecb476ee7f/oC9vBlFMLc.lottie"
-        style="width: 450px; height: 450px"
-        autoplay
-        loop
-      ></dotlottie-wc>
-    </div>
-    <div
-      class="text-center mb-1 pb-1 mt-0 pt-0"
-      data-aos="fade-up"
-      data-aos-delay="100"
-    >
-      <img
-        src="{{ url_for('static', filename='udash/assets/img/Rlogo2.png')}} "
-        width="300"
-        height="70"
-      />
+          <script
+            src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js"
+            type="module"
+          ></script>
+          <dotlottie-wc
+            src="https://lottie.host/d68083eb-3dd6-4380-a0a4-85ecb476ee7f/oC9vBlFMLc.lottie"
+            style="width: 450px; height: 450px"
+            autoplay
+            loop
+          ></dotlottie-wc>
+      <div
+        class="text-center mb-1 pb-1 mt-0 pt-0"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <img
+          src="{{ url_for('static', filename='udash/assets/img/Rlogo2.png')}} "
+          width="300"
+          height="70"
+        />
+      </div>
     </div>
   </div>
 </section>

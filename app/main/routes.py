@@ -1,6 +1,10 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, current_app
+from flask import Blueprint, render_template, flash, redirect, url_for, session
+from flask_login import current_user
+from app import db
 from app.models.roommodel import Rooms
-#from app import db
+from app.models.bookmodel import Bookings, Payments
+from ..rooms.roomutils import current_date
+#from app import db 
 
 # Creating an instance of the blueprint class
 main = Blueprint('main', __name__)
@@ -34,3 +38,34 @@ def contact():
     '''This function create a route to render the contact page'''
     
     return render_template('pages/getintouch.html', title='Contact')
+
+@main.route("/bookconfirm:/<int:room_id>", methods=['GET', 'POST']) 
+def bookconfirm(room_id):
+    '''This function create a route to render booking summary page'''
+    #today = current_date()
+    #booking = db.session.query(Bookings).filter(Bookings.user_id==current_user.id).first()
+    room = Rooms.query.get_or_404(room_id)
+    booking = db.session.query(Bookings).filter(
+        Bookings.user_id == current_user.id,
+        Bookings.active == "True",
+        Bookings.room_id == room.id
+        ).first()
+    #pay = Payments.query.join(Bookings).join(Rooms).filter(Bookings.room_id == Rooms.id).first()
+    
+    return render_template('pages/bookingmsg.html', title='Booking Summary',
+                            booking=booking, room=room )
+
+@main.route("/bookcancel:/<int:room_id>", methods=['GET', 'POST']) 
+def bookcancel(room_id):
+    '''This function create a route to render booking summary page'''
+    #today = current_date()
+    #booking = db.session.query(Bookings).filter(Bookings.user_id==current_user.id).first()
+    room = Rooms.query.get_or_404(room_id)
+    booking = db.session.query(Bookings).filter(
+        Bookings.user_id == current_user.id,
+        Bookings.status == "Cancelled",
+        Bookings.room_id == room.id
+        ).first()
+    
+    return render_template('pages/bookcancelmsg.html', title='Cancellation Summary',
+                            booking=booking, room=room )

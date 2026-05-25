@@ -1,17 +1,10 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }}
-<!-- <style>
-  @media (min-width: 1025px) {
-    .h-custom {
-      height: 100vh !important;
-    }
-  }
-</style> -->
-{% endblock %} {% block content %}
+{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock %} {%
+block content %}
 
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Booking Confirmation</h1>
+    <h1 class="mb-2 mb-lg-0">Booking Summary</h1>
     <nav class="breadcrumbs">
       <ol>
         <li><a href="{{ url_for('main.home') }}">Home</a></li>
@@ -25,6 +18,7 @@
 <!-- Booking summary Section -->
 <section id="contact" class="contact section">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!--HOST & GUEST INFO BOX-------------------------------------------->
     <div class="row g-4 mb-3" data-aos="fade-up" data-aos-delay="300">
       <div class="col-md-6">
         <div class="contact-info-card">
@@ -54,49 +48,12 @@
       </div>
     </div>
     <!------------------------------------->
-    <div class="col-md-12 pb-3">
-      <div class="contact-info-card">
-        <div class="info-content">
-          <!-- <h5>Enter Discount code</h5> -->
-          <form method="POST" action="">
-            {{ form2.hidden_tag() }}
-            <div class="row g-3">
-              <div class="col-md-12">
-                <div class="form-group1">
-                  <!-- <label>Enter a voucher code:</label>
-                  <input
-                  type="text"
-                  class="form-control mt-1 mb-1"
-                  name="voucherCode"
-                  required=""
-                  value=""
-                /> -->
-                  {{ form2.code.label(class="form2-control-label") }} {% if
-                  form2.code.errors %} {{ form2.code(class="form2-control
-                  form2-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form2.code.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% else %} {{ form2.code(class="form2-control
-                  form2-control-lg") }} {% endif %}
-                </div>
-                <div class="pt-2 text-end">
-                  <!-- <button type="submit" class="btn btn-outline-secondary"> -->
-                  {{ form2.submit(class="btn btn-outline-secondary") }}
-                  <!-- Redeem
-                  </button> -->
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+
     <!----------Payment summary------------>
     <div class="card mb-3">
-      <h5 class="card-header">Short Room rental</h5>
+      <h5 class="card-header">
+        Short Room rental | Booking Number: {{ book.booking_num }}
+      </h5>
       <div class="card-body">
         <!-- <h5 class="card-title">Room booked</h5> -->
         <table class="table table-borderless">
@@ -135,45 +92,62 @@
             <tr>
               <td colspan="2">Subtotal</td>
               <td class="text-end">
-                £{{ room.price * ( book.departure - book.arrival).days }}
+                £{{ payment.total_paid - payment.discount }}
               </td>
             </tr>
             <tr>
               <td colspan="2">Service Fee</td>
-              <td class="text-end">£0.00</td>
+              <td class="text-end">£{{ book.serv_charge }}</td>
             </tr>
 
             <tr>
               <td colspan="2">Discount</td>
-              {% if voucher %}
-              <td class="text-danger text-end">-£{{ voucher.value }}</td>
-              {% else %}
-              <td class="text-danger text-end">-£0</td>
-              {% endif %}
+              <td class="text-danger text-end">-£{{ payment.discount }}</td>
             </tr>
 
             <tr class="fw-bold">
               <td colspan="2">TOTAL</td>
-              {% if voucher %}
-              <td class="text-end">
-                £{{ (room.price * ( book.departure - book.arrival).days) -
-                voucher.value }}
-              </td>
-              {% else %}
-              <td class="text-end">
-                £{{ (room.price * ( book.departure - book.arrival).days) - 0 }}
-              </td>
-              {% endif %}
+              <td class="text-end">£{{ payment.total_paid }}</td>
             </tr>
           </tfoot>
         </table>
-        <hr />
-        <!--------Radio button payment options------------->
-        <!-- <div class="container pb-1">
-          <h5>Select a payment option below to checkout:</h5>
-        </div> -->
-        <form method="POST">
-          {{ form.hidden_tag() }}
+      </div>
+    </div>
+    <!----------------------APPLY VOUCHER-------->
+    <!-- <div class="col-md-12 pb-3">
+      <div class="contact-info-card">
+        <div class="info-content">
+          <form method="POST" action="">
+            {{ form2.hidden_tag() }} {{ form2.csrf_token }}
+            <div class="row g-3">
+              <div class="col-md-12">
+                <div class="form-group1">
+                  {{ form2.code.label(class="form2-control-label") }} {% if
+                  form2.code.errors %} {{ form2.code(class="form2-control
+                  form2-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form2.code.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form2.code(class="form2-control
+                  form2-control-lg") }} {% endif %}
+                </div>
+                <div class="pt-2 text-end">
+                  {{ form2.submit2(class="btn btn-outline-secondary") }}
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> -->
+    <!-------------------------END APPLY VOUNCHER-->
+    <!----CHECKOUT--------------------------------->
+    <div class="col-md-12 pb-3">
+      <div class="info-content">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }} {{ form.csrf_token }}
           <div>
             {% for subfield in form.pay_method %}
             <tr>
@@ -182,47 +156,14 @@
             </tr>
             {% endfor %}
           </div>
-          <!-- <div class="form-check pb-2">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-            />
-            <label class="form-check-label" for="flexRadioDefault1">
-              <i class="bi bi-credit-card pe-2"></i>Bank Card
-            </label>
-          </div>
-          <div class="form-check pb-2">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-            />
-            <label class="form-check-label" for="flexRadioDefault2">
-              <i class="bi bi-paypal pe-2"></i>Paypal
-            </label>
-          </div>
-          <div class="form-check pb-2">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault3"
-            />
-            <label class="form-check-label" for="flexRadioDefault3">
-              <i class="bi bi-cash-stack pe-2"></i>Cash on Arrival
-            </label>
-          </div> -->
           <hr />
           <div class="form-group1 form-actions text-end">
-            {{ form.submit(class="btn btn-dark btn-lg") }}
+            {{ form.submit(class="btn btn-primary") }}
           </div>
-          <!--------------------------------->
         </form>
       </div>
     </div>
+    <!------------------------------END CHECKOUT--->
   </div>
 </section>
 <!-- /Confirmation Section -->

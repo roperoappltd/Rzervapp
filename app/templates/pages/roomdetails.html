@@ -105,8 +105,8 @@ head_css %} {% block content %}
               <span>{{ roominfo.room_size }} sq ft</span>
             </div>
             <div class="capacity-item">
-              <i class="bi bi-bed"></i>
-              <span>{{roomextra.sleeping}} bed + Sofa bed</span>
+              <i class="bi bi-hypnotize"></i>
+              <span>{{roominfo.room_category}}</span>
             </div>
           </div>
           <div class="room-price">
@@ -335,7 +335,19 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Hosts
+            Guests
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="room-details-services-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#room-details-rules"
+            type="button"
+            role="tab"
+          >
+            Ground rules
           </button>
         </li>
       </ul>
@@ -400,6 +412,24 @@ head_css %} {% block content %}
               <div class="col-md-4">
                 <h6>After your trip</h6>
                 <p>Review trip to help the community</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="room-details-rules" role="tabpanel">
+          <div class="tab-content-wrapper">
+            <div class="row">
+              <div class="col-md-4">
+                <h6>Rule 1</h6>
+                <p>{{ roominfo.usp1 }}</p>
+              </div>
+              <div class="col-md-4">
+                <h6>Rule 2</h6>
+                <p>{{ roominfo.usp2 }}</p>
+              </div>
+              <div class="col-md-4">
+                <h6>Rule 3</h6>
+                <p>{{ roominfo.usp3 }}</p>
               </div>
             </div>
           </div>
@@ -590,39 +620,39 @@ head_css %} {% block content %}
           <h2 class="text-center mb-4">Review this Room</h2>
 
           <form method="POST">
-            {{ form.hidden_tag() }}
+            {{ form.hidden_tag() }} {{ form.csrf_token }}
             <div class="row g-3">
               <div class="col-12">
-                <div class="form-group">
+                <div class="form-group1">
                   <label class="form-label"
-                    >Select a score over 5 <i class="bi bi-stars"></i
+                    >Select a score: <i class="bi bi-stars"></i
                   ></label>
                   {{ form.rate_us.label(class="form-control-label") }} {% if
                   form.rate_us.errors %} {{ form.rate_us(class="form-control
-                  form-control-lg is-invalid") }}
+                  form-control-sm is-invalid") }}
                   <div class="invalid-feedback">
                     {% for error in form.rate_us.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                   </div>
                   {% else %} {{ form.rate_us(class="form-control
-                  form-control-lg") }} {% endif %}
+                  form-control-sm") }} {% endif %}
                 </div>
               </div>
 
               <div class="col-12">
-                <div class="form-group">
-                  <label>Please review this room</label>
+                <div class="form-group1">
+                  <label class="form-label">Enter your review message:</label>
                   {{ form.message.label(class="form-control-label") }} {% if
                   form.message.errors %} {{ form.message(class="form-control
-                  form-control-lg is-invalid") }}
+                  form-control-sm is-invalid") }}
                   <div class="invalid-feedback">
                     {% for error in form.message.errors %}
                     <span>{{ error }}</span>
                     {% endfor %}
                   </div>
                   {% else %} {{ form.message(class="form-control
-                  form-control-lg") }} {% endif %}
+                  form-control-sm") }} {% endif %}
                 </div>
               </div>
             </div>

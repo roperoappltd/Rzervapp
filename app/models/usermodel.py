@@ -43,7 +43,9 @@ class User(db.Model, UserMixin):
     roomads = db.relationship('Rooms', backref='user', lazy=True)
     mybooking = db.relationship('Bookings', backref='user', lazy=True)
     mypayment = db.relationship('Payments', backref='user', lazy=True)
-    # posts = db.relationship('Post', backref='author', lazy=True)
+    earnings = db.relationship('HostEarning', backref='host_earning', lazy=True)
+    withdrawals = db.relationship('Withdrawal', backref='host',lazy=True)
+    refunds = db.relationship('Refund', backref='user',lazy=True)
 
     # REsetting a web signature token
     def get_reset_token(self, max_age=1800):

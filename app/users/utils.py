@@ -29,7 +29,6 @@ def save_picture(form_picture):
     return uploaded_PicName
 
 
-
 def capture_image(camera_index=0):
     ''' 
         Capture an image from the specified webcam on click

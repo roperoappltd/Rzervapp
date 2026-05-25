@@ -11,7 +11,7 @@
     <!-- <title>Home - Rezerva</title> -->
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicons -->
     <link href="{{url_for('static', filename='img/fab.ico')}}" rel="icon" />
     <link
@@ -171,7 +171,7 @@
                     width="20"
                     height="20"
                   />
-                  &nbsp;My account
+                  &nbsp;Hi {{ current_user.username}}
                 </a>
               </li>
 

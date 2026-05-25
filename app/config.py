@@ -9,7 +9,13 @@ class Config :
     # Setting a secret key 
     SECRET_KEY =  os.getenv("APP_SECRET_KEY") 
     # Setting the DB location
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'  
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db' 
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "connect_args": {
+            "check_same_thread": False,
+            "timeout": 20  # wait for lock instead of immediate failure
+        }
+    } 
 
     # responsive user interface
     FLASK_ADMIN_FLUID_LAYOUT = True

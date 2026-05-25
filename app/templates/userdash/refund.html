@@ -1,0 +1,68 @@
+{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+
+<div class="panel-header panel-header-sm"></div>
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">
+            <b>My Refunds</b> &nbsp;<i
+              class="now-ui-icons health_ambulance"
+            ></i>
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <h6 style="text-transform: capitalize; color: rgb(3, 3, 88)">
+              Total Transactions: {{ user_refund.total }}
+            </h6>
+            <table class="table table-striped table-hover">
+              <thead class="text-primary">
+                <th class="text-center">Date</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Reason</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Refunded at</th>
+              </thead>
+              {% for refund in user_refund.items %}
+              <tbody>
+                <tr>
+                  <td>{{ refund.created_at.strftime('%d %B %Y')}}</td>
+                  <td class="text-center">£{{ refund.amount}}</td>
+                  <td class="text-center">{{ refund.reason }}</td>
+                  <td class="text-center">£{{ refund.status }}</td>
+                  <td class="text-center">£{{ refund.refunded_at }}</td>
+                </tr>
+              </tbody>
+              {% endfor %}
+            </table>
+            <!----------------Pagination-->
+            <div class="pagination">
+              {% if user_refund.has_prev %}
+              <a
+                href="{{ url_for('rooms.refund', page=user_refund.prev_num) }}"
+              >
+                Previous <i class="now-ui-icons arrows-1_minimal-left"></i
+              ></a>
+              {% endif %}
+              <span class="mx-2">
+                Page {{ user_refund.page }} of {{ user_refund.pages }}
+              </span>
+              {% if user_refund.has_next %}
+              <a
+                href="{{ url_for('rooms.refund', page=user_refund.next_num) }}"
+              >
+                Next <i class="now-ui-icons arrows-1_minimal-right"></i>
+              </a>
+              {% endif %}
+            </div>
+            <!----------------End pagination-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,4 +1,10 @@
-{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+{% extends "acclayout.html" %} {% block head_css %} {{ super() }} 
+<style>
+html {
+  overflow-y: scroll;
+}
+</style>
+{% endblock
 head_css %} {% block content %}
 <div class="panel-header panel-header-sm"></div>
 <!--Breadcrumb-->
@@ -24,61 +30,20 @@ head_css %} {% block content %}
       <!----------------->
       <h2 class="title mt-1 text-center">Update Room images</h2>
       <form method="POST" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }} {{ form.csrf_token }}
         <!------------------------UPLOAD IMAGES----------------------------------->
         <div class="mb-3">
-          {{ form.picture1.label() }}
-          {{ form.picture1(class="form-control-file form-control-sm") }}
-          {% if form.picture1.errors %}
-              {% for error in form.picture1.errors %}
-                <span class="text-danger">{{ error }}</span></br>
-              {% endfor %}
-          {% endif %}
-          <!------------->
-          {{ form.picture2.label() }}
-          {{ form.picture2(class="form-control-file form-control-sm") }}
-          {% if form.picture2.errors %}
-              {% for error in form.picture2.errors %}
-                <span class="text-danger">{{ error }}</span></br>
-              {% endfor %}
-          {% endif %}
-          <!------------->
-          {{ form.picture3.label() }}
-          {{ form.picture3(class="form-control-file form-control-sm") }}
-          {% if form.picture3.errors %}
-              {% for error in form.picture3.errors %}
-                <span class="text-danger">{{ error }}</span></br>
-              {% endfor %}
-          {% endif %}
-          <!------------->
-          {{ form.picture4.label() }}
-          {{ form.picture4(class="form-control-file form-control-sm") }}
-          {% if form.picture4.errors %}
-              {% for error in form.picture4.errors %}
-                <span class="text-danger">{{ error }}</span></br>
-              {% endfor %}
-          {% endif %}
-          <!------------->
-          {{ form.picture5.label() }}
-          {{ form.picture5(class="form-control-file form-control-sm") }}
-          {% if form.picture5.errors %}
-              {% for error in form.picture5.errors %}
-                <span class="text-danger">{{ error }}</span></br>
-              {% endfor %}
-          {% endif %}
-          <!------------->
-          {{ form.picture6.label() }}
-          {{ form.picture6(class="form-control-file form-control-sm") }}
-          {% if form.picture6.errors %}
-              {% for error in form.picture6.errors %}
+          {{ form.pictures.label() }}
+          {{ form.pictures(class="form-control-file form-control-sm", multiple=True) }}
+          {% if form.pictures.errors %}
+              {% for error in form.pictures.errors %}
                 <span class="text-danger">{{ error }}</span></br>
               {% endfor %}
           {% endif %}
         </div>
         <!------------------------------------------------------------------------>
         <div class="form-group text-right">
-          <!-- <button type="submit" class="btn btn-success">Update</button> -->
-           {{ form.submit(class="btn btn-info") }}
+           {{ form.submit(class="btn btn-info mt-3") }}
         </div>
       </form>
     </div>

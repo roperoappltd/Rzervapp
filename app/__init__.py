@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, session
 from app.config import Config 
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -6,7 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail
 #from flask_admin import Admin
-#from flask_wtf.csrf import CSRFProtect
+from flask_wtf import CSRFProtect
+from datetime import timedelta
 #from app.csrf import csrf, CSRFError
 
 # Create db object
@@ -18,7 +19,7 @@ mail = Mail()
 # creating a bcrypt instance for password hashing
 bcrypt = Bcrypt()
 # initializing csrf
-#csrf = CSRFProtect()
+csrf = CSRFProtect()
 
 
 # create an instance of loginManager 
@@ -34,7 +35,8 @@ def create_app(config_name='default'):
     app = Flask(__name__)
     # Load the proper configuration
     app.config.from_object(Config) #[config_name]
-    #csrf.init_app(app)
+    #setting how long session data can be store
+    #app.permanent_session_lifetime =  timedelta(hours=8)
 
     with app.app_context():
         # Initialize extensions
@@ -43,7 +45,7 @@ def create_app(config_name='default'):
         migrate.init_app(app, db)
         bcrypt.init_app(app)
         login_manager.init_app(app)
-        #csrf.init_app(app)
+        csrf.init_app(app)
 
         # Imports our route blueprints
         #from app.enrolls.routes import enrolls

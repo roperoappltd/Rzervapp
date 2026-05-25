@@ -135,9 +135,15 @@
               </a>
             </li>
             <li>
-              <a href="{{url_for('users.earnings')}}">
+              <a href="{{url_for('rooms.piggybank')}}">
                 <i class="now-ui-icons business_money-coins"></i>
                 <p>My Piggybank</p>
+              </a>
+            </li>
+            <li>
+              <a href="{{url_for('rooms.refund')}}">
+                <i class="now-ui-icons business_briefcase-24"></i>
+                <p>My Refund</p>
               </a>
             </li>
             <li>
@@ -146,16 +152,10 @@
                 <p>My Reviews</p>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a href="{{ url_for('users.logout') }}">
                 <i class="now-ui-icons media-1_button-power"></i>
                 <p>Log out</p>
-              </a>
-            </li>
-            <!-- <li>
-              <a href="./typography.html">
-                <i class="now-ui-icons text_caps-small"></i>
-                <p>Typography</p>
               </a>
             </li> -->
             <!-- hr data-content="Go to" class="hr-text" -->
@@ -291,7 +291,9 @@
                       href="{{url_for('rooms.bookings')}}"
                       >My Bookings</a
                     >
-                    <a class="dropdown-item" href="#">My Reviews</a>
+                    <a class="dropdown-item" href="{{url_for('users.logout')}}"
+                      >Log out</a
+                    >
                   </div>
                 </li>
               </ul>
