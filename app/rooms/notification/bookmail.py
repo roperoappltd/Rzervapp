@@ -6,6 +6,7 @@ from flask import url_for, current_app
 from flask_mail import Message
 from app import mail
 from app.models.roommodel import Rooms
+from app.models.bookmodel import Bookings
 from datetime import datetime
 import random
 
@@ -14,9 +15,9 @@ def booking_numgen():
     booking_number = f'{a}{random.randint(1,10000)}'
     return booking_number
 
-def booking_confirm_email(booking, room_id):
+def booking_confirm_email(booking, booking_id):
     '''This function enable to send a booking confirmation message'''
-    room = Rooms.query.get_or_404(room_id)
+    booking = Bookings.query.get_or_404(booking_id)
     now = datetime.now()
     date = now.strftime("%d/%m/%Y %H:%M")
     # message
@@ -80,7 +81,7 @@ def booking_confirm_email(booking, room_id):
             <p style="font-size: 15px;">We are please to confirm your booking.
             Please click the button below to view your booking summary. </p>
             <div>&nbsp;</div>
-            <a href="{ url_for('main.bookconfirm', room_id=room.id, _external=True) }">
+            <a href="{ url_for('main.bookconfirm', booking_id=booking.id, _external=True) }">
             <button class="favorite styled" type="button">Booking summary</button></a>
 
             <div>&nbsp;</div>

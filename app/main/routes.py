@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, session
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app import db
 from app.models.roommodel import Rooms
 from app.models.bookmodel import Bookings, Payments
@@ -39,23 +39,20 @@ def contact():
     
     return render_template('pages/getintouch.html', title='Contact')
 
-@main.route("/bookconfirm:/<int:room_id>", methods=['GET', 'POST']) 
-def bookconfirm(room_id):
+@main.route("/bookconfirm/<int:booking_id>", methods=['GET', 'POST']) 
+def bookconfirm(booking_id):
     '''This function create a route to render booking summary page'''
-    #today = current_date()
-    #booking = db.session.query(Bookings).filter(Bookings.user_id==current_user.id).first()
-    room = Rooms.query.get_or_404(room_id)
-    booking = db.session.query(Bookings).filter(
-        Bookings.user_id == current_user.id,
-        Bookings.active == "True",
-        Bookings.room_id == room.id
-        ).first()
-    #pay = Payments.query.join(Bookings).join(Rooms).filter(Bookings.room_id == Rooms.id).first()
+    booking = (
+                Bookings.query
+                .filter_by(id=booking_id)
+                .first_or_404()
+            )
     
     return render_template('pages/bookingmsg.html', title='Booking Summary',
-                            booking=booking, room=room )
+                            booking=booking)
 
 @main.route("/bookcancel:/<int:room_id>", methods=['GET', 'POST']) 
+#@login_required
 def bookcancel(room_id):
     '''This function create a route to render booking summary page'''
     #today = current_date()

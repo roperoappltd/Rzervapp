@@ -26,7 +26,8 @@ class Bookings(db.Model):
     serv_charge = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True, default=0.00)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), nullable=False)
-    payment = db.relationship('Payments', backref='bookings', uselist=False)
+    payment = db.relationship('Payments', backref='booking', uselist=False, 
+                            cascade="all, delete-orphan", single_parent=True)
     earnings = db.relationship('HostEarning', backref='host', lazy=True)
     refund = db.relationship('Refund', backref='booking', uselist=False)
 
@@ -63,8 +64,10 @@ class Payments(db.Model):
     #voucher_id = db.Column(db.Integer, db.ForeignKey('vouchers.id'), nullable=True)
     voucher_id = db.Column(db.Integer, db.ForeignKey('vouchers.id'), nullable=True)
     voucher = db.relationship('Vouchers', back_populates='payment')
-    host_earning = db.relationship('HostEarning', backref='payment', uselist=False)
-    refund = db.relationship('Refund', backref='payment',uselist=False)
+    host_earning = db.relationship('HostEarning', backref='payment', 
+                                   uselist=False, cascade="all, delete-orphan")
+    refund = db.relationship('Refund', backref='payments',uselist=False,
+                                        cascade="all, delete-orphan")
 
     def get_all(cls):
         payments = cls.query.all()
@@ -89,7 +92,7 @@ class Vouchers(db.Model):
     value = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
     is_active = db.Column(db.String(6), nullable=True, default='True')
     #payment = db.relationship('Payments', backref='vouchers')
-    payment = db.relationship('Payments', back_populates='voucher', uselist=False)
+    payment = db.relationship('Payments', back_populates='voucher', lazy=True)
 
 
     def __repr__(self):

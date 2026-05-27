@@ -177,22 +177,28 @@ def cancel_booking(booking_id):
 @rooms.route("/checkout/<int:room_id>", methods=['GET', 'POST']) 
 @login_required
 def checkout(room_id):
-    '''This function create a route to render voucher''' 
-    # update payment info: discount - total paid - status - voucher id - pay_method
+    '''This function create a route to handle checkout''' 
     room = Rooms.query.get_or_404(room_id)
     book = db.session.query(Bookings).with_for_update().filter(
         Bookings.room_id == room.id,
         Bookings.status == "Pending",
         ).first()
-    #helper function that compute book days
-    bookdays = days_between(book.arrival, book.departure) 
+
+    if not book:
+        flash('Server error or booking already created.', 'warning')
+        return redirect(url_for('rooms.room'))
+    
+    #compute bookdays
+    bookdays = ( book.departure - book.arrival).days 
+
+    if bookdays <= 0:
+        flash("Invalid booking dates.", "warning")
+        return redirect(url_for('rooms.roomdetail', room_id=room.id))
 
     # Import the voucher form
-    #form = VouchersForm()
     payform = PaymentForm()
-    subtotal = room.price * bookdays
+    subtotal = room.price * bookdays 
     total_paid = subtotal
-
     # default values
     voucher = None
     discount = 0
@@ -225,7 +231,6 @@ def checkout(room_id):
                             voucher_id=voucher.id if voucher else None)
         db.session.add(payment)
         db.session.flush()
-
         # Create hostearning record
         earning = HostEarning(user_id=book.rooms.user_id, booking_id=book.id,
                               payment_id=payment.id, gross_amount=subtotal,
@@ -245,7 +250,7 @@ def checkout(room_id):
             db.session.add(usage)
             db.session.commit()
         
-        return redirect(url_for('rooms.paysuccess', room_id=room.id))
+        return redirect(url_for('rooms.paysuccess', booking_id=book.id))
     # Pass text to submit button    
     #payform.submit.label.text = f"Pay £{total_paid}"
     return render_template('pages/payment.html',  title='Checkout', 
@@ -296,21 +301,20 @@ def checkvoucher():
                     "discount": float(voucher.value)
                     })
 
-@rooms.route("/paysuccess/<int:room_id>", methods=['GET', 'POST']) 
+@rooms.route("/paysuccess/<int:booking_id>", methods=['GET', 'POST']) 
 @login_required
-def paysuccess(room_id):
+def paysuccess(booking_id):
     '''This function create a route to render payment confirmation page''' 
     # query the db about specific user reviews
-    room = Rooms.query.get_or_404(room_id)
-    booking = db.session.query(Bookings).filter(
-        Bookings.user_id == current_user.id,
-        Bookings.active == "True",
-        Bookings.room_id == room.id
-        ).first()
+    #room = Rooms.query.get_or_404(room_id)
+    booking = (
+                Bookings.query
+                .filter_by(id=booking_id)
+                .first_or_404()
+            )
     # payment = Payments.query.get_or_404(current_user.id)
-    #booking = db.session.query(Bookings).filter(Bookings.user_id==current_user.id).first()
     if booking:
-        booking_confirm_email(booking, room.id)
+        booking_confirm_email(booking, booking.id)
         flash(f'Link to view booking summary sent to {booking.pguest_email}', 'success')
     else:
         flash('Server error, summary not sent, contact us now', 'warning' )
