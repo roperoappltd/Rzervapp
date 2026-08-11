@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block content %}
+<div class="content-section text-center">
+  <img
+    src="{{ url_for('static', filename='errors-img/error-500-server.png') }}"
+    alt="404-errors"
+  />
+</div>
+{% endblock content %}

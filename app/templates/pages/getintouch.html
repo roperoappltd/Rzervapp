@@ -4,11 +4,11 @@ head_css %} {% block content %}
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Contact</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _('Contact') }} 📞📨📍</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li class="current">Contact</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Contact') }}</li>
       </ol>
     </nav>
   </div>
@@ -16,7 +16,7 @@ head_css %} {% block content %}
 <!-- End Page Title -->
 
 <!-- Contact Section -->
-<section id="contact" class="contact section">
+<section id="contact" class="contact section pt-0">
   <!-- Map Section -->
   <div class="map-container mb-5 mt-2">
     <!-- <iframe
@@ -48,7 +48,7 @@ head_css %} {% block content %}
             <i class="bi bi-geo-alt"></i>
           </div>
           <div class="info-content">
-            <h4>Location</h4>
+            <h4>{{ _('Location') }}</h4>
             <p>18 Perry hill</p>
             <p>London, SE6 4AD - United Kingdom</p>
           </div>
@@ -61,9 +61,9 @@ head_css %} {% block content %}
             <i class="bi bi-telephone"></i>
           </div>
           <div class="info-content">
-            <h4>Phone &amp; Email</h4>
+            <h4>{{ _('Phone & Email') }}</h4>
             <p>+44 7818 295 292</p>
-            <p>connectwithus@rezerva.com</p>
+            <p>connectwithus@jambo.com</p>
           </div>
         </div>
       </div>
@@ -77,68 +77,86 @@ head_css %} {% block content %}
     >
       <div class="col-lg-10">
         <div class="contact-form-wrapper">
-          <h2 class="text-center mb-4">Send a Message</h2>
+          <h2 class="text-center mb-4">{{ _('How can we help?') }} 🙋🏻‍♀️</h2>
 
-          <form action="forms/contact.php" method="post" class="php-email-form">
+          <form action="" method="POST">
+            {{ form.csrf_token }} {{ form.hidden_tag() }}
             <div class="row g-3">
               <div class="col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="name"
-                    placeholder="Your Name"
-                    required=""
-                  />
+                <div class="form-group1">
+                  <label class="pb-1"> {{ _('Name') }}</label>
+                  {{ form.name.label(class="form-control-label pb-1") }} {% if
+                  form.name.errors %} {{ form.name(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.name(class="form-control form-control-lg")
+                  }} {% endif %}
                 </div>
               </div>
 
               <div class="col-md-6">
-                <div class="form-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    placeholder="Email Address"
-                    required=""
-                  />
+                <div class="form-group1">
+                  <label class="pb-1"> {{ _('Email') }}</label>
+                  {{ form.email.label(class="form-control-label pb-1") }} {% if
+                  form.email.errors %} {{ form.email(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.email(class="form-control form-control-lg")
+                  }} {% endif %}
                 </div>
               </div>
 
               <div class="col-12">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="subject"
-                    placeholder="Subject"
-                    required=""
-                  />
+                <div class="form-group1">
+                  <label class="pb-1"> {{ _('Subject') }}</label>
+                  {{ form.subject.label(class="form-control-label pb-1") }} {%
+                  if form.subject.errors %} {{ form.subject(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.subject.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.subject(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
 
               <div class="col-12">
-                <div class="form-group">
-                  <textarea
-                    class="form-control"
-                    name="message"
-                    placeholder="Your Message"
-                    rows="6"
-                    required=""
-                  ></textarea>
+                <div class="form-group1">
+                  <label class="pb-1"> {{ _('Add your Message') }}</label>
+                  {{ form.message.label(class="form-control-label pb-1") }} {%
+                  if form.message.errors %} {{ form.message(class="form-control
+                  form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.message.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form.message(class="form-control
+                  form-control-lg") }} {% endif %}
                 </div>
               </div>
 
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">
                   Your message has been sent. Thank you!
                 </div>
-              </div>
+              </div> -->
 
               <div class="col-12 text-center">
-                <button type="submit" class="btn-submit">SEND MESSAGE</button>
+                <!-- <button type="submit" class="btn-submit">SEND MESSAGE</button> -->
+                {{ form.submit(class="btn btn-success btn-submit") }}
               </div>
             </div>
           </form>

@@ -1,0 +1,272 @@
+/*body {
+  margin: 0;
+  padding-top: 40px;
+  color: #2e323c;
+  background: #f5f6fa;
+  position: relative;
+  height: 100%;
+}*/
+.account-settings .user-profile {
+  margin: 0 0 1rem 0;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+.account-settings .user-profile .user-avatar {
+  margin: 0 0 1rem 0;
+}
+.account-settings .user-profile .user-avatar img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+.account-settings .user-profile h5.user-name {
+  margin: 0 0 0.5rem 0;
+}
+.account-settings .user-profile h6.user-email {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9fa8b9;
+}
+.account-settings .about {
+  margin: 2rem 0 0 0;
+  text-align: center;
+}
+.account-settings .about h5 {
+  margin: 0 0 15px 0;
+  color: #007ae1;
+}
+.account-settings .about p {
+  font-size: 0.825rem;
+}
+.form-control {
+  border: 1px solid #cfd1d8;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 0.825rem;
+  background: #ffffff;
+  color: #2e323c;
+}
+
+.card {
+  background: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================
+   LOYALTY POINTS FLOATING BADGE
+   ========================================== */
+
+.points-badge {
+  position: fixed;
+  top: 100px;
+  right: 25px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffd700, #ffb700);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  overflow: hidden;
+  z-index: 999;
+
+  /* shadow + right glow */
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    20px 0 35px rgba(255, 215, 0, 0.45);
+
+  animation:
+    floatPoints 3s ease-in-out infinite,
+    pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* glossy reflection */
+.points-badge::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  width: 45%;
+  height: 35%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  filter: blur(8px);
+  transform: rotate(-20deg);
+}
+
+/* points value */
+.points-value {
+  font-size: 3rem;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}
+
+/* label */
+.points-text {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+/* floating animation */
+@keyframes floatPoints {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* glowing effect */
+@keyframes pulseGlow {
+  0% {
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.25),
+      20px 0 35px rgba(255, 215, 0, 0.45);
+  }
+
+  50% {
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.25),
+      20px 0 60px rgba(255, 215, 0, 0.9);
+  }
+
+  100% {
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.25),
+      20px 0 35px rgba(255, 215, 0, 0.45);
+  }
+}
+/*--------Responsiveness----------------------*/
+@media (max-width: 768px) {
+  .points-badge {
+    width: 80px;
+    height: 80px;
+    top: 80px;
+    right: 10px;
+  }
+  .points-value {
+    font-size: 1.3rem;
+  }
+  .points-text {
+    font-size: 0.6rem;
+  }
+}
+/* Room Stats */
+.rs-metric-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+.rs-metric-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.rs-metric-placeholder {
+  opacity: 0.6;
+}
+
+.rs-chart-card {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+.rs-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background: transparent;
+}
+.rs-chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rs-segmented {
+  display: flex;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+  padding: 3px;
+}
+.rs-seg-btn {
+  border: none;
+  background: transparent;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.rs-seg-btn.active {
+  background: #ff385c;
+  color: #fff;
+  opacity: 1;
+}
+
+.rs-theme-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.rs-theme-btn:hover {
+  border-color: #ff385c;
+  color: #ff385c;
+}
+
+.rs-chart-wrap {
+  position: relative;
+  height: 360px;
+}
+
+/* Dark mode -- applied to the card itself, not the whole page */
+.rs-chart-card.rs-dark {
+  background: #1c1f26;
+  color: #e8e8e8;
+}
+.rs-chart-card.rs-dark .rs-chart-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.rs-chart-card.rs-dark .rs-segmented {
+  background: rgba(255, 255, 255, 0.08);
+}
+.rs-chart-card.rs-dark .rs-theme-btn {
+  border-color: rgba(255, 255, 255, 0.15);
+}

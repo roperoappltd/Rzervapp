@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jambo booking assistant — floating chat widget</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --teal: #123c39;
+        --teal-light: #1b534f;
+        --coral: #f4623a;
+        --coral-dark: #d6491f;
+        --gold: #f2a93b;
+        --green: rgb(1, 249, 1);
+        --ivory: #fbf3e7;
+        --charcoal: #2a2521;
+        --charcoal-soft: #6b615a;
+        --line: #e8dcc8;
+        --skin: #c98a54;
+        --skin-shadow: #b5713e;
+        --hair: #2e1d14;
+        --hair-warm: #4a3020;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      /*html,body{
+    height:100%;
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:#EFE7DA;
+  }*/
+      /* demo page dressing only — not part of the widget */
+      .demo-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--charcoal-soft);
+        font-size: 14px;
+        text-align: center;
+        padding: 24px;
+      }
+
+      /* ============ Floating widget ============ */
+      .jambo-chat-root {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 9999;
+        font-family: 'Inter', sans-serif;
+      }
+
+      .jambo-fab {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        position: relative;
+        background: var(--teal);
+        box-shadow: 0 8px 24px rgba(18, 60, 57, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .jambo-fab:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(18, 60, 57, 0.4);
+      }
+      .jambo-fab:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      .jambo-fab::before {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 2px solid var(--gold);
+        opacity: 0.55;
+        animation: breathe 2.6s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .jambo-fab::before {
+          animation: none;
+        }
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.55;
+        }
+        50% {
+          transform: scale(1.12);
+          opacity: 0.15;
+        }
+      }
+
+      .jambo-fab .jw-avatar-wrap {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--ivory);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .jambo-fab svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .jambo-status-dot {
+        position: absolute;
+        bottom: 2px;
+        right: 2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--gold);
+        border: 3px solid #efe7da;
+      }
+
+      /* ============ Chat panel ============ */
+      .jambo-panel {
+        position: absolute;
+        right: 0;
+        bottom: 80px;
+        width: 360px;
+        max-width: calc(100vw - 32px);
+        height: 520px;
+        max-height: calc(100vh - 140px);
+        background: var(--ivory);
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(18, 60, 57, 0.28);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+        pointer-events: none;
+        transition:
+          opacity 0.18s ease,
+          transform 0.18s ease;
+      }
+      .jambo-chat-root.open .jambo-panel {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .jambo-header {
+        background: var(--teal);
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+      .jambo-header .jw-avatar-wrap {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--ivory);
+        flex-shrink: 0;
+      }
+      .jambo-header .jw-avatar-wrap svg {
+        width: 100%;
+        height: 100%;
+      }
+      .jambo-header-text {
+        flex: 1;
+        min-width: 0;
+      }
+      .jambo-header-text .jw-header-name {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 17px;
+        color: var(--ivory);
+        line-height: 1.2;
+      }
+      .jambo-header-text .jw-header-status {
+        font-size: 12px;
+        color: #cfe3e0;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 2px;
+      }
+      .jambo-header-text .jw-header-status::before {
+        content: '';
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+        display: inline-block;
+      }
+      .jambo-close {
+        background: none;
+        border: none;
+        color: #cfe3e0;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 8px;
+        line-height: 0;
+        transition: background 0.15s ease;
+      }
+      .jambo-close:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .jambo-close:focus-visible {
+        outline: 2px solid var(--gold);
+      }
+
+      .jambo-thread {
+        flex: 1;
+        overflow-y: auto;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .jambo-thread::-webkit-scrollbar {
+        width: 6px;
+      }
+      .jambo-thread::-webkit-scrollbar-thumb {
+        background: var(--line);
+        border-radius: 3px;
+      }
+
+      .jw-msg-row {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+      }
+      .jw-msg-row.user {
+        flex-direction: row-reverse;
+      }
+      .jw-msg-row .jw-mini-avatar {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--ivory);
+        border: 1px solid var(--line);
+      }
+      .jw-msg-row .jw-mini-avatar svg {
+        width: 100%;
+        height: 100%;
+      }
+      .jw-msg-row .jw-mini-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .jw-msg-row .jw-mini-avatar.jw-user-avatar {
+        background: var(--teal);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: #fff;
+        border-color: var(--teal);
+      }
+      .jw-msg-col {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        max-width: 74%;
+      }
+      .jw-msg-row.user .jw-msg-col {
+        align-items: flex-end;
+      }
+      .jw-msg-name {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--charcoal-soft);
+        padding-left: 3px;
+      }
+      .jw-bubble {
+        padding: 10px 14px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .jw-msg-row.bot .jw-bubble {
+        background: #fff;
+        color: var(--charcoal);
+        border: 1px solid var(--line);
+        border-bottom-left-radius: 4px;
+      }
+      .jw-msg-row.user .jw-bubble {
+        background: var(--coral);
+        color: #fff;
+        border-bottom-right-radius: 4px;
+      }
+
+      .jw-room-cards {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 2px 2px 4px;
+      }
+      .jw-room-card {
+        flex-shrink: 0;
+        width: 128px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+      .jw-room-card img {
+        width: 100%;
+        height: 74px;
+        object-fit: cover;
+        display: block;
+        background: var(--line);
+      }
+      .jw-room-card .jw-rc-body {
+        padding: 6px 8px;
+      }
+      .jw-room-card .jw-rc-name {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--charcoal);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .jw-room-card .jw-rc-price {
+        font-size: 11px;
+        color: var(--charcoal-soft);
+        margin-top: 1px;
+      }
+
+      .jw-checkout-btn {
+        display: inline-block;
+        margin-top: 2px;
+        padding: 9px 16px;
+        border-radius: 999px;
+        background: var(--coral);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.15s ease;
+      }
+      .jw-checkout-btn:hover {
+        background: var(--coral-dark);
+      }
+
+      .jw-typing-row {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+      }
+      .jw-typing-bubble {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-bottom-left-radius: 4px;
+        padding: 12px 16px;
+        border-radius: 16px;
+        display: flex;
+        gap: 4px;
+      }
+      .jw-typing-bubble span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--charcoal-soft);
+        opacity: 0.5;
+        animation: blink 1.1s infinite;
+      }
+      .jw-typing-bubble span:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .jw-typing-bubble span:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      @keyframes blink {
+        0%,
+        80%,
+        100% {
+          opacity: 0.25;
+          transform: translateY(0);
+        }
+        40% {
+          opacity: 1;
+          transform: translateY(-2px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .jw-typing-bubble span {
+          animation: none;
+          opacity: 0.6;
+        }
+      }
+
+      .jambo-inputbar {
+        flex-shrink: 0;
+        padding: 12px 14px;
+        background: #fff;
+        border-top: 1px solid var(--line);
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .jambo-inputbar input {
+        flex: 1;
+        border: 1px solid var(--line);
+        background: var(--ivory);
+        border-radius: 999px;
+        padding: 11px 16px;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        color: var(--charcoal);
+        outline: none;
+        transition: border-color 0.15s ease;
+      }
+      .jambo-inputbar input:focus {
+        border-color: var(--coral);
+      }
+      .jambo-inputbar input::placeholder {
+        color: var(--charcoal-soft);
+      }
+
+      .jambo-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--coral);
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition:
+          background 0.15s ease,
+          transform 0.1s ease;
+      }
+      .jambo-send:hover {
+        background: var(--coral-dark);
+      }
+      .jambo-send:active {
+        transform: scale(0.94);
+      }
+      .jambo-send:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 2px;
+      }
+      .jambo-send:disabled {
+        background: var(--line);
+        cursor: default;
+      }
+
+      @media (max-width: 420px) {
+        .jambo-panel {
+          width: calc(100vw - 24px);
+          right: -12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="demo-page">
+      Your page content goes here.<br />The chat widget floats in the
+      bottom-right corner — click the avatar to open it.
+    </div> -->
+
+    <!-- ============ WIDGET ============ -->
+    <div class="jambo-chat-root" id="jamboRoot">
+      <div
+        class="jambo-panel"
+        role="dialog"
+        aria-label="Booking assistant chat"
+        aria-hidden="true"
+        id="jamboPanel"
+      >
+        <div class="jambo-header">
+          <div class="jw-avatar-wrap">AVATAR_SVG_PLACEHOLDER</div>
+          <div class="jambo-header-text">
+            <div class="jw-header-name">Asseta</div>
+            <div class="jw-header-status">Online · Jambo booking assistant</div>
+          </div>
+          <button class="jambo-close" id="jamboClose" aria-label="Close chat">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M5 5L15 15M15 5L5 15"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="jambo-thread" id="jamboThread">
+          <div class="jw-msg-row bot">
+            <div class="jw-mini-avatar">AVATAR_SVG_PLACEHOLDER</div>
+            <div class="jw-msg-col">
+              <div class="jw-msg-name">Asseta</div>
+              <div class="jw-bubble">
+                Hi, I'm Asseta 👋 Tell me where you'd like to stay and your
+                dates, and I'll find you a room.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form class="jambo-inputbar" id="jamboForm">
+          <input
+            type="text"
+            id="jamboInput"
+            placeholder="Ask about rooms, dates, cities…"
+            autocomplete="off"
+            aria-label="Message"
+          />
+          <button type="submit" class="jambo-send" aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M3 10L17 3L12 17L9.5 11.5L3 10Z"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <button
+        class="jambo-fab"
+        id="jamboFab"
+        aria-label="Open booking chat"
+        aria-expanded="false"
+      >
+        <div class="jw-avatar-wrap">AVATAR_SVG_PLACEHOLDER</div>
+        <span class="jambo-status-dot"></span>
+      </button>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <script>
+      window.JAMBO_CURRENT_USER = {
+        name: '{{ current_user.username }}',
+        avatarUrl:
+          "{{ url_for('static', filename='userpics/' + current_user.image_file) }}",
+      };
+    </script>
+    {% endif %}
+
+    <script>
+      (function () {
+        function getCurrentUser() {
+          return window.JAMBO_CURRENT_USER || { name: 'Guest', avatarUrl: '' };
+        }
+
+        function initials(name) {
+          return (name || 'G')
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map((w) => w[0].toUpperCase())
+            .join('');
+        }
+
+        function userAvatarHtml() {
+          const user = getCurrentUser();
+          if (user.avatarUrl) {
+            return `<img src="${user.avatarUrl}" alt="${user.name}">`;
+          }
+          return initials(user.name);
+        }
+
+        const AVATAR_SVG = `
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="100" fill="#FBF3E7"/>
+    <path d="M34 200 Q40 150 100 146 Q160 150 166 200 Z" fill="#1F2A44"/>
+    <path d="M78 152 L100 176 L122 152 L118 148 L100 166 L82 148 Z" fill="#F4623A"/>
+    <path d="M34 200 Q46 168 78 154 L86 162 Q56 176 44 200 Z" fill="#28345A"/>
+    <path d="M166 200 Q154 168 122 154 L114 162 Q144 176 156 200 Z" fill="#28345A"/>
+    <circle cx="90" cy="182" r="2.6" fill="#F2A93B"/>
+    <circle cx="90" cy="192" r="2.6" fill="#F2A93B"/>
+    <rect x="88" y="132" width="24" height="24" rx="8" fill="#9A6636"/>
+    <g fill="#241712">
+      <ellipse cx="100" cy="70" rx="54" ry="52"/>
+    </g>
+    <g fill="#2E1D14">
+      <rect x="52"  y="40" width="14" height="34" rx="7" transform="rotate(-8 59 57)"/>
+      <rect x="66"  y="30" width="14" height="36" rx="7" transform="rotate(-4 73 48)"/>
+      <rect x="82"  y="24" width="14" height="34" rx="7"/>
+      <rect x="98"  y="22" width="14" height="34" rx="7"/>
+      <rect x="114" y="24" width="14" height="34" rx="7" transform="rotate(4 121 41)"/>
+      <rect x="129" y="32" width="14" height="34" rx="7" transform="rotate(9 136 49)"/>
+      <rect x="141" y="46" width="14" height="32" rx="7" transform="rotate(16 148 62)"/>
+      <rect x="46"  y="58" width="13" height="28" rx="6.5" transform="rotate(-18 52 72)"/>
+      <rect x="148" y="60" width="13" height="28" rx="6.5" transform="rotate(18 154 74)"/>
+    </g>
+    <ellipse cx="48" cy="106" rx="7" ry="10" fill="#9A6636"/>
+    <ellipse cx="152" cy="106" rx="7" ry="10" fill="#9A6636"/>
+    <circle cx="48" cy="112" r="3" fill="#F2A93B"/>
+    <circle cx="152" cy="112" r="3" fill="#F2A93B"/>
+    <ellipse cx="100" cy="108" rx="50" ry="54" fill="#9A6636"/>
+    <path d="M52 92 Q100 62 148 92 Q140 78 100 74 Q60 78 52 92 Z" fill="#241712" opacity="0.9"/>
+    <path d="M64 98 Q75 91 87 97" stroke="#241712" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <path d="M113 97 Q125 91 136 98" stroke="#241712" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="76" cy="112" rx="9" ry="7" fill="#FFFFFF"/>
+    <ellipse cx="124" cy="112" rx="9" ry="7" fill="#FFFFFF"/>
+    <circle cx="77" cy="112" r="5" fill="#7A4A20"/>
+    <circle cx="125" cy="112" r="5" fill="#7A4A20"/>
+    <circle cx="77" cy="112" r="2.3" fill="#241712"/>
+    <circle cx="125" cy="112" r="2.3" fill="#241712"/>
+    <circle cx="79" cy="110" r="1.1" fill="#FFFFFF"/>
+    <circle cx="127" cy="110" r="1.1" fill="#FFFFFF"/>
+    <g fill="none" stroke="#151515" stroke-width="4" stroke-linejoin="round">
+      <rect x="60" y="100" width="34" height="26" rx="9"/>
+      <rect x="106" y="100" width="34" height="26" rx="9"/>
+      <path d="M94 111 L106 111" stroke-width="4"/>
+      <path d="M60 108 L46 104" stroke-width="3.6" stroke-linecap="round"/>
+      <path d="M140 108 L154 104" stroke-width="3.6" stroke-linecap="round"/>
+    </g>
+    <path d="M100 118 L96 134 Q100 139 104 134 Z" fill="#87582D"/>
+    <ellipse cx="70" cy="134" rx="8" ry="5.5" fill="#F4623A" opacity="0.22"/>
+    <ellipse cx="130" cy="134" rx="8" ry="5.5" fill="#F4623A" opacity="0.22"/>
+    <path d="M80 146 Q100 160 120 146" stroke="#5C3418" stroke-width="4.2" fill="none" stroke-linecap="round"/>
+  </svg>`;
+
+        document
+          .querySelectorAll('.jw-avatar-wrap, .jw-mini-avatar')
+          .forEach((el) => {
+            el.innerHTML = AVATAR_SVG;
+          });
+
+        const root = document.getElementById('jamboRoot');
+        const fab = document.getElementById('jamboFab');
+        const closeBtn = document.getElementById('jamboClose');
+        const panel = document.getElementById('jamboPanel');
+        const thread = document.getElementById('jamboThread');
+        const form = document.getElementById('jamboForm');
+        const input = document.getElementById('jamboInput');
+
+        function openChat() {
+          root.classList.add('open');
+          fab.setAttribute('aria-expanded', 'true');
+          panel.setAttribute('aria-hidden', 'false');
+          setTimeout(() => input.focus(), 150);
+        }
+        function closeChat() {
+          root.classList.remove('open');
+          fab.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('aria-hidden', 'true');
+          fab.focus();
+        }
+        fab.addEventListener('click', () => {
+          root.classList.contains('open') ? closeChat() : openChat();
+        });
+        closeBtn.addEventListener('click', closeChat);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && root.classList.contains('open'))
+            closeChat();
+        });
+
+        function roomCardsHtml(rooms) {
+          if (!rooms || !rooms.length) return '';
+          const cards = rooms
+            .map(
+              (r) => `
+      <a class="jw-room-card" href="/roomsearch?location=${encodeURIComponent(r.location || '')}" target="_blank" rel="noopener">
+        <img src="${r.image_url || ''}" alt="${r.name || 'Room'}" onerror="this.style.visibility='hidden'">
+        <div class="jw-rc-body">
+          <div class="jw-rc-name">${r.name || 'Room'}</div>
+          <div class="jw-rc-price">${r.price != null ? r.price + ' / night' : ''}</div>
+        </div>
+      </a>`,
+            )
+            .join('');
+          return `<div class="jw-room-cards">${cards}</div>`;
+        }
+
+        function checkoutButtonHtml(checkoutUrl) {
+          if (!checkoutUrl) return '';
+          return `<a class="jw-checkout-btn" href="${checkoutUrl}">Complete payment</a>`;
+        }
+
+        function addMessage(text, who, rooms, checkoutUrl) {
+          const row = document.createElement('div');
+          row.className = 'jw-msg-row ' + who;
+          if (who === 'bot') {
+            row.innerHTML = `<div class="jw-mini-avatar">${AVATAR_SVG}</div><div class="jw-msg-col"><div class="jw-bubble"></div>${roomCardsHtml(rooms)}${checkoutButtonHtml(checkoutUrl)}</div>`;
+          } else {
+            row.innerHTML = `<div class="jw-mini-avatar jw-user-avatar">${userAvatarHtml()}</div><div class="jw-msg-col"><div class="jw-bubble"></div></div>`;
+          }
+          row.querySelector('.jw-bubble').textContent = text;
+          thread.appendChild(row);
+          thread.scrollTop = thread.scrollHeight;
+        }
+
+        function showTyping() {
+          const row = document.createElement('div');
+          row.className = 'jw-typing-row';
+          row.id = 'jamboTyping';
+          row.innerHTML = `<div class="jw-mini-avatar">${AVATAR_SVG}</div><div class="jw-typing-bubble"><span></span><span></span><span></span></div>`;
+          thread.appendChild(row);
+          thread.scrollTop = thread.scrollHeight;
+        }
+        function hideTyping() {
+          const t = document.getElementById('jamboTyping');
+          if (t) t.remove();
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const text = input.value.trim();
+          if (!text) return;
+          addMessage(text, 'user');
+          input.value = '';
+          showTyping();
+          callAgent(text)
+            .then((data) => {
+              hideTyping();
+              addMessage(
+                data.reply ||
+                  "Sorry, I didn't catch that — could you try again?",
+                'bot',
+                data.rooms,
+                data.checkout_url,
+              );
+            })
+            .catch(() => {
+              hideTyping();
+              addMessage(
+                "I'm having trouble connecting right now. Please try again in a moment.",
+                'bot',
+              );
+            });
+        });
+
+        // Reads the CSRF meta tag your base template should expose:
+        //   <meta name="csrf-token" content="{{ csrf_token() }}">
+        function getCsrfToken() {
+          const meta = document.querySelector('meta[name="csrf-token"]');
+          return meta ? meta.content : '';
+        }
+
+        function callAgent(message) {
+          return fetch('/api/agent/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCsrfToken(),
+            },
+            body: JSON.stringify({ message }),
+          }).then((r) => {
+            if (!r.ok) throw new Error('Agent request failed: ' + r.status);
+            return r.json();
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

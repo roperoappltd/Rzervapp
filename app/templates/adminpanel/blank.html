@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block admincontent %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item pl-3">
+      <a
+        style="padding-left: 15px; text-decoration: none"
+        href="{{url_for('admin.index')}}"
+        >{{ _('Dashboard') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ _('Users') }}</li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-3">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">Jambo Users 👤👤👤</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Empty card</h5>
+              </div>
+              <div class="card-body"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock %}

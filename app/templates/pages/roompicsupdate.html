@@ -4,16 +4,15 @@ html {
   overflow-y: scroll;
 }
 </style>
-{% endblock
-head_css %} {% block content %}
+{% endblock head_css %} {% block content %}
 <div class="panel-header panel-header-sm"></div>
 <!--Breadcrumb-->
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item pl-3">
-      <a href="{{url_for('users.listings')}}">My Listings</a>
+      <a href="{{url_for('users.listings')}}">{{ _('My Listings') }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Room images update</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ _('Room images update') }}</li>
   </ol>
 </nav>
 <!--End Breadcrumb-->
@@ -28,7 +27,7 @@ head_css %} {% block content %}
       <div class="alert alert-{{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
       <!----------------->
-      <h2 class="title mt-1 text-center">Update Room images</h2>
+      <h2 class="title mt-1 text-center">{{ _('Update Room images') }}</h2>
       <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }} {{ form.csrf_token }}
         <!------------------------UPLOAD IMAGES----------------------------------->

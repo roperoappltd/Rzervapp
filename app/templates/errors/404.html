@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<div class="content-section text-center">
+  <img
+    src="{{ url_for('static', filename='errors-img/error-404.png') }}"
+    alt="404-errors"
+    class="img-fluid"
+    width="750"
+    height="450"
+  />
+  <!-- <h1 class="fw-bolder">Page Not Found</h1> -->
+</div>
+{% endblock content %}

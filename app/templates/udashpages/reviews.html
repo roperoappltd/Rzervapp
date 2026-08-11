@@ -1,0 +1,62 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item pl-3">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('udash.udashboard')}}"
+        >{{ _('Dashboard') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Reviews') }}
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-2">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ _('Rating & Reviews') }} ⭐⭐⭐⭐⭐</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="about mb-0">{{ _('Room reviews & rating') }} 👍</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="text-primary">
+                      <th>{{ _('Date') }}</th>
+                      <th>{{ _('Review Msg') }}</th>
+                      <th>{{ _('Room') }}</th>
+                      <th>{{ _('Located') }}</th>
+                      <th class="text-right">{{ _('Rating') }}</th>
+                    </thead>
+                    {% for rev in myrevs %}
+                    <tbody>
+                      <tr>
+                        <td>{{ rev.date_posted.strftime('%d %B %Y') }}</td>
+                        <td>{{ rev.message }}</td>
+                        <td>{{ rev.rooms.room_name }}</td>
+                        <td>{{ rev.rooms.room_location }}</td>
+                        <td class="text-right">{{ rev.rate_us }}</td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock content %}

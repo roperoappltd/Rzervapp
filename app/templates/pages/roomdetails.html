@@ -1,14 +1,57 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock
-head_css %} {% block content %}
+{% extends "base.html" %} {% block head_css %} {{ super() }}
+<link
+  href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
+  rel="stylesheet"
+/>
+<style>
+  #calendar {
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+  .fc {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .fc-toolbar-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .fc-daygrid-event {
+    padding: 2px 4px;
+  }
+  .calendar-legend {
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+  }
+
+  .legend-box {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border-radius: 4px;
+  }
+
+  /* optional polish */
+  .calendar-legend small {
+    font-weight: 500;
+    color: #495057;
+  }
+</style>
+
+{% endblock head_css %} {% block content %}
 
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Room Details</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _("Room Details") }}</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li class="current">Room Details</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _("Home") }}</a></li>
+        <li class="current">{{ _("Room Details") }}</li>
       </ol>
     </nav>
   </div>
@@ -32,7 +75,7 @@ head_css %} {% block content %}
           <!-- src="{{ url_for('static', filename='img/hotel/room-15.webp')}}" -->
           <div class="room-badge">
             <span class="text-white"
-              >Located in {{roominfo.room_location}}<!--Premium Room--></span
+              >{{ _("Located in") }} {{roominfo.room_location}}<!--Premium Room--></span
             >
           </div>
         </div>
@@ -78,7 +121,9 @@ head_css %} {% block content %}
             </div>
             {% elif revscore == 0 %}
             <span class="rating-score">{{ revscore }}</span>
-            <div class="stars"><span>Room has no review yet!</span></div>
+            <div class="stars">
+              <span>{{ _("Room has no review yet!") }}</span>
+            </div>
             {% endif %}
             <!-- <div class="stars">
               <i class="bi bi-star-fill"></i>
@@ -87,7 +132,7 @@ head_css %} {% block content %}
               <i class="bi bi-star-fill"></i>
               <i class="bi bi-star-fill"></i>
             </div> -->
-            <span class="reviews-count">({{totalrev}} reviews)</span>
+            <span class="reviews-count">({{totalrev}} {{ _("reviews") }})</span>
           </div>
           <h1 class="room-title">{{ roominfo.room_name }}</h1>
           <p class="room-tagline">
@@ -98,11 +143,14 @@ head_css %} {% block content %}
           <div class="room-capacity mb-4">
             <div class="capacity-item">
               <i class="bi bi-people"></i>
-              <span>Up to {{ roominfo.max_occupancy }} guests</span>
+              <span
+                >{{ _("Up to") }} {{ roominfo.max_occupancy }} {{ _("guests")
+                }}</span
+              >
             </div>
             <div class="capacity-item">
               <i class="bi bi-grid"></i>
-              <span>{{ roominfo.room_size }} sq ft</span>
+              <span>{{ roominfo.room_size }} {{ _("sq ft") }}</span>
             </div>
             <div class="capacity-item">
               <i class="bi bi-hypnotize"></i>
@@ -110,16 +158,32 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="room-price">
+            {% if preferred_currency == room.currency %}
             <span class="price-amount"
-              >£ {{ roominfo.price }}
-              <!-- $395 -->
+              >{{ format_money(roominfo.price, roominfo.currency) }}
             </span>
-            <span class="price-period">per night</span>
+            {% else %}
+            <span class="price-amount">
+              {{ convert_and_format(roominfo.price, roominfo.currency,
+              preferred_currency) }}</span
+            >
+            {% endif %}
+            <span class="price-period">{{ _("per night") }}</span>
           </div>
+          <!-----Modal Button ------>
+          <button
+            class="btn btn-outline-secondary btn-lg shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#availabilityModal"
+          >
+            📅 {{ _("Availability") }}
+          </button>
+          &nbsp; &nbsp;
+          <!------------------------->
           <a
-            href="{{ url_for('rooms.booknow', room_id=roominfo.id) }}"
+            href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}"
             class="btn btn-book-now"
-            >Book Now</a
+            >{{ _("Book Now") }}</a
           >
         </div>
       </div>
@@ -127,7 +191,7 @@ head_css %} {% block content %}
 
     <!-- Room Gallery -->
     <div class="room-gallery mb-5" data-aos="fade-up" data-aos-delay="200">
-      <h3 class="section-subtitle mb-4">Room Gallery</h3>
+      <h3 class="section-subtitle mb-4">{{ _("Room Gallery") }}</h3>
       <div class="gallery-grid">
         <div class="gallery-main">
           <!-- href="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
@@ -200,7 +264,7 @@ head_css %} {% block content %}
     <div class="row mb-5">
       <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
         <div class="room-description">
-          <h3 class="section-subtitle">Room Overview</h3>
+          <h3 class="section-subtitle">{{ _("Room Overview") }}</h3>
           <p>
             <!-- Indulge in the ultimate luxury experience with our Deluxe Ocean View
             Suite. This spacious retreat features floor-to-ceiling windows
@@ -239,18 +303,19 @@ head_css %} {% block content %}
 
     <!-- Amenities and Features -->
     <div class="room-amenities mb-5" data-aos="fade-up" data-aos-delay="200">
-      <h3 class="section-subtitle mb-4">Room Amenities</h3>
+      <h3 class="section-subtitle mb-4">{{ _("Room Amenities") }}</h3>
       <div class="row">
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="amenity-category">
-            <h5>Sleeping</h5>
+            <h5>{{ _("Sleeping") }}</h5>
             <ul>
               <li>
-                <i class="bi bi-check2"></i> Bed size: {{roomextra.sleeping}}
+                <i class="bi bi-check2"></i> {{ _("Bed size") }}:
+                {{roomextra.sleeping}}
               </li>
-              <li><i class="bi bi-check2"></i> Sitting area: Yes</li>
+              <li><i class="bi bi-check2"></i> {{ _("Sitting area") }}: Yes</li>
               <li>
-                <i class="bi bi-check2"></i>Access to kitchen:
+                <i class="bi bi-check2"></i>{{ _("Access to kitchen") }}:
                 {{roomextra.kitchen}}
               </li>
               <!-- <li><i class="bi bi-check2"></i> Blackout curtains</li> -->
@@ -259,38 +324,52 @@ head_css %} {% block content %}
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="amenity-category">
-            <h5>Technology</h5>
+            <h5>{{ _("Technology") }}</h5>
             <ul>
               <li>
-                <i class="bi bi-check2"></i> Internet: {{roomextra.internet}}
+                <i class="bi bi-check2"></i> {{ _("Internet") }}:
+                {{roomextra.internet}}
               </li>
-              <li><i class="bi bi-check2"></i> Smart TV: {{roomextra.tv}}</li>
-              <li><i class="bi bi-check2"></i> Electric Sockets: Yes</li>
+              <li>
+                <i class="bi bi-check2"></i> {{ _("Smart TV")}}:
+                {{roomextra.tv}}
+              </li>
+              <li>
+                <i class="bi bi-check2"></i> {{ _("Electric Sockets")}}: Yes
+              </li>
               <!-- <li><i class="bi bi-check2"></i> USB charging ports</li> -->
             </ul>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="amenity-category">
-            <h5>Comfort</h5>
+            <h5>{{ _("Comfort")}}</h5>
             <ul>
-              <li><i class="bi bi-check2"></i> Climate control: Yes</li>
-              <li><i class="bi bi-check2"></i> Noise reduction: Yes</li>
+              <li>
+                <i class="bi bi-check2"></i> {{ _("Climate control")}}: Yes
+              </li>
+              <li>
+                <i class="bi bi-check2"></i> {{ _("Noise reduction")}}: Yes
+              </li>
               <!-- <li><i class="bi bi-check2"></i> Coffee machine</li> -->
-              <li><i class="bi bi-check2"></i> Safe deposit box: No</li>
+              <li>
+                <i class="bi bi-check2"></i> {{ _("Safe deposit box")}}: No
+              </li>
             </ul>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="amenity-category">
-            <h5>Bathroom</h5>
+            <h5>{{ _("Bathroom")}}</h5>
             <ul>
-              <li><i class="bi bi-check2"></i> Clean bathroom: Yes</li>
+              <li><i class="bi bi-check2"></i>{{ _("Clean bathroom")}}: Yes</li>
               <li>
-                <i class="bi bi-check2"></i> Hot water: {{roomextra.hot_water}}
+                <i class="bi bi-check2"></i>{{ _("Hot water")}}:
+                {{roomextra.hot_water}}
               </li>
               <li>
-                <i class="bi bi-check2"></i> Clean towels: {{roomextra.towels}}
+                <i class="bi bi-check2"></i>{{ _("Clean towels")}}:
+                {{roomextra.towels}}
               </li>
               <!-- <li><i class="bi bi-check2"></i> Heated floors</li> -->
             </ul>
@@ -311,7 +390,7 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Policies
+            {{ _("Policies")}}
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -323,7 +402,7 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Trust
+            {{ _("Trust")}}
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -335,7 +414,7 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Guests
+            {{ _("Guests")}}
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -347,7 +426,7 @@ head_css %} {% block content %}
             type="button"
             role="tab"
           >
-            Ground rules
+            {{ _("Ground rules")}}
           </button>
         </li>
       </ul>
@@ -360,16 +439,18 @@ head_css %} {% block content %}
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-4">
-                <h6>Check-in / Check-out</h6>
-                <p>Check-in: 3:00 PM<br />Check-out: 11:00 AM</p>
+                <h6>{{ _("Check-in")}} / {{ _("Check-out")}}</h6>
+                <p>
+                  {{ _("Check-in")}}: 3:00 PM<br />{{ _("Check-out")}}: 11:00 AM
+                </p>
               </div>
               <div class="col-md-4">
-                <h6>Cancellation</h6>
-                <p>Free cancellation up to 48 hours before arrival</p>
+                <h6>{{ _("Cancellation")}}</h6>
+                <p>{{ _("Free cancellation up to 48 hours before arrival")}}</p>
               </div>
               <div class="col-md-4">
-                <h6>Pets</h6>
-                <p>Pet-friendly with additional fee</p>
+                <h6>{{ _("Pets")}}</h6>
+                <p>{{ _("Pet-friendly with additional fee")}}</p>
               </div>
             </div>
           </div>
@@ -378,21 +459,23 @@ head_css %} {% block content %}
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-6">
-                <h6>Establishing trust between us</h6>
+                <h6>{{ _("Establishing trust between us")}}</h6>
                 <ul>
-                  <li>Identities checking is crucial</li>
-                  <li>Step-based identity check process</li>
-                  <li>Ensure that everybody are confident</li>
-                  <li>Host, co-host & guest's identity is checked.</li>
+                  <li>{{ _("Identities checking is crucial")}}</li>
+                  <li>{{ _("Step-based identity check process")}}</li>
+                  <li>{{ _("Ensure that everybody are confident")}}</li>
+                  <li>
+                    {{ _("Host, co-host & guest's identity is checked.")}}
+                  </li>
                 </ul>
               </div>
               <div class="col-md-6">
-                <h6>Why we verify identity?</h6>
+                <h6>{{ _("Why we verify identity")}}?</h6>
                 <ul>
-                  <li>Promote trust between guests & hosts</li>
-                  <li>Reduce fraudulent behaviour</li>
-                  <li>Carry out lawfully background checks</li>
-                  <li>Investigate safety and security issues</li>
+                  <li>{{ _("Promote trust between guests & hosts")}}</li>
+                  <li>{{ _("Reduce fraudulent behaviour")}}</li>
+                  <li>{{ _("Carry out lawfully background checks")}}</li>
+                  <li>{{ _("Investigate safety and security issues")}}</li>
                 </ul>
               </div>
             </div>
@@ -402,16 +485,16 @@ head_css %} {% block content %}
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-4">
-                <h6>Before you book</h6>
-                <p>Any questions about a listing, plz contact us.</p>
+                <h6>{{ _("Before you book")}}</h6>
+                <p>{{ _("Any questions about a listing, plz contact us.")}}</p>
               </div>
               <div class="col-md-4">
-                <h6>When reservation is confirmed</h6>
-                <p>Message your host immediately</p>
+                <h6>{{ _("When reservation is confirmed")}}</h6>
+                <p>{{ _("Message your host immediately")}}</p>
               </div>
               <div class="col-md-4">
-                <h6>After your trip</h6>
-                <p>Review trip to help the community</p>
+                <h6>{{ _("After your trip")}}</h6>
+                <p>{{ _("Review trip to help the community")}}</p>
               </div>
             </div>
           </div>
@@ -420,15 +503,15 @@ head_css %} {% block content %}
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-4">
-                <h6>Rule 1</h6>
+                <h6>{{ _("Rule 1")}}</h6>
                 <p>{{ roominfo.usp1 }}</p>
               </div>
               <div class="col-md-4">
-                <h6>Rule 2</h6>
+                <h6>{{ _("Rule 2")}}</h6>
                 <p>{{ roominfo.usp2 }}</p>
               </div>
               <div class="col-md-4">
-                <h6>Rule 3</h6>
+                <h6>{{ _("Rule 3")}}</h6>
                 <p>{{ roominfo.usp3 }}</p>
               </div>
             </div>
@@ -485,23 +568,31 @@ head_css %} {% block content %}
       <div class="booking-card">
         <div class="row align-items-center">
           <div class="col-lg-8">
-            <h4>Ready to book your stay?</h4>
+            <h4>{{ _("Ready to book your stay?")}}</h4>
             <p>
-              Enjoy comfortable, peaceful, and affordable accommodations for
-              your short gateway and holidays. Book now with confidence and
-              create memories that will last forever.
+              {{ _("Enjoy comfortable, peaceful, and affordable accommodations
+              for your short gateway and holidays. Book now with confidence and
+              create memories that will last forever.")}}
             </p>
           </div>
           <div class="col-lg-4 text-center text-lg-end">
             <div class="price-display">
-              <span class="price">£ {{ roominfo.price }}</span>
-              <!--$395-->
-              <span class="period">per night</span>
+              {% if preferred_currency != room.currency %}
+              <span class="price"
+                >{{ convert_and_format(roominfo.price, roominfo.currency,
+                preferred_currency) }}</span
+              >
+              {% else %}
+              <span class="price">
+                {{ format_money(roominfo.price, roominfo.currency) }}</span
+              >
+              <span class="period">{{ _("per night")}}</span>
+              {% endif %}
             </div>
             <a
-              href="{{ url_for('rooms.booknow', room_id=roominfo.id) }}"
+              href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}"
               class="btn btn-primary btn-lg"
-              >Book now !</a
+              >{{ _("Book now !")}}</a
             >
           </div>
         </div>
@@ -530,18 +621,23 @@ head_css %} {% block content %}
               aria-expanded="false"
               aria-controls="collapseReview"
             >
-              {% if totalrev <= 1 %} {{ totalrev }} Review to read {% elif
-              totalrev > 1 %} {{ totalrev }} Reviews to read {% endif %}
+              {% if totalrev <= 1 %} {{ totalrev }} {{ _("Review to read") }} {%
+              elif totalrev > 1 %} {{ totalrev }} {{ _("Reviews to read") }} {%
+              endif %}
             </button>
           </p>
           <div class="collapse" id="collapseReview">
             <div class="card card-body">
               {% if totalrev <= 1 %}
-              <h4 class="mb-0">{{ totalrev }} Review for this room.</h4>
-              <p class="fw-light mb-4 pb-2">Latest user Review</p>
+              <h4 class="mb-0">
+                {{ totalrev }} {{ _("Review for this room.")}}
+              </h4>
+              <p class="fw-light mb-4 pb-2">{{ _("Latest user Review")}}</p>
               {% elif totalrev > 1 %}
-              <h4 class="mb-0">{{ totalrev }} Reviews for this room.</h4>
-              <p class="fw-light mb-4 pb-2">Latest users Reviews</p>
+              <h4 class="mb-0">
+                {{ totalrev }} {{ _("Reviews for this room.")}}
+              </h4>
+              <p class="fw-light mb-4 pb-2">{{ _("Latest users Reviews")}}</p>
               {% endif %} {% for review in reviews %}
               <div class="d-flex flex-start">
                 <img
@@ -555,47 +651,62 @@ head_css %} {% block content %}
                   <h6 class="fw-bold mb-1">{{ review.user.first_name }}</h6>
                   <div class="d-flex align-items-center mb-3">
                     <p class="mb-0">
-                      {{ review.date_posted.strftime('%d %B %Y') }} {% if
-                      review.status == 'Unverified' %}
-                      <span class="badge bg-danger">{{ review.status }}</span>
-                      &nbsp; {% elif review.status == 'Verified' %}
-                      <span class="badge bg-success">{{ review.status }}</span>
-                      &nbsp; {% endif %}
+                      {{ review.date_posted.strftime('%d %B %Y') }}
+                      <!-- FIXED: was checking review.status == 'Unverified'/'Verified',
+                           which never matched (real values are Published/Flagged/Removed) --
+                           this badge never rendered. Replaced with the real Verified Stay
+                           badge, which is genuinely always true now that booking_id is required. -->
+                      <span
+                        class="verified-badge"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="{{ _('Stayed') }} {{ review.booking.arrival.strftime('%B %Y') }}"
+                      >
+                        <i class="bi bi-patch-check-fill"></i>
+                        {{ _('Verified Stay') }}
+                      </span>
                     </p>
-                    {% if review.rate_us == 5 %}
+                    <!-- FIXED: was 5 near-identical if/elif branches -- one loop instead -->
                     <div class="stars">
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
+                      {% for i in range(1, 6) %}
+                      <i
+                        style="color: gold"
+                        class="bi {{ 'bi-star-fill' if i <= review.rate_us else 'bi-star' }}"
+                      ></i>
+                      {% endfor %}
                     </div>
-                    {% elif review.rate_us == 4 %}
-                    <div class="stars">
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                    </div>
-                    {% elif review.rate_us == 3 %}
-                    <div class="stars">
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                    </div>
-                    {% elif review.rate_us == 2 %}
-                    <div class="stars">
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                    </div>
-                    {% elif review.rate_us == 1 %}
-                    <div class="stars">
-                      <i style="color: gold" class="bi bi-star-fill"></i>
-                    </div>
-                    {% endif %}
                   </div>
-                  <p class="mb-3">{{ review.message}}</p>
-                  <hr class="my-0 mb-2" style="height: 1px" />
+                  <p class="mb-2">{{ review.message}}</p>
+
+                  <!-- Helpful vote -- count is the cached column, no
+                       extra query. "Active" state comes from the
+                       my_helpful_votes set computed once in the route,
+                       not a per-review lookup. -->
+                  <button
+                    type="button"
+                    class="helpful-btn {{ 'jw-active' if review.id in my_helpful_votes else '' }}"
+                    data-review-id="{{ review.id }}"
+                    {%
+                    if
+                    not
+                    current_user.is_authenticated
+                    or
+                    review.user_id=""
+                    ="current_user.id"
+                    %}disabled{%
+                    endif
+                    %}
+                  >
+                    <i
+                      class="bi {{ 'bi-hand-thumbs-up-fill' if review.id in my_helpful_votes else 'bi-hand-thumbs-up' }}"
+                    ></i>
+                    {{ _('Helpful') }}
+                    <span class="helpful-count"
+                      >{{ review.helpful_count }}</span
+                    >
+                  </button>
+
+                  <hr class="my-0 mb-2 mt-2" style="height: 1px" />
                 </div>
               </div>
               {% endfor %}
@@ -608,7 +719,7 @@ head_css %} {% block content %}
 </section>
 <!---------------------------ROOM REVIEWS FORM-------------------------------------->
 <section id="contact" class="contact section pt-1 pb-1">
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
+  <div class="container" data-aos="fade-up" data-aos-delay="100" id="reviews">
     <!-- Contact Form -->
     <div
       class="row justify-content-center mb-2"
@@ -617,7 +728,7 @@ head_css %} {% block content %}
     >
       <div class="col-lg-10">
         <div class="contact-form-wrapper">
-          <h2 class="text-center mb-4">Review this Room</h2>
+          <h2 class="text-center mb-4">{{ _("Review this Room")}}</h2>
 
           <form method="POST">
             {{ form.hidden_tag() }} {{ form.csrf_token }}
@@ -625,8 +736,8 @@ head_css %} {% block content %}
               <div class="col-12">
                 <div class="form-group1">
                   <label class="form-label"
-                    >Select a score: <i class="bi bi-stars"></i
-                  ></label>
+                    >{{ _("Select a score")}}: ⭐⭐⭐⭐⭐</label
+                  >
                   {{ form.rate_us.label(class="form-control-label") }} {% if
                   form.rate_us.errors %} {{ form.rate_us(class="form-control
                   form-control-sm is-invalid") }}
@@ -642,7 +753,9 @@ head_css %} {% block content %}
 
               <div class="col-12">
                 <div class="form-group1">
-                  <label class="form-label">Enter your review message:</label>
+                  <label class="form-label"
+                    >{{ _("Enter your review message")}}: ᯓ 💌</label
+                  >
                   {{ form.message.label(class="form-control-label") }} {% if
                   form.message.errors %} {{ form.message(class="form-control
                   form-control-sm is-invalid") }}
@@ -666,4 +779,95 @@ head_css %} {% block content %}
   </div>
 </section>
 
+<!----MODAL Window--------------------------------------->
+<div class="modal fade" id="availabilityModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <!-- Header -->
+      <div class="modal-header bg-secondary">
+        <h5 class="modal-title text-white">{{ _("Room Availability")}}</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <!-- Body -->
+      <div class="modal-body p-4">
+        <!------Legend------->
+        <div class="calendar-legend mb-3 d-flex flex-wrap gap-3">
+          <div class="calendar-legend">
+            <span>🔴 {{ _("Booked")}}</span>
+            <span>⚫ {{ _("Blocked")}}</span>
+            <span>🟢 {{ _("Available")}}</span>
+          </div>
+        </div>
+        <!-- <div id="calendar"></div> -->
+        <!----------END LEGEND------>
+        <div id="calendar">
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              let calendar;
+              const modal = document.getElementById('availabilityModal');
+
+              const calendarUrl =
+                "{{ url_for('rooms.room_calendar', room_id=room.id) }}";
+
+              modal.addEventListener('shown.bs.modal', function () {
+                const calendarEl = document.getElementById('calendar');
+
+                if (!calendar) {
+                  calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    height: 'auto',
+                    expandRows: true,
+                    headerToolbar: {
+                      left: 'prev,next today',
+                      center: 'title',
+                      right: '',
+                    },
+
+                    // 🔴 LOAD EVENTS FROM FLASK
+                    events: calendarUrl,
+
+                    // 🚫 READ-ONLY (disable interaction)
+                    selectable: false,
+                    editable: false,
+                    eventDisplay: 'block',
+
+                    // 🎨 FORCE SAME VISUAL STYLE
+                    eventDidMount: function (info) {
+                      const type = info.event.extendedProps.type;
+
+                      if (type === 'booking') {
+                        info.el.style.backgroundColor = '#dc3545';
+                        info.el.style.borderColor = '#dc3545';
+                        info.el.style.color = '#fff';
+                      }
+
+                      if (type === 'block') {
+                        info.el.style.backgroundColor = '#212529';
+                        info.el.style.borderColor = '#212529';
+                        info.el.style.color = '#fff';
+                      }
+
+                      info.el.style.borderRadius = '6px';
+                      info.el.style.fontSize = '0.85rem';
+                    },
+                  });
+                  calendar.render();
+                } else {
+                  calendar.render();
+                }
+              });
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<!--Revuew helpful -->
+<script src="{{url_for('static', filename='/js/helpful-vote.js')}}"></script>
 {% endblock content %}

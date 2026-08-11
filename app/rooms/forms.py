@@ -6,7 +6,7 @@ from wtforms import (StringField, PasswordField, SubmitField, BooleanField, Floa
 from app import db
 #from wtforms.widgets import ListWidget, CheckboxInput
 from wtforms.validators import (DataRequired, Optional, Length, Email, EqualTo, 
-                                ValidationError, NoneOf)
+                                ValidationError, NumberRange, NoneOf)
 from flask_login import current_user
 from app.models.usermodel import User 
 from app.models.roommodel import Rooms, Roomextra, Roomreviews
@@ -15,9 +15,9 @@ from datetime import date
 #import pycountry
 
 # Queries
-locations = db.session.query(Rooms.room_location).distinct().all()
-category = db.session.query(Rooms.room_category).distinct().all()
-locations2 = Rooms.query.distinct().all()
+# locations = db.session.query(Rooms.room_location
+#                             ).distinct().order_by(Rooms.room_location).all()
+# category = db.session.query(Rooms.room_category).distinct().all()
 
 
 # Create a room listing form class 
@@ -35,7 +35,7 @@ class AddRoomForm(FlaskForm):
                                               ('5', '5')], validators=[DataRequired()])
     price = FloatField('', validators=[DataRequired()])
     description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=350)])
-    status =  SelectField('', choices=[(' ', ' '), ('Occupied', 'Occupied'), ('Available', 'Available')], 
+    status =  SelectField('', choices=[(' ', ' '), ('Available', 'Available'),('Maintenance', 'Maintenance'),], 
                                 validators=[DataRequired()])
     rule1 =  StringField('', validators=[Optional()])
     rule2 =  StringField('', validators=[Optional()])
@@ -47,32 +47,39 @@ class AddRoomForm(FlaskForm):
 class RoomExtraForm(FlaskForm):
     '''This class enable to model the room extra process'''
     # Room amenities
-    sleeping = SelectField('', choices=[('Double', 'Double'), 
+    sleeping = SelectField('', choices=[('',''), ('Double', 'Double'), 
                                 ('Single', 'Single'), ('King', 'King')], 
-                                validators=[DataRequired()], default='Single')
-    hot_water = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')],
-                                validators=[DataRequired()], default='No') 
-    tv = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                 validators=[DataRequired()], default='No') 
-    internet = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                 validators=[DataRequired()], default='No')
-    kitchen = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                 validators=[DataRequired()], default='No')
-    towels = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                validators=[DataRequired()], default='Yes')
+                                validators=[DataRequired()])
+    hot_water = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')],
+                                validators=[DataRequired()]) 
+    tv = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                 validators=[DataRequired()]) 
+    internet = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                 validators=[DataRequired()])
+    kitchen = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                 validators=[DataRequired()])
+    towels = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                validators=[DataRequired()])
     # Room Services
-    resto = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                validators=[DataRequired()], default='No')
-    bar = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')],
-                                validators=[DataRequired()], default='No') 
-    spa = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                validators=[DataRequired()], default='No') 
-    shop = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                validators=[DataRequired()], default='No')
-    concierge = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                validators=[DataRequired()], default='No')
-    car = SelectField('', choices=[('Yes', 'Yes'), ('No', 'No')], 
-                                validators=[DataRequired()], default='No')
+    resto = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                validators=[DataRequired()])
+    bar = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')],
+                                validators=[DataRequired()]) 
+    spa = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                validators=[DataRequired()]) 
+    shop = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                validators=[DataRequired()])
+    concierge = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                validators=[DataRequired()])
+    car = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+                                validators=[DataRequired()])
+    # confort & Leisure
+    aircon = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], validators=[DataRequired()])
+    pool = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], validators=[DataRequired()])
+    workspace = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], validators=[DataRequired()])
+    washing = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], validators=[DataRequired()])
+    sport = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], validators=[DataRequired()])
+    parking = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], validators=[DataRequired()])
                                               
     submit = SubmitField('Submit')
 
@@ -93,11 +100,12 @@ class UpdateRoomForm(FlaskForm):
     max_occupancy = IntegerField('', validators=[DataRequired()])
     price = FloatField('' )
     description = TextAreaField('', validators=[DataRequired()])
-    status =  SelectField('', choices=[(' ', ' '), ('Occupied', 'Occupied'), ('Available', 'Available')], 
+    status =  SelectField('', choices=[(' ', ' '), ('Maintenance', 'Maintenance'), ('Available', 'Available'),
+                                      ('Hidden', 'Hidden'), ('Inactive', 'Inactive')], 
                         validators=[DataRequired()])
-    usp1 =  StringField('' ) #validators=[Length(min=5, max=20)]
-    usp2 =  StringField('' ) #validators=[Length(min=5, max=20)]
-    usp3 =  StringField('' ) #validators=[Length(min=5, max=20)]
+    rule1 =  StringField('' ) #validators=[Length(min=5, max=20)]
+    rule2 =  StringField('' ) #validators=[Length(min=5, max=20)]
+    rule3 =  StringField('' ) #validators=[Length(min=5, max=20)]
 
     submit = SubmitField('Update')
 
@@ -105,11 +113,6 @@ class UpdateRoomForm(FlaskForm):
 # Update room picture form class 
 class UpdateRoomPictureForm(FlaskForm):
     '''This class enable to model the room picture update process'''
-    # picture1 = FileField('Image 1', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
-    # picture2 = FileField('Image 2', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
-    # picture3 = FileField('Image 3', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
-    # picture4 = FileField('Image 4', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
-    # picture5 = FileField('Image 5', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
     # picture6 = FileField('Image 6', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
     pictures = MultipleFileField("Room Pictures",
                validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
@@ -119,8 +122,16 @@ class UpdateRoomPictureForm(FlaskForm):
 class RoomReviewsForm(FlaskForm):
     '''This class enable to generate Room reviews form'''
     # Define the field and the validators
-    rate_us = SelectField('', choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'),
-                                         ('4', '4'), ('5', '5')], validators=[DataRequired()]) 
+    rate_us = SelectField('', choices=[('', ' '), ('1', '1'), ('2', '2'), ('3', '3'),
+                                         ('4', '4'), ('5', '5')], validators=[DataRequired()])  # FIXED: placeholder value was ' ' (a space, truthy) -- now '' (reliably falsy across WTForms versions)
+    message = TextAreaField('', validators=[DataRequired(), Length(min=20, max=200)])
+    submit = SubmitField('Send')
+
+class GuestReviewForm(FlaskForm):
+    '''Mirrors RoomReviewsForm exactly, for UI/UX consistency between
+    room reviews and guest reviews.'''
+    rate_us = SelectField('', choices=[('', ' '), ('1', '1'), ('2', '2'), ('3', '3'),
+                                         ('4', '4'), ('5', '5')], validators=[DataRequired()])
     message = TextAreaField('', validators=[DataRequired(), Length(min=20, max=200)])
     submit = SubmitField('Send')
 
@@ -129,14 +140,12 @@ class RoomReviewsForm(FlaskForm):
 class BookingForm(FlaskForm):
     '''This class enable to generate room booking form'''
     # Define the field and the validators
-    arrival = DateField('Arrival Date', validators=[DataRequired()])
-    departure = DateField('Departure Date', validators=[DataRequired()])
-    num_guests = StringField('Total Guest', validators=[DataRequired()])
-    #num_rooms = SelectField('', choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'),('4', '4'), 
-    #                                     ('5', '5')], validators=[DataRequired()]) 
-    room_type = SelectField('Room category',choices=[(' ', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
+    arrival = DateField('', validators=[DataRequired()])
+    departure = DateField('', validators=[DataRequired()])
+    num_guests = StringField('', validators=[DataRequired()])
+    room_type = SelectField('',choices=[(' ', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
-    ad_info = TextAreaField('Additional Information', default="What would you like?")
+    ad_info = TextAreaField('', default="What would you like?")
     primary_guest = StringField('', validators=[DataRequired()])
     pguest_email = StringField('', validators=[DataRequired()])
     pguest_phone = StringField('', validators=[DataRequired()])
@@ -186,11 +195,15 @@ class VouchersForm(FlaskForm):
             raise ValidationError(f'£{voucher.value} discount has been applied!')
 
 class RoomSearchForm(FlaskForm):
-    room_location = SelectField('', choices = [city.room_location for city in locations2], validators=[Optional()])
-    room_category = SelectField('', choices = [city.room_category for city in category], validators=[Optional()])
-    min_price = FloatField("", validators=[Optional()])
-    max_price = FloatField("", validators=[Optional()])
-    submit = SubmitField("Search")
+    room_location = SelectField('', choices = [ ], validators=[Optional()])
+    room_category = SelectField('', choices = [ ], validators=[Optional()])
+    min_price = FloatField('', validators=[Optional()])
+    max_price = FloatField('', validators=[Optional()])
+    submit = SubmitField("Apply Filters")
 
 class CancelBookingForm(FlaskForm):
     submit = SubmitField("Cancel")
+
+class WithdrawalForm(FlaskForm):
+    amount = FloatField("Amount",validators=[DataRequired(), NumberRange(min=10)])
+    submit = SubmitField("Request")

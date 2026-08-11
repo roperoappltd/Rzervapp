@@ -1,77 +1,163 @@
-from flask import Flask, session
-from app.config import Config 
+# ============================================================
+# Standard library
+# ============================================================
+import mimetypes
+from datetime import timedelta
+
+# ============================================================
+# Flask & extensions
+# ============================================================
+from flask import Flask, session, request
+from flask_login import current_user, LoginManager
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail
-#from flask_admin import Admin
+from flask_socketio import SocketIO
+from flask_admin import Admin
+from flask_admin.theme import Bootstrap4Theme
 from flask_wtf import CSRFProtect
-from datetime import timedelta
-#from app.csrf import csrf, CSRFError
+from flask_babel import Babel, _
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
 
-# Create db object
+# ============================================================
+# App-local
+# ============================================================
+from app.config import Config
+
+
+# ============================================================
+# One-off runtime fixes
+# ============================================================
+# Windows' mimetypes registry often doesn't know .webp -- without this,
+# Flask's static file server sends it as application/octet-stream, which
+# browsers download instead of displaying inline.
+mimetypes.add_type('image/webp', '.webp')
+
+
+# ============================================================
+# Extension instances (created here, initialized in create_app())
+# ============================================================
 db = SQLAlchemy()
-# Create flask migrate object
 migrate = Migrate()
-# Create flask mail object
-mail = Mail() 
-# creating a bcrypt instance for password hashing
+mail = Mail()
 bcrypt = Bcrypt()
-# initializing csrf
 csrf = CSRFProtect()
+babel = Babel()
 
+# TODO (production): tighten this to your real domain before deploying --
+# "*" allows any origin to open a WebSocket connection to this server.
+socketio = SocketIO(cors_allowed_origins="*")
+# socketio = SocketIO(cors_allowed_origins=["https://yourdomain.com"])
 
-# create an instance of loginManager 
 login_manager = LoginManager()
-login_manager.login_view = 'users.login'   # exige login to view the account page
+login_manager.login_view = 'users.login'   # require login to view the account page
 login_manager.login_message_category = 'info'
 
-# integrate flask admin
-#admin = Admin( template_mode='bootstrap4')
+# Custom master template wraps every Flask-Admin page in the site's own
+# sidebar/topbar/footer instead of Flask-Admin's default layout.
+admin = Admin(theme=Bootstrap4Theme(base_template='adminpanel/master.html'))
 
+
+# ============================================================
+# SQLite foreign-key enforcement
+# ============================================================
+# SQLite does not enforce foreign key constraints by default -- without
+# this, invalid/orphaned FK references can silently exist in dev, then
+# surface as unexpected IntegrityErrors the moment this moves to MySQL
+# (which enforces FKs by default). Enabling it now, in dev, means any FK
+# problems get caught here instead of surprising you in production. Only
+# takes effect for SQLite connections -- harmless no-op on MySQL/Postgres.
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    if type(dbapi_connection).__module__.startswith("sqlite3"):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
+
+
+# ============================================================
+# App factory
+# ============================================================
 def create_app(config_name='default'):
-
     app = Flask(__name__)
-    # Load the proper configuration
-    app.config.from_object(Config) #[config_name]
-    #setting how long session data can be store
-    #app.permanent_session_lifetime =  timedelta(hours=8)
+    app.config.from_object(Config)  # [config_name]
+
+    app.config['LANGUAGES'] = ['en', 'fr']
+    app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+    app.config['BABEL_TRANSLATION_DIRECTORIES'] = 'translations'
+
+    def get_locale():
+        # 1. Explicit choice from the language switcher
+        if 'language' in session and session['language'] in app.config['LANGUAGES']:
+            return session['language']
+        # 2. Fall back to browser preference
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
 
     with app.app_context():
-        # Initialize extensions
+        # ---------------- Initialize extensions ----------------
         db.init_app(app)
         mail.init_app(app)
         migrate.init_app(app, db)
         bcrypt.init_app(app)
         login_manager.init_app(app)
         csrf.init_app(app)
+        socketio.init_app(app)
+        babel.init_app(app, locale_selector=get_locale)
 
-        # Imports our route blueprints
-        #from app.enrolls.routes import enrolls
+        # ---------------- Blueprint imports ----------------
+        # NOTE: models referenced by db.create_all() below only get
+        # created if they've been imported into the process by this
+        # point -- either explicitly, or transitively through whichever
+        # of these blueprint modules imports them. Given several models
+        # this session (User, Conversation, GuestReviews, RoomView,
+        # ReviewHelpful) needed explicit importing here specifically to
+        # dodge circular-import errors, it's worth double-checking each
+        # new model actually gets registered before create_all() runs,
+        # rather than assuming a transitive import covers it.
         from app.users.routes import users
         from app.main.routes import main
-        from app.rooms.routes import rooms
-        #from app.posts.routes import posts
+        from app.rooms.routes import bedrooms
+        from app.udashboard.routes import udash
         from app.errors.handlers import errors
-        #from app.models import Controller_AdminView
+        from app.agents.routes import agent
+        from app.adminis.routes import administrator
+        from app.adminis.views import MyAdminIndexView
 
-        #from flask_track_usage import TrackUsage
-        #from flask_track_usage.storage.sql import SQLStorage
+        # ---------------- Services ----------------
+        from app.services.currency import format_money, convert_and_format, COUNTRY_CURRENCY
+        from app.services.geo_service import detect_country, detect_language
+        from app.services.preference_service import VisitorPreferences
 
-        # initialize the admin controller view
-        #admin.init_app(app, index_view=Controller_AdminView())
+        # ---------------- Flask-Admin ----------------
+        admin.init_app(app, index_view=MyAdminIndexView())
 
-        # Register our blueprints
-        #app.register_blueprint(enrolls)
+        # ---------------- Register blueprints ----------------
         app.register_blueprint(users)
         app.register_blueprint(main)
-        app.register_blueprint(rooms)
-        #app.register_blueprint(posts)
+        app.register_blueprint(bedrooms)
+        app.register_blueprint(udash)
         app.register_blueprint(errors)
+        app.register_blueprint(agent)
+        app.register_blueprint(administrator, url_prefix="/admin")
 
-
-        # Create database tables
+        # ---------------- Create tables ----------------
         db.create_all()
 
-    return app 
+    # ---------------- Context processors ----------------
+    @app.context_processor
+    def inject_currency():
+        return dict(format_money=format_money, convert_and_format=convert_and_format)
+
+    @app.context_processor
+    def inject_preferences():
+        prefs = VisitorPreferences()
+        return dict(
+            get_locale=get_locale,
+            current_language=prefs.language,
+            preferred_currency=prefs.currency,
+            visitor_country=prefs.country,
+        )
+
+    return app

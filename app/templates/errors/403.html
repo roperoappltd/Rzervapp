@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% block content %}
+<div class="content-section text-center">
+  <img
+    src="{{ url_for('static', filename='errors-img/errors-403-forb.png') }}"
+    alt="404-errors"
+  />
+  <h1 class="fw-bolder">Access Forbidden</h1>
+</div>
+{% endblock content %}

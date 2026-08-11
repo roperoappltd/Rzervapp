@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="{{ g.locale }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Responsive User Dashboard based on Bootstrap 5"
+    />
+    <meta name="author" content="Jambo" />
+    <meta
+      name="keywords"
+      content="Booking app, bootstrap, bootstrap 5, admin, dashboard, booking, css, sass, html, theme, front-end, ui kit, web"
+    />
+
+    <!---Icons-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="shortcut icon"
+      href="{{url_for('static', filename='img/fav/favicon2.ico')}}"
+    />
+
+    <link rel="canonical" href="#" />
+    <!---World map-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css"
+      rel="stylesheet"
+    />
+
+    <!--Platform title-->
+    {% if title %}
+    <title>{{ _("Jambo") }} - {{ _(title) }}</title>
+    {% else %}
+    <title>{{ _("Jambo") }}</title>
+    {% endif %}
+
+    <!--Main CSS-->
+    <link
+      href="{{ url_for('static', filename='resources/css/app.css')}}"
+      rel="stylesheet"
+    />
+    <!--Other CSS files-->
+    <link
+      href="{{ url_for('static', filename='resources/css/userpro.css')}}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/chat.css')}}"
+      rel="stylesheet"
+    />
+    <!--BOOTSTRAP-->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!--Fonts-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <nav id="sidebar" class="sidebar js-sidebar">
+        <div class="sidebar-content js-simplebar">
+          <a class="sidebar-brand" href="index.html">
+            <!-- <span class="align-middle">Jambo</span> -->
+            <img
+              src="{{url_for('static', filename='resources/img/logo/jamnew1.png')}}"
+              width="175"
+              height="65"
+              alt="logo"
+            />
+          </a>
+          {% if current_user.is_authenticated %}
+          <ul class="sidebar-nav">
+            <!-- <li class="sidebar-header">Pages</li> -->
+            <li class="sidebar-item active">
+              <a class="sidebar-link" href="{{ url_for('udash.udashboard') }}">
+                <i class="align-middle" data-feather="sliders"></i>
+                <span class="align-middle">{{ _("Dashboard") }}</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('udash.profile') }}">
+                <i class="align-middle" data-feather="eye-off"></i>
+                <span class="align-middle">{{ _("User Profile") }}</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('udash.mylistings') }}">
+                <i class="align-middle" data-feather="list"></i>
+                <span class="align-middle">{{ _("Listings") }}</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('udash.mybookings') }}">
+                <i class="align-middle" data-feather="user-check"></i>
+                <span class="align-middle">{{ _("Bookings") }}</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('udash.earnings') }}">
+                <i class="align-middle" data-feather="compass"></i>
+                <span class="align-middle">{{ _("Piggybank") }}</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('udash.refunds') }}">
+                <i class="align-middle" data-feather="filter"></i>
+                <span class="align-middle">{{ _("Refunds") }}</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('udash.myreviews') }}">
+                <i class="align-middle" data-feather="smile"></i>
+                <span class="align-middle">Reviews</span>
+              </a>
+            </li>
+
+            <li class="sidebar-header">{{ _("Go to") }}</li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="{{ url_for('main.home') }}">
+                <i class="align-middle" data-feather="home"></i>
+                <span class="align-middle">{{ _("Home") }}</span>
+              </a>
+            </li>
+
+            <!-- <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <i class="align-middle" data-feather="grid"></i>
+                <span class="align-middle">Cards</span>
+              </a>
+            </li> -->
+
+            <!-- <li class="sidebar-item">
+              <a class="sidebar-link" href="#">
+                <i class="align-middle" data-feather="align-left"></i>
+                <span class="align-middle">Typography</span>
+              </a>
+            </li> -->
+          </ul>
+          {% endif %}
+          <!----Promo ad-->
+          <!-- <div class="sidebar-cta">
+            <div class="sidebar-cta-content">
+              <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
+              <div class="mb-3 text-sm">
+                Are you looking for more components? Check out our premium
+                version.
+              </div>
+              <div class="d-grid">
+                <a href="upgrade-to-pro.html" class="btn btn-primary"
+                  >Upgrade to Pro</a
+                >
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </nav>
+
+      <div class="main">
+        {% if current_user.is_authenticated %}
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+          <a class="sidebar-toggle js-sidebar-toggle">
+            <i class="hamburger align-self-center"></i>
+          </a>
+
+          <div class="navbar-collapse collapse">
+            <ul class="navbar-nav navbar-align">
+              <li class="nav-item">
+                <a class="nav-icon" href="{{ url_for('main.home') }}">🌐</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-icon dropdown-toggle"
+                  href="#"
+                  id="alertsDropdown"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <div class="position-relative">
+                    <i class="align-middle" data-feather="message-circle"> </i>
+                    <span
+                      id="chatBadge"
+                      class="indicator"
+                      style="background-color: #ff385c; display: none"
+                    >
+                      0
+                    </span>
+                  </div>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+                  aria-labelledby="alertsDropdown"
+                >
+                  <!-- Header -->
+                  <div id="chatNotificationHeader" class="dropdown-menu-header">
+                    {{ _("No New Messages") }}
+                  </div>
+                  <!-- Dynamic messages inserted here -->
+                  <div id="chatNotificationList" class="list-group"></div>
+                  <!-- Footer -->
+                  <div class="dropdown-menu-footer">
+                    <a
+                      href="{{ url_for('udash.mybookings') }}"
+                      class="text-muted"
+                    >
+                      {{ _("view bookings") }}
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <!-- <li class="nav-item dropdown">
+                <a
+                  class="nav-icon dropdown-toggle"
+                  href="#"
+                  id="messagesDropdown"
+                  data-bs-toggle="dropdown"
+                >
+                  <div class="position-relative">
+                    <i class="align-middle" data-feather="message-square"></i>
+                  </div>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
+                  aria-labelledby="messagesDropdown"
+                >
+                  <div class="dropdown-menu-header">
+                    <div class="position-relative">4 New Messages</div>
+                  </div>
+                  <div class="list-group">
+                    <a href="#" class="list-group-item">
+                      <div class="row g-0 align-items-center">
+                        <div class="col-2">
+                          <img
+                            src="{{ url_for('static', filename='resources/img/avatars/avatar-5.jpg') }}"
+                            class="avatar img-fluid rounded-circle"
+                            alt="Vanessa Tucker"
+                          />
+                        </div>
+                        <div class="col-10 ps-2">
+                          <div class="text-dark">Vanessa Tucker</div>
+                          <div class="text-muted small mt-1">
+                            Nam pretium turpis et arcu. Duis arcu tortor.
+                          </div>
+                          <div class="text-muted small mt-1">15m ago</div>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                      <div class="row g-0 align-items-center">
+                        <div class="col-2">
+                          <img
+                            src="{{ url_for('static', filename='resources/img/avatars/avatar-2.jpg') }}"
+                            class="avatar img-fluid rounded-circle"
+                            alt="William Harris"
+                          />
+                        </div>
+                        <div class="col-10 ps-2">
+                          <div class="text-dark">William Harris</div>
+                          <div class="text-muted small mt-1">
+                            Curabitur ligula sapien euismod vitae.
+                          </div>
+                          <div class="text-muted small mt-1">2h ago</div>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                      <div class="row g-0 align-items-center">
+                        <div class="col-2">
+                          <img
+                            src="{{ url_for('static', filename='resources/img/avatars/avatar-4.jpg') }}"
+                            class="avatar img-fluid rounded-circle"
+                            alt="Christina Mason"
+                          />
+                        </div>
+                        <div class="col-10 ps-2">
+                          <div class="text-dark">Christina Mason</div>
+                          <div class="text-muted small mt-1">
+                            Pellentesque auctor neque nec urna.
+                          </div>
+                          <div class="text-muted small mt-1">4h ago</div>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                      <div class="row g-0 align-items-center">
+                        <div class="col-2">
+                          <img
+                            src="{{ url_for('static', filename='resources/img/avatars/avatar-3.jpg') }}"
+                            class="avatar img-fluid rounded-circle"
+                            alt="Sharon Lessman"
+                          />
+                        </div>
+                        <div class="col-10 ps-2">
+                          <div class="text-dark">Sharon Lessman</div>
+                          <div class="text-muted small mt-1">
+                            Aenean tellus metus, bibendum sed, posuere ac,
+                            mattis non.
+                          </div>
+                          <div class="text-muted small mt-1">5h ago</div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="dropdown-menu-footer">
+                    <a href="#" class="text-muted">Show all messages</a>
+                  </div>
+                </div>
+              </li> -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-icon dropdown-toggle d-inline-block d-sm-none"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="align-middle" data-feather="settings"></i>
+                </a>
+
+                <a
+                  class="nav-link dropdown-toggle d-none d-sm-inline-block"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                >
+                  <img
+                    src="{{ url_for('static', filename='userpics/' + current_user.image_file) }}"
+                    class="rounded-circle article-img me-1"
+                    height="25px"
+                    width="25px"
+                    alt="Profile picture"
+                  />
+                  <span class="text-dark"
+                    >{{ _("Hi") }} {{current_user.first_name}}</span
+                  >
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="{{ url_for('udash.profile') }}"
+                    ><i class="align-middle me-1" data-feather="user"></i> {{
+                    _("Profile") }}</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('udash.udashboard') }}"
+                    ><i class="align-middle me-1" data-feather="pie-chart"></i>
+                    {{ _("Dashboard") }}</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="{{ url_for('udash.earnings') }}"
+                    ><i class="align-middle me-1" data-feather="briefcase"></i>
+                    {{ _("Piggybank") }}</a
+                  >
+                  <a class="dropdown-item" href="{{ url_for('main.contact') }}"
+                    ><i
+                      class="align-middle me-1"
+                      data-feather="help-circle"
+                    ></i>
+                    {{ _("Help Center") }}</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ url_for('users.logout') }}"
+                    >{{ _("Log out") }}</a
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        {% endif %} {% block content %} {% endblock content %}
+
+        <!-------Chat Modal------>
+        <div id="chatModal" class="chat-modal">
+          <div class="chat-window">
+            <!-- Header -->
+            <div class="chat-header bg-primary">
+              <div class="chat-user">
+                <div class="chat-avatar">
+                  <!-- Dynamic user image -->
+                  <img
+                    id="chatUserImage"
+                    src="{{ url_for('static', filename='userpics/default.jpg') }}"
+                    class="rounded-circle article-img me-1"
+                    height="45px"
+                    width="45px"
+                    alt="Profile picture"
+                  />
+                </div>
+
+                <div>
+                  <!-- Dynamic username -->
+                  <div class="chat-name text-white" id="chatUserName"></div>
+                  <small class="chat-status text-white">
+                    {{ _("Online") }}
+                  </small>
+                </div>
+              </div>
+
+              <button
+                id="closeChat"
+                class="chat-close btn-close btn-close-white"
+                type="button"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <!-- Messages -->
+            <div id="chatMessages" class="chat-messages"></div>
+
+            <!-- Typing indicator -->
+            <div id="typingIndicator" class="typing-indicator"></div>
+
+            <!-- Message Input -->
+            <form id="chatForm" class="chat-input">
+              <input
+                id="messageInput"
+                type="text"
+                placeholder="{{ _('Type a message...') }}"
+                autocomplete="off"
+              />
+
+              <button type="submit">
+                <i class="align-middle" data-feather="send"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        <!------END Modal-->
+
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row text-muted">
+              <div class="col-6 text-start">
+                <small class="mb-0">
+                  ©️2026 - {{ _("All rights reserved") }} Jambo | Powered by
+                  <a
+                    class="text-info"
+                    href="https://tboss.ci/"
+                    style="text-decoration: none"
+                    target="_blank"
+                  >
+                    <b>Techno|BOSS</b>💖
+                  </a>
+                </small>
+              </div>
+              <div class="col-6 text-end">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <a class="text-muted" href="#"
+                      ><small>{{ _("Contact us") }}</small></a
+                    >
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="text-muted" href="#"
+                      ><small>{{ _("Privacy") }}</small></a
+                    >
+                  </li>
+                  <li class="list-inline-item">
+                    <a class="text-muted" href="#"
+                      ><small>{{ _("Terms") }}</small></a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='resources/js/app.js')}}"></script>
+    <!----Bootstrap JS files-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+      integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Bar chart
+        new Chart(document.getElementById('chartjs-dashboard-bar'), {
+          type: 'bar',
+          data: {
+            labels: [
+              'Jan',
+              'Feb',
+              'Mar',
+              'Apr',
+              'May',
+              'Jun',
+              'Jul',
+              'Aug',
+              'Sep',
+              'Oct',
+              'Nov',
+              'Dec',
+            ],
+            datasets: [
+              {
+                label: 'This year',
+                backgroundColor: window.theme.primary,
+                borderColor: window.theme.primary,
+                hoverBackgroundColor: window.theme.primary,
+                hoverBorderColor: window.theme.primary,
+                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+                barPercentage: 0.75,
+                categoryPercentage: 0.5,
+              },
+            ],
+          },
+          options: {
+            maintainAspectRatio: false,
+            legend: { display: false },
+            scales: {
+              yAxes: [
+                {
+                  gridLines: { display: false },
+                  stacked: false,
+                  ticks: { stepSize: 20 },
+                },
+              ],
+              xAxes: [{ stacked: false, gridLines: { color: 'transparent' } }],
+            },
+          },
+        });
+      });
+    </script>
+    <!--Datepicker-->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
+        var defaultDate =
+          date.getUTCFullYear() +
+          '-' +
+          (date.getUTCMonth() + 1) +
+          '-' +
+          date.getUTCDate();
+        document
+          .getElementById('datetimepicker-dashboard')
+          .flatpickr({
+            inline: true,
+            prevArrow: '<span title="Previous month">&laquo;</span>',
+            nextArrow: '<span title="Next month">&raquo;</span>',
+            defaultDate: defaultDate,
+          });
+      });
+    </script>
+    <!------Real Time chat JS files------>
+    <script>
+      const currentUserId = '{{ current_user.id }}';
+    </script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/gl-socket.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat-open-close.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notification.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/chat-socketIO.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat-rt-send.js') }}"></script>
+    <!---Line Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/earnings-chart.js') }}"></script>
+    <!---Pie chart--->
+    <script src="{{ url_for('static', filename='js/top-rooms-chart.js') }}"></script>
+    <!--JS World map -->
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+    <script>
+      const roomDetailUrl = "{{ url_for('bedrooms.roomdetail', room_id=0) }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/room-map.js') }}"></script>
+  </body>
+</html>

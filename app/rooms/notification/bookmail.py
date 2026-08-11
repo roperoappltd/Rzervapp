@@ -9,6 +9,10 @@ from app.models.roommodel import Rooms
 from app.models.bookmodel import Bookings
 from datetime import datetime
 import random
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def booking_numgen():
     a = 'BN01RZ26'
@@ -22,7 +26,7 @@ def booking_confirm_email(booking, booking_id):
     date = now.strftime("%d/%m/%Y %H:%M")
     # message
     msg = Message('Hooray! Successful Booking.', 
-                  sender='dmc.partners@yahoo.com',
+                  sender=os.getenv("EMAIL_USER"), #'dmc.partners@yahoo.com',
                   recipients=[booking.pguest_email])
     msg.html = f'''\
     <!DOCTYPE html>
@@ -71,22 +75,22 @@ def booking_confirm_email(booking, booking_id):
                     width="188"
                     height="100"
                     alt=""
-                    src="{url_for('static', filename='/userpics/Modlogo.png')}"
+                    src="{{{url_for('static', filename='resources/img/logo/Jamlogo1g.png')}}}"
                 />
             </div>
             &nbsp;<br>
 
-            <h2>Hotep { booking.primary_guest },</h2>
+            <h2>Hello { booking.primary_guest },</h2>
 
-            <p style="font-size: 15px;">We are please to confirm your booking.
-            Please click the button below to view your booking summary. </p>
+            <p style="font-size: 13px;">We are please to confirm your booking.
+            Click the button below to view your booking summary. </p>
             <div>&nbsp;</div>
             <a href="{ url_for('main.bookconfirm', booking_id=booking.id, _external=True) }">
             <button class="favorite styled" type="button">Booking summary</button></a>
 
             <div>&nbsp;</div>
-            <h4 style="font-size: 16px;"> Kind regards <br/> Rezerva <br/> Customer service.</h4>
-            <p  style="text-align:center">Copyright © 2025 Rezerva.ci . All Rights Reserved. | <small class="text-warning font-italic text-capitalize">Powered by <a href="https://tboss.ci/" style="text-decoration:none;">Techno|Boss</a></small></p>
+            <h4 style="font-size: 13px;"> Kind regards <br/> Jambo <br/> Customer service.</h4>
+            <p  style="text-align:center">Copyright © 2026 Jambo.ci . All Rights Reserved. | <small class="text-warning font-italic text-capitalize">Powered by <a href="https://tboss.ci/" style="text-decoration:none;">Techno|Boss</a></small></p>
 
         </body>
     </html>

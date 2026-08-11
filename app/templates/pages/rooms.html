@@ -3,11 +3,11 @@ head_css %} {% block content %}
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Rooms</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _("Rooms") }}🛌</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li class="current">Rooms</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _("Home") }}</a></li>
+        <li class="current">{{ _("Rooms") }}</li>
       </ol>
     </nav>
   </div>
@@ -15,14 +15,15 @@ head_css %} {% block content %}
 <!-- End Page Title -->
 
 <!-- Rooms 2 Section -->
-<section id="rooms-2" class="rooms-2 section">
+<section id="rooms-2" class="rooms-2 section pt-1">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="room-filters" data-aos="fade-up" data-aos-delay="200">
-      <form method="POST" action="{{ url_for('rooms.roomsearch') }}">
-        {{ form.hidden_tag() }}
+      <h5 class="mb-3">{{ _("Advanced Search") }}</h5>
+      <form method="POST" action="{{ url_for('bedrooms.roomsearch') }}">
+        {{ form.hidden_tag() }} {{ form.csrf_token }}
         <div class="row g-3 align-items-center">
           <div class="col-lg-3 col-md-6">
-            <label class="form-label">By Location</label>
+            <label class="form-label">{{ _("By Location") }}</label>
             {{ form.room_location.label(class="form-control-label lh-sm") }} {%
             if form.room_location.errors %} {{
             form.room_location(class="form-control form-control-sm is-invalid")
@@ -36,7 +37,7 @@ head_css %} {% block content %}
             form-control-sm") }} {% endif %}
           </div>
           <div class="col-lg-3 col-md-6">
-            <label class="form-label">By Room type</label>
+            <label class="form-label">{{ _("By Room type") }}</label>
             {{ form.room_category.label(class="form-control-label lh-sm") }} {%
             if form.room_category.errors %} {{
             form.room_category(class="form-control form-control-sm is-invalid")
@@ -50,7 +51,7 @@ head_css %} {% block content %}
             form-control-sm") }} {% endif %}
           </div>
           <div class="col-lg-3 col-md-6">
-            <label class="form-label">Min Price</label>
+            <label class="form-label">{{ _("Min Price") }}</label>
             {{ form.min_price.label(class="form-control-label lh-sm") }} {% if
             form.min_price.errors %} {{ form.min_price(class="form-control
             form-control-sm is-invalid") }}
@@ -63,7 +64,7 @@ head_css %} {% block content %}
             }} {% endif %}
           </div>
           <div class="col-lg-3 col-md-6">
-            <label class="form-label">Max Price</label>
+            <label class="form-label">{{ _("Max Price") }}</label>
             {{ form.max_price.label(class="form-control-label lh-sm") }} {% if
             form.max_price.errors %} {{ form.max_price(class="form-control
             form-control-sm is-invalid") }}
@@ -96,13 +97,15 @@ head_css %} {% block content %}
                 class="img-fluid"
               />
               <div class="room-features">
-                {% if room.status == 'Available' %}
-                <span class="badge text-bg-warning">{{room.status}}</span>
-                <span class="feature-badge ocean">{{room.room_location}}</span>
-                {% else %}
+                <!-- {% if room.status == 'Available' %} -->
+                <!-- <span class="badge text-bg-warning">{{room.status}}</span> -->
+                <span class="feature-badge" style="background-color: #ff385c"
+                  >{{room.room_location}}</span
+                >
+                <!-- {% else %}
                 <span class="badge text-bg-danger">{{room.status}}</span>
                 <span class="feature-badge ocean">{{room.room_location}}</span>
-                {% endif %}
+                {% endif %} -->
                 <!-- <span class="feature-badge garden">Green</span>
                 <span class="feature-badge ocean">Blue</span> -->
                 <!-- <span class="feature-badge popular">Popular</span> -->
@@ -129,25 +132,25 @@ head_css %} {% block content %}
               </p>
               <div class="room-amenities">
                 <span
-                  ><i class="bi bi-people"></i> Up to {{ room.max_occupancy }}
-                  guests</span
+                  ><i class="bi bi-people"></i> {{ _("Up to") }} {{
+                  room.max_occupancy }} {{ _("guests") }}</span
                 >
-                <span><i class="bi bi-wifi"></i> Free WiFi</span>
+                <span><i class="bi bi-wifi"></i> {{ _("Free WiFi") }}</span>
                 <span><i class="bi bi-tv"></i> {{ room.room_category }}</span>
               </div>
               <div class="room-footer">
                 <div class="room-price">
-                  <span class="price-from">From</span>
+                  <span class="price-from">{{ _("From") }}</span>
                   <span class="price-amount"
                     ><!--$289-->
                     {{ room.price }}</span
                   >
-                  <span class="price-period">/ night</span>
+                  <span class="price-period">/ {{ _("night") }}</span>
                 </div>
                 <a
-                  href="{{ url_for('rooms.roomdetail', room_id=room.id) }}"
+                  href="{{ url_for('bedrooms.roomdetail', room_id=room.id) }}"
                   class="btn-room-details"
-                  >View Details</a
+                  >{{ _("View Details") }}</a
                 >
               </div>
             </div>
@@ -169,7 +172,8 @@ head_css %} {% block content %}
     </div> -->
     <div class="pt-3">
       <h6 class="card-header">
-        Click to see the next page <i class="bi bi-arrow-right-circle-fill"></i>
+        {{ _("Click to see the next page") }}
+        <i class="bi bi-arrow-right-circle-fill"></i>
       </h6>
     </div>
     {% for page_num in allrooms.iter_pages(left_edge=1, right_edge=1,
@@ -177,13 +181,13 @@ head_css %} {% block content %}
     page_num %}
     <a
       class="btn btn-success pt-2 mt-2 mb-2"
-      href="{{ url_for('rooms.room', page=page_num) }}"
+      href="{{ url_for('bedrooms.room', page=page_num) }}"
       >{{ page_num }}</a
     >
     {% else %}
     <a
       class="btn btn-success-info pt-2 mt-2 mb-2"
-      href="{{ url_for('rooms.room', page=page_num) }}"
+      href="{{ url_for('bedrooms.room', page=page_num) }}"
       >{{ page_num }}</a
     >
     {% endif %} {% else %} ... {% endif %} {% endfor %}

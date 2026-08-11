@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-5" style="max-width: 520px">
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4">
+      <h4 class="mb-3 text-danger">{{ _('Delete your account') }}</h4>
+
+      <!-- Explicit, upfront warning -- shown before the user even sees
+           the password field, not buried after submission. -->
+      <div class="alert alert-warning">
+        <strong>{{ _('This action is permanent.') }}</strong>
+        <ul class="mb-0 mt-2">
+          <li>
+            {{ _('Any of your own upcoming bookings that are still eligible for
+            cancellation will be automatically cancelled and refunded.') }}
+          </li>
+          <li>
+            {{ _('Any rooms you host will be hidden from search and can no
+            longer be booked.') }}
+          </li>
+          <li>
+            {{ _('Your profile information will be removed, though past booking
+            and payment records are kept for accounting purposes.') }}
+          </li>
+        </ul>
+      </div>
+
+      <p class="text-muted">
+        {{ _('If you have upcoming bookings that cannot be automatically
+        cancelled, or guests currently booked into your rooms, you will need to
+        resolve those first before you can delete your account.') }}
+      </p>
+
+      <form method="POST">
+        {{ form.hidden_tag() }} {{ form.csrf_token }}
+        <div class="mb-3">
+          {{ form.password.label(class="form-label") }} {{
+          form.password(class="form-control") }}
+        </div>
+        {{ form.submit(class="btn btn-danger rounded-pill w-100") }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

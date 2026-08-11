@@ -1,0 +1,70 @@
+{# templates/admin/my_master.html This becomes the base template for every
+Flask-Admin auto-generated page (list/create/edit views for User, Room, Booking,
+etc.) -- it does NOT affect admindash.html, which already extends
+adminpanel/base.html directly and works independently. Flask-Admin's own page
+templates (admin/model/list.html, admin/model/edit.html, etc.) override specific
+blocks from this file -- primarily `body`, plus `head_css`/`tail` for their
+JS/CSS assets. Those blocks must exist here (even empty) or Flask-Admin's `{{
+super() }}` calls inside its own templates will fail to find a parent block.
+Full block reference:
+https://flask-admin.readthedocs.io/en/stable/introduction/#available-template-blocks
+#} {% extends "adminpanel/base.html" %} {# Flask-Admin's list/edit views inject
+their CSS (DataTables, Select2, etc.) here via {{ super() }} -- must exist for
+those pages to render correctly, even though admindash.html never touches this
+block. #} {% block head_css %} {{ super() }} {% block head_meta %}{% endblock %}
+{% block title %}{% endblock %} {% block head %}{% endblock %} {# Flask-Admin's
+search form uses Bootstrap 4's .form-inline class on both the
+<form>
+  and an inner
+  <div>
+    -- Bootstrap 5 removed that class entirely, so it does nothing and the
+    input/button stack vertically. Restoring the inline row with flexbox here,
+    scoped to Flask-Admin's admin pages only (this stylesheet only loads on
+    admin/ pages). #}
+    <style>
+      .form-inline {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .form-inline input[type='text'],
+      .form-inline input[type='search'] {
+        flex: 1 1 auto;
+        width: auto !important;
+      }
+    </style>
+    {% endblock %} {% block admincontent %} {# Flash messages -- plain Flask,
+    not a Flask-Admin internal macro, so this works reliably regardless of
+    Flask-Admin version. #} {% block messages %} {% with messages =
+    get_flashed_messages(with_categories=true) %} {% if messages %}
+    <div class="container-fluid pt-3">
+      {% for category, message in messages %}
+      <div
+        class="alert alert-{{ 'danger' if category in ['danger', 'error'] else category }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %} {% endblock %} {# The current view's name, e.g.
+    "Users" -- shown above its table/form. #} {% block page_title %} {% if
+    admin_view is defined and admin_view.name %}
+    <div class="container-fluid pt-3">
+      <h1 class="h3 mb-3">{{ admin_view.name }}</h1>
+    </div>
+    {% endif %} {% endblock %} {# This is where Flask-Admin actually renders the
+    real content -- the list table, the create/edit form, etc. #}
+    <div class="container-fluid">{% block body %}{% endblock %}</div>
+    {% endblock %} {# Flask-Admin's list/edit views inject their JS (DataTables
+    init, Select2 init, etc.) here via {{ super() }}. #} {% block tail %}{%
+    endblock %}
+  </div>
+</form>

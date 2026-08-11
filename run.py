@@ -2,7 +2,7 @@
 from datetime import timedelta
 from flask import session, g
 from flask_login import current_user
-from app import create_app
+from app import create_app, socketio
 
 # from flask_track_usage import TrackUsage
 # from flask_track_usage.storage.sql import SQLStorage
@@ -18,6 +18,8 @@ def before_request():
     session.modified = True
     g.user = current_user
 
+if __name__ == "__main__":
+    socketio.run(app, debug=True)
 
-if __name__ == '__main__':
-    app.run(debug=True) 
+# if __name__ == '__main__':
+#     app.run(debug=True) 

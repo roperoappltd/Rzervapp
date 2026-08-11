@@ -5,10 +5,10 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item pl-3">
-      <a href="{{url_for('users.listings')}}">My Listings</a>
+      <a href="{{url_for('users.listings')}}">{{ _('My Listings') }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-      Room listing update
+      {{ _('Room listing update') }}
     </li>
   </ol>
 </nav>
@@ -24,12 +24,12 @@ head_css %} {% block content %}
       <div class="alert alert-{{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
       <!----------------->
-      <h2 class="title mt-1 text-center">Update Room Listing</h2>
+      <h2 class="title mt-1 text-center">{{ _('Update Room Listing') }}</h2>
       <form method="POST" action="">
         {{ form.hidden_tag() }} {{ form.csrf_token }}
         <div class="row">
           <div class="form-group col-md-6">
-            <label>Room name</label>
+            <label>{{ _('Room name') }}</label>
             {{ form.room_name.label(class="form-control-label") }} {% if
             form.room_name.errors %} {{ form.room_name(class="form-control
             form-control-lg is-invalid") }}
@@ -42,7 +42,7 @@ head_css %} {% block content %}
             }} {% endif %}
           </div>
           <div class="form-group col-md-6">
-            <label>Category</label>
+            <label>{{ _('Category') }}</label>
             {{ form.room_category.label(class="form-control-label") }} {% if
             form.room_category.errors %} {{
             form.room_category(class="form-control form-control-lg is-invalid")
@@ -57,7 +57,7 @@ head_css %} {% block content %}
           </div>
         </div>
         <div class="form-group">
-          <label>Short description</label>
+          <label>{{ _('Short description') }}</label>
           {{ form.short_desc.label(class="form-control-label") }} {% if
           form.short_desc.errors %} {{ form.short_desc(class="form-control
           form-control-lg is-invalid") }}
@@ -71,7 +71,7 @@ head_css %} {% block content %}
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Max occupancy</label>
+            <label>{{ _('Max occupancy') }}</label>
             {{ form.max_occupancy.label(class="form-control-label") }} {% if
             form.max_occupancy.errors %} {{
             form.max_occupancy(class="form-control form-control-lg is-invalid")
@@ -85,7 +85,7 @@ head_css %} {% block content %}
             form-control-lg") }} {% endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Price per night</label>
+            <label>{{ _('Price per night') }}</label>
             {{ form.price.label(class="form-control-label") }} {% if
             form.price.errors %} {{ form.price(class="form-control
             form-control-lg is-invalid") }}
@@ -98,7 +98,7 @@ head_css %} {% block content %}
             endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Status</label>
+            <label>{{ _('Status') }}</label>
             {{ form.status.label(class="form-control-label") }} {% if
             form.status.errors %} {{ form.status(class="form-control
             form-control-lg is-invalid") }}
@@ -114,7 +114,7 @@ head_css %} {% block content %}
         <div class="row">
           <div class="form-group col-md-4">
             <!-- <div class="form-group pl-3 pr-0"> -->
-            <label>Ground Rule 1</label>
+            <label>{{ _('Ground Rule 1') }}</label>
             {{ form.usp1.label(class="form-control-label") }} {% if
             form.usp1.errors %} {{ form.usp1(class="form-control form-control-lg
             is-invalid") }}
@@ -129,7 +129,7 @@ head_css %} {% block content %}
           </div>
           <div class="form-group col-md-4">
             <!-- <div class="form-group pl-0 pr-0"> -->
-            <label>Ground Rule 2</label>
+            <label>{{ _('Ground Rule 2') }}</label>
             {{ form.usp2.label(class="form-control-label") }} {% if
             form.usp2.errors %} {{ form.usp2(class="form-control form-control-lg
             is-invalid") }}
@@ -144,7 +144,7 @@ head_css %} {% block content %}
           </div>
           <div class="form-group col-md-4">
             <!-- <div class="form-group pl-0 pr-3"> -->
-            <label>Ground Rule 3</label>
+            <label>{{ _('Ground Rule 3') }}</label>
             {{ form.usp3.label(class="form-control-label") }} {% if
             form.usp3.errors %} {{ form.usp3(class="form-control form-control-lg
             is-invalid") }}
@@ -159,7 +159,7 @@ head_css %} {% block content %}
           </div>
         </div>
         <div class="form-group">
-          <label>Description</label>
+          <label>{{ _('Description') }}</label>
           {{ form.description.label(class="form-control-label lh-sm") }} {% if
           form.description.errors %} {{ form.description(class="form-control
           form-control-lg is-invalid") }}

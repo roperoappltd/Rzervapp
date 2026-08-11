@@ -4,11 +4,11 @@ head_css %} {% block content %}
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">About</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _('About') }}</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="index.html">Home</a></li>
-        <li class="current">About</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('About') }}</li>
       </ol>
     </nav>
   </div>
@@ -27,22 +27,22 @@ head_css %} {% block content %}
             data-aos-delay="200"
           >
             <img
-              src="{{url_for('static', filename='img/hotel/showcase-9.webp')}}"
-              alt="Hotel Exterior"
+              src="{{url_for('static', filename='userpics/ads/afconv2.png')}}"
+              alt="{{ _('Hotel Exterior') }}"
               class="img-fluid main-image"
             />
             <div class="floating-card" data-aos="zoom-in" data-aos-delay="400">
               <div class="card-icon">
                 <i class="bi bi-star-fill"></i>
               </div>
-              <h6>5-Star Excellence</h6>
-              <p>Rated #1 Luxury Resort</p>
+              <h6>{{ _('5-Star Excellence') }}</h6>
+              <p>{{ _('warm-heartedness') }}</p>
             </div>
           </div>
           <div class="secondary-image" data-aos="fade-up" data-aos-delay="300">
             <img
-              src="{{url_for('static', filename='img/hotel/room-8.webp')}}"
-              alt="Luxury Suite"
+              src="{{url_for('static', filename='userpics/ads/afconv1.avif')}}"
+              alt="{{ _('Luxury Suite') }}"
               class="img-fluid"
             />
           </div>
@@ -52,22 +52,27 @@ head_css %} {% block content %}
       <div class="col-lg-7">
         <div class="content-wrapper" data-aos="fade-left" data-aos-delay="200">
           <div class="badge">
-            <span>Est. 1923</span>
+            <span>Est. 2020</span>
           </div>
 
-          <h2>Where Timeless Elegance Meets Modern Luxury</h2>
+          <h4 class="text-justify">
+            {% trans %}Over the years, Jambo has steadily been building a
+            trustworthy and hospitable community step by step.{% endtrans %}
+          </h4>
 
-          <p class="lead">
-            Excepteur sint occaecat cupidatat non proident sunt in culpa qui
-            officia deserunt mollit anim id est laborum. Sed ut perspiciatis
-            unde omnis iste natus error sit voluptatem accusantium.
+          <p class="lead text-justify">
+            {% trans %}Jambo was founded in 2020 when the concept of regrouping
+            individuals with available space and willing to share their homes
+            was introduced. Next, we broadened our services to encompass guest
+            houses and small to medium-sized hotels.{% endtrans %}
           </p>
 
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua.
+          <p class="text-justify">
+            {% trans %}The primary objective was to blend traditional African
+            conviviality into guests' experiences, aiming to forge a lasting
+            memory. Essentially, the focus was on building a trusted community
+            where guests feel safe, enjoy a friendly environment while saving
+            money, and cutting down time on the booking process.{% endtrans %}
           </p>
 
           <div class="milestone-timeline">
@@ -76,10 +81,12 @@ head_css %} {% block content %}
               data-aos="slide-up"
               data-aos-delay="250"
             >
-              <div class="milestone-year">1923</div>
+              <div class="milestone-year">2020</div>
               <div class="milestone-content">
-                <h5>Grand Opening</h5>
-                <p>Founded as exclusive mountain retreat</p>
+                <h5>{{ _('Community building') }}</h5>
+                <p>
+                  {{ _('Started as a platform where home could generate passive incomes.') }}
+                </p>
               </div>
             </div>
             <div
@@ -87,10 +94,10 @@ head_css %} {% block content %}
               data-aos="slide-up"
               data-aos-delay="300"
             >
-              <div class="milestone-year">1987</div>
+              <div class="milestone-year">2022</div>
               <div class="milestone-content">
-                <h5>Major Renovation</h5>
-                <p>Modern amenities while preserving heritage</p>
+                <h5>{{ _('Extended the community') }}</h5>
+                <p>{{ _('Guest houses and hotel join the Jambo family') }}</p>
               </div>
             </div>
             <div
@@ -98,15 +105,15 @@ head_css %} {% block content %}
               data-aos="slide-up"
               data-aos-delay="350"
             >
-              <div class="milestone-year">2019</div>
+              <div class="milestone-year">2025</div>
               <div class="milestone-content">
-                <h5>Spa &amp; Wellness</h5>
-                <p>Award-winning wellness center addition</p>
+                <h5>{{ _('Big Innovation') }}</h5>
+                <p>{{ _('Local touch for an unique experience') }}</p>
               </div>
             </div>
           </div>
 
-          <div class="action-buttons">
+          <!-- <div class="action-buttons">
             <a href="#" class="btn-explore">
               <i class="bi bi-compass"></i>
               Explore Our Heritage
@@ -118,22 +125,22 @@ head_css %} {% block content %}
               <i class="bi bi-play-circle"></i>
               Watch Story
             </a>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
 
-    <div class="row features-showcase">
+    <div class="row features-showcase mt-0">
       <div class="col-12">
         <div
           class="features-header text-center"
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <h3>Exceptional Hospitality Redefined</h3>
+          <h3>{{ _('Memorable moments') }}</h3>
           <p>
-            Discover the amenities and services that make your stay
-            unforgettable
+            {% trans %}Here we share some of the Jambo family memorable &
+            fantastic moments. Happiness never far with Jambo!{% endtrans %}
           </p>
         </div>
       </div>
@@ -144,7 +151,7 @@ head_css %} {% block content %}
         <div class="feature-card" data-aos="flip-up" data-aos-delay="200">
           <div class="feature-visual">
             <img
-              src="{{url_for('static', filename='img/hotel/amenities-3.webp')}}"
+              src="{{url_for('static', filename='userpics/ads/diabfam.png')}}"
               alt="Spa Services"
               class="img-fluid"
             />
@@ -155,9 +162,10 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="feature-details">
-            <h4>World-Class Spa</h4>
+            <h4>{{ _('Maisonette at Abidjan') }}</h4>
             <p>
-              Rejuvenating treatments in our award-winning wellness sanctuary
+              {{ _("The Diaby's familly occupying their Jambo booked property
+              for 2 weeks.") }}
             </p>
           </div>
         </div>
@@ -166,7 +174,7 @@ head_css %} {% block content %}
         <div class="feature-card" data-aos="flip-up" data-aos-delay="250">
           <div class="feature-visual">
             <img
-              src="{{url_for('static', filename='img/hotel/dining-4.webp')}}"
+              src="{{url_for('static', filename='userpics/ads/dasilva.png')}}"
               alt="Fine Dining"
               class="img-fluid"
             />
@@ -177,8 +185,10 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="feature-details">
-            <h4>Gourmet Dining</h4>
-            <p>Michelin-starred cuisine crafted by renowned executive chefs</p>
+            <h4>{{ _('Flat at Pretoria') }}</h4>
+            <p>
+              {{ _('A host in South Africa welcoming his Guests for 4 days stay.') }}
+            </p>
           </div>
         </div>
       </div>
@@ -186,7 +196,7 @@ head_css %} {% block content %}
         <div class="feature-card" data-aos="flip-up" data-aos-delay="300">
           <div class="feature-visual">
             <img
-              src="{{url_for('static', filename='img/hotel/location-2.webp')}}"
+              src="{{url_for('static', filename='userpics/ads/safari.png')}}"
               alt="Prime Location"
               class="img-fluid"
             />
@@ -197,9 +207,9 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="feature-details">
-            <h4>Prime Location</h4>
+            <h4>{{ _('Bungalow in Cotonou') }}</h4>
             <p>
-              Nestled in the heart of the city with breathtaking panoramic views
+              {{ _('Couple enjoying sunrise in their Jambo booked bungalow in Cotonou') }}.
             </p>
           </div>
         </div>
@@ -213,46 +223,46 @@ head_css %} {% block content %}
             <div class="stat-counter">
               <span
                 data-purecounter-start="0"
-                data-purecounter-end="236"
-                data-purecounter-duration="2"
-                class="purecounter"
-              ></span>
-            </div>
-            <div class="stat-description">Luxury Suites</div>
-          </div>
-          <div class="achievement-stat">
-            <div class="stat-counter">
-              <span
-                data-purecounter-start="80"
-                data-purecounter-end="96"
-                data-purecounter-duration="2"
-                class="purecounter"
-              ></span
-              >%
-            </div>
-            <div class="stat-description">Satisfaction Rate</div>
-          </div>
-          <div class="achievement-stat">
-            <div class="stat-counter">
-              <span
-                data-purecounter-start="0"
-                data-purecounter-end="15"
-                data-purecounter-duration="1"
-                class="purecounter"
-              ></span>
-            </div>
-            <div class="stat-description">International Awards</div>
-          </div>
-          <div class="achievement-stat">
-            <div class="stat-counter">
-              <span
-                data-purecounter-start="90"
                 data-purecounter-end="100"
                 data-purecounter-duration="2"
                 class="purecounter"
               ></span>
             </div>
-            <div class="stat-description">Years of Excellence</div>
+            <div class="stat-description">{{ _('Number of hosts') }}</div>
+          </div>
+          <div class="achievement-stat">
+            <div class="stat-counter">
+              <span
+                data-purecounter-start="80"
+                data-purecounter-end="98"
+                data-purecounter-duration="2"
+                class="purecounter"
+              ></span
+              >%
+            </div>
+            <div class="stat-description">{{ _('Satisfaction Rate') }}</div>
+          </div>
+          <div class="achievement-stat">
+            <div class="stat-counter">
+              <span
+                data-purecounter-start="0"
+                data-purecounter-end="85000"
+                data-purecounter-duration="1"
+                class="purecounter"
+              ></span>
+            </div>
+            <div class="stat-description">{{ _('Number of Booking') }}</div>
+          </div>
+          <div class="achievement-stat">
+            <div class="stat-counter">
+              <span
+                data-purecounter-start="90"
+                data-purecounter-end="6"
+                data-purecounter-duration="2"
+                class="purecounter"
+              ></span>
+            </div>
+            <div class="stat-description">{{ _('Years of Excellence') }}</div>
           </div>
         </div>
       </div>

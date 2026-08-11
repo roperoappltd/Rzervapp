@@ -23,9 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function initUI() {
     const subtotal = Number(subtotalEl.dataset.value) || 0;
-    submitBtn.value = `Pay £${subtotal.toFixed(2)}`;
-    finalEl.innerText = subtotal.toFixed(2);
-    discountEl.innerText = '0.00';
+    const discount = Number(discountEl.dataset.value) || 0;
+    const finalTotal = Number(finalEl.dataset.value) || 0;
+
+    discountEl.innerText = discount.toFixed(2);
+    finalEl.innerText = finalTotal.toFixed(2);
+    submitBtn.value = `Pay now £${finalTotal.toFixed(2)}`;
   }
 
   input.addEventListener('input', function () {

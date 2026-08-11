@@ -1,0 +1,438 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item pl-3">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('udash.udashboard')}}"
+        >{{ _('Dashboard') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Listings') }}
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-2">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ _('My Listings') }} 📋</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %} {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %} {% endif %} {% endwith %}
+              <div class="card-header">
+                <h5 class="about mb-0">{{ _('Room Listings') }} 🏷️</h5>
+              </div>
+
+              <!-- Large modal -->
+              <div class="text-end pt-3" style="padding-right: 40px">
+                <button
+                  type="button"
+                  class="btn btn-info text-white"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  style="background-color: #ff385c; border-color: #ff385c"
+                >
+                  <h8><b>&#x2b; {{ _('Add Room') }}</b></h8>
+                </button>
+                <!--------------------------------->
+              </div>
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content px-4 py-4">
+                    <div class="modal-header pt-1">
+                      <h1
+                        class="modal-title fs-5"
+                        id="exampleModalLabel text-white"
+                      >
+                        {{ _('Fill all fields to add a room') }}
+                      </h1>
+                    </div>
+                    <form method="POST" action="">
+                      {{ form.hidden_tag() }} {{ form.csrf_token }}
+                      <!--START FORM FIELDS-->
+                      <div class="row pb-2 pt-2">
+                        <div class="col-md-6 pb-3">
+                          <div class="form-group pl-3 pr-0 mt-2">
+                            <label class="pb-1"
+                              >{{ _('Enter Room name') }}</label
+                            >
+                            {{ form.room_name.label(class="form-control-label")
+                            }} {% if form.room_name.errors %} {{
+                            form.room_name(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.room_name.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.room_name(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group pl-0 pr-3 mt-2">
+                            <label class="pb-1"
+                              >{{ _('Enter Room City') }}</label
+                            >
+                            {{
+                            form.room_location.label(class="form-control-label")
+                            }} {% if form.room_location.errors %} {{
+                            form.room_location(class="form-control
+                            form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.room_location.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.room_location(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row pb-2">
+                        <div class="col-md-4">
+                          <div class="form-group pl-3 pr-0">
+                            <label class="pb-1"
+                              >{{ _('Enter Room Price') }}</label
+                            >
+                            {{ form.price.label(class="form-control-label") }}
+                            {% if form.price.errors %} {{
+                            form.price(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.price.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.price(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group pl-0 pr-0">
+                            <label class="pb-1"
+                              >{{ _('Select Room Category') }}</label
+                            >
+                            {{
+                            form.room_category.label(class="form-control-label")
+                            }} {% if form.room_category.errors %} {{
+                            form.room_category(class="form-control
+                            form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.room_category.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.room_category(class="form-control
+                            form-control-sm form-select") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group pl-0 pr-3">
+                            <label class="pb-1">{{ _('Select Status') }}</label>
+                            {{ form.status.label(class="form-control-label") }}
+                            {% if form.status.errors %} {{
+                            form.status(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.status.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.status(class="form-control
+                            form-control-sm form-select") }} {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row pb-2">
+                        <div class="col-md-6">
+                          <div class="form-group pl-3 pr-0">
+                            <label class="pb-1"
+                              >{{ _('Type a Short Description') }}</label
+                            >
+                            {{ form.short_desc.label(class="form-control-label")
+                            }} {% if form.short_desc.errors %} {{
+                            form.short_desc(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.short_desc.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.short_desc(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group pl-0 pr-0">
+                            <label class="pb-1"
+                              >{{ _('Select Room Size (m2)') }}</label
+                            >
+                            {{ form.room_size.label(class="form-control-label")
+                            }} {% if form.room_size.errors %} {{
+                            form.room_size(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.room_size.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.room_size(class="form-control
+                            form-control-sm form-select") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group pl-0 pr-3">
+                            <label class="pb-1">{{ _('Max Occupancy') }}</label>
+                            {{
+                            form.max_occupancy.label(class="form-control-label")
+                            }} {% if form.max_occupancy.errors %} {{
+                            form.max_occupancy(class="form-control
+                            form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.max_occupancy.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.max_occupancy(class="form-control
+                            form-control-sm form-select") }} {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row pb-2">
+                        <div class="col-md-4">
+                          <div class="form-group pl-3 pr-0">
+                            <label class="pb-1">{{ _('Ground Rule 1') }}</label>
+                            {{ form.rule1.label(class="form-control-label") }}
+                            {% if form.rule1.errors %} {{
+                            form.rule1(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.rule1.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.rule1(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group pl-0 pr-0">
+                            <label class="pb-1">{{ _('Ground Rule 2') }}</label>
+                            {{ form.rule2.label(class="form-control-label") }}
+                            {% if form.rule2.errors %} {{
+                            form.rule2(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.rule2.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.rule2(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group pl-0 pr-3">
+                            <label class="pb-1">{{ _('Ground Rule 3') }}</label>
+                            {{ form.rule3.label(class="form-control-label") }}
+                            {% if form.rule3.errors %} {{
+                            form.rule3(class="form-control form-control-sm
+                            is-invalid") }}
+                            <div class="invalid-feedback">
+                              {% for error in form.rule3.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %} {{ form.rule3(class="form-control
+                            form-control-sm") }} {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group pl-3 pr-3 pb-3 pt-2">
+                        <label class="pb-1"
+                          >{{ _('Enter Room Description') }}</label
+                        >
+                        {{ form.description.label(class="form-control-label
+                        lh-sm") }} {% if form.description.errors %} {{
+                        form.description(class="form-control form-control-sm
+                        is-invalid") }}
+                        <div class="invalid-feedback">
+                          {% for error in form.description.errors %}
+                          <span>{{ error }}</span>
+                          {% endfor %}
+                        </div>
+                        {% else %} {{ form.description(class="form-control
+                        form-control-sm") }} {% endif %}
+                      </div>
+
+                      <!------------------->
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          {{ _('Close') }}
+                        </button>
+                        {{ form.submit(class="btn btn-primary") }}
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!--Room Listings table-->
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="text-primary">
+                      <th>➕{{ _('add Pics') }}</th>
+                      <th>{{ _('Title') }}</th>
+                      <th>{{ _('Location') }}</th>
+                      <th>{{ _('Category') }}</th>
+                      <th>{{ _('Status') }}</th>
+                      <th>{{ _('Price') }}</th>
+                      <th class="text-center">{{ _('Action') }}</th>
+                    </thead>
+                    {% for roo in roomlist %}
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a
+                            href="{{ url_for('bedrooms.update_roompics', room_id=roo.id)}}"
+                            class="dropdown-item pt-0 mt-0"
+                            ><img
+                              class="rounded-circle article-img zoomer"
+                              src="{{ url_for('static', filename='/userpics/roompics/'+ roo.image1 ) }}"
+                              width="40"
+                              height="40"
+                            />
+                          </a>
+                        </td>
+                        <td>{{ roo.room_name }}</td>
+                        <td>{{ roo.room_location }}</td>
+                        <td>{{ roo.room_category }}</td>
+                        <td>{{ roo.status }}</td>
+                        {% if preferred_currency == roo.currency %}
+                        <td class="text-right">
+                          {{ format_money(roo.price, roo.currency) }}
+                        </td>
+                        {% else %}
+                        <td class="text-right">
+                          {{ convert_and_format(roo.price, roo.currency,
+                          preferred_currency) }}
+                        </td>
+                        {% endif %}
+                        <td class="text-right">
+                          <!-- Example single danger button -->
+                          <div class="dropdown">
+                            <button
+                              type="button"
+                              class="btn btn-primary rounded-pill btn-sm dropdown-toggle"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              style="
+                                background-color: #ff385c;
+                                border-color: #ff385c;
+                              "
+                            >
+                              {{ _('Action') }}
+                            </button>
+                            <ul
+                              class="dropdown-menu"
+                              aria-labelledby="dropdownMenuButton1"
+                            >
+                              <!-- <a class="dropdown-item pt-0 mt-0" href="#">View</a> -->
+                              <li>
+                                <a
+                                  href="{{ url_for('bedrooms.roomextra', room_id=roo.id)}}"
+                                  class="dropdown-item"
+                                  >{{ _('Add amenities') }}</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="{{ url_for('bedrooms.roomdetail', room_id=roo.id)}}"
+                                  class="dropdown-item"
+                                  >{{ _('View room') }}</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="{{ url_for('bedrooms.update_room', room_id=roo.id)}}"
+                                  class="dropdown-item"
+                                  >{{ _('Update listing') }}</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="{{ url_for('bedrooms.host_calendar', room_id=roo.id)}}"
+                                  class="dropdown-item"
+                                  >{{ _('Set calendar') }}</a
+                                >
+                              </li>
+                              <li>
+                                <a
+                                  href="{{ url_for('bedrooms.delete_room', room_id=roo.id)}}"
+                                  class="dropdown-item"
+                                  >{{ _('Delete listing') }}</a
+                                >
+                              </li>
+                            </ul>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                  <!----------------Pagination-->
+                  <div class="pagination">
+                    {% if roomlist.has_prev %}
+                    <a
+                      href="{{ url_for('udash.mylistings', page=roomlist.prev_num) }}"
+                    >
+                      {{ _('Previous') }} <i class="bi bi-arrow-left-short"></i
+                    ></a>
+                    {% endif %}
+                    <span class="mx-2">
+                      {{ _('Page') }} {{ roomlist.page }} of {{ roomlist.pages
+                      }}
+                    </span>
+                    {% if roomlist.has_next %}
+                    <a
+                      href="{{ url_for('udash.mylistings', page=roomlist.next_num) }}"
+                    >
+                      {{ _('Next') }} <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                    {% endif %}
+                  </div>
+                  <!----------------End pagination-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+{% endblock content %}

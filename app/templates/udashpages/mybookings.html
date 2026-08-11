@@ -1,0 +1,435 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item pl-3">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('udash.udashboard')}}"
+        >{{ _('Dashboard') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Bookings') }}
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-2">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ _('My Bookings') }} 📅</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="about mb-0">{{ _('Bookings as host') }} 👑</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <h6 style="text-transform: capitalize; color: navy">
+                    {{ _('Total Host bookings') }}: {{ bookhost.total }}
+                  </h6>
+                  <!-- <p>Current page items: {{ bookhost.items|length }}</p> -->
+                  <table class="table">
+                    <thead class="text-primary">
+                      <th>{{ _('Room') }}</th>
+                      <th>{{ _('Location') }}</th>
+                      <th>{{ _('Price') }}</th>
+                      <th>{{ _('Guest') }}</th>
+                      <th>{{ _('From') }}</th>
+                      <th>{{ _('Days') }}</th>
+                      <th>{{ _('Status') }}</th>
+                    </thead>
+                    {% for booh in bookhost.items %}
+                    <tbody>
+                      {% if booh.rooms.user.id == current_user.id %}
+                      <tr>
+                        <td>{{ booh.rooms.room_name }}</td>
+                        <td>{{ booh.rooms.room_location }}</td>
+
+                        <td>
+                          {% if preferred_currency == booh.rooms.currency %} {{
+                          format_money(booh.rooms.price, booh.rooms.currency) }}
+                          {% else %} {{ convert_and_format(booh.rooms.price,
+                          booh.rooms.currency, preferred_currency) }} {% endif
+                          %}
+                        </td>
+
+                        <td>{{ booh.primary_guest }}</td>
+                        <td>{{ booh.arrival.strftime('%d %B %Y') }}</td>
+                        <td>{{ (booh.departure - booh.arrival).days }}</td>
+                        <!------------------------------Start here-->
+                        {% if booh.status == 'Cancelled' %}
+                        <td class="text-muted"><b>{{ booh.status }}</b></td>
+
+                        {% elif booh.status == 'Pending' %}
+                        {# TODO: host-side equivalent of the guest payment CTA, once that flow exists #}
+                        <td class="text-info"><b>{{ booh.status }}</b></td>
+
+                        {% elif booh.status == 'Confirmed' and booh.departure > today %}
+                        <!-- Anytime before departure: Need help and chat, throughout the booking period -->
+                        <td>
+                          <div class="btn-group">
+                            <button
+                              class="btn rounded-pill btn-danger btn-sm dropdown-toggle"
+                              style="background-color: #ff385c; border-color: #ff385c;"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              {{ _('Action') }}
+                            </button>
+                            <div class="dropdown-menu">
+                              
+                              href="{{ url_for('main.contact') }}"
+                              class="dropdown-item pt-0 mt-0"
+                              >{{ _('Need help') }}</a>
+
+                              <!------------Chat button -- available throughout the booking period-------------------->
+                              {% if booh.conversation %}
+                              {% set other = booh.conversation.other_user_for(current_user.id) %}
+                              {% if other %}
+                              
+                                class="chat-launch-btn dropdown-item"
+                                data-conversation="{{ booh.conversation.id }}"
+                                data-user="{{ other.username }}"
+                              >
+                                <i class="bi bi-chat-dots"></i>
+                                {{ _('Message') }} {{ other.username }}
+                              </a>
+                              {% endif %}
+                              {% endif %}
+                              <!------------------------------->
+                            </div>
+                          </div>
+                        </td>
+
+                        {% elif booh.status == 'Confirmed' and booh.departure <= today %}
+                        <!-- Stay has ended: rate the guest, or look up their existing reviews -->
+                        <td>
+                          <span class="text-muted me-2"><b>{{ booh.status }}</b></span>
+
+                          <button
+                            type="button"
+                            class="btn rounded-pill btn-primary btn-sm"
+                            style="background-color: #ff385c; border-color: #ff385c;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#rateGuestModal"
+                            data-action-url="{{ url_for('udash.rate_guest', booking_id=booh.id) }}"
+                            data-guest-name="{{ booh.user.username }}"
+                          >
+                            {{ _('Rate Guest') }}
+                          </button>
+
+                          <button
+                            type="button"
+                            class="btn rounded-pill btn-outline-secondary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#guestReviewsModal"
+                            data-api-url="{{ url_for('udash.api_guest_reviews', guest_id=booh.user.id) }}"
+                            data-guest-name="{{ booh.user.username }}"
+                          >
+                            {{ _('View reviews') }}
+                          </button>
+                        </td>
+
+                        {% else %}
+                        <!-- Fallback for any status not explicitly handled above -->
+                        <td><b>{{ booh.status }}</b></td>
+                        {% endif %}
+                        <!---------------End here------>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                  <!-----------PAGINATION---------->
+                  <div class="pagination">
+                    {% if bookhost.has_prev %}
+                    <a
+                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.prev_num) }}"
+                    >
+                      {{ _('Previous') }}
+                      <i class="now-ui-icons arrows-1_minimal-left"></i
+                    ></a>
+                    {% endif %}
+                    <span class="mx-2">
+                      {{ _('Page') }} {{ bookhost.page }} of {{ bookhost.pages
+                      }}
+                    </span>
+                    {% if bookhost.has_next %}
+                    <a
+                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.next_num) }}"
+                    >
+                      {{ _('Next') }}
+                      <i class="now-ui-icons arrows-1_minimal-right"></i>
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!----Guest bookings-->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="about mb-0">{{ _('Bookings as Guest') }} 𐦂𖨆𐀪𖠋</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <h6 style="text-transform: capitalize; color: navy">
+                    {{ _('Total Guest bookings') }}: {{ bookguest.total }}
+                  </h6>
+                  <table class="table">
+                    <thead class="text-primary">
+                      <th>{{ _('From') }}</th>
+                      <th>{{ _('To') }}</th>
+                      <th>{{ _('Room') }}</th>
+                      <th>{{ _('Location') }}</th>
+                      <th>{{ _('Price') }}</th>
+                      <th>{{ _('Host') }}</th>
+                      <th>{{ _('Action') }}</th>
+                    </thead>
+                    {% for boo in bookguest.items %}
+                    <tbody>
+                      <tr>
+                        <td>{{ boo.arrival.strftime('%d %B %Y') }}</td>
+                        <td>{{ boo.departure.strftime('%d %B %Y') }}</td>
+                        <td>{{ boo.rooms.room_name }}</td>
+                        <td>{{ boo.rooms.room_location }}</td>
+                        {% if preferred_currency == boo.rooms.currency %}
+                        <td>
+                          {{ format_money(boo.rooms.price, boo.rooms.currency)
+                          }}
+                        </td>
+                        {% else %}
+                        <td>
+                          {{ convert_and_format(boo.rooms.price,
+                          boo.rooms.currency, preferred_currency) }}
+                        </td>
+                        {% endif %}
+                        <td>
+                          {{ boo.rooms.user.first_name}} {{
+                          boo.rooms.user.last_name}}
+                        </td>
+                        {% if boo.status == 'Cancelled' %}
+                        <td class="text-muted"><b>{{ boo.status }}</b></td>
+
+                        {% elif boo.status == 'Pending' %} {# TODO: replace with
+                        a real "Complete payment" CTA once that feature is built
+                        #}
+                        <td class="text-info"><b>{{ boo.status }}</b></td>
+
+                        {% elif boo.status == 'Confirmed' and boo.departure >
+                        today %}
+                        <!-- Anytime before departure: full action dropdown, chat always available regardless of whether travel has started -->
+                        <td>
+                          <div class="btn-group">
+                            <button
+                              type="button"
+                              class="btn rounded-pill btn-danger btn-sm dropdown-toggle"
+                              style="
+                                background-color: #ff385c;
+                                border-color: #ff385c;
+                              "
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              {{ _('Action') }}
+                            </button>
+                            <div class="dropdown-menu">
+                              {% if can_cancel(boo.status, boo.arrival) == True
+                              %}
+                              <form
+                                method="POST"
+                                action="{{ url_for('bedrooms.cancel_booking', booking_id=boo.id) }}"
+                              >
+                                <input
+                                  type="hidden"
+                                  name="csrf_token"
+                                  value="{{ csrf_token() }}"
+                                />
+                                <button
+                                  type="submit"
+                                  class="dropdown-item btn btn-link"
+                                >
+                                  {{ _('Cancel booking') }}
+                                </button>
+                              </form>
+                              {% else %}
+                              <a
+                                href="{{ url_for('main.contact') }}"
+                                class="dropdown-item pt-0 mt-0"
+                                >{{ _('Need help') }}</a
+                              >
+                              {% endif %}
+
+                              <!---------Message link -- available the whole way up to departure--------------->
+                              {% if boo.conversation %} {% set other =
+                              boo.conversation.other_user_for(current_user.id)
+                              %} {% if other %}
+                              <a
+                                class="chat-launch-btn dropdown-item"
+                                data-conversation="{{ boo.conversation.id }}"
+                                data-user="{{ other.username }}"
+                              >
+                                <i class="bi bi-chat-dots"></i>
+                                {{ _('Message') }} {{ other.username }}
+                              </a>
+                              {% endif %} {% endif %}
+                              <!----------------------------------->
+                            </div>
+                          </div>
+                        </td>
+
+                        {% elif boo.status == 'Confirmed' and boo.departure <=
+                        today %}
+                        <!-- Stay has ended: status and rate-stay shown together -->
+                        <td>
+                          <span class="text-muted me-2"
+                            ><b>{{ boo.status }}</b></span
+                          >
+                          <a
+                            href="{{ url_for('bedrooms.roomdetail', room_id=boo.rooms.id) }}#reviews"
+                          >
+                            <button
+                              type="button"
+                              class="btn rounded-pill btn-primary btn-sm"
+                              style="
+                                background-color: #ff385c;
+                                border-color: #ff385c;
+                              "
+                            >
+                              {{ _('Rate stay') }}
+                            </button>
+                          </a>
+                        </td>
+                        {% else %}
+                        <!-- Fallback for any status not explicitly handled above -->
+                        <td><b>{{ boo.status }}</b></td>
+                        {% endif %}
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                  <!------------------>
+                  <div class="pagination">
+                    {% if bookguest.has_prev %}
+                    <a
+                      href="{{ url_for('udash.mybookings', guest_page=bookguest.prev_num, host_page=bookhost.page) }}"
+                    >
+                      {{ _('Previous') }} <i class="bi bi-arrow-left-short"></i
+                    ></a>
+                    {% endif %}
+                    <span class="mx-2">
+                      Page {{ bookguest.page }} of {{ bookguest.pages }}
+                    </span>
+                    {% if bookguest.has_next %}
+                    <a
+                      href="{{ url_for('udash.mybookings', guest_page=bookguest.next_num, host_page=bookhost.page) }}"
+                    >
+                      {{ _('Next') }} <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ================= RATE GUEST MODAL ================= -->
+<div class="modal fade" id="rateGuestModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content jw-modal-content">
+      <div class="modal-header jw-modal-header">
+        <div>
+          <div class="modal-title">{{ _('Rate your guest') }}</div>
+          <div class="jw-subtitle" id="rateGuestSubtitle"></div>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="jw-modal-body">
+        <form id="rateGuestForm" method="POST" action="">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input
+            type="hidden"
+            name="rate_us"
+            id="rateGuestRateInput"
+            value=""
+          />
+
+          <div class="jw-star-picker" id="rateGuestStars">
+            <i class="bi bi-star" data-value="1"></i>
+            <i class="bi bi-star" data-value="2"></i>
+            <i class="bi bi-star" data-value="3"></i>
+            <i class="bi bi-star" data-value="4"></i>
+            <i class="bi bi-star" data-value="5"></i>
+          </div>
+
+          <textarea
+            class="form-control"
+            name="message"
+            id="rateGuestMessage"
+            minlength="20"
+            maxlength="200"
+            placeholder="{{ _('Share what it was like hosting this guest (min. 20 characters)...') }}"
+            required
+          ></textarea>
+          <div class="jw-char-count">
+            <span id="rateGuestCharCount">0</span>/200
+          </div>
+
+          <div class="text-center mt-3">
+            <button type="submit" class="jw-btn-primary">
+              {{ _('Submit review') }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= VIEW GUEST REVIEWS MODAL ================= -->
+<div class="modal fade" id="guestReviewsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content jw-modal-content">
+      <div class="modal-header jw-modal-header">
+        <div>
+          <div class="modal-title">{{ _('Guest reviews') }}</div>
+          <div class="jw-subtitle" id="guestReviewsSubtitle"></div>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="jw-modal-body" id="guestReviewsBody">
+        <div class="jw-loading">{{ _('Loading...') }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!---Review Gues JS file-->
+<script src="{{ url_for('static', filename='js/review-guest.js') }}"></script>
+{% endblock content %}

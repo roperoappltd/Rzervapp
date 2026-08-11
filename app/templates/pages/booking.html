@@ -4,11 +4,11 @@ head_css %} {% block content %}
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Booking</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _('Booking') }}</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li class="current">Booking</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Booking') }}</li>
       </ol>
     </nav>
   </div>
@@ -24,9 +24,10 @@ head_css %} {% block content %}
         data-aos="fade-up"
         data-aos-delay="200"
       >
-        <h2>Reserve Your Stay</h2>
+        <h2>{{ _('Reserve Your Stay') }}</h2>
         <p class="lead">
-          Experience unmatched hospitality with our streamlined booking process
+          {{ _('Experience unmatched hospitality with our streamlined booking
+          process') }}
         </p>
       </div>
 
@@ -40,10 +41,10 @@ head_css %} {% block content %}
             <form method="POST" action="" class="reservation-form">
               {{ form.hidden_tag() }} {{ form.csrf_token }}
               <div class="form-section">
-                <h4>Booking Details</h4>
+                <h4>{{ _('Booking Details') }}</h4>
                 <div class="form-grid">
                   <div class="form-group1">
-                    <!-- <label class="form-label">Arrival Date</label> -->
+                    <label class="pb-1">{{ _('Arrival Date') }}</label>
                     {{ form.arrival.label(class="form-control-label") }} {% if
                     form.arrival.errors %} {{ form.arrival(class="form-control
                     form-control-lg is-invalid") }}
@@ -56,7 +57,7 @@ head_css %} {% block content %}
                     form-control-lg") }} {% endif %}
                   </div>
                   <div class="form-group1">
-                    <!-- <label class="form-label">Departure Date</label> -->
+                    <label class="pb-1">{{ _('Departure Date') }}</label>
                     {{ form.departure.label(class="form-control-label") }} {% if
                     form.departure.errors %} {{
                     form.departure(class="form-control form-control-lg
@@ -70,9 +71,7 @@ head_css %} {% block content %}
                     form-control-lg") }} {% endif %}
                   </div>
                   <div class="form-group1">
-                    <!-- <label for="guest-count" class="form-label"
-                      >Select Total Guests</label
-                    > -->
+                    <label class="pb-1">{{ _('Total Guests') }}</label>
                     {{ form.num_guests.label(class="form-control-label") }} {%
                     if form.num_guests.errors %} {{
                     form.num_guests(class="form-control form-control-lg
@@ -86,9 +85,7 @@ head_css %} {% block content %}
                     form-control-lg") }} {% endif %}
                   </div>
                   <div class="form-group1">
-                    <!-- <label for="accommodation-type" class="form-label"
-                      >Room Type</label
-                    > -->
+                    <label class="pb-1">{{ _('Room Type') }}</label>
                     {{ form.room_type.label(class="form-control-label") }} {% if
                     form.room_type.errors %} {{
                     form.room_type(class="form-control form-control-lg
@@ -99,13 +96,11 @@ head_css %} {% block content %}
                       {% endfor %}
                     </div>
                     {% else %} {{ form.room_type(class="form-control
-                    form-control-lg") }} {% endif %}
+                    form-control-lg ") }} {% endif %}
                   </div>
                 </div>
                 <div class="form-group1">
-                  <!-- <label for="additional-notes" class="form-label"
-                    >Additional Requirements</label
-                  > -->
+                  <label class="pb-1">{{ _('Additional Requirements') }}</label>
                   {{ form.ad_info.label(class="form-control-label") }} {% if
                   form.ad_info.errors %} {{ form.ad_info(class="form-control
                   form-control-lg is-invalid") }}
@@ -120,11 +115,11 @@ head_css %} {% block content %}
               </div>
 
               <div class="form-section">
-                <h4>Guest Information</h4>
+                <h4>{{ _('Guest Information') }}</h4>
                 <div class="form-grid">
                   <div class="form-group1 full-width">
-                    <label for="primary-guest" class="form-label"
-                      >Primary Guest full name</label
+                    <label class="pb-1"
+                      >{{ _('Primary Guest full name') }}</label
                     >
                     {{ form.primary_guest.label(class="form-control-label") }}
                     {% if form.primary_guest.errors %} {{
@@ -139,9 +134,7 @@ head_css %} {% block content %}
                     form-control-lg") }} {% endif %}
                   </div>
                   <div class="form-group1">
-                    <label for="contact-email" class="form-label"
-                      >Email Address</label
-                    >
+                    <label class="pb-1">{{ _('Email Address') }}</label>
                     {{ form.pguest_email.label(class="form-control-label") }} {%
                     if form.pguest_email.errors %} {{
                     form.pguest_email(class="form-control form-control-lg
@@ -155,9 +148,7 @@ head_css %} {% block content %}
                     form-control-lg") }} {% endif %}
                   </div>
                   <div class="form-group1">
-                    <label for="contact-phone" class="form-label"
-                      >Contact Number</label
-                    >
+                    <label class="pb-1">{{ _('Contact Number') }}</label>
                     {{ form.pguest_phone.label(class="form-control-label") }} {%
                     if form.pguest_phone.errors %} {{
                     form.pguest_phone(class="form-control form-control-lg
@@ -181,6 +172,12 @@ head_css %} {% block content %}
 
         <div class="hotel-showcase" data-aos="fade-left" data-aos-delay="400">
           <!-- {{ url_for('static', filename='img/hotel/plateau.jpeg')}} -->
+          <div class="text-center">
+            <h6>
+              {{ room.room_category|capitalize }} located in {{
+              room.room_location }}
+            </h6>
+          </div>
           <div class="showcase-image">
             <img
               src="{{ url_for('static', filename='userpics/roompics/' + room.image1) }}"
@@ -189,16 +186,16 @@ head_css %} {% block content %}
             />
           </div>
 
-          <div class="hotel-highlights">
-            <h3>Why Choose Rezerva?</h3>
+          <div class="hotel-highlights pt-1">
+            <h3>{{ _('Why Choose Rezerva?') }}</h3>
             <div class="highlights-grid">
               <div class="highlight-item">
                 <div class="highlight-icon">
                   <i class="bi bi-people"></i>
                 </div>
                 <div class="highlight-content">
-                  <h5>trustworthy community</h5>
-                  <p>Hosts & guests identity is checked</p>
+                  <h5>{{ _('trustworthy community') }}</h5>
+                  <p>{{ _('Hosts & guests identity is checked') }}</p>
                 </div>
               </div>
               <div class="highlight-item">
@@ -206,8 +203,8 @@ head_css %} {% block content %}
                   <i class="bi bi-clock"></i>
                 </div>
                 <div class="highlight-content">
-                  <h5>24/7 Support</h5>
-                  <p>Round-the-clock assistance and support</p>
+                  <h5>{{ _('24/7 Support') }}</h5>
+                  <p>{{ _('Round-the-clock assistance and support') }}</p>
                 </div>
               </div>
               <div class="highlight-item">
@@ -215,8 +212,10 @@ head_css %} {% block content %}
                   <i class="bi bi-shield-check"></i>
                 </div>
                 <div class="highlight-content">
-                  <h5>Secure booking</h5>
-                  <p>Book with 100% trust & confidence</p>
+                  <h5>{{ _('Secure booking') }}</h5>
+                  <p>
+                    {% trans %}Book with 100% trust & confidence {% endtrans %}
+                  </p>
                 </div>
               </div>
               <div class="highlight-item">
@@ -224,8 +223,8 @@ head_css %} {% block content %}
                   <i class="bi bi-arrow-clockwise"></i>
                 </div>
                 <div class="highlight-content">
-                  <h5>Flexible Cancellation</h5>
-                  <p>48h Free cancellation</p>
+                  <h5>{{ _('Flexible Cancellation') }}</h5>
+                  <p>{{ _('48h Free cancellation') }}</p>
                 </div>
               </div>
             </div>
@@ -247,26 +246,26 @@ head_css %} {% block content %}
           </div> -->
           <!-------------------------------------------------------------->
           <div class="card mt-2">
-            <h5 class="card-header">
-              Urgent Notification <i class="bi bi-bell"></i>
+            <h5 class="card-header text-danger fw-bold">
+              {{ _('Urgent Notification') }} <i class="bi bi-bell"></i>
             </h5>
             <div class="card-body">
               <!-- <h5 class="card-title">
                 Please read before proceeding to checkout
               </h5> -->
               <p class="card-text" style="text-align: justify">
-                By clicking you are agreeing to our terms and conditions. Please
-                contact the host before your travel on the host's contact
-                provided. Rezerva will follow up the booking to make sure that
-                everything goes well. Do no hesitate to get in touch with us for
-                any support. We wish you a pleasant stay. <br />
+                {% trans %}By clicking you are agreeing to our terms and
+                conditions. Please contact the host on the contact provided
+                before your travel. Do no hesitate to get in touch with us for
+                any support. We wish you a pleasant stay.{% endtrans %} <br />
                 &nbsp; <br />
-                HR Team <br />
-                Rezerva.com
+
+                {{ _('HR Team') }} <br />
+                Jambo
               </p>
-              <div class="text-right">
+              <div class="text-end">
                 <a href="#" class="btn btn-primary"
-                  >Read our Terms & conditions</a
+                  >{{ _('Read our Terms & Conditions') }}</a
                 >
               </div>
             </div>

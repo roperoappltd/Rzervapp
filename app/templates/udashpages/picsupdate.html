@@ -1,0 +1,57 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<!--Breadcrumb-->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item ">
+      <a style="padding-left: 10px; text-decoration: none;" href="{{url_for('udash.mylistings')}}">Room Listings</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ _('Room images') }}</li>
+  </ol>
+</nav>
+<!--End Breadcrumb-->
+
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-1">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ _('Room images') }} 🏞️</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <!--Flash alerts-->
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %} {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %} {% endif %} {% endwith %}
+              <!----------------->
+              <div class="card-header">
+                <h5 class="about mb-0">{{ _('Upload room images') }} 📸</h5>
+              </div>
+              <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                  {{ form.hidden_tag() }} {{ form.csrf_token }}       
+                  <div class="mb-3">
+                    {{ form.pictures.label() }}
+                    {{ form.pictures(class="form-control-file form-control", type="file", multiple=True) }}
+                    {% if form.pictures.errors %}
+                        {% for error in form.pictures.errors %}
+                          <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                    {% endif %}
+                  </div>
+                  
+                  <div class="form-group text-right">
+                    {{ form.submit(class="btn btn-info mt-3") }}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock content %}

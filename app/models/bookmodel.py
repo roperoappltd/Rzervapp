@@ -11,7 +11,7 @@ class Bookings(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # ------------------------------------------------------------------------------------- 
-    booking_num = db.Column(db.String(20), nullable=True)
+    booking_num = db.Column(db.String(20), nullable=False, unique=True)  # FIXED: was nullable=True with no uniqueness -- this is the customer-facing reference number
     arrival = db.Column(db.Date, nullable=False)
     departure = db.Column(db.Date, nullable=False)
     num_guests = db.Column(db.Integer, nullable=False)
@@ -22,14 +22,30 @@ class Bookings(db.Model):
     pguest_email = db.Column(db.String(30), nullable=False)
     pguest_phone = db.Column(db.String(30), nullable=False)
     status = db.Column(db.String(20), nullable=True, default='Pending')
-    active = db.Column(db.String(5), default='False')
-    serv_charge = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True, default=0.00)
+    active = db.Column(db.Boolean, default=False)
+
+    serv_charge = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00) # 3 to 5% of total amount
+    serv_charge_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00)
+    serv_charge_currency = db.Column(db.String(3), nullable=True)  # NEW: currency serv_charge is denominated in
+    serv_charge_exchange_rate = db.Column(db.Numeric(18, 8), nullable=True)  # NEW: serv_charge_currency -> GBP
+    # =============================================================================
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), nullable=False)
-    payment = db.relationship('Payments', backref='booking', uselist=False, 
-                            cascade="all, delete-orphan", single_parent=True)
-    earnings = db.relationship('HostEarning', backref='host', lazy=True)
+
+    # No cascade on any financial relationship -- deleting a Bookings row
+    # (which should really only happen in dev/test cleanup, never in real
+    # app flow -- cancellations are a status change, not a DELETE) must
+    # never silently take payment/earning/refund records with it.
+    payment = db.relationship('Payments', backref='booking', uselist=False)
+    earning = db.relationship('HostEarning', backref='booking', uselist=False)  # FIXED: was 'earnings' (plural) with backref='host' (misleading -- .host returned a Booking, not a User); also FIXED uselist since HostEarning.booking_id is unique=True, a true one-to-one
     refund = db.relationship('Refund', backref='booking', uselist=False)
+
+    # Not a financial record -- safe to cascade-delete.
+    conversation = db.relationship("Conversation", backref="booking", uselist=False,
+                                    cascade="all, delete-orphan")
+
+    deal_id = db.Column(db.Integer, db.ForeignKey('deals.id'), nullable=True, default=None)
+    deal = db.relationship('Deals')
 
     def get_all(cls):
         bookings = cls.query.all()
@@ -42,7 +58,8 @@ class Bookings(db.Model):
     def __repr__(self):
         return f"Bookings('{self.arrival}', '{self.departure}', '{self.num_guests}'\
                     '{self.room_type}', '{self.ad_info}', '{self.primary_guest}'\
-                    '{self.pguest_email}', '{self.pguest_phone}', '{self.booking_num}')"
+                    '{self.pguest_email}', '{self.pguest_phone}', '{self.booking_num}'\
+                    '{self.serv_charge}', '{self.serv_charge_gbp}')"
 
 class Payments(db.Model):
     __tablename__ = 'payments'
@@ -50,24 +67,43 @@ class Payments(db.Model):
     # ------------------------------------------------------------------------------------- 
     payment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     pay_method = db.Column(db.String(30), nullable=False, default='Cash on Arrival')
-    price_per_night = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
+
+    room_price_original = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
+    room_price_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
+    room_price_currency = db.Column(db.String(3), nullable=False)
+    room_price_exchange_rate = db.Column(db.Numeric(18,8))   # room_price_currency -> accounting_currency
     book_days = db.Column(db.Integer, nullable=False, default=1)
-    discount = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True, default=0.00)
-    #serv_charge = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True, default=0.00)
-    transac_fee = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
-    total_paid = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
-    rzerv_points = db.Column(db.Integer, nullable=True, default=20)
+
+    discount_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True, default=0.00)
+    discount_host = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True, default=0.00)
+    discount_funded_by = db.Column(db.String(20), nullable=True)
+
+    transac_fee_host = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
+    transac_fee_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
+
+    total_paid_host = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
+    payment_currency = db.Column(db.String(3))
+
+    accounting_amount = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False) # convert total paid in GBP
+    accounting_currency = db.Column(db.String(3), default="GBP")
+
+    pay_exchange_rate = db.Column(db.Numeric(18,8), nullable=False)  # payment_currency -> accounting_currency
+    rate_captured_at = db.Column(db.DateTime, default=datetime.utcnow)  # shared timestamp for both, since they're fetched together
+
     status = db.Column(db.String(20), nullable=True, default='Unpaid')
-    #code = db.Column(db.String(10), nullable=True)
+    points_earned = db.Column(db.Integer, nullable=True, default=0)
+   
+    # ==========================================================================
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, unique=True)
-    #voucher_id = db.Column(db.Integer, db.ForeignKey('vouchers.id'), nullable=True)
     voucher_id = db.Column(db.Integer, db.ForeignKey('vouchers.id'), nullable=True)
     voucher = db.relationship('Vouchers', back_populates='payment')
     host_earning = db.relationship('HostEarning', backref='payment', 
                                    uselist=False, cascade="all, delete-orphan")
     refund = db.relationship('Refund', backref='payments',uselist=False,
                                         cascade="all, delete-orphan")
+    deal_id = db.Column(db.Integer, db.ForeignKey('deals.id', name='fk_payments_deal_id'), 
+                                                nullable=True)
 
     def get_all(cls):
         payments = cls.query.all()
@@ -79,8 +115,9 @@ class Payments(db.Model):
 
     def __repr__(self):
         return f"Payments('{self.payment_date}', '{self.pay_method}', '{self.price_per_night}'\
-                    '{self.book_days}', '{self.discount}', '{self.status}'\
-                    '{self.total_paid}', '{self.rzerv_points}')"
+                    '{self.book_days}', '{self.discount}', '{self.transac_fee_gbp}')\
+                    '{self.total_paid}', '{self.transac_fee}'), '{self.points_earned}'\
+                    '{self.payment_currency}', '{self.status}', '{self.accounting_amount}')"
 
 class Vouchers(db.Model):
     __tablename__ = 'vouchers'
@@ -89,11 +126,11 @@ class Vouchers(db.Model):
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
     code = db.Column(db.String(10), nullable=False)
+    funded_by = db.Column(db.String(20), nullable=False)
     value = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
     is_active = db.Column(db.String(6), nullable=True, default='True')
     #payment = db.relationship('Payments', backref='vouchers')
     payment = db.relationship('Payments', back_populates='voucher', lazy=True)
-
 
     def __repr__(self):
         return f"Vouchers('{self.start_date}', '{self.end_date}', '{self.code}'\
@@ -113,46 +150,102 @@ class HostEarning(db.Model):
     __tablename__ = 'hostearning'
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    gross_amount = db.Column( db.Numeric(10, 2), nullable=False)
-    voucher_amount = db.Column(db.Numeric(10, 2), default=0 )
-    platform_fee = db.Column( db.Numeric(10, 2), nullable=False)
-    net_earning = db.Column(db.Numeric(10, 2), nullable=False)
-    # Paid - Pending - Refunded  
-    status = db.Column(db.String(20), default='Pending')
+
+    gross_amount_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    gross_amount_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    # NEW: mirrors Payments.discount_gbp / discount_host, but only populated
+    # when discount_funded_by == 'host' on the related Payment -- i.e. this
+    # is the portion of the discount that actually reduced this host's
+    # earning, as opposed to a platform-funded discount that doesn't touch
+    # host_earning_* at all.
+    discount_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00)
+    discount_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00)
+
+    host_earning_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    host_earning_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    host_currency = db.Column(db.String(3))
+
+    voucher_amount_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), default=0)
+    voucher_amount_host = db.Column(db.Numeric(10, 2, asdecimal=True), default=0)
+
+    platform_fee_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    platform_fee_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+
+    exchange_rate = db.Column(db.Numeric(18, 8))  # host_currency -> GBP; correct as a single field,
+                                                  # this table never involves a third payment currency
+    status = db.Column(db.String(20), default='Pending')  # Paid - Pending - Refunded
     #----------------------------------------------------------------------------
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    booking_id = db.Column( db.Integer, db.ForeignKey('bookings.id'), nullable=False, unique=True)
-    payment_id = db.Column( db.Integer, db.ForeignKey('payments.id'),nullable=False, unique=True)
+    booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, unique=True)
+    payment_id = db.Column(db.Integer, db.ForeignKey('payments.id'), nullable=False, unique=True)
 
     def __repr__(self):
-        return f"HostEarning('{self.gross_amount}', '{self.voucher_amount}',\
-                '{self.net_earning}')"
+        return f"HostEarning('{self.gross_amount_host}', '{self.voucher_amount_host}',\
+                '{self.host_earning_host}', '{self.exchange_rate}', '{self.status}')"
 
 class Withdrawal(db.Model):
     __tablename__ = 'withdrawal'
     id = db.Column(db.Integer, primary_key=True)
-    requested_at = db.Column(db.DateTime,default=datetime.utcnow)
-    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    requested_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    amount_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    amount_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    host_currency = db.Column(db.String(3), nullable=False)  # NEW: currency amount_host is denominated in
+
+    withdraw_xchange_rate = db.Column(db.Numeric(18, 8), nullable=False)  # FIXED: was Numeric(10,2), truncated most real rates
+
+    payout_method = db.Column(db.String(30), nullable=True)     # NEW: e.g. 'Bank Transfer', 'Mobile Money'
+    payout_reference = db.Column(db.String(120), nullable=True)  # NEW: account number / mobile money number / reference used for this specific payout
+
     status = db.Column(db.String(20), default='Pending')
-    #-------------------------------------------------------------
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    processed_at = db.Column(db.DateTime, nullable=True)
+    #----------------------------------------------------------------------------
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
     def __repr__(self):
         return f"Withdrawal('{self.amount}', '{self.status}',\
                 '{self.requested_at}')"
     
 class Refund(db.Model):
+    __tablename__ = 'refund'
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    refunded_at = db.Column(db.DateTime, nullable=True)
-    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    refunded_at = db.Column(db.DateTime, nullable=True)  # set only when status becomes 'Paid'
+
+    amount_refund_guest = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)  # refunded to the guest, in the currency THEY originally paid with (matches Payment.payment_currency for this booking)
+    amount_refund_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
+    refund_currency = db.Column(db.String(3), nullable=False)  # must match the related Payment.payment_currency -- you refund in the currency that was actually charged
+    exchange_rate = db.Column(db.Numeric(18, 8))  # refund_currency -> GBP, captured at refund time
+
     reason = db.Column(db.String(255), nullable=False, default='24h Flexible cancellation')
-    # pending / approved / rejected / completed/ Paid
-    status = db.Column(db.String(20), default='pending')
+
+    # Pending -> Approved -> Paid (refunded_at set on this transition)
+    #         -> Rejected (terminal, refunded_at stays None)
+    status = db.Column(db.String(20), default='Pending')
+    # ==========================================================================
     booking_id = db.Column(db.Integer, db.ForeignKey('bookings.id'), nullable=False, unique=True)
     payment_id = db.Column(db.Integer, db.ForeignKey('payments.id'), nullable=False, unique=True)
-    user_id = db.Column( db.Integer,db.ForeignKey('user.id'), nullable=False, unique=True)
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # FIXED: was unique=True, blocked a user from ever getting a 2nd refund
+
     def __repr__(self):
         return f"Refund('{self.refunded_at}', '{self.amount}',\
                 '{self.reason}', '{self.status}')"
+
+class ExchangeRate(db.Model):
+    __tablename__ = "exchange_rates"
+    __table_args__ = (db.UniqueConstraint("base_currency","target_currency", 
+                                          name="unique_exchange_rate"),)
+    id = db.Column(db.Integer, primary_key=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, 
+                            onupdate=datetime.utcnow)
+    base_currency = db.Column(db.String(3), nullable=False)
+    target_currency = db.Column(db.String(3), nullable=False)
+    rate = db.Column(db.Numeric(18, 8), nullable=False)
+
+    def __repr__(self):
+        return f"ExchangeRate('{self.base_currency}', '{self.target_currency}',\
+                '{self.rate}')"
+
+
     
+
+        

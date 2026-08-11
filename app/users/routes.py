@@ -4,16 +4,24 @@ from app import db, bcrypt
 from app.models.usermodel import User
 from app.models.roommodel import Rooms, Roomreviews
 from app.models.bookmodel import Bookings, HostEarning, Withdrawal
-from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm, 
-                    UpdateAccountForm, UserDashLoginForm)
+from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm,
+                    DeleteAccountForm)
 from app.rooms.forms import AddRoomForm, UpdateRoomForm
+from app.rooms.roomutils import can_cancel
+from app.helpers.cancel_checks import cancel_and_refund_if_paid
 from .usermails.resetrequest import send_reset_email
 from .usermails.joinusmail import member_regismail
 from .utils import save_picture
 from ..rooms.roomutils import sanitize_input
+from flask_babel import _
+from datetime import datetime, timedelta
+from app.helpers.login_security import (is_safe_redirect_url, MAX_FAILED_ATTEMPTS, 
+                                        LOCKOUT_DURATION_MINUTES)
 import cv2
+from datetime import date, timedelta
 
 users = Blueprint('users', __name__)
+
 
 @users.route("/login" , methods=['GET', 'POST']) 
 def login():
@@ -22,17 +30,66 @@ def login():
         return redirect(url_for('main.home'))
     
     form = LoginForm()
-
+ 
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+ 
+        # Treat a soft-deleted account exactly like a non-existent one --
+        # same generic message, same dummy-cost bcrypt check below. If we
+        # gave a distinct "this account was deleted" message, that would
+        # leak which emails used to be real accounts, reopening the exact
+        # enumeration gap the timing-safe check further down exists to close.
+        if user and user.deleted_at is not None:
+            user = None
+ 
+        # If a previous lockout window has passed, clear it and give a
+        # fresh set of attempts rather than instantly re-locking on the
+        # next single failure.
+        if user and user.locked_until and user.locked_until <= datetime.utcnow():
+            user.locked_until = None
+            user.failed_login_attempts = 0
+            db.session.commit()
+ 
+        # Check lockout BEFORE attempting any password verification.
+        # Deliberately reusing the exact same generic message as invalid
+        # credentials below -- a distinct "too many attempts" message would
+        # confirm to an attacker that this account exists AND is currently
+        # locked, which is real information disclosure.
+        if user and user.locked_until and user.locked_until > datetime.utcnow():
+            flash(_('Login unsuccessful, Please check email and password!'), 'danger')
+            return render_template('pages/login.html', title='Log in', form=form)
+ 
+        # Always run a bcrypt check, even when no user exists, so the
+        # response takes the same amount of time either way -- otherwise
+        # a fast response (no bcrypt call at all) leaks that the email
+        # doesn't exist, and a slow one leaks that it does.
+        if user:
+            password_valid = bcrypt.check_password_hash(user.password, form.password.data)
+        else:
+            bcrypt.check_password_hash('$2b$12$' + 'x' * 53, form.password.data)  # dummy-cost check, result discarded
+            password_valid = False
+ 
+        if user and password_valid:
+            # Successful login -- clear any accumulated failed attempts.
+            user.failed_login_attempts = 0
+            user.locked_until = None
+            user.last_login = datetime.utcnow()
+            db.session.commit()
+ 
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            # redirecting to the right page after been force to authenticate
-            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+ 
+            if next_page and is_safe_redirect_url(next_page):
+                return redirect(next_page)
+            return redirect(url_for('main.home'))
         else:
-            flash('Login unsuccessful, Please check email and password!', 'danger')
+            if user:
+                user.failed_login_attempts += 1
+                if user.failed_login_attempts >= MAX_FAILED_ATTEMPTS:
+                    user.locked_until = datetime.utcnow() + timedelta(minutes=LOCKOUT_DURATION_MINUTES)
+                db.session.commit()
+ 
+            flash(_('Login unsuccessful, Please check email and password!'), 'danger')
     
     return render_template('pages/login.html',  title='Log in', form=form)
 
@@ -51,13 +108,12 @@ def signup():
                     password=hashed_pass, terms=form.terms.data)
 
         db.session.add(user)                                                               # adding the user to the database
-        db.session.commit()                                                                # saving the changes                                                               
-        flash(f"Your account has been created!. An activation email has been sent to {user.email}.", 'success')     # display validation message [ f'Account created for {form.username.data}!' ]
+        db.session.commit()  
         # send account verification email to user
         member_regismail(user)
+        # Flash confirmation msg
+        flash(_('Account created! Please check your email to verify your account.'), 'info')  # saving the changes 
 
-        # Sending an activation email to new users
-        # activation_email(user)
         return redirect(url_for('users.login'))
 
     return render_template('pages/register.html', title='Sign up', form=form)
@@ -67,7 +123,7 @@ def signup():
 def logout():
     '''This function enable users to logout from their account'''
     logout_user()
-    flash('You are now logged out of the system', 'success' )
+    flash(_('You are now logged out of the system'), 'success' )
     return redirect(url_for('users.login')) 
 
 @users.route("/reset_password", methods=['GET', 'POST'])             # Creating a reset password request route                                            
@@ -85,7 +141,7 @@ def reset_request():
         send_reset_email(user)
         # get current user email
        
-        flash(f'An email has been sent to {user.email} with instructions to reset your password!', 'info')
+        flash(_(f'An email has been sent to {user.email} with instructions to reset your password!'), 'info')
         return redirect(url_for('users.login'))
     return render_template('pages/reset_request.html', title='Reset Password', form=form)
 
@@ -98,7 +154,7 @@ def reset_token(token):
     # generating a token & pass it in to the user
     user = User.verify_reset_token(token)
     if user is None:
-        flash('That is an invalid or expired token', 'warning')
+        flash(_('That is an invalid or expired token'), 'warning')
         return redirect(url_for('users.reset_request'))
 
     form = ResetPasswordForm()
@@ -106,130 +162,118 @@ def reset_token(token):
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")    # Hashing user password
         user.password = hashed_pass                                                        # setting the user new password
         db.session.commit()                                                                # saving the changes 
-        flash("Your Password has been Updated!. You can now Log in. " , 'success')         # display validation message [ f'Account created for {form.username.data}!' ]
+        flash(_("Your Password has been Updated!. You can now Log in.") , 'success')         # display validation message [ f'Account created for {form.username.data}!' ]
         return redirect(url_for('users.login'))
     return render_template('pages/reset_token.html', title='Reset Password', form=form)
 
-@users.route("/uaccount", methods=['GET', 'POST']) 
+
+# Add this inside your existing registration/signup route, right after
+# the new User row is committed to the database:
+
+    verify_url = url_for('users.verify_email', token=user.get_verification_token(), _external=True)
+    msg = Message('Verify your Jambo account', recipients=[user.email])
+    msg.body = f"Welcome to Jambo! Please verify your email by visiting: {verify_url}"
+    # or msg.html = render_template('email/verify_email.html', verify_url=verify_url)
+    mail.send(msg)
+
+    flash(_('Account created! Please check your email to verify your account.'), 'info')
+
+
+# New route -- add this alongside your other users.routes:
+
+@users.route("/verify-email/<token>")
+def verify_email(token):
+    user = User.verify_verification_token(token)
+
+    if user is None:
+        flash(_('That verification link is invalid or has expired.'), 'danger')
+        return redirect(url_for('main.home'))
+
+    if user.email_verified:
+        flash(_('Your email is already verified.'), 'info')
+        return redirect(url_for('users.login'))
+
+    user.email_verified = True
+    user.email_verified_at = datetime.utcnow()
+    db.session.commit()
+
+    flash(_('Your email has been verified! You can now log in.'), 'success')
+    return redirect(url_for('users.login'))
+
+@users.route("/delete-account", methods=['GET', 'POST'])
 @login_required
-def uaccount():
-    '''This function create a route to render user account page''' 
-    # find the user total listing
-    totrooms = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).count()
-    #totbook = db.session.query(Bookings).filter(Bookings.user_id==current_user.id).count()
-    totbook = Bookings.query.join(Rooms).filter(Rooms.user_id==current_user.id).count()
+def delete_account():
+    form = DeleteAccountForm()
 
-    total_earnings = db.session.query(db.func.sum(HostEarning.net_earning)
-                                     ).filter_by(user_id=current_user.id
-                                     ).scalar() or 0
-    total_withdrawals = db.session.query(db.func.sum(Withdrawal.amount)
-                                        ).filter_by(user_id=current_user.id,
-                                        status='Completed'
-                                        ).scalar() or 0
-    available_balance = total_earnings - total_withdrawals
+    # --------------------------------------------------------------
+    # HOST-SIDE CHECK: does this user have any upcoming guests booked
+    # into rooms they host? Unconditional block -- unlike a guest
+    # cancelling their own trip, a host disappearing on a guest who's
+    # already paid and expecting a stay is a much bigger trust problem
+    # than a delayed refund. No auto-resolution offered; the host must
+    # deal with these bookings first (contact guests, let stays
+    # complete, or go through normal cancellation) before they can delete.
+    # --------------------------------------------------------------
+    hosted_upcoming = (
+        Bookings.query.join(Rooms, Bookings.room_id == Rooms.id)
+        .filter(
+            Rooms.user_id == current_user.id,
+            Bookings.status == 'Confirmed',
+            Bookings.departure > date.today(),
+        )
+        .count()
+    )
+    if hosted_upcoming > 0:
+        flash(_("You have upcoming guests booked into your rooms. Please resolve these bookings before deleting your account."), "danger")
+        return redirect(url_for('udash.udashboard'))  # adjust to your actual dashboard route name
 
+    # --------------------------------------------------------------
+    # GUEST-SIDE CHECK: does this user have a Confirmed trip of their
+    # own that's past the point where can_cancel() would allow a full
+    # refund? Block rather than silently cancel with no refund -- the
+    # platform shouldn't keep money for a trip it unilaterally cancelled.
+    # --------------------------------------------------------------
+    own_confirmed = Bookings.query.filter(
+        Bookings.user_id == current_user.id,
+        Bookings.status == 'Confirmed',
+        Bookings.departure > date.today(),
+    ).all()
 
-    return render_template('userdash/useraccount.html',  title='User Account',
-                            totrooms=totrooms, totbook=totbook, 
-                            available_balance=available_balance)
-    
+    non_cancellable = [b for b in own_confirmed if not can_cancel(b.status, b.arrival)]
+    if non_cancellable:
+        flash(_("You have an upcoming trip that can no longer be freely cancelled. Please contact us before deleting your account."), "danger")
+        return redirect(url_for('udash.mybookings'))  # adjust to your actual bookings route name
 
-@users.route("/myprofile", methods=['GET', 'POST'])
-@login_required 
-def myprofile():
-    '''This function create a route to render user profile page''' 
-    
-    #func = capture_image()
-    form = UpdateAccountForm()
-    
     if form.validate_on_submit():
-        if form.picture.data:    # check if profile picture has been uploaded
-            picture_file = save_picture(form.picture.data)
-            # set the profile image file
-            current_user.image_file = picture_file
-        # allow update if username & email is valid
-        current_user.company_name = form.company_name.data
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        current_user.first_name = form.first_name.data
-        current_user.last_name = form.last_name.data
-        current_user.gender = form.gender.data
-        current_user.phone = form.phone.data
-        current_user.address = form.address.data
-        current_user.city = form.city.data
-        current_user.country = form.country.data
-        current_user.zip_code = form.zip_code.data
-        current_user.aboutme = form.aboutme.data
-       
-        # save the db entry
+        if not bcrypt.check_password_hash(current_user.password, form.password.data):
+            flash(_('Incorrect password. Account not deleted.'), 'danger')
+            return render_template('pages/delete_account.html', title='Delete Account', form=form)
+
+        # Everything below happens in one transaction.
+
+        # Auto-cancel the user's own remaining eligible bookings (Pending,
+        # or Confirmed-and-still-within-the-cancellation-window -- we
+        # already proved above that nothing past that window exists).
+        for booking in Bookings.query.filter(
+            Bookings.user_id == current_user.id,
+            Bookings.status.in_(['Pending', 'Confirmed']),
+            Bookings.departure > date.today(),
+        ).all():
+            cancel_and_refund_if_paid(booking)
+
+        # Hide every room this user hosts -- safe to do now, we already
+        # confirmed above there are no upcoming guests booked into them.
+        for room in Rooms.query.filter_by(user_id=current_user.id).all():
+            room.status = 'Hidden'
+
+        current_user.soft_delete()
         db.session.commit()
-        # Displaying an update message
-        flash('Your profile has been successfully updated', 'success')
-        # redirect after update to the account page
-        return redirect(url_for('users.myprofile'))
-    # populate the form field with the user data
-    elif request.method == 'GET':
-        form.company_name.data =  current_user.company_name 
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-        form.first_name.data = current_user.first_name
-        form.last_name.data = current_user.last_name
-        form.gender.data = current_user.gender
-        form.phone.data = current_user.phone
-        form.address.data = current_user.address
-        form.city.data = current_user.city
-        form.country.data = current_user.country
-        form.zip_code.data = current_user.zip_code
-        form.aboutme.data = current_user.aboutme
-            
-    
-    # set cuurent user profile pictures to pass to the current default image
-    image_file = url_for('static', filename='userpics/' + current_user.image_file) 
-        
-    return render_template('userdash/userprofile.html', title='Account', image_file=image_file, 
-                           form=form)
 
-@users.route("/listings", methods=['GET', 'POST']) 
-@login_required
-def listings():
-    '''This function create a route to render user listings page'''    
-    form = AddRoomForm()
-    roomlist = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).all()
-    #userads = Rooms.query.filter_by(user_id=current_user.id).first()
+        logout_user()
+        flash(_('Your account has been deleted.'), 'info')
+        return redirect(url_for('main.home'))
 
-    if form.validate_on_submit():
-        if current_user.address or current_user.phone or current_user.zip_code != 'Change me':  
-            clean_short_desc = sanitize_input(form.short_desc.data)
-            clean_description = sanitize_input(form.description.data)
-            # room listing info   
-            room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
-                            price=form.price.data, room_category=form.room_category.data, status=form.status.data,
-                            short_desc=clean_short_desc, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 
-                            description=clean_description, usp1=form.rule1.data, usp2=form.rule2.data, usp3=form.rule3.data,
-                            user_id=current_user.id)
-
-                        # picture1=form.picture1.data, picture2=form.picture2.data, picture3=form.picture3.data
-            db.session.add(room_info)                                                               # adding the user to the database
-            db.session.commit()                                                                # saving the changes                                                               
-            flash(f"Your room listing is now pending and will be active live soon after validation.", 'success')     # display validation message [ f'Account created for {form.username.data}!' ]
-            # send account verification email to user
-            #adslive_msg(user)
-
-            return redirect(url_for('users.listings'))
-        else:
-            flash('You need to fully complete your profile before you can make a room listing!', 'warning')
-    
-    return render_template('userdash/listings.html',  title='Listings', form=form,
-                            roomlist=roomlist)
-
-@users.route("/reviews") 
-@login_required
-def reviews():
-    '''This function create a route to render user reviews page''' 
-    # query the db about specific user reviews
-    myrevs = db.session.query(Roomreviews).filter(Roomreviews.user_id==current_user.id).all()
-
-    return render_template('userdash/myreviews.html',  title='Reviews', myrevs=myrevs)
+    return render_template('pages/delete_account.html', title='Delete Account', form=form)
 
 # =======================================================================================
 @users.route("/capture_image") 

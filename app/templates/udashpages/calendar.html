@@ -1,0 +1,157 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }}
+<link
+  href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
+  rel="stylesheet"
+/>
+{% endblock head_css %} {% block content %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item pl-3">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('udash.mylistings')}}"
+        >{{ _('Listings') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Room calendar') }}
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-0">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ _('Calendar') }} 🗓</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card-header">
+              <h5 class="about pb-2">{{ _('Room booking calendar') }} 🕓</h5>
+            </div>
+            <div
+              class="card"
+              id="calendar"
+              style="padding: 10px 15px"
+              data-calendar-url="{{ url_for('bedrooms.room_calendar', room_id=room.id) }}"
+              data-block-url="{{ url_for('bedrooms.block_dates', room_id=room.id) }}"
+              data-room-id="{{ room.id }}"
+            >
+              <div class="card">
+                <div class="card-body">
+                  <!---HOST Calendar display-------->
+                  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+                  <script
+                    src="{{ url_for('static', filename='js/hostCalendar.js') }}"
+                  >
+                    var csrf_token = "{{ csrf_token() }}";
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!---------------Block Date Modal-------->
+<div class="modal fade" id="createBlockModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h5 class="modal-title text-white">{{ _('Block Dates') }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body" style="font-size: 17px">
+        <div class="mb-2">
+          <strong>{{ _('Selected Period') }}:</strong>
+          <div class="badge bg-dark text-white" id="selectedDates"></div>
+        </div>
+        <div class="mb-1">
+          <label class="form-label"> {{ _('Reason') }} </label>
+          <select class="form-select" id="blockReasonSelect">
+            <option value="Maintenance">{{ _('Maintenance') }}</option>
+            <option value="Personal Use">{{ _('Personal') }}</option>
+            <!-- <option value="Cleaning">Deep Cleaning</option> -->
+            <option value="Unavailable">{{ _('Unavailable') }}</option>
+          </select>
+        </div>
+        <div class="mb-1">
+          <label class="form-label"> {{ _('Notes (optional)') }} </label>
+          <textarea class="form-control" id="blockNotes" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{ _('Cancel') }}
+        </button>
+        <button type="button" class="btn btn-danger" id="saveBlockBtn">
+          {{ _('Block Dates') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!---------------End block date modal---->
+
+<!---------------Unblock Date Modal------>
+<div
+  class="modal fade"
+  id="blockModal"
+  tabindex="-1"
+  aria-labelledby="blockModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h5 class="modal-title text-white" id="blockModalLabel">
+          {{ _('Blocked Dates') }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body" style="font-size: 17px">
+        <!-- Hidden values used by JavaScript -->
+        <input type="hidden" id="blockId" />
+        <input type="hidden" id="roomId" />
+
+        <div class="mb-1">
+          <strong>{{ _('Reason') }}:</strong>
+          <div class="badge bg-dark fs-6 text-white" id="blockReason"></div>
+        </div>
+
+        <div class="mb-1">
+          <strong>{{ _('Start Date') }}:</strong>
+          <span id="blockStart"></span>
+        </div>
+
+        <div class="mb-1">
+          <strong>{{ _('End Date') }}:</strong>
+          <span id="blockEnd"></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{ _('Close') }}
+        </button>
+        <button type="button" class="btn btn-danger" id="deleteBlockBtn">
+          {{ _('Remove Block') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

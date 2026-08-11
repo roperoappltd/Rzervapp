@@ -19,17 +19,6 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember me')
     submit = SubmitField('Sign In')
 
-# Create a login form class
-class UserDashLoginForm(FlaskForm):
-    '''This class enable to model the userdash login forms'''
-    # Difining some data field with necessary validators
-    username = StringField('Username', validators=[DataRequired(), Length(min=5, max=15)]) 
-    #email = StringField('Email address', validators=[DataRequired(), Email()]) 
-    password =  PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Submit')
-
-
 # Create a registration form class
 class RegistrationForm(FlaskForm):
     '''This class enable to model the registration forms'''
@@ -38,13 +27,12 @@ class RegistrationForm(FlaskForm):
     last_name = StringField('Surname', validators=[DataRequired(), Length(max=40)])
     #gender = SelectField("Gender", choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
     username = StringField('Username', validators=[DataRequired(), Length(min=5, max=20)]) 
-    dob = DateField('Date of birth', validators=[DataRequired()])
+    dob = DateField('Date of birth', validators=[DataRequired(), User.validate_dob_minimum_age])
     # Connection info
-    email = StringField('Email', validators=[DataRequired(), Length(max=100), Email()]) 
-    password =  PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Length(max=100), Email(), Length(max=100)]) 
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=128)])  # FIXED: was max=20, an OWASP-flagged anti-pattern that blocks strong/password-manager-generated passwords
     confirm_password =  PasswordField('Retype password', validators=[DataRequired(), EqualTo('password')])
-    terms = RadioField('Accept T&C', choices=[('Yes','Yes'), ('No', 'No')],  validators=[DataRequired()], default='Yes' )
-    #role = StringField('Role', validators=[DataRequired(), Length(max=20)], default='member')
+    terms = BooleanField('I accept the Terms & Conditions', validators=[DataRequired()])  # FIXED: was a Yes/No RadioField returning a string -- 'No' is truthy in Python, a real fail-open risk if ever naively coerced to bool
     submit = SubmitField('Sign Up')
 
     # defining a form validation function for username
@@ -58,7 +46,7 @@ class RegistrationForm(FlaskForm):
         '''This function validate the user email'''
         user = User.query.filter_by(email=email.data).first()
         if user:
-            raise ValidationError('That email is taken!. Please choose a different one.') 
+            raise ValidationError('That email is taken!. Please choose a different one.')
 
 # Create an update account form class
 class UpdateAccountForm(FlaskForm):
@@ -67,8 +55,8 @@ class UpdateAccountForm(FlaskForm):
     company_name =  StringField('', validators=[Length(min=3, max=30)])
     username = StringField('', validators=[DataRequired(), Length(min=5, max=15)]) 
     email = StringField('', validators=[DataRequired(), Email()]) 
-    first_name = StringField('', validators=[DataRequired(), Length(max=40)])
-    last_name = StringField('', validators=[DataRequired(), Length(max=40)])
+    #first_name = StringField('', validators=[DataRequired(), Length(max=40)])
+    #last_name = StringField('', validators=[DataRequired(), Length(max=40)])
     gender = SelectField('', choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
     phone = StringField('', validators=[Length(max=30)])
     address = StringField('', validators=[Length(max=100)])
@@ -77,7 +65,7 @@ class UpdateAccountForm(FlaskForm):
     zip_code =  StringField('', validators=[Length(min=2, max=10)])
     aboutme = TextAreaField('', validators=[DataRequired(), Length(min=30, max=200)])
     #Enabling profile picture update and allowed image extensions
-    picture = FileField('Upload picture', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
+    picture = FileField('Upload profile picture', validators=[FileAllowed(['jpg', 'jpeg', 'png'])] )
     submit = SubmitField('Update')
 
     # defining a form validation function for username
@@ -114,3 +102,11 @@ class ResetPasswordForm(FlaskForm):
     password =  PasswordField('Password', validators=[DataRequired(), Length(min=8, max=20)])
     confirm_password =  PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Password Reset')
+
+class DeleteAccountForm(FlaskForm):
+    '''Requires re-entering the password, same principle as most real
+    platforms gating irreversible account actions -- a single click on a
+    page someone's already logged into isn't enough friction for
+    something this permanent.'''
+    password = PasswordField('Confirm your password', validators=[DataRequired()])
+    submit = SubmitField('Permanently delete my account')

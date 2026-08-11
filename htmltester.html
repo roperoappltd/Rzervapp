@@ -1,17 +1,9 @@
-<div style="font-size: 0px; display: flex; justify-content: center">
-  <img
-    class="t18"
-    style="
-      display: block;
-      border: 0;
-      height: auto;
-      width: 20%;
-      margin: 20px;
-      max-width: 100%;
-    "
-    width="188"
-    height="100"
-    alt=""
-    src="C:\Users\mcurt\Desktop\MyFiles\Modules-year4\Final-Projet\project\Rzervapp\app\static\userpics\Modlogo.png"
-  />
-</div>
+{% if current_user.is_authenticated %}
+<script>
+  window.JAMBO_CURRENT_USER = {
+    name: '{{ current_user.username }}',
+    avatarUrl:
+      "{{ url_for('static', filename='userpics/' + current_user.image_file) }}",
+  };
+</script>
+{% endif %}

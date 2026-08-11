@@ -28,3 +28,7 @@ class Config :
     MAIL_USE_SSL = True
     MAIL_USERNAME = os.getenv("EMAIL_USER") 
     MAIL_PASSWORD = os.getenv("EMAIL_PASS") 
+
+    #-------------------------------------------
+    ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+    XCHANGE_RATE_API_KEY = os.getenv("XCHANGE_RATE_API_KEY")

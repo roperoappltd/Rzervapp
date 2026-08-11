@@ -520,12 +520,9 @@
                                                                                         font-weight: bold;
                                                                                         mso-line-height-rule: exactly;
                                                                                       "
-                                                                                      >Booking
-                                                                                      number:
+                                                                                      >{{ _('Booking number') }}:
                                                                                     </span>
-                                                                                    {{
-                                                                                    booking.booking_num
-                                                                                    }}
+                                                                                    {{ booking.booking_num }}
                                                                                   </p>
                                                                                 </td>
                                                                               </tr>
@@ -613,13 +610,8 @@
                                                                                         font-weight: 600;
                                                                                         mso-line-height-rule: exactly;
                                                                                       "
-                                                                                      >Date</span
-                                                                                    >:
-                                                                                    {{
-                                                                                    booking.created_at.strftime('%d
-                                                                                    %B
-                                                                                    %Y
-                                                                                    %H:%M')}}
+                                                                                      >{{ _('Date') }}</span
+                                                                                    >: {{ booking.created_at.strftime('%d %B %Y %H:%M')}}
                                                                                   </p>
                                                                                 </td>
                                                                               </tr>
@@ -680,7 +672,7 @@
                                                                     width="188"
                                                                     height="143"
                                                                     alt=""
-                                                                    src="{{url_for('static', filename='userpics/Modlogo.png')}}"
+                                                                    src="{{url_for('static', filename='resources/img/logo/Jamlogo1g.png')}}"
                                                                   />
                                                                 </div>
                                                               </td>
@@ -764,9 +756,7 @@
                                                       font-style: italic;
                                                       mso-line-height-rule: exactly;
                                                     "
-                                                    >Hello {{
-                                                    booking.primary_guest
-                                                    }},</span
+                                                    >{{ _('Hello') }} {{ booking.primary_guest }},</span
                                                   >
                                                 </h1>
                                               </td>
@@ -841,16 +831,10 @@
                                                       font-style: italic;
                                                       mso-line-height-rule: exactly;
                                                     "
-                                                    >We&#39;re please to confitm
-                                                    that your booking has been
-                                                    successfully completed.
-                                                    Please , make sure to
-                                                    contact your host before
-                                                    travelling.&nbsp; Be aware,
-                                                    you have 24h for free
-                                                    cancellation. This can be
-                                                    done through your user
-                                                    dashbord.</span
+                                                    >{% trans %}We&#39;re please to confitm that your bookinghas been 
+                                                    successfully completed. Please , make sure to contact your host
+                                                    before travelling.&nbsp; Be aware, you have 24h for free cancellation. 
+                                                    This can be done through your user dashbord.{% endtrans %}</span
                                                   >
                                                 </p>
                                               </td>
@@ -925,10 +909,8 @@
                                                       font-style: italic;
                                                       mso-line-height-rule: exactly;
                                                     "
-                                                    >We wish you a pleasant stay
-                                                    and share your experience
-                                                    with the Rezerva
-                                                    community.</span
+                                                    >{% trans %}We wish you a pleasant stay and share your
+                                                    experience with the Jambo community.{% endtrans %}</span
                                                   >
                                                 </p>
                                               </td>
@@ -1003,7 +985,7 @@
                                                       font-style: italic;
                                                       mso-line-height-rule: exactly;
                                                     "
-                                                    >Best Regards&nbsp; </span
+                                                    >{{ _('Best Regards') }}&nbsp; </span
                                                   ><br />
                                                   <span
                                                     class="t53"
@@ -1013,7 +995,8 @@
                                                       font-style: italic;
                                                       mso-line-height-rule: exactly;
                                                     "
-                                                    >Rezerva Team</span
+                                                    >{{ _('Jambo Team')
+                                                    }}</span
                                                   >
                                                 </p>
                                               </td>
@@ -1067,7 +1050,7 @@
                                               >
                                                 <a
                                                   class="t60"
-                                                  href="{{ url_for('rooms.bookings', _external=True) }}"
+                                                  href="{{ url_for('udash.mybookings', _external=True) }}"
                                                   style="
                                                     display: block;
                                                     margin: 0;
@@ -1116,7 +1099,7 @@
                                                       mso-line-height-rule: exactly;
                                                       mso-text-raise: 2px;
                                                     "
-                                                    >Manage booking</span
+                                                    >{{ _('Manage booking') }}</span
                                                   ></a
                                                 >
                                               </td>
@@ -1341,13 +1324,9 @@
                                                                                       mso-text-raise: 1px;
                                                                                     "
                                                                                   >
-                                                                                    {{
-                                                                                    booking.rooms.room_name
-                                                                                    }}
+                                                                                    {{ booking.rooms.room_name }}
                                                                                     -
-                                                                                    {{
-                                                                                    booking.rooms.room_category
-                                                                                    }}
+                                                                                    {{ booking.rooms.room_category }}
                                                                                   </h1>
                                                                                 </td>
                                                                               </tr>
@@ -1443,11 +1422,7 @@
                                                                                       mso-text-raise: 1px;
                                                                                     "
                                                                                   >
-                                                                                    Located
-                                                                                    at
-                                                                                    {{
-                                                                                    booking.rooms.room_location
-                                                                                    }}
+                                                                                    {{ _('Located at') }} {{ booking.rooms.room_location }}
                                                                                   </h1>
                                                                                 </td>
                                                                               </tr>
@@ -1546,51 +1521,29 @@
                                                                                       mso-text-raise: 1px;
                                                                                     "
                                                                                   >
-                                                                                    Booked
-                                                                                    from
-                                                                                    {{
-                                                                                    booking.arrival.strftime('%d
-                                                                                    %B
-                                                                                    %Y')
-                                                                                    }}
-                                                                                    To
-                                                                                    {{
-                                                                                    booking.departure.strftime('%d
-                                                                                    %B
-                                                                                    %Y')
-                                                                                    }}
+                                                                                    {{ _('Booked from') }}
+                                                                                    {{ booking.arrival.strftime('%d %B %Y') }}
+                                                                                    {{ _('To') }}
+                                                                                    {{ booking.departure.strftime('%d %B %Y') }}
                                                                                     <hr />
-                                                                                    Price
-                                                                                    per
-                                                                                    night:
-                                                                                    £{{
-                                                                                    booking.payment.price_per_night
-                                                                                    }}
+                                                                                    {{ _('Price per night') }}:
+                                                                                    £{{ booking.payment.price_per_night }}
                                                                                     <hr />
-                                                                                    Number
-                                                                                    of
-                                                                                    days:
-                                                                                    {{
-                                                                                    booking.payment.book_days}}
+                                                                                    {{_('Number of days') }}:
+                                                                                    {{ booking.payment.book_days }}
                                                                                     <hr />
                                                                                     <b
-                                                                                      >Total:
-                                                                                      £{{
-                                                                                      (booking.payment.price_per_night
+                                                                                      >{{ _('Total') }}:
+                                                                                      £{{ (booking.payment.price_per_night
                                                                                       *
-                                                                                      booking.payment.book_days
-                                                                                      )
-                                                                                      }}</b
+                                                                                      booking.payment.book_days) }}</b
                                                                                     >
                                                                                     <hr />
-                                                                                    Discount:
-                                                                                    £{{
-                                                                                    booking.payment.discount
-                                                                                    }}
+                                                                                    {{ _('Discount') }}:
+                                                                                    £{{ booking.payment.discount }}
                                                                                     <hr />
                                                                                     <b
-                                                                                      >Your
-                                                                                      bill:
+                                                                                      >{{ _('Your bill') }}:
                                                                                       £{{
                                                                                       (booking.payment.price_per_night
                                                                                       *
@@ -1839,8 +1792,7 @@
                                                                                                         mso-text-raise: 1px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Host
-                                                                                                      info
+                                                                                                      {{ _('Host info') }}
                                                                                                     </h1>
                                                                                                   </td>
                                                                                                 </tr>
@@ -1932,14 +1884,9 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Host
-                                                                                                      :
-                                                                                                      {{
-                                                                                                      booking.rooms.user.first_name
-                                                                                                      }}
-                                                                                                      {{
-                                                                                                      booking.rooms.user.last_name
-                                                                                                      }}
+                                                                                                      {{ _('Host') }}:
+                                                                                                      {{ booking.rooms.user.first_name }}
+                                                                                                      {{ booking.rooms.user.last_name }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2015,10 +1962,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Email:
-                                                                                                      {{
-                                                                                                      booking.rooms.user.email
-                                                                                                      }}
+                                                                                                      {{ _('Email') }}:
+                                                                                                      {{ booking.rooms.user.email }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2094,10 +2039,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Phone:
-                                                                                                      {{
-                                                                                                      booking.rooms.user.phone
-                                                                                                      }}
+                                                                                                      {{ _('Phone') }}:
+                                                                                                      {{ booking.rooms.user.phone }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2173,10 +2116,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Country:
-                                                                                                      {{
-                                                                                                      booking.rooms.user.country
-                                                                                                      }}
+                                                                                                      {{ _('Country') }}:
+                                                                                                      {{ booking.rooms.user.country }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2321,9 +2262,7 @@
                                                                                                         mso-text-raise: 1px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Host
-                                                                                                      important
-                                                                                                      note:
+                                                                                                      {{ _('Host important note') }}:
                                                                                                     </h1>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2415,11 +2354,7 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Please
-                                                                                                      contact
-                                                                                                      me
-                                                                                                      before
-                                                                                                      travelling.
+                                                                                                      {{ _('Please contact me before travelling') }}.
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2602,8 +2537,7 @@
                                                                                                         mso-text-raise: 1px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Guest
-                                                                                                      info
+                                                                                                      {{ _('Guest info') }}
                                                                                                     </h1>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2695,11 +2629,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Primary
-                                                                                                      guest:
-                                                                                                      {{
-                                                                                                      booking.primary_guest
-                                                                                                      }}
+                                                                                                      {{ _('Primary guest') }}:
+                                                                                                      {{ booking.primary_guest }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2775,10 +2706,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Email:
-                                                                                                      {{
-                                                                                                      booking.pguest_email
-                                                                                                      }}
+                                                                                                      {{ _('Email') }}:
+                                                                                                      {{ booking.pguest_email }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2854,10 +2783,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Phone:
-                                                                                                      {{
-                                                                                                      booking.pguest_phone
-                                                                                                      }}
+                                                                                                      {{ _('Phone') }}:
+                                                                                                      {{ booking.pguest_phone }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -2933,11 +2860,8 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      Booking
-                                                                                                      status:
-                                                                                                      {{
-                                                                                                      booking.status
-                                                                                                      }}
+                                                                                                      {{ _('Booking status') }}:
+                                                                                                      {{ booking.status }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -3082,8 +3006,7 @@
                                                                                                         mso-text-raise: 1px;
                                                                                                       "
                                                                                                     >
-                                                                                                      PAYMENT
-                                                                                                      METHOD
+                                                                                                      {{ _('PAYMENT METHOD') }}
                                                                                                     </h1>
                                                                                                   </td>
                                                                                                 </tr>
@@ -3175,9 +3098,7 @@
                                                                                                         mso-text-raise: 3px;
                                                                                                       "
                                                                                                     >
-                                                                                                      {{
-                                                                                                      booking.payment.pay_method
-                                                                                                      }}
+                                                                                                      {{ booking.payment.pay_method }}
                                                                                                     </p>
                                                                                                   </td>
                                                                                                 </tr>
@@ -3311,8 +3232,7 @@
                                                     mso-text-raise: 1px;
                                                   "
                                                 >
-                                                  For more update, follow us on
-                                                  our social media
+                                                  {{ _('For more update, follow us on our social media') }}
                                                 </p>
                                               </td>
                                             </tr>
@@ -3670,7 +3590,7 @@
                                                     mso-text-raise: 3px;
                                                   "
                                                 >
-                                                  Rezerva booking platform, 18
+                                                  Jambo booking platform, 18
                                                   Perry House, London, United
                                                   Kingdom, SE6 4AD
                                                 </p>
@@ -3749,7 +3669,7 @@
                                                       mso-line-height-rule: exactly;
                                                     "
                                                     target="_blank"
-                                                    >Unsubscribe</a
+                                                    >{{ _('Unsubscribe') }}</a
                                                   >&nbsp; •&nbsp;
                                                   <a
                                                     class="t284"
@@ -3765,7 +3685,7 @@
                                                       mso-line-height-rule: exactly;
                                                     "
                                                     target="_blank"
-                                                    >Privacy policy</a
+                                                    >{{ _('Privacy policy') }}</a
                                                   >&nbsp; •&nbsp;
                                                   <a
                                                     class="t285"
@@ -3781,7 +3701,7 @@
                                                       mso-line-height-rule: exactly;
                                                     "
                                                     target="_blank"
-                                                    >Contact us</a
+                                                    >{{ _('Contact us') }}</a
                                                   >
                                                 </p>
                                               </td>

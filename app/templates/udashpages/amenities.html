@@ -1,0 +1,316 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('udash.mylistings')}}"
+        >{{ _('Listings') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _(Room Amenities') }}
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<div class="wrapper">
+  <div class="main">
+    <main class="content pt-0">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">{{ _('Room Extra') }} 🏊</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="about mb-0">
+                  {{ _('Add room amenities & services') }} 📺
+                </h5>
+              </div>
+              <div class="card-body">
+                <!--Flash alerts-->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %} {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %} {% endif %} {% endwith %}
+                <!----------------->
+                <form method="POST" action="">
+                  {{ form.hidden_tag() }} {{ form.csrf_token }}
+                  <span style="font-size: 20px">{{ _('Room Amenities') }}</span>
+                  <hr style="background-color: black" />
+                  <div class="row pb-3">
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Bed type') }}</label>
+                      {{ form.sleeping.label(class="form-control-label") }} {%
+                      if form.sleeping.errors %} {{
+                      form.sleeping(class="form-control form-control-sm
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.sleeping.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.sleeping(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Hot water') }}</label>
+                      {{ form.hot_water.label(class="form-control-label") }} {%
+                      if form.hot_water.errors %} {{
+                      form.hot_water(class="form-control form-control-sm
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.hot_water.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.hot_water(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Smart Tv') }}</label>
+                      {{ form.tv.label(class="form-control-label") }} {% if
+                      form.tv.errors %} {{ form.tv(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.tv.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.tv(class="form-control form-control-sm
+                      form-select") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="row pb-3">
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Internet') }}</label>
+                      {{ form.internet.label(class="form-control-label") }} {%
+                      if form.internet.errors %} {{
+                      form.internet(class="form-control form-control-sm
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.internet.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.internet(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Kitchen') }}</label>
+                      {{ form.kitchen.label(class="form-control-label") }} {% if
+                      form.kitchen.errors %} {{ form.kitchen(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.kitchen.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.kitchen(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Towels') }}</label>
+                      {{ form.towels.label(class="form-control-label") }} {% if
+                      form.towels.errors %} {{ form.towels(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.towels.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.towels(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                  </div>
+                  <br />
+                  <span style="font-size: 20px">{{ _('Room Services') }}</span>
+                  <hr style="background-color: black" />
+                  <div class="row pb-3">
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Restaurant') }}</label>
+                      {{ form.resto.label(class="form-control-label") }} {% if
+                      form.resto.errors %} {{ form.resto(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.resto.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.resto(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Bar') }}</label>
+                      {{ form.bar.label(class="form-control-label") }} {% if
+                      form.bar.errors %} {{ form.bar(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.bar.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.bar(class="form-control form-control-sm
+                      form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Spa') }}</label>
+                      {{ form.spa.label(class="form-control-label") }} {% if
+                      form.spa.errors %} {{ form.spa(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.spa.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.spa(class="form-control form-control-sm
+                      form-select") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="row pb-3">
+                    <div class="form-group col-md-4">
+                      <label>{{ _('Shop') }}</label>
+                      {{ form.shop.label(class="form-control-label") }} {% if
+                      form.shop.errors %} {{ form.shop(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.shop.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.shop(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Concierge') }}</label>
+                      {{ form.concierge.label(class="form-control-label") }} {%
+                      if form.concierge.errors %} {{
+                      form.concierge(class="form-control form-control-sm
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.concierge.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.concierge(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Car rental') }}</label>
+                      {{ form.car.label(class="form-control-label") }} {% if
+                      form.car.errors %} {{ form.car(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.car.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.car(class="form-control form-control-sm
+                      form-select") }} {% endif %}
+                    </div>
+                  </div>
+                  <span style="font-size: 20px"
+                    >{{ _('Comfort & Leisure') }}</span
+                  >
+                  <hr style="background-color: black" />
+                  <div class="row pb-3">
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Air Condition') }}</label>
+                      {{ form.aircon.label(class="form-control-label") }} {% if
+                      form.aircon.errors %} {{ form.aircon(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.aircon.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.aircon(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Swimming Pool') }}</label>
+                      {{ form.pool.label(class="form-control-label") }} {% if
+                      form.pool.errors %} {{ form.pool(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.pool.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.pool(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Work Space') }}</label>
+                      {{ form.workspace.label(class="form-control-label") }} {%
+                      if form.workspace.errors %} {{
+                      form.workspace(class="form-control form-control-sm
+                      is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.workspace.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.workspace(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                  </div>
+                  <div class="row pb-3">
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Washing Machine') }}</label>
+                      {{ form.washing.label(class="form-control-label") }} {% if
+                      form.washing.errors %} {{ form.washing(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.washing.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.washing(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Sport Room') }}</label>
+                      {{ form.sport .label(class="form-control-label") }} {% if
+                      form.sport.errors %} {{ form.sport(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.sport.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.sport(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="pb-2">{{ _('Parking') }}</label>
+                      {{ form.parking.label(class="form-control-label") }} {% if
+                      form.parking.errors %} {{ form.parking(class="form-control
+                      form-control-sm is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in form.parking.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ form.parking(class="form-control
+                      form-control-sm form-select") }} {% endif %}
+                    </div>
+                  </div>
+                  <hr style="background-color: black" />
+                  <!------------------------------------------------------------------------>
+                  <div class="form-group text-end pt-2">
+                    {{ form.submit(class="btn btn-primary") }}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% endblock content %}

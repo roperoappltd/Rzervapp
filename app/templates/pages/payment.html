@@ -5,11 +5,11 @@
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Checkout</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _('Checkout') }}</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li class="current">Checkout</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Checkout') }}</li>
       </ol>
     </nav>
   </div>
@@ -26,10 +26,10 @@
             <i class="bi bi-person-check"></i>
           </div>
           <div class="info-content">
-            <h4>Host</h4>
+            <h4>{{ _('Host') }}</h4>
             <p>{{ room.user.first_name }} {{ room.user.last_name }}</p>
-            <p>Email: {{ room.user.email }}</p>
-            <p>Phone: {{ room.user.phone }}</p>
+            <p>{{ _('Email') }}: {{ room.user.email }}</p>
+            <p>{{ _('Phone') }}: {{ room.user.phone }}</p>
           </div>
         </div>
       </div>
@@ -39,10 +39,10 @@
             <i class="bi bi-person-raised-hand"></i>
           </div>
           <div class="info-content">
-            <h4>Primary Guest</h4>
+            <h4>{{ _('Primary Guest') }}</h4>
             <p>{{ book.primary_guest }}</p>
-            <p>Email: {{ book.pguest_email}}</p>
-            <p>Phone: {{ book.pguest_phone}}</p>
+            <p>{{ _('Email') }}: {{ book.pguest_email}}</p>
+            <p>{{ _('Phone') }}: {{ book.pguest_phone}}</p>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
     <!----------Payment summary------------>
     <div class="card mb-3">
       <h5 class="card-header">
-        Short Room rental | Booking Number: {{ book.booking_num }}
+        {{ _('Short Room rental') }} | {{ _('Booking Number') }}: {{ book.booking_num }}
       </h5>
       <div class="card-body">
         <!-- <h5 class="card-title">Room booked</h5> -->
@@ -74,16 +74,15 @@
                   <div class="flex-lg-grow-1 ms-3">
                     <h6 class="small mb-0">
                       <span class="text-reset"
-                        >{{ room.room_category}} ({{room.room_name}}) located at
+                        >{{ room.room_category}} ({{room.room_name}}) {{ _('located at') }}
                         {{room.room_location}}
                       </span>
                     </h6>
                     {% if book %}
                     <span class="small text-success"
-                      >Booked from {{ book.arrival.strftime('%d %B %Y') }} To {{
-                      book.departure.strftime('%d %B %Y') }} for
-                      <b>{{ ( book.departure - book.arrival).days }} days</b>
-                    </span>
+                      {{ _('Booked from') }} {{ book.arrival.strftime('%d %B %Y') }} {{ _('To') }} {{
+                      book.departure.strftime('%d %B %Y') }} {{ _('for') }}
+                      <b>{{ ( book.departure - book.arrival).days }} {{ _('days') }}</b>                    </span>
                     {% endif %}
                   </div>
                 </div>
@@ -94,7 +93,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2">Subtotal</td>
+              <td colspan="2">{{ _('Subtotal') }}</td>
               <td class="text-end">
                 £<span id="subtotal" data-value="{{ subtotal }}"
                   >{{ subtotal }}</span
@@ -102,21 +101,26 @@
               </td>
             </tr>
             <tr>
-              <td colspan="2">Service Fee</td>
+              <td colspan="2">{{ _('Service Fee') }}</td>
               <td class="text-end">£{{ book.serv_charge }}</td>
             </tr>
 
             <tr>
-              <td colspan="2">Discount</td>
+              <td colspan="2">{{ _('Discount') }}</td>
               <td class="text-danger text-end">
-                -£<span id="discount">0.00</span>
+                -£<span id="discount" data-value="{{ discount }}"
+                  >{{ "%.2f"|format(discount) }}</span
+                >
               </td>
             </tr>
 
             <tr class="fw-bold">
-              <td colspan="2">TOTAL</td>
+              <td colspan="2">{{ _('TOTAL') }}</td>
               <td class="text-end">
-                £ <span id="final-total">{{ subtotal }}</span>
+                £
+                <span id="final-total" data-value="{{ total_paid }}"
+                  >{{ "%.2f"|format(total_paid) }}</span
+                >
               </td>
             </tr>
           </tfoot>
@@ -124,24 +128,35 @@
       </div>
     </div>
     <!----CHECKOUT--------------------------------->
-    <div class="col-md-12 pb-1">
+    <div class="col-md-14 pb-1">
       <div class="info-content">
         <form method="POST" action="">
           {{ payform.hidden_tag() }} {{ payform.csrf_token }}
-          <label class="pb-2"
-            ><h6 class="card-header">Select a payment method:</h6></label
-          >
-          <div>
-            {% for subfield in payform.pay_method %}
-            <tr>
-              <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ subfield }}</td>
-              <td>{{ subfield.label }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            {% endfor %}
+          <div class="card mb-3">
+            <!-- <div class="card-header"> -->
+            <label class="pb-2"
+              ><h5 class="card-header">{{ _('Select a payment method') }}:</h5></label
+            >
+            <div>
+              {% for subfield in payform.pay_method %}
+              <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ subfield }}</td>
+                <td>{{ subfield.label }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              </tr>
+              {% endfor %}
+            </div>
+            <hr />
+            <!-- </div> -->
           </div>
-          <hr />
-          <div class="col-md-12">
+          <div class="col-md-14">
             <div class="contact-info-card">
+              {% if deal_booking %}
+              <!-- <div class="alert alert-info"> -->
+              <strong> {{ _('Deal dicount') }}:</strong>{{ _('A') }} £{{ "%.2f"|format(discount) }}
+              {{ _('promotional discount has been successfully applied. Takecare and
+              See you very soon!') }}
+              <!-- </div> -->
+              {% else %}
               <div class="form-group1">
                 {{ payform.voucher_code.label(class="payform-control-label pb-1
                 ") }} {% if payform.voucher_code.errors %} {{
@@ -156,11 +171,13 @@
                 payform-control-sm", id="voucher_code") }} {% endif %}
               </div>
               <div id="msg"></div>
+              {% endif %}
             </div>
           </div>
           <hr />
           <div class="form-group1 form-actions text-end">
-            {{ payform.submit(class="btn btn-primary", id="submit-btn") }}
+            {{ payform.submit(class="btn btn-primary", id="submit-btn",
+            value=_("Pay £%(amount).2f", amount=total_paid)) }}
           </div>
         </form>
       </div>

@@ -1,13 +1,15 @@
-{% extends "acclayout.html" %} {% block head_css %} {{ super() }} {% endblock
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
 head_css %} {% block content %}
 <div class="panel-header panel-header-sm"></div>
 <!----Breadcrumb------>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item pl-3">
-      <a href="{{url_for('users.listings')}}">My Listings</a>
+      <a href="{{url_for('udash.mylistings')}}">{{ _('My Listings') }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Add Room Extra</li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Add Room Amenities') }}
+    </li>
   </ol>
 </nav>
 <!----End Breadcrumb------>
@@ -22,173 +24,173 @@ head_css %} {% block content %}
       <div class="alert alert-{{ category }}">{{ message }}</div>
       {% endfor %} {% endif %} {% endwith %}
       <!----------------->
-      <h2 class="title mt-1 text-center">Add Room Extra</h2>
+      <h2 class="title mt-1 text-center">{{ _('Add Room Amenities') }}</h2>
       <form method="POST" action="">
-        {{ form.hidden_tag() }}
+        {{ form.hidden_tag() }} {{ form.csrf_token }}
         <hr style="background-color: darkgrey" />
-        <legend>Room Amenities</legend>
+        <legend>{{ _('Room Amenities') }}</legend>
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Bed type</label>
+            <label>{{ _('Bed type') }}</label>
             {{ form.sleeping.label(class="form-control-label") }} {% if
             form.sleeping.errors %} {{ form.sleeping(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.sleeping.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.sleeping(class="form-control form-control-lg") }}
+            {% else %} {{ form.sleeping(class="form-control form-control-sm") }}
             {% endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Hot water</label>
+            <label>{{ _('Hot water') }}</label>
             {{ form.hot_water.label(class="form-control-label") }} {% if
             form.hot_water.errors %} {{ form.hot_water(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.hot_water.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.hot_water(class="form-control form-control-lg")
+            {% else %} {{ form.hot_water(class="form-control form-control-sm")
             }} {% endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Smart Tv</label>
+            <label>{{ _('Smart Tv') }}</label>
             {{ form.tv.label(class="form-control-label") }} {% if form.tv.errors
-            %} {{ form.tv(class="form-control form-control-lg is-invalid") }}
+            %} {{ form.tv(class="form-control form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.tv.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.tv(class="form-control form-control-lg") }} {%
+            {% else %} {{ form.tv(class="form-control form-control-sm") }} {%
             endif %}
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Internet</label>
+            <label>{{ _('Internet') }}</label>
             {{ form.internet.label(class="form-control-label") }} {% if
             form.internet.errors %} {{ form.internet(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.internet.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.internet(class="form-control form-control-lg") }}
+            {% else %} {{ form.internet(class="form-control form-control-sm") }}
             {% endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Kitchen</label>
+            <label>{{ _('Kitchen') }}</label>
             {{ form.kitchen.label(class="form-control-label") }} {% if
             form.kitchen.errors %} {{ form.kitchen(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.kitchen.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.kitchen(class="form-control form-control-lg") }}
+            {% else %} {{ form.kitchen(class="form-control form-control-sm") }}
             {% endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Towels</label>
+            <label>{{ _('Towels') }}</label>
             {{ form.towels.label(class="form-control-label") }} {% if
             form.towels.errors %} {{ form.towels(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.towels.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.towels(class="form-control form-control-lg") }}
+            {% else %} {{ form.towels(class="form-control form-control-sm") }}
             {% endif %}
           </div>
         </div>
         <hr style="background-color: darkgrey" />
-        <legend>Room Services</legend>
+        <legend>{{ _('Room Services') }}</legend>
         <div class="row">
           <div class="form-group col-md-4">
             <label>Restaurant</label>
             {{ form.resto.label(class="form-control-label") }} {% if
             form.resto.errors %} {{ form.resto(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.resto.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.resto(class="form-control form-control-lg") }} {%
+            {% else %} {{ form.resto(class="form-control form-control-sm") }} {%
             endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Bar</label>
+            <label>{{ _('Bar') }}</label>
             {{ form.bar.label(class="form-control-label") }} {% if
-            form.bar.errors %} {{ form.bar(class="form-control form-control-lg
+            form.bar.errors %} {{ form.bar(class="form-control form-control-sm
             is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.bar.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.bar(class="form-control form-control-lg") }} {%
+            {% else %} {{ form.bar(class="form-control form-control-sm") }} {%
             endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Spa</label>
+            <label>{{ _('Spa') }}</label>
             {{ form.spa.label(class="form-control-label") }} {% if
-            form.spa.errors %} {{ form.spa(class="form-control form-control-lg
+            form.spa.errors %} {{ form.spa(class="form-control form-control-sm
             is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.spa.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.spa(class="form-control form-control-lg") }} {%
+            {% else %} {{ form.spa(class="form-control form-control-sm") }} {%
             endif %}
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-4">
-            <label>Shop</label>
+            <label>{{ _('Shop') }}</label>
             {{ form.shop.label(class="form-control-label") }} {% if
-            form.shop.errors %} {{ form.shop(class="form-control form-control-lg
+            form.shop.errors %} {{ form.shop(class="form-control form-control-sm
             is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.shop.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.shop(class="form-control form-control-lg") }} {%
+            {% else %} {{ form.shop(class="form-control form-control-sm") }} {%
             endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Concierge</label>
+            <label>{{ _('Concierge') }}</label>
             {{ form.concierge.label(class="form-control-label") }} {% if
             form.concierge.errors %} {{ form.concierge(class="form-control
-            form-control-lg is-invalid") }}
+            form-control-sm is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.concierge.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.concierge(class="form-control form-control-lg")
+            {% else %} {{ form.concierge(class="form-control form-control-sm")
             }} {% endif %}
           </div>
           <div class="form-group col-md-4">
-            <label>Car rental</label>
+            <label>{{ _('Car rental') }}</label>
             {{ form.car.label(class="form-control-label") }} {% if
-            form.car.errors %} {{ form.car(class="form-control form-control-lg
+            form.car.errors %} {{ form.car(class="form-control form-control-sm
             is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.car.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.car(class="form-control form-control-lg") }} {%
+            {% else %} {{ form.car(class="form-control form-control-sm") }} {%
             endif %}
           </div>
         </div>

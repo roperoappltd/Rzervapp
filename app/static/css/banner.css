@@ -1,0 +1,99 @@
+.host-banner {
+  width: 100%;
+  max-width: 1010px;
+  height: 220px;
+  margin: 20px auto;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(135deg, #0097b2, rgba(255, 90, 95, 0.7)),
+    url('/static/userpics/ads/host1cut.png'); /*#57b72e*/
+
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.host-banner-content {
+  width: 100%;
+  padding: 0 60px;
+}
+
+.host-text {
+  max-width: 600px;
+  color: white;
+}
+
+.host-text h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.host-text p {
+  margin-top: 12px;
+  margin-bottom: 24px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  opacity: 0.95;
+  text-align: justify;
+}
+
+.host-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 26px;
+  background: white;
+  color: #ff385c;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+.host-btn:hover {
+  color: #ff385c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .host-banner {
+    height: 200px;
+  }
+
+  .host-banner-content {
+    padding: 0 40px;
+  }
+
+  .host-text h1 {
+    font-size: 2.3rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .host-banner {
+    height: auto;
+    min-height: 180px;
+    padding: 30px 0;
+  }
+
+  .host-banner-content {
+    padding: 0 24px;
+  }
+
+  .host-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .host-text p {
+    font-size: 0.95rem;
+  }
+}

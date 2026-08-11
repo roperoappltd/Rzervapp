@@ -1,10 +1,5 @@
 {% extends "base.html" %} {% block head_css %} {{ super() }}
 
-<!-- Style -->
-<!-- <link
-  rel="stylesheet"
-  href="{{url_for('static', filename='signup/css/style.css')}}"
-/> -->
 
 {% endblock head_css %} {% block content %}
 
@@ -13,19 +8,19 @@
 >
   <div class="title-text">
     <div class="title login">
-      Log in </br>
-      <h6 class="text-primary mt-1">Log in to explore great Stuffs!</h6>
+      {{ _('Log in') }} </br>
+      <h6 class="text-primary mt-1">{{ _('Log in to explore great Stuffs') }}!</h6>
     </div>
-    <div class="title signup">Sign up
-        <h6 class="text-primary mt-1">Sign up to experience wonders!</h6>
+    <div class="title signup">{{ _('Sign up') }}
+        <h6 class="text-primary mt-1">{{ _('Sign up to experience wonders') }}!</h6>
     </div>
   </div>
   <div class="child form-container">
     <div class="slide-controls">
       <input type="radio" name="slide" id="login" checked />
       <input type="radio" name="slide" id="signup" />
-      <label for="login" class="slide login">Log in</label>
-      <label for="signup" class="slide signup">Sign up</label>
+      <label for="login" class="slide login">{{ _('Log in') }}</label>
+      <label for="signup" class="slide signup">{{ _('Sign up') }}</label>
       <div class="slider-tab"></div>
     </div>
     <div class="form-inner">
@@ -37,12 +32,12 @@
         <div class="field">
           <input type="password" placeholder="Password" required />
         </div>
-        <div class="pass-link mt-3"><a href="#">Forgot password?</a></div>
+        <div class="pass-link mt-3"><a href="#">{{ _('Forgot password') }}?</a></div>
         <div class="field btn">
           <div class="btn-layer"></div>
           <input type="submit" value="Login" />
         </div>
-        <div class="signup-link">Not a member? <a href="">Sign up now</a></div>
+        <div class="signup-link">{{ _('Not a member') }}? <a href="">{{ _('Sign up now') }}</a></div>
       </form>
       <form action="#" class="signup">
         <div class="field">

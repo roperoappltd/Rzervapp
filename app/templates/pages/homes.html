@@ -1,47 +1,50 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }}
-
-<!-- Style -->
-<!-- <link
-  rel="stylesheet"
-  href="{{url_for('static', filename='login/css/stylelogin.css')}}"
-/> -->
-
-{% endblock head_css %} {% block content %}
-<section id="hotel-hero" class="hotel-hero section">
+{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<section id="hotel-hero" class="hotel-hero section pb-1">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-4 align-items-center">
       <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
         <div class="hero-content">
-          <h1>A safer, friendly & affordable Stay.</h1>
-          <p class="lead">
-            Experience unparalleled comfort and sophistication at our premium
-            hotel. From elegant suites to world-class amenities, every moment of
-            your stay is crafted to perfection.
+          <!-- <audio controls autoplay>
+            <source
+              src="{{ url_for('static', filename='resources/audio/welcome.mp3') }}"
+              type="audio/mpeg"
+            />
+          </audio>
+          <hr /> -->
+
+          <h1>{{ _('A safer, friendly & affordable stay.') }}</h1>
+          <p class="lead" style="text-align: justify">
+            {{ _('Experience unparalleled simple comfort and a safer home-like
+            feeling at an affordable cost. Our carefully hand picked and vetted
+            hosts are committed to making your stay an unforgettable memory')
+            }}.
           </p>
           <div class="hero-features">
             <div class="feature-item">
-              <i class="bi bi-wifi"></i>
-              <span>Complimentary WiFi</span>
+              <i class="bi bi-shuffle"></i>
+              <span>{{ _('Flexible') }}</span>
             </div>
             <div class="feature-item">
               <i class="bi bi-house"></i>
-              <span>Safe home</span>
+              <span>{{ _('Vetted Hosts') }}</span>
             </div>
             <div class="feature-item">
-              <i class="bi bi-cup-hot"></i>
-              <span>24/7 Room Service</span>
+              <i class="bi bi-shield-check"></i>
+              <span>{{ _("You're Protected") }}</span>
             </div>
           </div>
           <div class="hero-buttons">
-            <a href="booking.html" class="btn btn-primary">Register</a>
-            <a href="{{ url_for('rooms.room') }}" class="btn btn-outline"
-              >View Rooms</a
+            <a href="{{ url_for('users.signup') }}" class="btn btn-primary"
+              >{{ _('Join us now') }}</a
+            >
+            <a href="{{ url_for('bedrooms.room') }}" class="btn btn-outline"
+              >{{ _('View Rooms') }}</a
             >
           </div>
         </div>
       </div>
       <!-----------------------------HOME FIRST IMAGE------------------------------------>
-      <!-- src="{{url_for('static', filename='img/hotel/showcase-3-1.jpg')}}" -->
       <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
         <div class="hero-images">
           <div class="main-image">
@@ -52,33 +55,34 @@
             />
           </div>
           <!--Customer floating review-->
-          <!-- <div
-                  class="floating-card"
-                  data-aos="zoom-in"
-                  data-aos-delay="400"
-                >
-                  <div class="card-content">
-                    <div class="rating">
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                      <i class="bi bi-star-fill"></i>
-                    </div>
-                    <h6>Exceptional Experience</h6>
-                    <p>
-                      "Absolutely stunning hotel! The service was impeccable and
-                      the views breathtaking."
-                    </p>
-                    <div class="guest-info">
-                      <img
-                        src="{{url_for('static', filename='img/person/person-f-3.webp')}}"
-                        alt="Guest"
-                        class="guest-avatar"
-                      />
-                      <span>Sarah Johnson</span>
-                    </div>
-                  </div>
-                </div> -->
+          <div
+            class="floating-card p-3 m-2"
+            data-aos="zoom-in"
+            data-aos-delay="400"
+          >
+            <div class="card-content">
+              <div class="rating">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+              </div>
+              <h6>{{ _('Very useful platform') }}</h6>
+              <p class="text-justify">
+                {{ _('Definitely saved my time and money. Flawless booking
+                process with vetted and trustworthy hosts.') }}
+              </p>
+              <div class="guest-info">
+                <img
+                  src="{{url_for('static', filename='img/person/djeney.png')}}"
+                  alt="Guest"
+                  class="guest-avatar"
+                />
+                <span>Djeney Diaby</span>
+              </div>
+            </div>
+          </div>
           <!--END of customer review-->
         </div>
       </div>
@@ -91,11 +95,11 @@
             <span
               class="stat-number purecounter"
               data-purecounter-start="0"
-              data-purecounter-end="200"
+              data-purecounter-end="100"
               data-purecounter-duration="1"
-              >200</span
+              >100</span
             >
-            <span class="stat-label">Business Partners</span>
+            <span class="stat-label">{{ _('Host Partners') }}</span>
           </div>
         </div>
         <div class="col-md-3 col-6">
@@ -107,7 +111,7 @@
               data-purecounter-duration="1"
               >5</span
             >
-            <span class="stat-label">Stars Service</span>
+            <span class="stat-label">{{ _('Stars Service') }}</span>
           </div>
         </div>
         <div class="col-md-3 col-6">
@@ -119,7 +123,7 @@
               data-purecounter-duration="1"
               >24</span
             >
-            <span class="stat-label">Service & support</span>
+            <span class="stat-label">{{ _('Service & support') }}</span>
           </div>
         </div>
         <div class="col-md-3 col-6">
@@ -131,7 +135,7 @@
               data-purecounter-duration="1"
               >98</span
             >
-            <span class="stat-label">Guest Satisfaction</span>
+            <span class="stat-label">{{ _('Guest Satisfaction') }}</span>
           </div>
         </div>
       </div>
@@ -139,53 +143,81 @@
   </div>
 </section>
 <!-- /Hotel Hero Section -->
+<section class="pb-3 pt-0">
+  <!------------------->
+  <div class="col-12 col-xl-12 d-flex px-5">
+    <div class="card flex-fill">
+      <div class="card-header">
+        <h5 class="card-title mb-0">{{ _('Rooms Locations') }}</h5>
+
+        <small class="text-muted">
+          {{ _('Zoom the map to get a clear of the cities.') }}
+        </small>
+      </div>
+
+      <div
+        class="card-body px-3 py-3"
+        style="background-image: url('static/userpics/ads/blue.avif')"
+      >
+        <div class="map-container">
+          <!-- <div
+            id="world_map"
+            style="height: 350px"
+            data-room-url="{{ url_for('bedrooms.roomdetail', room_id=0) }}"
+          ></div> -->
+          <!-- <div id="mapTooltip" class="map-tooltip"></div> -->
+          <div id="roomMap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!------------------->
+</section>
 
 <!-- About Home Section -->
 <section id="about-home" class="about-home section light-background">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-4 align-items-center">
       <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
-        <div class="about-content">
-          <h2>Welcome to Rezerva.</h2>
+        <div class="about-content" style="text-align: justify">
+          <h2>{{ _('Welcome to Jambo.') }}</h2>
           <p class="lead">
-            Where luxury meets tranquility in the heart of nature's paradise.
+            {{ _('Here, conviviality and comfort fused with affordability and
+            flexibility to provide peace of mind.') }}
           </p>
           <p>
-            Nestled among rolling hills and pristine landscapes, Grandview
-            Resort has been offering exceptional hospitality for over three
-            decades. Our commitment to excellence and attention to detail
-            creates an unforgettable experience for discerning travelers seeking
-            both comfort and adventure.
+            {{ _('Jambo is a startup online African marketplace that connects
+            travelers with hosts offering accommodations. Our platform enables
+            people, hostels, guest houses to rent out spare rooms or homes.') }}
           </p>
           <p>
-            From our elegantly appointed suites to our world-class amenities,
-            every aspect of your stay is designed to exceed expectations.
-            Discover breathtaking views, exquisite dining, and personalized
-            service that makes every moment special.
+            {{ _('Even though the platform seek to first vet each host and
+            guest, however both users can also review each other to helps build
+            trust and create a safer community.') }}
           </p>
 
           <div class="stats-row">
             <div class="stat-item">
-              <div class="stat-number">500+</div>
-              <div class="stat-label">Rooms available</div>
+              <div class="stat-number">100+</div>
+              <div class="stat-label">{{ _('Rooms available') }}</div>
             </div>
             <div class="stat-item">
               <div class="stat-number">98%</div>
-              <div class="stat-label">Guest Satisfaction</div>
+              <div class="stat-label">{{ _('Guest Satisfaction') }}</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">30</div>
-              <div class="stat-label">Years of Excellence</div>
+              <div class="stat-number">6+</div>
+              <div class="stat-label">{{ _('Years of Excellence') }}</div>
             </div>
           </div>
           <!-- End Stats Row -->
 
           <div class="about-actions">
             <a href="{{ url_for('main.about') }}" class="btn-primary"
-              >About us</a
+              >{{ _('About us') }}</a
             >
             <a href="{{ url_for('main.contact') }}" class="btn-secondary"
-              >Contact us</a
+              >{{ _('Contact us') }}</a
             >
           </div>
         </div>
@@ -210,8 +242,10 @@
           </div>
           <div class="experience-badge">
             <div class="badge-content">
-              <span class="badge-number">30+</span>
-              <span class="badge-text">Years<br />Experience</span>
+              <span class="badge-number">6+</span>
+              <span class="badge-text"
+                >{{ _('Years') }}<br />{{ _('Experience') }}</span
+              >
             </div>
           </div>
         </div>
@@ -226,10 +260,10 @@
 <div class="team-boxed">
   <div class="container">
     <div class="intro">
-      <h1 class="text-center">How to become a host?</h1>
+      <h1 class="text-center">{{ _('How to become a host?') }}</h1>
       <p class="text-center">
-        Nunc luctus in metus eget fringilla. Aliquam sed justo ligula.
-        Vestibulum nibh erat, pellentesque ut laoreet vitae.
+        {{ _('Become a host in 3 easy and rewarding steps. We will be with you
+        from the start throughout the grow of your business.') }}
       </p>
     </div>
     <div class="row people">
@@ -239,9 +273,9 @@
             class="rounded-circle"
             src="{{url_for('static', filename='img/misc/register.png')}}"
           />
-          <h3 class="name">Register Now</h3>
-          <p class="title">Musician</p>
-          <p class="description">
+          <h3 class="name">{{ _('Register') }}</h3>
+          <p class="title">{{ _('To be a member') }}</p>
+          <!-- <p class="description">
             Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus.
             Praesent aliquam in tellus eu gravida. Aliquam varius finibus est,
             et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper
@@ -251,7 +285,7 @@
             <a href="#"><i class="fa fa-facebook-official"></i></a
             ><a href="#"><i class="fa fa-twitter"></i></a
             ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-md-6 col-lg-4 item">
@@ -260,9 +294,9 @@
             class="rounded-circle"
             src="{{url_for('static', filename='img/misc/vetting.png')}}"
           />
-          <h3 class="name">Pass vetting</h3>
-          <p class="title">Artist</p>
-          <p class="description">
+          <h3 class="name">{{ _('Pass vetting') }}</h3>
+          <p class="title">{{ _('Team visit') }}</p>
+          <!-- <p class="description">
             Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus.
             Praesent aliquam in tellus eu gravida. Aliquam varius finibus est,
             et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper
@@ -272,18 +306,18 @@
             <a href="#"><i class="fa fa-facebook-official"></i></a
             ><a href="#"><i class="fa fa-twitter"></i></a
             ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-md-6 col-lg-4 item">
         <div class="box">
           <img
             class="rounded-circle"
-            src="{{url_for('static', filename='img/misc/makecash1.png')}}"
+            src="{{ url_for('static', filename='img/misc/makecash1.png') }}"
           />
-          <h3 class="name">Make Cash</h3>
-          <p class="title">Stylist</p>
-          <p class="description">
+          <h3 class="name">{{ _('Make Cash') }}</h3>
+          <p class="title">{{ _('Go live') }}</p>
+          <!-- <p class="description">
             Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus.
             Praesent aliquam in tellus eu gravida. Aliquam varius finibus est,
             et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper
@@ -293,7 +327,7 @@
             <a href="#"><i class="fa fa-facebook-official"></i></a
             ><a href="#"><i class="fa fa-twitter"></i></a
             ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div>
+          </div> -->
         </div>
       </div>
       <!--BUTTONS---------------------------------------------->
@@ -302,10 +336,15 @@
                 ><h4>Click here to become a host.</h4></a
               >
             </div> -->
-      <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-        <a href="{{ url_for('rooms.room') }}" class="explore-all-link">
-          <span>Click here to become a host</span>
-          <i class="bi bi-arrow-right"></i>
+      <div
+        class="text-primary text-center"
+        data-aos="fade-up"
+        data-aos-delay="600"
+      >
+        <a href="{{ url_for('main.behost') }}" class="explore-all-link">
+          <h5>
+            {{ _('Learn more') }} <i class="bi bi-arrow-right-circle"></i>
+          </h5>
         </a>
       </div>
       <!--END BUTTONS---------------------------------------------->
@@ -318,11 +357,11 @@
 <section id="rooms-showcase" class="rooms-showcase section">
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <span class="description-title">Spotlight</span>
-    <h2>Spotlight</h2>
+    <span class="description-title">{{ _('Spotlight') }}</span>
+    <h2>{{ _('Spotlight') }}</h2>
     <p>
-      Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-      consectetur velit
+      {{ _('We present to you our most popular room listing this week chosen by
+      the Jambo community.') }}
     </p>
   </div>
   <!-- End Section Title -->
@@ -333,33 +372,33 @@
         <div class="hero-room-showcase">
           <div class="showcase-image-container">
             <img
-              src="{{url_for('static', filename='img/hotel/room-14.webp')}}"
+              src="{{ image1 }}"
               alt="Grand Presidential Suite"
               class="img-fluid"
             />
             <div class="room-category-badge">
-              <span>Presidential</span>
+              <span>{{ _('SpotLight') }}</span>
             </div>
             <div class="room-details-overlay">
               <div class="room-specs">
                 <span class="spec-item">
                   <i class="bi bi-people"></i>
-                  <span>6 Guests</span>
+                  <span>{{ spotlight.max_occupancy }} {{ _('Guests') }}</span>
                 </span>
                 <span class="spec-item">
                   <i class="bi bi-house"></i>
-                  <span>180m²</span>
+                  <span>{{ spotlight.room_size }}m²</span>
                 </span>
                 <span class="spec-item">
                   <i class="bi bi-geo-alt"></i>
-                  <span>Top Floor</span>
+                  <span>{{ spotlight.room_location }}</span>
                 </span>
               </div>
             </div>
           </div>
           <div class="showcase-content">
             <div class="room-title-section">
-              <h2>Grand Presidential Suite</h2>
+              <h2>{{ spotlight.room_name }}</h2>
               <div class="room-rating">
                 <div class="stars">
                   <i class="bi bi-star-fill"></i>
@@ -368,40 +407,35 @@
                   <i class="bi bi-star-fill"></i>
                   <i class="bi bi-star-fill"></i>
                 </div>
-                <span class="rating-text">5.0 Excellence</span>
+                <span class="rating-text">5.0 {{ _('Excellence') }}</span>
               </div>
             </div>
-            <p class="room-description">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo.
-            </p>
+            <p class="room-description">{{spotlight.description }}</p>
             <div class="amenities-grid">
               <div class="amenity-item">
                 <i class="bi bi-wifi"></i>
-                <span>Premium WiFi</span>
+                <span>{{ _('Premium WiFi') }}</span>
               </div>
               <div class="amenity-item">
                 <i class="bi bi-tv"></i>
-                <span>Smart TV</span>
+                <span>{{ _('Smart TV') }}</span>
               </div>
               <div class="amenity-item">
-                <i class="bi bi-cup-hot"></i>
-                <span>Coffee Bar</span>
+                <i class="bi bi-alarm"></i>
+                <span>24h {{ _('Support') }}</span>
               </div>
               <div class="amenity-item">
                 <i class="bi bi-snow"></i>
-                <span>Climate Control</span>
+                <span>{{ _('Climate Control') }}</span>
               </div>
             </div>
             <div class="booking-section">
               <div class="price-display">
-                <span class="currency">$</span>
-                <span class="amount">649</span>
-                <span class="period">per night</span>
+                <span class="currency">£</span>
+                <span class="amount">{{ spotlight.price }}</span>
+                <span class="period">{{ _('per night') }}</span>
               </div>
-              <a href="#" class="primary-booking-btn">Reserve now</a>
+              <a href="#" class="primary-booking-btn">{{ _('Reserve now') }}</a>
             </div>
           </div>
         </div>
@@ -410,13 +444,19 @@
 
       <div class="col-xl-4">
         <div class="room-list-container">
+          {% for spot in latest_rooms %}
           <div
             class="standard-room-card"
             data-aos="slide-left"
             data-aos-delay="250"
           >
+            {% if loop.index == 1 %}
             <div class="card-image">
-              <img src="{{ image1 }}" alt="Executive Room" class="img-fluid" />
+              <img
+                src="{{ url_for('static', filename='userpics/roompics/' + spot.image1) }}"
+                alt="Executive Room"
+                class="img-fluid"
+              />
               <!-- src="{{url_for('static', filename='img/hotel/room-6.webp')}}" -->
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
@@ -424,31 +464,31 @@
             </div>
             <div class="card-content">
               <!-- <h4>Executive Business Room</h4> -->
-              <h4>{{spotlight.room_name}}</h4>
+              <h4>{{spot.room_name}}</h4>
               <p>
                 <!--Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
                 aut fugit, sed quia consequuntur magni dolores.-->
-                {{spotlight.short_desc}}
+                {{spot.short_desc}}
               </p>
               <div class="features-list">
                 <!--Work Space-->
-                <span><i class="bi bi-building"></i>{{spotlight.status}}</span>
+                <span><i class="bi bi-building"></i>{{spot.status}}</span>
                 &nbsp; &nbsp; &nbsp;
                 <!--City Views-->
                 <span
                   ><i class="bi bi-geo-alt"></i>
-                  {{spotlight.room_location}}
+                  {{spot.room_location}}
                 </span>
               </div>
               <div class="booking-row">
                 <div class="price">
                   <!-- $329-->
-                  {{spotlight.price}}<small>/night</small>
+                  {{spot.price}}<small> /{{ _('night') }}</small>
                 </div>
                 <a
-                  href="{{ url_for('rooms.roomdetail', room_id=2) }}"
+                  href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
                   class="book-link"
-                  >View</a
+                  >{{ _('View') }}</a
                 >
               </div>
             </div>
@@ -459,86 +499,89 @@
             data-aos="slide-left"
             data-aos-delay="300"
           >
+            {% elif loop.index == 2 %}
             <div class="card-image">
               <!-- {{url_for('static', filename='img/hotel/room-19.webp')}} -->
-              <img src="{{ image2 }}" alt="Garden View" class="img-fluid" />
+              <img
+                src="{{ url_for('static', filename='userpics/roompics/' + spot.image1) }}"
+                alt="Garden View"
+                class="img-fluid"
+              />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
             </div>
             <div class="card-content">
               <!-- Garden View Deluxe -->
-              <h4>{{spotlight2.room_name}}</h4>
+              <h4>{{spot.room_name}}</h4>
               <!-- At vero eos et accusamus et iusto odio dignissimos ducimus qui
               blanditiis praesentium voluptatum deleniti atque. -->
-              <p>{{spotlight2.short_desc}}</p>
+              <p>{{ spot.short_desc }}</p>
               <div class="features-list">
                 <!-- Garden View -->
-                <span><i class="bi bi-building"></i>{{spotlight2.status}}</span>
+                <span><i class="bi bi-building"></i>{{ spot.status }}</span>
                 <!-- Private Terrace -->
                 &nbsp; &nbsp; &nbsp;
                 <span
-                  ><i class="bi bi-geo-alt"></i
-                  >{{spotlight2.room_location}}</span
+                  ><i class="bi bi-geo-alt"></i>{{ spot.room_location }}</span
                 >
               </div>
               <div class="booking-row">
                 <div class="price">
-                  £ {{spotlight2.price}}<small>/night</small>
+                  £{{ spot.price }}<small> /{{ _('night') }}</small>
                 </div>
                 <a
-                  href="{{ url_for('rooms.roomdetail', room_id=5) }}"
+                  href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
                   class="book-link"
-                  >View</a
+                  >{{ _('View') }}</a
                 >
               </div>
             </div>
           </div>
           <!-- End Standard Room -->
-
           <div
             class="standard-room-card"
             data-aos="slide-left"
             data-aos-delay="350"
           >
+            {% elif loop.index == 3 %}
             <div class="card-image">
               <!--src="{{url_for('static', filename='img/hotel/room-12.webp')}}"-->
-              <img src="{{ image3 }}" alt="Family Suite" class="img-fluid" />
+              <img
+                src="{{ url_for('static', filename='userpics/roompics/' + spot.image1) }}"
+                alt="Family Suite"
+                class="img-fluid"
+              />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
             </div>
             <div class="card-content">
               <!-- Family Comfort Suite -->
-              <h4>{{spotlight3.room_name}}</h4>
-              <p>
-                {{spotlight3.short_desc}}
-                <!-- Temporibus autem quibusdam et aut officiis debitis aut rerum
-                necessitatibus saepe eveniet ut et voluptates. -->
-              </p>
+              <h4>{{ spot.room_name }}</h4>
+              <p>{{ spot.short_desc }}</p>
               <div class="features-list">
-                <span
-                  ><i class="bi bi-building"></i
-                  ><!--Family Space-->{{spotlight3.status}}</span
-                >
+                <span><i class="bi bi-building"></i>{{ spot.status }}</span>
                 &nbsp; &nbsp; &nbsp;
                 <span
                   ><i class="bi bi-geo-alt"></i
                   ><!--Kids Area-->
-                  {{spotlight3.room_location}}</span
+                  {{ spot.room_location }}</span
                 >
               </div>
               <div class="booking-row">
                 <div class="price">
-                  £ {{spotlight3.price}}<small>/night</small>
+                  £{{ spot.price }}<small> /{{ _('night') }}</small>
                 </div>
                 <a
-                  href="{{ url_for('rooms.roomdetail', room_id=1) }}"
+                  href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
                   class="book-link"
-                  >View</a
+                  >{{ _('View') }}</a
                 >
               </div>
+              {% endif %}
             </div>
+            {% endfor %}
           </div>
           <!-- End Standard Room -->
         </div>
@@ -547,10 +590,12 @@
 
     <div class="row mt-6">
       <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+        {% for feature in featured_rooms %}
         <div class="minimal-room-card">
+          {% if loop.index == 1 %}
           <div class="room-image">
             <img
-              src="{{url_for('static', filename='img/hotel/room-1.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
               alt="Classic Room"
               class="img-fluid"
             />
@@ -561,8 +606,10 @@
             </div>
           </div>
           <div class="room-summary">
-            <h5>Classic Double</h5>
-            <div class="price-tag">$189<span>/night</span></div>
+            <h5>{{ feature.room_category }}</h5>
+            <div class="price-tag">
+              £{{ feature.price }}<span> /{{ _('night') }}</span>
+            </div>
             <div class="basic-amenities">
               <i class="bi bi-wifi"></i>
               <i class="bi bi-tv"></i>
@@ -575,9 +622,10 @@
 
       <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="450">
         <div class="minimal-room-card">
+          {% elif loop.index == 2 %}
           <div class="room-image">
             <img
-              src="{{url_for('static', filename='img/hotel/room-5.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
               alt="Superior Room"
               class="img-fluid"
             />
@@ -588,8 +636,10 @@
             </div>
           </div>
           <div class="room-summary">
-            <h5>Superior King</h5>
-            <div class="price-tag">$249<span>/night</span></div>
+            <h5>{{ feature.room_category }}</h5>
+            <div class="price-tag">
+              £{{ feature.price }}<span> /{{ _('night') }}</span>
+            </div>
             <div class="basic-amenities">
               <i class="bi bi-wifi"></i>
               <i class="bi bi-cup-hot"></i>
@@ -602,9 +652,10 @@
 
       <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="500">
         <div class="minimal-room-card">
+          {% elif loop.index == 3 %}
           <div class="room-image">
             <img
-              src="{{url_for('static', filename='img/hotel/room-8.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
               alt="Premium Room"
               class="img-fluid"
             />
@@ -615,8 +666,10 @@
             </div>
           </div>
           <div class="room-summary">
-            <h5>Premium Ocean View</h5>
-            <div class="price-tag">$359<span>/night</span></div>
+            <h5>{{ feature.room_category }}</h5>
+            <div class="price-tag">
+              £{{ feature.price }}<span> /{{ _('night') }}</span>
+            </div>
             <div class="basic-amenities">
               <i class="bi bi-water"></i>
               <i class="bi bi-door-open"></i>
@@ -629,9 +682,10 @@
 
       <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="550">
         <div class="minimal-room-card">
+          {% elif loop.index == 4 %}
           <div class="room-image">
             <img
-              src="{{url_for('static', filename='img/hotel/room-17.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
               alt="Luxury Suite"
               class="img-fluid"
             />
@@ -642,22 +696,27 @@
             </div>
           </div>
           <div class="room-summary">
-            <h5>Luxury Penthouse</h5>
-            <div class="price-tag">$1,199<span>/night</span></div>
+            <h5>{{ feature.room_category }}</h5>
+            <div class="price-tag">
+              {{ feature.price }}<span> /{{ _('night') }}</span>
+            </div>
             <div class="basic-amenities">
               <i class="bi bi-star"></i>
               <i class="bi bi-house"></i>
               <i class="bi bi-gem"></i>
             </div>
           </div>
+          {% endif %}
         </div>
+        {% endfor %}
       </div>
+
       <!-- End Minimal Room -->
     </div>
 
     <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-      <a href="{{ url_for('rooms.room') }}" class="explore-all-link">
-        <span>Explore All Rooms</span>
+      <a href="{{ url_for('bedrooms.room') }}" class="explore-all-link">
+        <span>{{ _('Explore All Rooms') }}</span>
         <i class="bi bi-arrow-right"></i>
       </a>
     </div>
@@ -892,8 +951,8 @@
 <section id="testimonials" class="testimonials section light-background">
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <span class="description-title">Testimonials</span>
-    <h2>Testimonials</h2>
+    <span class="description-title">{{ _('Testimonials') }}</span>
+    <h2>{{ _('Testimonials') }}</h2>
     <p>
       Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
       consectetur velit
@@ -1030,11 +1089,12 @@
 <section id="offer-cards" class="offer-cards section">
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <span class="description-title">Offers</span>
-    <h2>Offers</h2>
+    <span class="description-title">{{ _('Offers') }}</span>
+    <h2>{{ _('Offers') }}</h2>
     <p>
-      Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-      consectetur velit
+      {{ _('Take advantage now of our deal package to save money and get the
+      best experience') }}. <br />
+      {{ _('With Jambo get a safe, friendly and affordable stay') }}.
     </p>
   </div>
   <!-- End Section Title -->
@@ -1044,33 +1104,36 @@
       <div class="col-lg-4 col-md-6">
         <div class="offer-card" data-aos="zoom-in" data-aos-delay="200">
           <div class="offer-badge">
-            <span class="discount">25% OFF</span>
+            <span class="discount">{{ weekend_room.room_location }}</span>
           </div>
           <div class="offer-image">
             <img
-              src="{{url_for('static', filename='img/hotel/showcase-3.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + weekend_room.image1) }}"
               alt="Weekend Getaway"
               class="img-fluid"
             />
           </div>
           <div class="offer-content">
-            <h3>Weekend Getaway</h3>
-            <p>
-              Escape the ordinary with our exclusive weekend package. Includes
-              complimentary breakfast and late checkout until 2 PM.
-            </p>
+            <h3>{{ _('Weekend Getaway Deal') }}</h3>
+            <hr />
+            <h6>{{ weekend_room.room_name }}</h6>
+            <p style="text-align: justify">{{ weekend_room.description }}</p>
             <div class="offer-details">
               <div class="price-info">
-                <span class="original-price">$299</span>
-                <span class="offer-price">$224</span>
-                <span class="per-night">per night</span>
+                <span class="original-price">£{{ weekend_room.price }}</span>
+                <span class="offer-price">£{{ offer_1 }}</span>
+                <span class="per-night">{{ _('per night') }}</span>
               </div>
               <div class="validity">
                 <i class="bi bi-calendar-check"></i>
-                <span>Valid until Dec 31, 2024</span>
+                <span>{{ _('Valid until') }} {{wkend_deal.end_date}}</span>
               </div>
             </div>
-            <a href="#" class="btn-book">Reserve Now</a>
+            <a
+              href="{{ url_for('bedrooms.booknow', room_id=weekend_room.id, deal_id=wkend_deal.id ) }}"
+              class="btn-book"
+              >{{ _('Reserve Now') }}</a
+            >
           </div>
         </div>
       </div>
@@ -1082,33 +1145,36 @@
           data-aos-delay="300"
         >
           <div class="offer-badge">
-            <span class="discount">BEST VALUE</span>
+            <span class="discount">{{ weekday_room.room_location }}</span>
           </div>
           <div class="offer-image">
             <img
-              src="{{url_for('static', filename='img/hotel/showcase-7.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + weekday_room.image1) }}"
               alt="Extended Stay Deal"
               class="img-fluid"
             />
           </div>
           <div class="offer-content">
-            <h3>Extended Stay Deal</h3>
-            <p>
-              Stay 5 nights or more and enjoy significant savings. Perfect for
-              business travelers and extended vacations with premium amenities.
-            </p>
+            <h3>{{ _('Weekday Massive Deal') }}</h3>
+            <hr />
+            <h6>{{ weekday_room.room_name }}</h6>
+            <p style="text-align: justify">{{ weekday_room.description }}</p>
             <div class="offer-details">
               <div class="price-info">
-                <span class="original-price">$189</span>
-                <span class="offer-price">$149</span>
-                <span class="per-night">per night</span>
+                <span class="original-price">£{{ weekday_room.price }}</span>
+                <span class="offer-price">£{{ offer_2 }}</span>
+                <span class="per-night">{{ _('per night') }}</span>
               </div>
               <div class="validity">
                 <i class="bi bi-calendar-check"></i>
-                <span>Book by Jan 15, 2025</span>
+                <span>{{ _('Book by Sunday every week.') }} </span>
               </div>
             </div>
-            <a href="#" class="btn-book">Reserve Now</a>
+            <a
+              href="{{ url_for('bedrooms.booknow', room_id=weekday_room.id, deal_id=wkday_deal.id ) }}"
+              class="btn-book"
+              >{{ _('Reserve Now') }}</a
+            >
           </div>
         </div>
       </div>
@@ -1116,39 +1182,42 @@
       <div class="col-lg-4 col-md-6">
         <div class="offer-card" data-aos="zoom-in" data-aos-delay="400">
           <div class="offer-badge">
-            <span class="discount">EARLY BIRD</span>
+            <span class="discount">{{ romantic_room.room_location }}</span>
           </div>
           <div class="offer-image">
             <img
-              src="{{url_for('static', filename='img/hotel/showcase-11.webp')}}"
+              src="{{ url_for('static', filename='userpics/roompics/' + romantic_room.image1) }}"
               alt="Advance Booking"
               class="img-fluid"
             />
           </div>
           <div class="offer-content">
-            <h3>Advance Booking</h3>
-            <p>
-              Plan ahead and save more! Book your stay 30 days in advance and
-              enjoy exclusive rates with free cancellation up to 7 days.
-            </p>
+            <h3>{{ _('Couples Great Savings') }}</h3>
+            <hr />
+            <h6>{{ romantic_room.room_name }}</h6>
+            <p style="text-align: justify">{{ romantic_room.description }}</p>
             <div class="offer-details">
               <div class="price-info">
-                <span class="original-price">$249</span>
-                <span class="offer-price">$199</span>
-                <span class="per-night">per night</span>
+                <span class="original-price">£{{ romantic_room.price }}</span>
+                <span class="offer-price">{{ offer_3 }}</span>
+                <span class="per-night">{{ _('per night') }}</span>
               </div>
               <div class="validity">
                 <i class="bi bi-calendar-check"></i>
-                <span>Available year-round</span>
+                <span>{{ _('Available year-round') }}</span>
               </div>
             </div>
-            <a href="#" class="btn-book">Reserve Now</a>
+            <a
+              href="{{ url_for('bedrooms.booknow', room_id=romantic_room.id, deal_id=rom_deal.id ) }}"
+              class="btn-book"
+              >{{ _('Reserve Now') }}</a
+            >
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row mt-5">
+    <!---------LIMITED OFFER--------------------------------------------->
+    <!-- <div class="row mt-5">
       <div class="col-12">
         <div class="offer-banner" data-aos="fade-up" data-aos-delay="500">
           <div class="row align-items-center">
@@ -1184,7 +1253,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 <!-- /Offer Cards Section -->
@@ -1195,34 +1264,40 @@
     <div class="row align-items-center">
       <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
         <div class="content">
-          <h2>Experience an unforgettable adventure.</h2>
-          <p>
-            Immerse yourself in unparalleled comfort and sophistication at our
-            premium hotel. From elegantly appointed rooms to world-class
-            amenities, every detail is crafted to exceed your expectations. Book
-            your extraordinary stay today and create unforgettable memories.
+          <h2>{{ _('Experience heaven on earth.') }}</h2>
+          <p style="text-align: justify">
+            {{ _('Assinie, a delightful seaside retreat situated on a
+            breathtaking strand of sand that serves as a natural boundary
+            separating the lagoon from the ocean. A stunning fishing village,
+            nestled by the tranquil sea, amidst lush palm trees and powdery
+            white sands, offers the perfect retreat for a few days of pure
+            relaxation, where visitors can immerse themselves in the local
+            community.') }}
           </p>
           <ul class="features-list">
             <li>
-              <i class="bi bi-check-circle"></i> Complimentary breakfast and
-              Wi-Fi
+              <i class="bi bi-check-circle"></i>
+              {{ _('free guided tourist visit') }}
             </li>
             <li>
-              <i class="bi bi-check-circle"></i> 24/7 concierge and room service
+              <i class="bi bi-check-circle"></i>
+              {{ _('24/7 concierge and room service') }}
             </li>
             <li>
-              <i class="bi bi-check-circle"></i> State-of-the-art spa and
-              fitness center
+              <i class="bi bi-check-circle"></i>
+              {{ _('Delicious local and international cuisine') }}
             </li>
             <li>
-              <i class="bi bi-check-circle"></i> Prime location with stunning
-              city views
+              <i class="bi bi-check-circle"></i>
+              {{ _('Prime location with stunning city views') }}
             </li>
           </ul>
           <div class="cta-buttons">
-            <a href="#" class="btn-primary">Book Your Stay</a>
-            <a href="{{ url_for('rooms.room') }}" class="btn-secondary"
-              >View Rooms</a
+            <a href="{{ url_for('main.contact') }}" class="btn-primary"
+              >{{ _('Contact us') }}</a
+            >
+            <a href="{{ url_for('bedrooms.room') }}" class="btn-secondary"
+              >{{ _('View Rooms') }}</a
             >
           </div>
         </div>
@@ -1231,14 +1306,15 @@
       <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
         <div class="image-wrapper">
           <img
-            src="{{url_for('static', filename='img/hotel/showcase-9-1.jpg')}}"
+            src="{{ url_for('static', filename='img/hotel/showcase-9-1.jpg') }}"
             alt="Luxury Hotel Experience"
             class="img-fluid"
           />
+
           <div class="overlay-content">
             <div class="special-offer">
-              <span class="label">Visit today</span>
-              <span class="discount">Assinie</span>
+              <span class="label">{{ _('Visit from') }}</span>
+              <span class="discount">£200</span>
             </div>
           </div>
         </div>
@@ -1474,8 +1550,7 @@
 <!-- /Events Cards Section -->
 
 <!-- Location Cards Section -->
-<section id="location-cards" class="location-cards section">
-  <!-- Section Title -->
+<!-- <section id="location-cards" class="location-cards section">
   <div class="container section-title" data-aos="fade-up">
     <span class="description-title">Location &amp; Activities</span>
     <h2>Location &amp; Activities</h2>
@@ -1484,7 +1559,6 @@
       consectetur velit
     </p>
   </div>
-  <!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-5 align-items-center">
@@ -1516,7 +1590,6 @@
               </div>
             </div>
           </div>
-          <!-- End Area Highlight -->
 
           <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
             <div class="area-highlight">
@@ -1546,7 +1619,6 @@
               </div>
             </div>
           </div>
-          <!-- End Area Highlight -->
 
           <div class="col-md-6" data-aos="zoom-in" data-aos-delay="400">
             <div class="area-highlight">
@@ -1574,7 +1646,6 @@
               </div>
             </div>
           </div>
-          <!-- End Area Highlight -->
 
           <div class="col-md-6" data-aos="zoom-in" data-aos-delay="500">
             <div class="area-highlight">
@@ -1602,7 +1673,6 @@
               </div>
             </div>
           </div>
-          <!-- End Area Highlight -->
         </div>
       </div>
 
@@ -1669,5 +1739,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
+<!--JS World map -->
+
 {% endblock content %}

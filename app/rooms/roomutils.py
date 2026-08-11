@@ -59,10 +59,13 @@ def current_date():
     converted = date.date()
     return converted
 
-def can_cancel(status, arrival ):
+ 
+def can_cancel(status, arrival):
     if status != "Confirmed":
         return False
-    return date.today() < arrival
+    return date.today() <= arrival - timedelta(days=2)  
+    # FIXED: was `< arrival`, which allowed cancellation right up to the day before 
+    # arrival, not honoring the real 48h policy
 
 # add day
 def add_days(d1, num_of_days):
@@ -93,3 +96,4 @@ def sanitize_input(text):
         attributes=ALLOWED_ATTRIBUTES,
         strip=True
     )
+

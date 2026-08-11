@@ -1,0 +1,164 @@
+{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+
+<!-- Page Title -->
+<div class="page-title light-background">
+  <div class="container d-lg-flex justify-content-between align-items-center">
+    <h1 class="mb-2 mb-lg-0">{{ _('Become host') }}</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Become host') }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- End Page Title -->
+
+<!-- How it works Section -->
+<section class="host-journey py-5">
+  <div class="container">
+    <!-- Header -->
+
+    <div class="text-center mb-5">
+      <h1 class="fw-bold">{{ _('Your hosting Journey start here') }}</h1>
+
+      <p class="lead text-muted">
+        {% trans %}Share your property, welcome guests, and start earning through our
+        trusted hosting community.{% endtrans %}
+      </p>
+    </div>
+
+    <!-- Timeline -->
+
+    <div class="timeline" data-aos="fade-up" data-aos-delay="100">
+      <!-- STEP 1 -->
+
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+        <div class="timeline-icon">
+          <i class="bi bi-person-check"></i>
+        </div>
+
+        <div class="timeline-content">
+          <span class="badge bg-danger mb-2"> {{ _('Step 1') }} </span>
+
+          <h3>{{ _('Create your account') }}</h3>
+
+          <p>
+            {% trans %}Join our community by registering as a member. Creating an account
+            allows you to start your hosting journey and access your host
+            dashboard.{% endtrans %}
+          </p>
+
+          <a href="{{ url_for('users.signup') }}" class="btn btn-danger">
+            {{ _('Register Now') }}
+          </a>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+        <div class="timeline-icon">
+          <i class="bi bi-house-check"></i>
+        </div>
+
+        <div class="timeline-content">
+          <span class="badge bg-danger mb-2"> {{ _('Step 2') }} </span>
+
+          <h3>{{ _('Property verification') }}</h3>
+
+          <p>
+            {% trans %}Send us your intention to become a host. Our team will arrange a
+            visit to review your property, verify quality standards, and ensure
+            a safe experience for guests.{% endtrans %}
+          </p>
+
+          <a
+            href="{{ url_for('main.contact') }}"
+            class="btn btn-outline-danger"
+          >
+            {{ _('Send intent mail') }}
+          </a>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+        <div class="timeline-icon">
+          <i class="bi bi-send-plus"></i>
+        </div>
+
+        <div class="timeline-content">
+          <span class="badge bg-danger mb-2"> {{ _('Step 3') }} </span>
+
+          <h3>{{ _('Go live and welcome guests') }}</h3>
+
+          <p>
+            {% trans %}After successful verification, your property will be published on
+            our platform. Guests can discover your property and you can start
+            receiving bookings.{% endtrans %}
+          </p>
+
+          <a href="{{ url_for('rooms.room') }}" class="btn btn-danger">
+            {{ _('Listing Go Live') }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Banner Section -->
+<section id="contact" class="contact section pt-0 mt-0">
+  <!-- Banner Section -->
+  <!-- <div class="map-container mb-0 mt-0 pt-0"> -->
+  <div class="container pt-5" data-aos="fade-up" data-aos-delay="100">
+    <div class="row g-4 mb-0" data-aos="fade-up" data-aos-delay="300">
+      <div class="host-banner">
+        <div class="host-banner-content">
+          <div class="host-text">
+            <h1>{{ _('In 3 Rewarding Steps') }}</h1>
+            <p>
+              {% trans %}Turn your extra space into extra income. Welcome guests, share
+              your home, and start earning today by signin up.{% endtrans %}
+            </p>
+
+            <a href="{{ url_for('users.signup') }}" class="host-btn">
+              {{ _('Sign up now!') }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <!---Contact container-->
+      <!-- <div class="col-md-6">
+        <div class="contact-info-card">
+          <div class="icon-box">
+            <i class="bi bi-geo-alt"></i>
+          </div>
+          <div class="info-content">
+            <h4>Location</h4>
+            <p>18 Perry hill</p>
+            <p>London, SE6 4AD - United Kingdom</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="contact-info-card">
+          <div class="icon-box">
+            <i class="bi bi-telephone"></i>
+          </div>
+          <div class="info-content">
+            <h4>Phone &amp; Email</h4>
+            <p>+44 7818 295 292</p>
+            <p>connectwithus@rezerva.com</p>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

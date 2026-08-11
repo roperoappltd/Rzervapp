@@ -1,0 +1,237 @@
+{% extends "adminpanel/base.html" %} {% block head_css %} {{ super() }} {%
+endblock head_css %} {% block admincontent %}
+<!----Breadcrumb------>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb pt-3">
+    <li class="breadcrumb-item pl-3">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('admin.index')}}"
+        >{{ _('Home') }}</a
+      >
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Admin Dashboard') }}
+    </li>
+  </ol>
+</nav>
+<!----End Breadcrumb------>
+<main class="content pt-2">
+  <div class="container-fluid p-0">
+    <h1 class="h3 mb-3">
+      <strong>{{ _('Analytics') }}</strong> {{ _('Dashboard') }}
+    </h1>
+
+    <div class="row">
+      <div class="col-xl-6 col-xxl-5 d-flex">
+        <div class="w-100">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col mt-0">
+                      <h5 class="card-title">{{ _('Listings') }}</h5>
+                    </div>
+
+                    <div class="col-auto">
+                      <div class="stat text-primary">
+                        🏡<!-- <i class="align-middle" data-feather="truck"></i> -->
+                      </div>
+                    </div>
+                  </div>
+                  {% if total_rooms < 10 %}
+                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                    0{{ total_rooms }}
+                  </h1>
+                  {% else %}
+                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                    {{ total_rooms }}
+                  </h1>
+                  {% endif %}
+                  <div class="mb-0">
+                    <span class="text-primary">{{ _('Total') }}</span>
+                    <span class="text-muted">{{ _('Rooms') }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col mt-0">
+                      <h5 class="card-title">{{ _('Bookings') }}</h5>
+                    </div>
+
+                    <div class="col-auto">
+                      <div class="stat text-primary">
+                        ✈️<!-- <i class="align-middle" data-feather="users"></i> -->
+                      </div>
+                    </div>
+                  </div>
+                  {% if total_bookings <= 9 %}
+                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                    0{{ total_bookings }}
+                  </h1>
+                  {% else %}
+                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                    {{ total_bookings }}
+                  </h1>
+                  {% endif %}
+                  <div class="mb-0">
+                    <span class="text-success">{{ _('Total') }}</span>
+                    <span class="text-muted">{{ _('Bookings') }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col mt-0">
+                      <h5 class="card-title">{{ _('Turnover') }}</h5>
+                    </div>
+
+                    <div class="col-auto">
+                      <div class="stat text-primary">
+                        💸<!-- <i class="align-middle" data-feather="dollar-sign"></i> -->
+                      </div>
+                    </div>
+                  </div>
+                  <h2 class="mt-1 mb-3 fw-bolder text-center">
+                    {{ total_revenue }}
+                  </h2>
+                  <div class="mb-2">
+                    {% if earnings_state <= 0 %}
+                    <span class="text-danger"
+                      ><i class="align-middle" data-feather="arrow-down"></i>{{
+                      earnings_state }}%</span
+                    >
+                    <span class="text-muted">{{ _('Since last month') }}</span>
+                    {% else %}
+                    <span class="text-success"
+                      ><i class="align-middle" data-feather="arrow-up"></i>{{
+                      earnings_state }}%</span
+                    >
+                    <span class="text-muted">{{ _('Last 30 Days') }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col mt-0">
+                      <h5 class="card-title">{{ _('Users') }}</h5>
+                    </div>
+
+                    <div class="col-auto">
+                      <div class="stat text-primary">🧑‍✈️</div>
+                    </div>
+                  </div>
+                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                    {{ total_users }}
+                  </h1>
+                  <div class="mb-0">
+                    <span class="text-warning">{{ _('Total') }}</span>
+                    <span class="text-muted">{{ _('Users') }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-6 col-xxl-7">
+        <div class="card flex-fill w-100 shadow-sm">
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{ _('Earnings Progression') }}</h5>
+
+            <small class="text-muted"
+              >{{ _('Last 12 months earnings') }}
+            </small>
+          </div>
+
+          <div class="card-body py-3">
+            <div class="chart chart-sm">
+              <canvas id="earningsChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
+        <div class="card flex-fill w-100">
+          <div class="card flex-fill">
+            <div class="card-header">
+              <h5 class="card-title mb-0">{{ _('Top Performing Rooms') }}</h5>
+              <small class="text-muted"
+                >{{ _('Revenue generated to date') }}
+              </small>
+            </div>
+
+            <div class="card-body">
+              <!-- Pie Chart -->
+              <div class="py-3">
+                <div class="chart chart-md">
+                  <canvas id="topRoomsPieChart"></canvas>
+                </div>
+              </div>
+
+              <!-- Revenue Table -->
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>{{ _('Room') }}</th>
+                      <th class="text-end">{{ _('Bookings') }}</th>
+                      <th class="text-end">{{ _('Revenue') }}</th>
+                      <th class="text-end">{{ _('Share') }}</th>
+                    </tr>
+                  </thead>
+                  <tbody id="topRoomsTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+        <div class="card flex-fill w-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{ _('Room Locations') }}</h5>
+
+            <small class="text-muted"
+              >{{ _('Worldwide room distribution') }}
+            </small>
+          </div>
+
+          <div class="card-body px-4">
+            <div style="position: relative">
+              <div id="world_map" style="height: 350px"></div>
+              <div id="mapTooltip" class="map-tooltip"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+        <div class="card flex-fill">
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{ _('Calendar') }}</h5>
+          </div>
+          <div class="card-body d-flex">
+            <div class="align-self-center w-100">
+              <div class="chart">
+                <div id="datetimepicker-dashboard"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

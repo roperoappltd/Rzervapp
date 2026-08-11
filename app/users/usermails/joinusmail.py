@@ -8,8 +8,9 @@ def member_regismail(user):
     '''This function enable to send a welcome message at first registration'''
     now = datetime.now()
     date = now.strftime("%d/%m/%Y %H:%M")
+    token = user.get_verification_token()
     # sending the password reset message
-    msg = Message('Thanks for joining us', 
+    msg = Message('Verify & activate your Jambo account', 
                   sender='dmc.partners@yahoo.com',
                   recipients=[user.email])
     msg.html = f'''\
@@ -67,21 +68,21 @@ def member_regismail(user):
         <h2>Hello {user.first_name},</h2>
 
         <p style="font-size: 18px; text-align:justify;"> We would like to thank you for your registration
-        received today {date}. We wish you a warn Welcome to the "Rezerva community" where you can reserve
+        received today {date}. We wish you a warn Welcome to the "Jambo community" where you can reserve
         short stay safer, happier and cheaper. Also, you can confidently add a room to start generating
         passive income. <br>
         &nbsp;<br>
-        Click on the button below to activate your acount and start your Rezerva adventure.
+        Click on the button below to verify and activate your account and start your Jambo adventure.
         </p>
 
         <div>&nbsp; &nbsp;</div>
         
-        <a href="{ url_for('users.login', _external=True)}">
-        <button class="favorite styled" type="button">Activate your account</button></a>
+        <a href="{ url_for('users.verify_email', token=token, _external=True)}">
+        <button class="favorite styled" type="button">Verify & Activate your account</button></a>
 
         <div>&nbsp;</div>
-        <h3> Kind regards <br/> <b>Rezerva</b> <br/> Customer Service.</h3>
-        <p  style="text-align:center">Copyright © 2026 Rezerva. All Rights Reserved. | <small class="text-warning font-italic text-capitalize">Powered by <a href="https://tboss.ci/" style="text-decoration:none;">Techno Boss Intl.</a></small></p>
+        <h3> Kind regards <br/> <b>Jambo</b> <br/> Customer Service.</h3>
+        <p  style="text-align:center">Copyright © 2026 Jambo. All Rights Reserved. | <small class="text-warning font-italic text-capitalize">Powered by <a href="https://tboss.ci/" style="text-decoration:none;">Techno Boss Intl.</a></small></p>
 
     </body>
 </html>

@@ -1,0 +1,152 @@
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+head_css %} {% block content %}
+<div class="wrapper">
+  <div class="main">
+    <main class="content">
+      <div class="container-fluid p-0">
+        <h1 class="h3 mb-3">Room Stats 📅</h1>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title mb-0">Empty card</h5>
+              </div>
+              <div class="card-body">
+                <!-- Room Stats Dashboard-->
+                <main class="content pt-2">
+                  <div class="container-fluid p-0">
+                    <nav aria-label="breadcrumb">
+                      <ol class="breadcrumb pt-3">
+                        <li class="breadcrumb-item">
+                          <a
+                            href="{{ url_for('udash.mylistings') }}"
+                            style="text-decoration: none"
+                            >{{ _('Listings') }}</a
+                          >
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                          {{ room.room_name }}
+                        </li>
+                      </ol>
+                    </nav>
+
+                    <h1 class="h3 mb-3">
+                      <strong>{{ room.room_name }}</strong> {{ _('Stats') }}
+                    </h1>
+
+                    <!-- ===== 4 metric cards ===== -->
+                    <div class="row">
+                      <div class="col-sm-6 col-xl-3">
+                        <div class="card rs-metric-card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col mt-0">
+                                <h5 class="card-title">
+                                  {{ _('Room Views') }}
+                                </h5>
+                              </div>
+                              <div class="col-auto">
+                                <div class="rs-metric-icon">👁️</div>
+                              </div>
+                            </div>
+                            <h1 class="mt-1 mb-0 fw-bolder">
+                              {{ total_views }}
+                            </h1>
+                            <div class="text-muted small">
+                              {{ _('All time') }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {% for i in range(3) %}
+                      <div class="col-sm-6 col-xl-3">
+                        <div class="card rs-metric-card rs-metric-placeholder">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col mt-0">
+                                <h5 class="card-title text-muted">
+                                  {{ _('Coming Soon') }}
+                                </h5>
+                              </div>
+                              <div class="col-auto">
+                                <div class="rs-metric-icon">🔒</div>
+                              </div>
+                            </div>
+                            <h1 class="mt-1 mb-0 fw-bolder text-muted">--</h1>
+                            <div class="text-muted small">
+                              {{ _('Future metric') }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+
+                    <!-- ===== Chart card ===== -->
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card rs-chart-card" id="rsChartCard">
+                          <div class="card-header rs-chart-header">
+                            <h5 class="card-title mb-0">
+                              {{ _('Views over time') }}
+                            </h5>
+
+                            <div class="rs-chart-controls">
+                              <div class="rs-segmented" id="rsPeriodToggle">
+                                <button
+                                  type="button"
+                                  class="rs-seg-btn active"
+                                  data-period="week"
+                                >
+                                  {{ _('Week') }}
+                                </button>
+                                <button
+                                  type="button"
+                                  class="rs-seg-btn"
+                                  data-period="month"
+                                >
+                                  {{ _('Month') }}
+                                </button>
+                              </div>
+
+                              <button
+                                type="button"
+                                class="rs-theme-btn"
+                                id="rsThemeToggle"
+                                title="{{ _('Toggle background') }}"
+                              >
+                                <i class="bi bi-moon-stars"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <div class="rs-chart-wrap">
+                              <canvas id="roomViewsChart"></canvas>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+                <!--End Room Stats Dash-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!--JS Chart Data-->
+<div
+  id="rsChartData"
+  data-week="{{ week_data | tojson }}"
+  data-month="{{ month_data | tojson }}"
+  style="display: none"
+></div>
+
+<script src="{{ url_for('static', filename='resources/js/room_stats_chart.js') }}"></script>
+{% endblock content %}
