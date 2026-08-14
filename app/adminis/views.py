@@ -165,25 +165,25 @@ class BookAdmin(ModelView):
 
 class PayAdmin(ModelView):
     # Columns displayed
-    column_list = ("id", "payment_date", "pay_method", "total_paid", "payment_currency",
+    column_list = ("id", "payment_date", "pay_method", "accounting_amount", "payment_currency",
                    "transac_fee_host", "status")  # FIXED: 'transac_fee' -> 'transac_fee_host'
 
     # Search -- text fields only, including a lookup by booking reference
     column_searchable_list = ("pay_method", "payment_currency", "booking.booking_num")  # FIXED: removed payment_date/total_paid (Date/Numeric columns); added booking_num lookup
 
     # Filters -- date/amount/status belong here, not in text search
-    column_filters = ("payment_date", "status", "pay_method", "payment_currency", "total_paid")
+    column_filters = ("payment_date", "status", "pay_method", "payment_currency", "accounting_amount")
 
     column_labels = dict(
         payment_date='Payment Date',
         pay_method='Method',
-        total_paid='Total Paid',
+        accounting_amount='Total Paid',
         payment_currency='Currency',
         transac_fee_host="Transaction Fee (Host Currency)",
     )
 
     # Sorting
-    column_sortable_list = ("id", "total_paid", "payment_date")
+    column_sortable_list = ("id", "accounting_amount", "payment_date")
 
     # Column formatting 
     column_formatters = {"payment_date": lambda v, c, m, p:

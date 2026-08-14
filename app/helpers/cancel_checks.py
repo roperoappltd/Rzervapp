@@ -24,7 +24,7 @@ def cancel_and_refund_if_paid(booking):
         booking_id=booking.id,
         payment_id=payment.id,
         user_id=booking.user_id,
-        amount_refund_guest=payment.total_paid,
+        amount_refund_guest=payment.total_paid_guest,
         amount_gbp=payment.accounting_amount,
         refund_currency=payment.payment_currency,
         exchange_rate=payment.payment_exchange_rate,

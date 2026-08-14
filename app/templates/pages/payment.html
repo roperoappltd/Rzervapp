@@ -88,27 +88,27 @@
                 </div>
               </td>
               <td>1</td>
-              <td class="text-end">£{{ room.price }}</td>
+              <td class="text-end">{{ currency_symbol }}{{ room_price_guest }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colspan="2">{{ _('Subtotal') }}</td>
               <td class="text-end">
-                £<span id="subtotal" data-value="{{ subtotal }}"
+                {{ currency_symbol }}<span id="subtotal" data-value="{{ subtotal }}"
                   >{{ subtotal }}</span
                 >
               </td>
             </tr>
             <tr>
               <td colspan="2">{{ _('Service Fee') }}</td>
-              <td class="text-end">£{{ book.serv_charge }}</td>
+              <td class="text-end">{{ convert_and_format(book.serv_charge, book.serv_charge_currency, guest_currency) }}</td>
             </tr>
 
             <tr>
               <td colspan="2">{{ _('Discount') }}</td>
               <td class="text-danger text-end">
-                -£<span id="discount" data-value="{{ discount }}"
+                -{{ currency_symbol }}<span id="discount" data-value="{{ discount }}"
                   >{{ "%.2f"|format(discount) }}</span
                 >
               </td>
@@ -117,7 +117,7 @@
             <tr class="fw-bold">
               <td colspan="2">{{ _('TOTAL') }}</td>
               <td class="text-end">
-                £
+                {{ currency_symbol }}
                 <span id="final-total" data-value="{{ total_paid }}"
                   >{{ "%.2f"|format(total_paid) }}</span
                 >
@@ -152,7 +152,7 @@
             <div class="contact-info-card">
               {% if deal_booking %}
               <!-- <div class="alert alert-info"> -->
-              <strong> {{ _('Deal dicount') }}:</strong>{{ _('A') }} £{{ "%.2f"|format(discount) }}
+              <strong> {{ _('Deal dicount') }}:</strong>{{ _('A') }} {{ currency_symbol }}{{ "%.2f"|format(discount) }}
               {{ _('promotional discount has been successfully applied. Takecare and
               See you very soon!') }}
               <!-- </div> -->
@@ -177,7 +177,7 @@
           <hr />
           <div class="form-group1 form-actions text-end">
             {{ payform.submit(class="btn btn-primary", id="submit-btn",
-            value=_("Pay £%(amount).2f", amount=total_paid)) }}
+            value=_("Pay %(symbol)s%(amount).2f", symbol=currency_symbol, amount=total_paid)) }}
           </div>
         </form>
       </div>
@@ -191,9 +191,11 @@
       </div>
     </div> -->
     <!----------------------------------------------------->
+    <!-- Carries data for voucher.js -- avoids mixing Jinja syntax
+         directly inside a <script> tag. -->
+    <div id="checkoutMeta" data-currency-symbol="{{ currency_symbol }}" style="display:none;"></div>
   </div>
 </section>
-<script src="{{ url_for('static', filename='js/voucher.js') }}">
-  var csrf_token = "{{ csrf_token() }}";
-</script>
+<script src="{{ url_for('static', filename='js/voucher.js') }}"></script>
+
 {% endblock content %}

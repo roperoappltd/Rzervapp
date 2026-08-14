@@ -24,8 +24,8 @@ head_css %} {% block content %}
       <h1 class="fw-bold">{{ _('Your hosting Journey start here') }}</h1>
 
       <p class="lead text-muted">
-        {% trans %}Share your property, welcome guests, and start earning through our
-        trusted hosting community.{% endtrans %}
+        {% trans %}Share your property, welcome guests, and start earning
+        through our trusted hosting community.{% endtrans %}
       </p>
     </div>
 
@@ -45,9 +45,9 @@ head_css %} {% block content %}
           <h3>{{ _('Create your account') }}</h3>
 
           <p>
-            {% trans %}Join our community by registering as a member. Creating an account
-            allows you to start your hosting journey and access your host
-            dashboard.{% endtrans %}
+            {% trans %}Join our community by registering as a member. Creating
+            an account allows you to start your hosting journey and access your
+            host dashboard.{% endtrans %}
           </p>
 
           <a href="{{ url_for('users.signup') }}" class="btn btn-danger">
@@ -69,9 +69,9 @@ head_css %} {% block content %}
           <h3>{{ _('Property verification') }}</h3>
 
           <p>
-            {% trans %}Send us your intention to become a host. Our team will arrange a
-            visit to review your property, verify quality standards, and ensure
-            a safe experience for guests.{% endtrans %}
+            {% trans %}Send us your intention to become a host. Our team will
+            arrange a visit to review your property, verify quality standards,
+            and ensure a safe experience for guests.{% endtrans %}
           </p>
 
           <a
@@ -96,12 +96,12 @@ head_css %} {% block content %}
           <h3>{{ _('Go live and welcome guests') }}</h3>
 
           <p>
-            {% trans %}After successful verification, your property will be published on
-            our platform. Guests can discover your property and you can start
-            receiving bookings.{% endtrans %}
+            {% trans %}After successful verification, your property will be
+            published on our platform. Guests can discover your property and you
+            can start receiving bookings.{% endtrans %}
           </p>
 
-          <a href="{{ url_for('rooms.room') }}" class="btn btn-danger">
+          <a href="{{ url_for('bedrooms.room') }}" class="btn btn-danger">
             {{ _('Listing Go Live') }}
           </a>
         </div>
@@ -120,8 +120,9 @@ head_css %} {% block content %}
           <div class="host-text">
             <h1>{{ _('In 3 Rewarding Steps') }}</h1>
             <p>
-              {% trans %}Turn your extra space into extra income. Welcome guests, share
-              your home, and start earning today by signin up.{% endtrans %}
+              {% trans %}Turn your extra space into extra income. Welcome
+              guests, share your home, and start earning today by signin up.{%
+              endtrans %}
             </p>
 
             <a href="{{ url_for('users.signup') }}" class="host-btn">

@@ -21,26 +21,31 @@ from datetime import date
 
 
 # Create a room listing form class 
+ 
+# Create a room listing form class 
 class AddRoomForm(FlaskForm):
     '''This class enable to model the room listing process'''
     # Defining some fields that can be updated with necessary validators
     room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30)])
     room_location =  StringField('', validators=[DataRequired(), Length(max=30)])
-    room_category = SelectField('',choices=[(' ', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
+    room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
     short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=50)]) 
-    room_size = SelectField('',choices=[(' ', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
+    room_size = SelectField('',choices=[('', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
                                ('30–45', '30–45'), ('40–60', '40–60')], validators=[DataRequired()]) 
-    max_occupancy = SelectField('', choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
+    max_occupancy = SelectField('', choices=[('', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
                                               ('5', '5')], validators=[DataRequired()])
     price = FloatField('', validators=[DataRequired()])
     description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=350)])
-    status =  SelectField('', choices=[(' ', ' '), ('Available', 'Available'),('Maintenance', 'Maintenance'),], 
+    status =  SelectField('', choices=[('', ' '), ('Available', 'Available'),('Maintenance', 'Maintenance'),], 
                                 validators=[DataRequired()])
-    rule1 =  StringField('', validators=[Optional()])
-    rule2 =  StringField('', validators=[Optional()])
-    rule3 =  StringField('', validators=[Optional()])
-
+    rule1 =  StringField('', validators=[Optional(), Length(min=10, max=60)])
+    rule2 =  StringField('', validators=[Optional(), Length(min=10, max=60)])
+    rule3 =  StringField('', validators=[Optional(), Length(min=10, max=60)])
+    # discount_percent = IntegerField('', validators=[Optional(), NumberRange(min=0, max=90)])
+    discount_percent = SelectField('',choices=[('', ' '), ('10', '10'), ('15', '15'), ('20', '20'),('25', '25'),
+                                        ('30', '30'), ('35', '35')], validators=[Optional()]) 
+    
     submit = SubmitField('Submit')
 
 # Create a room service et amenities form class 
@@ -90,7 +95,7 @@ class UpdateRoomForm(FlaskForm):
     # Defining some fields that can be updated with necessary validators
     room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30)])
     #room_location =  StringField('', validators=[DataRequired(), Length(max=30)])
-    room_category = SelectField('',choices=[(' ', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
+    room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
     short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100)]) 
     #room_size = SelectField('',choices=[(' ', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
@@ -98,24 +103,32 @@ class UpdateRoomForm(FlaskForm):
     #max_occupancy = SelectField('',choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
     #                                          ('5', '5')], validators=[DataRequired()])
     max_occupancy = IntegerField('', validators=[DataRequired()])
-    price = FloatField('' )
+    price = FloatField('', validators=[DataRequired()])  # FIXED: was missing DataRequired -- model has nullable=False + CHECK price > 0, an empty submission would throw IntegrityError
     description = TextAreaField('', validators=[DataRequired()])
-    status =  SelectField('', choices=[(' ', ' '), ('Maintenance', 'Maintenance'), ('Available', 'Available'),
-                                      ('Hidden', 'Hidden'), ('Inactive', 'Inactive')], 
-                        validators=[DataRequired()])
-    rule1 =  StringField('' ) #validators=[Length(min=5, max=20)]
-    rule2 =  StringField('' ) #validators=[Length(min=5, max=20)]
-    rule3 =  StringField('' ) #validators=[Length(min=5, max=20)]
-
+    status =  SelectField('', choices=[('', ' '), ('Maintenance', 'Maintenance'), ('Available', 'Available'),
+                                      ('Hidden', 'Hidden'), ('Inactive', 'Inactive')],validators=[DataRequired()])
+    rule1 =  StringField('', validators=[Optional(), Length(min=10, max=60)] )
+    rule2 =  StringField('', validators=[Optional(), Length(min=10, max=60)] ) 
+    rule3 =  StringField('', validators=[Optional(), Length(min=10, max=60)] )
+    # discount_percent = IntegerField('', validators=[Optional(), NumberRange(min=0, max=90)])
+    discount_percent = SelectField('',choices=[('', ' '), ('10', '10'), ('15', '15'), ('20', '20'),('25', '25'),
+                                            ('30', '30'), ('35', '35')], validators=[Optional()]) 
+    
     submit = SubmitField('Update')
-
 
 # Update room picture form class 
 class UpdateRoomPictureForm(FlaskForm):
-    '''This class enable to model the room picture update process'''
-    # picture6 = FileField('Image 6', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'])] )
-    pictures = MultipleFileField("Room Pictures",
-               validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
+    '''One optional field per image slot -- lets a host replace any
+    subset of the 6 images without touching the others. Previously a
+    single MultipleFileField with no way to target a specific slot,
+    which combined with the route always wiping all 6 first, meant any
+    partial update destroyed the untouched images.'''
+    image1 = FileField('Image 1', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
+    image2 = FileField('Image 2', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
+    image3 = FileField('Image 3', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
+    image4 = FileField('Image 4', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
+    image5 = FileField('Image 5', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
+    image6 = FileField('Image 6', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'webp'], 'Images only!')])
     submit = SubmitField('Update')
 
 # Create an review form class

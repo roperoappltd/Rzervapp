@@ -3,34 +3,78 @@ from flask import (Blueprint, render_template, flash, abort, redirect, request, 
 from flask_login import current_user, login_required
 from app import db
 from wtforms.validators import ValidationError
-from app.models.usermodel import User
+# from app.models.usermodel import User
 from app.models.roommodel import (Rooms, Roomextra, Roomreviews, Deals, RoomBlock, 
                                   ReviewHelpful, RoomView)
 from app.models.bookmodel import Bookings, Vouchers, Payments, HostEarning, VoucherUsage
-from app.models.chatmodel import Conversation
+# from app.models.chatmodel import Conversation
 from app.rooms.forms import (UpdateRoomForm, UpdateRoomPictureForm, PaymentForm, RoomSearchForm,
                             RoomExtraForm, RoomReviewsForm, BookingForm)
-from .roomutils import (save_picture, get_total, sanitize_input, fee_calculator, 
-                        can_cancel)
+from .roomutils import (save_picture, sanitize_input, fee_calculator, 
+                        can_cancel, get_ratings_for_rooms)
 # from ..users.utils import get_location
 from .notification.bookmail import booking_confirm_email
 from .notification.bookcancel import book_cancellation_email
-from sqlalchemy import func
+# from sqlalchemy import func
 from datetime import datetime, date
 # from sqlalchemy import or_
 from app.helpers.populate_search import populate_search_choices
-from app.helpers.is_avail import is_available
-from app.helpers.booking import create_booking
+# from app.helpers.is_avail import is_available
+from app.helpers.booking import create_booking, get_room_active_deal
 from app.helpers.searches import build_room_query
 from app.helpers.email_verify import email_verified_required
 from app.helpers.cancel_checks import cancel_and_refund_if_paid
 from decimal import Decimal
-from app.services.currency import get_exchange_rates 
+from app.services.currency import get_exchange_rates, get_symbol 
 from app.services.preference_service import VisitorPreferences
 from flask_babel import _
 
 # Creating an instance of the blueprint class
 bedrooms = Blueprint('bedrooms', __name__)
+
+# @bedrooms.route("/room") 
+# def room():
+#     '''This function create a route to render the rooms page'''
+#     #room = Rooms.query.get_or_404(room_id)
+#     #dt = booker.created_at
+#     #deadlines = deadline(dt.date(), 2)
+#     form = RoomSearchForm()
+#     populate_search_choices(form)
+#     # Set a specific page to start with 
+#     page = request.args.get('page', 1, type=int)
+#     # Query db to display specific number of room per page (Pagination)
+#     allrooms = Rooms.query.filter(Rooms.status == "Available"
+#                                  ).order_by(Rooms.updated_at.desc()
+#                                            ).paginate(page=page, per_page=6,
+#                                                       error_out=False
+#                                                       )
+
+#     # Search rooms with expired booking 
+#     expired_bookings = Bookings.query.filter(
+#                        Bookings.departure < datetime.now()
+#                        ).all()
+
+#     # Iterate over the list of bookings
+#     for booking in expired_bookings:
+#         booking.active = False
+#         booking.status = 'Expired'
+#         #conversation.active = False
+#     # Save the changes in db
+#     db.session.commit()
+
+#     # Search for canccelled booking
+#     cancelled_bookings = Bookings.query.filter(
+#                          Bookings.status == 'Cancelled',
+#                          Bookings.active == True
+#                         ).all()
+
+#     for booking in cancelled_bookings:
+#         booking.active = False
+#         #conversation.active = False
+
+#     db.session.commit()
+
+#     return render_template('pages/rooms.html', title='Rooms Pool', allrooms=allrooms, form=form)
 
 @bedrooms.route("/room") 
 def room():
@@ -48,12 +92,18 @@ def room():
                                            ).paginate(page=page, per_page=6,
                                                       error_out=False
                                                       )
-
+ 
+    # One query for every room's rating on this page, instead of a
+    # separate query per card -- see get_ratings_for_rooms() in
+    # rooms/roomutils.py (shared with roomsearch() below).
+    room_ids = [r.id for r in allrooms.items]
+    ratings_by_room = get_ratings_for_rooms(room_ids)
+ 
     # Search rooms with expired booking 
     expired_bookings = Bookings.query.filter(
                        Bookings.departure < datetime.now()
                        ).all()
-
+ 
     # Iterate over the list of bookings
     for booking in expired_bookings:
         booking.active = False
@@ -61,20 +111,21 @@ def room():
         #conversation.active = False
     # Save the changes in db
     db.session.commit()
-
+ 
     # Search for canccelled booking
     cancelled_bookings = Bookings.query.filter(
                          Bookings.status == 'Cancelled',
                          Bookings.active == True
                         ).all()
-
+ 
     for booking in cancelled_bookings:
         booking.active = False
         #conversation.active = False
-
+ 
     db.session.commit()
-
-    return render_template('pages/rooms.html', title='Rooms Pool', allrooms=allrooms, form=form)
+ 
+    return render_template('pages/rooms.html', title='Rooms Pool', allrooms=allrooms,
+                          form=form, ratings_by_room=ratings_by_room)
 
 @bedrooms.route("/roomsearch", methods=["GET", "POST"])
 def roomsearch():
@@ -112,19 +163,19 @@ def roomsearch():
     if result["error"] == "invalid_dates":
         flash(_("Invalid arrival or departure date."), "warning")
         return render_template("pages/roomsearched.html", title="Search Results",
-                              form=form, rooms_found=None)
+                              form=form, rooms_found=None, ratings_by_room={})
  
     if result["error"] == "departure_before_arrival":
         flash(_("Departure date must be after arrival date."), "warning")
         return render_template("pages/roomsearched.html", title="Search Results",
-                              form=form, rooms_found=None)
+                              form=form, rooms_found=None, ratings_by_room={})
  
     if result["error"] == "no_availability":
         rooms_found = result["query"].paginate(page=page, per_page=6, error_out=False)
         flash(_("No rooms available for the selected dates."), "warning")
         return render_template("pages/roomsearched.html", title="Search Results",
                               form=form, rooms_found=rooms_found, arrival=arrival,
-                              departure=departure, location=location)
+                              departure=departure, location=location, ratings_by_room={})
  
     # --------------------------------------------------
     # PAGINATION
@@ -134,9 +185,13 @@ def roomsearch():
     if rooms_found.total == 0:
         flash(_("No rooms found. Please refine your search."), "warning")
  
+    # Same shared helper as room() -- one query for all rooms on this
+    # results page instead of one per card.
+    ratings_by_room = get_ratings_for_rooms([r.id for r in rooms_found.items])
+ 
     return render_template("pages/roomsearched.html", title="Search Results",
-                               form=form, rooms_found=rooms_found, arrival=arrival,
-                               departure=departure, location=location)
+                            form=form, rooms_found=rooms_found, arrival=arrival,
+                            departure=departure, location=location, ratings_by_room=ratings_by_room)
  
 
 @bedrooms.route("/booknow/<int:room_id>", methods=['GET', 'POST'])
@@ -283,108 +338,9 @@ def cancel_booking(booking_id):
  
     return redirect(url_for('bedrooms.bookings'))
     
-# @bedrooms.route("/checkout/<int:room_id>", methods=['GET', 'POST']) 
-# @login_required
-# def checkout(room_id):
-#     '''This function create a route to handle checkout''' 
-#     room = Rooms.query.get_or_404(room_id)
-#     book = db.session.query(Bookings).with_for_update().filter(
-#         Bookings.room_id == room.id,
-#         Bookings.status == "Pending",
-#         ).first()
-
-#     if not book:
-#         flash(_('Server error or booking already created.'), 'warning')
-#         return redirect(url_for('bedrooms.room'))
-    
-#     #compute bookdays
-#     bookdays = ( book.departure - book.arrival).days 
-
-#     if bookdays <= 0:
-#         flash(_("Invalid booking dates."), "warning")
-#         return redirect(url_for('rooms.roomdetail', room_id=room.id))
-
-#     # Import the voucher form
-#     payform = PaymentForm()
-#     subtotal = room.price * bookdays 
-#     total_paid = subtotal
-#     # default values
-#     voucher = None
-#     voucher_id = None
-#     discount = 0
-
-#     # check if booking use a deal
-#     if book.deal:
-#         discount = (subtotal * book.deal.discount_percent / 100)
-#         total_paid = max(subtotal - discount, 0)
-#     else:
-#         # get voucher from session (if any)
-#         voucher_id = session.get("voucher_id")
-
-#         if voucher_id:
-#             voucher = Vouchers.query.get(voucher_id)
-            
-#             # safety check (must still be valid)
-#             if voucher:
-#                 existing_usage = VoucherUsage.query.filter_by(voucher_id=voucher.id,
-#                                                 user_id=current_user.id).first()
-#                 if not existing_usage:
-#                     discount = voucher.value
-#             else:
-#                 session.pop("voucher_id", None)
-#                 voucher = None
-#         total_paid = max(subtotal - discount, 0)
-
-#     # check if a deal booking exists:
-#     deal_booking = book.deal is not None
-#     # --------------------------------
-#     # FORM PAYMENT
-#     # --------------------------------    
-#     if payform.validate_on_submit():
-#         t_fees = fee_calculator(total_paid)
-#         # loyalty points calculation
-#         points = int(total_paid // 30)
-#         # Create payment record
-#         payment = Payments(pay_method=payform.pay_method.data, price_per_night=room.price, book_days=bookdays, 
-#                             discount=discount, status='Paid', total_paid=total_paid, 
-#                             transac_fee=t_fees, user_id=current_user.id, booking_id=book.id, 
-#                             voucher_id=voucher.id if voucher else None,
-#                             deal_id=book.deal_id if book.deal_id else None, points_earned=points)
-#         db.session.add(payment)
-#         # Award loyalty points
-#         current_user.rzerv_points = (current_user.rzerv_points or 0) + points
-        
-#         db.session.flush()
-#         # Create hostearning record
-#         earning = HostEarning(user_id=book.rooms.user_id, booking_id=book.id,
-#                               payment_id=payment.id, gross_amount=subtotal,
-#                               voucher_amount=discount, platform_fee=t_fees,
-#                               net_earning=total_paid - t_fees)
-#         db.session.add(earning)
-#         # Update booking & room status
-#         book.status = 'Confirmed'
-#         book.active = True
-#         #room.status = 'Occupied'
-#         db.session.commit() 
-#         # Create voucher usage record
-#         if voucher:
-#             db.session.flush()
-#             usage = VoucherUsage(voucher_id=voucher.id, user_id=current_user.id,
-#                              payment_id=payment.id)
-#             db.session.add(usage)
-#             db.session.commit()
-        
-#         return redirect(url_for('bedrooms.paysuccess', booking_id=book.id))
-#     # Pass text to submit button    
-#     payform.submit.label.text = f"Pay now £{total_paid}"
-#     return render_template('pages/payment.html',  title='Checkout', 
-#                           room=room, room_id=room.id, book=book, discount=discount,
-#                           subtotal=subtotal, total_paid=total_paid, payform=payform,
-#                           voucher_id=voucher_id, deal_booking=deal_booking)
-
-
-
+ 
 TWO_DP = Decimal('0.01')
+ 
 
 @bedrooms.route("/checkout/<int:room_id>", methods=['GET', 'POST']) 
 @login_required
@@ -395,51 +351,57 @@ def checkout(room_id):
         Bookings.room_id == room.id,
         Bookings.status == "Pending",
         ).first()
-
+ 
     if not book:
         flash(_('Server error or booking already created.'), 'warning')
         return redirect(url_for('bedrooms.room'))
     
     #compute bookdays
     bookdays = (book.departure - book.arrival).days 
-
+ 
     if bookdays <= 0:
         flash(_("Invalid booking dates."), "warning")
         return redirect(url_for('bedrooms.roomdetail', room_id=room.id))  # FIXED: was 'rooms.roomdetail' -- wrong blueprint name, would throw BuildError
-
+ 
     # --------------------------------------------------------------
     # Currency chain: room.price (host currency) -> GBP -> guest's
     # currency. Same GBP-bridge pattern as create_booking().
     # --------------------------------------------------------------
     guest_currency = VisitorPreferences().currency
     host_currency = room.room_currency
-
+ 
     rates = get_exchange_rates()  # {currency_code: rate_per_1_gbp, ..., 'GBP': 1}
-
+ 
     raw_host_rate = rates.get(host_currency)
     if raw_host_rate is None:
         flash(_("Checkout currently unavailable: missing exchange rate for %(currency)s.", currency=host_currency), "danger")
         return redirect(url_for('bedrooms.roomdetail', room_id=room.id))
-
+ 
     raw_guest_rate = rates.get(guest_currency)
     if raw_guest_rate is None:
         flash(_("Checkout currently unavailable: missing exchange rate for %(currency)s.", currency=guest_currency), "danger")
         return redirect(url_for('bedrooms.roomdetail', room_id=room.id))
-
+ 
     rate_host = Decimal(str(raw_host_rate))
     rate_guest = Decimal(str(raw_guest_rate))
-
+ 
     # room.price is per-night, host currency.
     room_price_host = Decimal(room.price)
     room_price_gbp = room_price_host / rate_host
-
+    # AMENDED: payment.html (pre-payment checkout page) needs a per-night
+    # price in the guest's own currency for display. Payments doesn't
+    # exist yet at this point in the flow (only created after form
+    # submission below), so this can't come from a Payments row the way
+    # check.html's post-payment receipt does -- computed fresh here instead.
+    room_price_guest = (room_price_gbp * rate_guest).quantize(TWO_DP)
+ 
     subtotal_host = room_price_host * bookdays
     subtotal_gbp = room_price_gbp * bookdays
     subtotal_guest = subtotal_gbp * rate_guest
-
+ 
     # Import the voucher form
     payform = PaymentForm()
-
+ 
     # --------------------------------------------------------------
     # Discount -- computed in GBP first, then derived into host/guest
     # currency from that single canonical figure (same pattern as the
@@ -454,10 +416,16 @@ def checkout(room_id):
     voucher_id = None
     discount_gbp = Decimal('0.00')
     discount_funded_by = None
-
+ 
     if book.deal:
         discount_gbp = subtotal_gbp * (Decimal(str(book.deal.discount_percent)) / 100)
-        discount_funded_by = 'host'
+        # AMENDED: was unconditionally 'host' for every deal. A deal with
+        # room_id set is a genuine host-chosen discount on their own room
+        # -- 'host' is correct there. A deal with room_id NULL is one of
+        # the platform-wide campaigns (Weekend Deal, etc.), which can get
+        # randomly paired with ANY room's listing on the homepage -- that
+        # host never opted into it, so it shouldn't reduce their earning.
+        discount_funded_by = 'host' if book.deal.room_id else 'app'
     else:
         voucher_id = session.get("voucher_id")
         if voucher_id:
@@ -471,14 +439,14 @@ def checkout(room_id):
             else:
                 session.pop("voucher_id", None)
                 voucher = None
-
+ 
     discount_host = (discount_gbp * rate_host).quantize(TWO_DP)
     discount_guest = (discount_gbp * rate_guest).quantize(TWO_DP)
     discount_gbp = discount_gbp.quantize(TWO_DP)
-
+ 
     total_paid_guest = max(subtotal_guest - discount_guest, Decimal('0.00')).quantize(TWO_DP)
     total_paid_gbp = max(subtotal_gbp - discount_gbp, Decimal('0.00')).quantize(TWO_DP)
-
+ 
     # check if a deal booking exists:
     deal_booking = book.deal is not None
     # --------------------------------
@@ -492,12 +460,12 @@ def checkout(room_id):
         transac_fee_guest = Decimal(str(fee_calculator(total_paid_guest)))
         transac_fee_gbp = (transac_fee_guest / rate_guest).quantize(TWO_DP)
         transac_fee_host = (transac_fee_gbp * rate_host).quantize(TWO_DP)
-
+ 
         # Loyalty points from the GBP-normalized total, not the
         # currency-varying total_paid -- otherwise the same stay is
         # worth wildly different points depending on the guest's currency.
         points = int(total_paid_gbp // 30)
-
+ 
         # Create payment record
         payment = Payments(
             pay_method=payform.pay_method.data, room_price_original=room_price_host,
@@ -517,7 +485,7 @@ def checkout(room_id):
         current_user.rzerv_points = (current_user.rzerv_points or 0) + points
         
         db.session.flush()
-
+ 
         # Create hostearning record. Only a HOST-funded discount (deal)
         # reduces host_earning_*; an app-funded voucher is tracked
         # separately (voucher_amount_*) and does not reduce it.
@@ -525,7 +493,7 @@ def checkout(room_id):
         host_discount_gbp = discount_gbp if discount_funded_by == 'host' else Decimal('0.00')
         voucher_amount_host = discount_host if voucher else Decimal('0.00')
         voucher_amount_gbp = discount_gbp if voucher else Decimal('0.00')
-
+ 
         earning = HostEarning(
             user_id=book.rooms.user_id, booking_id=book.id, payment_id=payment.id,
             gross_amount_host=subtotal_host, gross_amount_gbp=subtotal_gbp.quantize(TWO_DP),
@@ -557,11 +525,14 @@ def checkout(room_id):
     return render_template('pages/payment.html',  title='Checkout', 
                           room=room, room_id=room.id, book=book, discount=discount_guest,
                           subtotal=subtotal_guest, total_paid=total_paid_guest, payform=payform,
-                          voucher_id=voucher_id, deal_booking=deal_booking)
+                          voucher_id=voucher_id, deal_booking=deal_booking,
+                          room_price_guest=room_price_guest,
+                          currency_symbol=get_symbol(guest_currency),
+                          guest_currency=guest_currency)
 
 # Voucher checker helper function 
 @bedrooms.route("/check-voucher", methods=["POST"])
-#@login_required
+@login_required  # AMENDED: was commented out, but current_user.id is used unconditionally below -- would crash for an anonymous visitor
 def checkvoucher():
     data = request.get_json(force=True)  
     
@@ -570,38 +541,56 @@ def checkvoucher():
             "message": "❌ Invalid request format"
         })
     code = data.get("voucher_code", "").strip()
-
+ 
     if not code:
         return jsonify({
             "message": " ", #"❌ No voucher code provided"
             "discount": 0
         })
     voucher = Vouchers.query.filter_by(code=code).first()
-
     # invalid
     if not voucher:
         session.pop("voucher_id", None)
         return jsonify({"message": "<span style='color:red'>invalid code</span>"})
-
+    
      # Check if CURRENT USER already used voucher
     existing_usage = VoucherUsage.query.filter_by(voucher_id=voucher.id,
-                                                    user_id=current_user.id).first()
+                                                  user_id=current_user.id).first()
     if existing_usage:
         session.pop("voucher_id", None)
         return jsonify({
             "message":
             "<span style='color:red'>code already used</span>"})
-
+ 
+    # AMENDED: was returning float(voucher.value) completely unconverted
+    # -- voucher.value is GBP per policy, but this live preview needs to
+    # match what checkout() actually charges, which converts vouchers
+    # into the guest's own currency before applying them. Without this,
+    # the number shown while typing a code didn't match what got charged
+    # on submission.
+    guest_currency = VisitorPreferences().currency
+    rates = get_exchange_rates()
+    raw_rate = rates.get(guest_currency)
+ 
+    if raw_rate is None:
+        return jsonify({
+            "message": "<span style='color:red'>Voucher currently unavailable for your currency.</span>",
+            "discount": 0
+        })
+ 
+    rate = Decimal(str(raw_rate))
+    discount_gbp = Decimal(str(voucher.value))
+    discount_guest = (discount_gbp * rate).quantize(Decimal('0.01'))
     # valid
     session["voucher_id"] = voucher.id
     session.modified = True
 
     # IMPORTANT DEBUG LINE (add this temporarily)
     #print("SESSION SET:", session.get("voucher_id"))
-
+ 
     return jsonify({"message": "<span style='color:green'>valid code, voucher applied</span>",
-                    "discount": float(voucher.value)
-                    })
+                    "discount": float(discount_guest)
+                  })
 
 # payment confirmation
 @bedrooms.route("/paysuccess/<int:booking_id>", methods=['GET', 'POST']) 
@@ -829,7 +818,7 @@ def update_room(room_id):
         abort(403)
     # Create an instance of room form
     form = UpdateRoomForm()
-
+ 
     # adding the logic to validate changes and add to db
     if form.validate_on_submit(): 
         room.room_name = form.room_name.data
@@ -843,11 +832,27 @@ def update_room(room_id):
         room.rule2 = form.rule2.data
         room.rule3 = form.rule3.data
 
+        # NEW: find-or-create the room's own linked Deals row for its
+        # host-set discount. If one already exists, update it in place
+        # rather than creating a second (room_id is unique=True on
+        # Deals, so a second insert would fail anyway). Clearing the
+        # field to 0/blank deactivates rather than deletes it, keeping
+        # the row (and its history) rather than losing it outright.
+        existing_deal = Deals.query.filter_by(room_id=room.id).first()
+        if form.discount_percent.data:
+            if existing_deal:
+                existing_deal.discount_percent = form.discount_percent.data
+                existing_deal.active = True
+            else:
+                db.session.add(Deals(room_id=room.id, discount_percent=form.discount_percent.data, active=True))
+        elif existing_deal:
+            existing_deal.active = False
+ 
         # Save changes
         db.session.commit()
         flash(_('Room details has been successfully updated!'), 'success')
         return redirect(url_for('udash.mylistings', room_id=room.id))
-
+ 
     elif request.method == 'GET':
         # Populate the post with the content and tilte of post to update 
         form.room_name.data = room.room_name
@@ -857,10 +862,13 @@ def update_room(room_id):
         form.price.data = room.price
         form.description.data = room.description
         form.status.data = room.status
-        form.usp1.data = room.usp1
-        form.usp2.data = room.usp2
-        form.usp3.data = room.usp3
-
+        form.rule1.data = room.rule1  # FIXED: was form.usp1.data = room.usp1 -- neither field exists on either side, crashed this route on every GET
+        form.rule2.data = room.rule2  # FIXED: was form.usp2.data = room.usp2
+        form.rule3.data = room.rule3  # FIXED: was form.usp3.data = room.usp3
+ 
+        active_deal = get_room_active_deal(room.id)
+        if active_deal:
+            form.discount_percent.data = active_deal.discount_percent 
         #####
     return render_template('udashpages/roomupdate.html',  title='Listing Update', form=form)
 
@@ -869,7 +877,6 @@ def update_room(room_id):
 @login_required
 def update_roompics(room_id):
     '''This function a create a route to update room images'''
-    DEFAULT_IMAGE = 'roomdef1.jpg'
     # fetch the post by id if exist or return 404 if doesnt 
     room = Rooms.query.get_or_404(room_id)
     # Check if the user is the author of the post first 
@@ -878,15 +885,13 @@ def update_roompics(room_id):
     # Create an instance of room form
     form = UpdateRoomPictureForm()
     # adding the logic to validate changes and add to db
-    if form.validate_on_submit(): 
-        files = form.pictures.data
-        # remove empty uploads
-        files = [file for file in files if file.filename != '']
-
-        if len(files) > 6:
-            flash(_('Maximum 6 images allowed.'), 'danger')
-            redirect(url_for('users.listings', room_id=room.id))
-        
+    if form.validate_on_submit():
+        # AMENDED: was resetting ALL 6 slots to the default image on
+        # every submission, then refilling only as many as were just
+        # uploaded -- meaning any partial update (e.g. replacing just
+        # one photo) silently destroyed the other 5 real images. Now
+        # only touches a slot when that specific field actually received
+        # a new upload; everything else is left completely untouched.
         image_fields = [
             'image1',
             'image2',
@@ -895,27 +900,25 @@ def update_roompics(room_id):
             'image5',
             'image6'
         ]
-        
-        # First set ALL images to default
-        for field in image_fields:
-            setattr(room, field, DEFAULT_IMAGE)
-        
-        # Replace defaults with uploaded images
-        for index, file in enumerate(files):
-            filename = save_picture(file)
-            setattr(
-                room,
-                image_fields[index],
-                filename
-            )
-        # Save changes
-        db.session.commit()
-
-        flash(_('Room images successfully updated!'), 'success')
+ 
+        updated_any = False
+        for field_name in image_fields:
+            file = getattr(form, field_name).data
+            if file and file.filename != '':
+                filename = save_picture(file)
+                setattr(room, field_name, filename)
+                updated_any = True
+ 
+        if updated_any:
+            db.session.commit()
+            flash(_('Room images successfully updated!'), 'success')
+        else:
+            flash(_('No new images were selected.'), 'info')
+ 
         return redirect(url_for('udash.mylistings', room_id=room.id))
     
     return render_template('udashpages/picsupdate.html',  title='Room Images', 
-                            form=form)
+                            form=form, room=room)
 
 # route to delete a specific listing
 @bedrooms.route("/room/<int:room_id>/delete", methods=['GET', 'POST'])

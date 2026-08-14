@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }}
+{% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {%
+block head_css %} {{ super() }}
 <link
   href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
   rel="stylesheet"
@@ -66,7 +67,7 @@
       <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
         <div class="room-header-image">
           <img
-            src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image1 ) }}"
+            src="{{ get_room_image_url(roominfo.image1) }}"
             alt="Deluxe Ocean View Suite"
             class="img-fluid rounded"
             width="1024"
@@ -84,54 +85,8 @@
       <div class="col-lg-5" data-aos="fade-left" data-aos-delay="300">
         <div class="room-header-content">
           <div class="room-rating mb-3">
-            {% if revscore >= 5 %}
-            <span class="rating-score">{{ revscore }}<!--4.8--></span>
-            <div class="stars">
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-            </div>
-            {% elif revscore >= 4 and revscore < 5 %}
-            <span class="rating-score">{{ revscore }}<!--4.8--></span>
-            <div class="stars">
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-            </div>
-            {% elif revscore >= 3 and revscore < 4 %}
             <span class="rating-score">{{ revscore }}</span>
-            <div class="stars">
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-            </div>
-            {% elif revscore >= 2 and revscore < 3 %}
-            <span class="rating-score">{{ revscore }}</span>
-            <div class="stars">
-              <i style="color: gold" class="bi bi-star-fill"></i>
-              <i style="color: gold" class="bi bi-star-fill"></i>
-            </div>
-            {% elif revscore >= 1 and revscore < 2 %}
-            <span class="rating-score">{{ revscore }}</span>
-            <div class="stars">
-              <i style="color: gold" class="bi bi-star-fill"></i>
-            </div>
-            {% elif revscore == 0 %}
-            <span class="rating-score">{{ revscore }}</span>
-            <div class="stars">
-              <span>{{ _("Room has no review yet!") }}</span>
-            </div>
-            {% endif %}
-            <!-- <div class="stars">
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-            </div> -->
+            {{ render_stars(revscore, totalrev) }}
             <span class="reviews-count">({{totalrev}} {{ _("reviews") }})</span>
           </div>
           <h1 class="room-title">{{ roominfo.room_name }}</h1>
@@ -195,13 +150,10 @@
       <div class="gallery-grid">
         <div class="gallery-main">
           <!-- href="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
-          <a
-            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image2 ) }}"
-            class="glightbox"
-          >
+          <a href="{{ get_room_image_url(roominfo.image2) }}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image2 ) }}"
+              src="{{ get_room_image_url(roominfo.image2) }}"
               alt="Suite Interior"
               class="img-fluid"
             />
@@ -209,49 +161,37 @@
         </div>
         <div class="gallery-thumbnails">
           <!-- href="{{ url_for('static', filename='img/hotel/room-8.webp')}}" -->
-          <a
-            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image3 )}}"
-            class="glightbox"
-          >
+          <a href="{{ get_room_image_url(roominfo.image3)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-8.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image3 )}}"
+              src="{{ get_room_image_url(roominfo.image3)}}"
               alt="Bedroom View"
               class="img-fluid"
             />
           </a>
           <!-- href="{{ url_for('static', filename='img/hotel/room-6.webp')}}" -->
-          <a
-            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image4 )}}"
-            class="glightbox"
-          >
+          <a href="{{ get_room_image_url(roominfo.image4)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-6.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image4 )}}"
+              src="{{ get_room_image_url(roominfo.image4)}}"
               alt="Living Area"
               class="img-fluid"
             />
           </a>
           <!-- href="{{ url_for('static', filename='img/hotel/room-18.webp')}}" -->
-          <a
-            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image5 )}}"
-            class="glightbox"
-          >
+          <a href="{{ get_room_image_url(roominfo.image5)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-18.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image5 )}}"
+              src="{{ get_room_image_url(roominfo.image5)}}"
               alt="Ocean View"
               class="img-fluid"
             />
           </a>
           <!-- href="{{ url_for('static', filename='img/hotel/dining-4.webp')}}" -->
-          <a
-            href="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image6 )}}"
-            class="glightbox"
-          >
+          <a href="{{ get_room_image_url(roominfo.image6)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/dining-4.webp')}}" -->
             <img
-              src="{{ url_for('static', filename='/userpics/roompics/'+ roominfo.image6 )}}"
+              src="{{ get_room_image_url(roominfo.image6)}}"
               alt="Bathroom"
               class="img-fluid"
             />

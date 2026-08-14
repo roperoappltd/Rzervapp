@@ -129,6 +129,7 @@ def create_app(config_name='default'):
         from app.services.currency import format_money, convert_and_format, COUNTRY_CURRENCY
         from app.services.geo_service import detect_country, detect_language
         from app.services.preference_service import VisitorPreferences
+        from app.services.image_storage import get_room_image_url
 
         # ---------------- Flask-Admin ----------------
         admin.init_app(app, index_view=MyAdminIndexView())
@@ -149,6 +150,10 @@ def create_app(config_name='default'):
     @app.context_processor
     def inject_currency():
         return dict(format_money=format_money, convert_and_format=convert_and_format)
+
+    @app.context_processor
+    def inject_image_helpers():
+        return dict(get_room_image_url=get_room_image_url)
 
     @app.context_processor
     def inject_preferences():

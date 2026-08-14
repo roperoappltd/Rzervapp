@@ -3,10 +3,16 @@ head_css %} {% block content %}
 <!--Breadcrumb-->
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
-    <li class="breadcrumb-item ">
-      <a style="padding-left: 10px; text-decoration: none;" href="{{url_for('udash.mylistings')}}">Room Listings</a>
+    <li class="breadcrumb-item">
+      <a
+        style="padding-left: 10px; text-decoration: none"
+        href="{{url_for('udash.mylistings')}}"
+        >Room Listings</a
+      >
     </li>
-    <li class="breadcrumb-item active" aria-current="page">{{ _('Room images') }}</li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ _('Room images') }}
+    </li>
   </ol>
 </nav>
 <!--End Breadcrumb-->
@@ -31,17 +37,46 @@ head_css %} {% block content %}
               </div>
               <div class="card-body">
                 <form method="POST" enctype="multipart/form-data">
-                  {{ form.hidden_tag() }} {{ form.csrf_token }}       
-                  <div class="mb-3">
-                    {{ form.pictures.label() }}
-                    {{ form.pictures(class="form-control-file form-control", type="file", multiple=True) }}
-                    {% if form.pictures.errors %}
-                        {% for error in form.pictures.errors %}
-                          <span class="text-danger">{{ error }}</span></br>
-                        {% endfor %}
-                    {% endif %}
+                  {{ form.hidden_tag() }} {{ form.csrf_token }}
+
+                  <div class="row">
+                    {% for field in [form.image1, form.image2, form.image3,
+                    form.image4, form.image5, form.image6] %} {% set
+                    current_filename = [room.image1, room.image2, room.image3,
+                    room.image4, room.image5, room.image6][loop.index0] %}
+                    <div class="col-md-4 mb-4">
+                      <div class="card h-100">
+                        <div class="card-body text-center">
+                          <h6 class="mb-2">{{ field.label.text }}</h6>
+
+                          {% if current_filename and current_filename !=
+                          'roomdef1.jpg' %}
+                          <img
+                            src="{{ url_for('static', filename='userpics/roompics/' + current_filename) }}"
+                            class="img-fluid rounded mb-2"
+                            style="max-height: 120px; object-fit: cover"
+                            alt="{{ field.label.text }}"
+                          />
+                          {% else %}
+                          <div class="text-muted small mb-2">
+                            {{ _('No image set') }}
+                          </div>
+                          {% endif %} {{ field(class="form-control-file
+                          form-control form-control-sm") }} {% if field.errors
+                          %} {% for error in field.errors %}
+                          <span class="text-danger d-block">{{ error }}</span>
+                          {% endfor %} {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
                   </div>
-                  
+
+                  <p class="text-muted small">
+                    {{ _('Leave a slot empty to keep its current image
+                    unchanged.') }}
+                  </p>
+
                   <div class="form-group text-right">
                     {{ form.submit(class="btn btn-info mt-3") }}
                   </div>

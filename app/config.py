@@ -32,3 +32,13 @@ class Config :
     #-------------------------------------------
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
     XCHANGE_RATE_API_KEY = os.getenv("XCHANGE_RATE_API_KEY")
+
+    #-------------------------------------------
+    # Image storage backend: 'local' (default, no setup needed for dev)
+    # or 'cloudinary' (production). Switching later to another provider
+    # (e.g. R2) only ever needs a change in app/services/image_storage.py
+    # -- nothing in routes/templates depends on which backend is active.
+    IMAGE_BACKEND = os.getenv("IMAGE_BACKEND", "local")
+    CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
+    CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")
+    CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET")

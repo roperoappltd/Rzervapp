@@ -81,7 +81,7 @@ class Payments(db.Model):
     transac_fee_host = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
     transac_fee_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
 
-    total_paid_host = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
+    total_paid_guest = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
     payment_currency = db.Column(db.String(3))
 
     accounting_amount = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False) # convert total paid in GBP
@@ -114,9 +114,9 @@ class Payments(db.Model):
         return payment
 
     def __repr__(self):
-        return f"Payments('{self.payment_date}', '{self.pay_method}', '{self.price_per_night}'\
-                    '{self.book_days}', '{self.discount}', '{self.transac_fee_gbp}')\
-                    '{self.total_paid}', '{self.transac_fee}'), '{self.points_earned}'\
+        return f"Payments('{self.payment_date}', '{self.pay_method}', '{self.room_price_gbp}'\
+                    '{self.book_days}', '{self.discount_funded_by}', '{self.transac_fee_host}')\
+                    '{self.total_paid_guest}', '{self.transac_fee_gbp}'), '{self.points_earned}'\
                     '{self.payment_currency}', '{self.status}', '{self.accounting_amount}')"
 
 class Vouchers(db.Model):
@@ -134,7 +134,7 @@ class Vouchers(db.Model):
 
     def __repr__(self):
         return f"Vouchers('{self.start_date}', '{self.end_date}', '{self.code}'\
-                    '{self.value}', '{self.is_active}')"
+                    '{self.value}', '{self.is_active}', '{self.funded_by}')"
 
 class VoucherUsage(db.Model):
     __tablename__ = 'voucherusage'
@@ -145,6 +145,9 @@ class VoucherUsage(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     payment_id = db.Column(db.Integer,db.ForeignKey('payments.id'),nullable=False)
     used_at = db.Column(db.DateTime, default=datetime.utcnow)
+    def __repr__(self):
+        return f"VoucherUsage('{self.payment_id}', '{self.voucher_id}', '{self.used_at}'\
+                    '{self.user_id}')"
 
 class HostEarning(db.Model):
     __tablename__ = 'hostearning'
@@ -181,7 +184,8 @@ class HostEarning(db.Model):
 
     def __repr__(self):
         return f"HostEarning('{self.gross_amount_host}', '{self.voucher_amount_host}',\
-                '{self.host_earning_host}', '{self.exchange_rate}', '{self.status}')"
+                '{self.host_earning_host}', '{self.exchange_rate}', '{self.status}',\
+                '{self.platform_fee_gbp}')"
 
 class Withdrawal(db.Model):
     __tablename__ = 'withdrawal'
@@ -202,8 +206,8 @@ class Withdrawal(db.Model):
     #----------------------------------------------------------------------------
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
     def __repr__(self):
-        return f"Withdrawal('{self.amount}', '{self.status}',\
-                '{self.requested_at}')"
+        return f"Withdrawal('{self.amount_host}', '{self.amount_gbp}',\
+                '{self.withdraw_xchange_rate}, '{self.host_currency}')"
     
 class Refund(db.Model):
     __tablename__ = 'refund'
@@ -227,8 +231,8 @@ class Refund(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # FIXED: was unique=True, blocked a user from ever getting a 2nd refund
 
     def __repr__(self):
-        return f"Refund('{self.refunded_at}', '{self.amount}',\
-                '{self.reason}', '{self.status}')"
+        return f"Refund('{self.refunded_at}', '{self.amount_refund_guest}',\
+                '{self.reason}', '{self.amount_refund_gbp}', '{self.exchange_rate}')"
 
 class ExchangeRate(db.Model):
     __tablename__ = "exchange_rates"

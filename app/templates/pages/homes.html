@@ -368,6 +368,7 @@ head_css %} {% block content %}
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-5">
+      {% if spotlight %}
       <div class="col-xl-8" data-aos="zoom-in" data-aos-delay="200">
         <div class="hero-room-showcase">
           <div class="showcase-image-container">
@@ -441,6 +442,18 @@ head_css %} {% block content %}
         </div>
       </div>
       <!-- End Hero Room -->
+      {% else %}
+      <div class="col-xl-8" data-aos="zoom-in" data-aos-delay="200">
+        <div
+          class="hero-room-showcase d-flex align-items-center justify-content-center text-center p-5"
+          style="min-height: 320px"
+        >
+          <p class="text-muted mb-0">
+            {{ _('No rooms available yet -- check back soon!') }}
+          </p>
+        </div>
+      </div>
+      {% endif %}
 
       <div class="col-xl-4">
         <div class="room-list-container">
@@ -453,7 +466,7 @@ head_css %} {% block content %}
             {% if loop.index == 1 %}
             <div class="card-image">
               <img
-                src="{{ url_for('static', filename='userpics/roompics/' + spot.image1) }}"
+                src="{{ get_room_image_url(spot.image1) }}"
                 alt="Executive Room"
                 class="img-fluid"
               />
@@ -503,7 +516,7 @@ head_css %} {% block content %}
             <div class="card-image">
               <!-- {{url_for('static', filename='img/hotel/room-19.webp')}} -->
               <img
-                src="{{ url_for('static', filename='userpics/roompics/' + spot.image1) }}"
+                src="{{ get_room_image_url(spot.image1) }}"
                 alt="Garden View"
                 class="img-fluid"
               />
@@ -548,7 +561,7 @@ head_css %} {% block content %}
             <div class="card-image">
               <!--src="{{url_for('static', filename='img/hotel/room-12.webp')}}"-->
               <img
-                src="{{ url_for('static', filename='userpics/roompics/' + spot.image1) }}"
+                src="{{ get_room_image_url(spot.image1) }}"
                 alt="Family Suite"
                 class="img-fluid"
               />
@@ -595,7 +608,7 @@ head_css %} {% block content %}
           {% if loop.index == 1 %}
           <div class="room-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
+              src="{{ get_room_image_url(feature.image1) }}"
               alt="Classic Room"
               class="img-fluid"
             />
@@ -625,7 +638,7 @@ head_css %} {% block content %}
           {% elif loop.index == 2 %}
           <div class="room-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
+              src="{{ get_room_image_url(feature.image1) }}"
               alt="Superior Room"
               class="img-fluid"
             />
@@ -655,7 +668,7 @@ head_css %} {% block content %}
           {% elif loop.index == 3 %}
           <div class="room-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
+              src="{{ get_room_image_url(feature.image1) }}"
               alt="Premium Room"
               class="img-fluid"
             />
@@ -685,7 +698,7 @@ head_css %} {% block content %}
           {% elif loop.index == 4 %}
           <div class="room-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + feature.image1) }}"
+              src="{{ get_room_image_url(feature.image1) }}"
               alt="Luxury Suite"
               class="img-fluid"
             />
@@ -1100,7 +1113,8 @@ head_css %} {% block content %}
   <!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row g-4">
+    <div class="row g-4 deals-carousel">
+      {% if weekend_room and wkend_deal %}
       <div class="col-lg-4 col-md-6">
         <div class="offer-card" data-aos="zoom-in" data-aos-delay="200">
           <div class="offer-badge">
@@ -1108,7 +1122,7 @@ head_css %} {% block content %}
           </div>
           <div class="offer-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + weekend_room.image1) }}"
+              src="{{ get_room_image_url(weekend_room.image1) }}"
               alt="Weekend Getaway"
               class="img-fluid"
             />
@@ -1137,7 +1151,7 @@ head_css %} {% block content %}
           </div>
         </div>
       </div>
-
+      {% endif %} {% if weekday_room and wkday_deal %}
       <div class="col-lg-4 col-md-6">
         <div
           class="offer-card featured"
@@ -1149,7 +1163,7 @@ head_css %} {% block content %}
           </div>
           <div class="offer-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + weekday_room.image1) }}"
+              src="{{ get_room_image_url(weekday_room.image1) }}"
               alt="Extended Stay Deal"
               class="img-fluid"
             />
@@ -1178,7 +1192,7 @@ head_css %} {% block content %}
           </div>
         </div>
       </div>
-
+      {% endif %} {% if romantic_room and rom_deal %}
       <div class="col-lg-4 col-md-6">
         <div class="offer-card" data-aos="zoom-in" data-aos-delay="400">
           <div class="offer-badge">
@@ -1186,7 +1200,7 @@ head_css %} {% block content %}
           </div>
           <div class="offer-image">
             <img
-              src="{{ url_for('static', filename='userpics/roompics/' + romantic_room.image1) }}"
+              src="{{ get_room_image_url(romantic_room.image1) }}"
               alt="Advance Booking"
               class="img-fluid"
             />
@@ -1215,45 +1229,45 @@ head_css %} {% block content %}
           </div>
         </div>
       </div>
+      {% endif %}
     </div>
-    <!---------LIMITED OFFER--------------------------------------------->
-    <!-- <div class="row mt-5">
-      <div class="col-12">
-        <div class="offer-banner" data-aos="fade-up" data-aos-delay="500">
-          <div class="row align-items-center">
-            <div class="col-lg-8">
-              <div class="banner-content">
-                <h2>Limited Time Offer</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Duis aute irure dolor in reprehenderit.
-                </p>
-              </div>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-              <div class="banner-action">
-                <div class="countdown" data-count="2025/12/15">
-                  <div>
-                    <span class="count-days"></span>
-                    <label>Days</label>
-                  </div>
-                  <div>
-                    <span class="count-hours"></span>
-                    <label>Hours</label>
-                  </div>
-                  <div>
-                    <span class="count-minutes"></span>
-                    <label>Minutes</label>
-                  </div>
-                </div>
-                <a href="#" class="btn-cta">Claim Offer</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
+
+    <style>
+      /* Mobile/tablet carousel behavior for the 3 deal cards.
+         Scoped to .deals-carousel only -- doesn't affect any other
+         .row/.col-* in the app. At lg and above, this whole block is
+         inactive and the cards fall back to Bootstrap's normal 3-column
+         grid, untouched. */
+      @media (max-width: 991.98px) {
+        .deals-carousel {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 0.5rem; /* room for the scrollbar so it doesn't sit under the cards */
+        }
+        .deals-carousel::-webkit-scrollbar {
+          height: 6px;
+        }
+        .deals-carousel::-webkit-scrollbar-thumb {
+          background: rgba(0, 0, 0, 0.15);
+          border-radius: 999px;
+        }
+        .deals-carousel > [class*='col-'] {
+          scroll-snap-align: start;
+          flex: 0 0 85%;
+          max-width: 85%;
+        }
+      }
+
+      /* Tablet: show more of a second card peeking in, ~1.5-2 cards visible */
+      @media (min-width: 576px) and (max-width: 991.98px) {
+        .deals-carousel > [class*='col-'] {
+          flex: 0 0 55%;
+          max-width: 55%;
+        }
+      }
+    </style>
   </div>
 </section>
 <!-- /Offer Cards Section -->

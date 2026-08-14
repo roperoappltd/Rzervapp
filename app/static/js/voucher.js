@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
+  // Currency symbol for THIS checkout's guest currency -- was hardcoded
+  // as "£" before, which was wrong for any guest not paying in GBP.
+  const metaEl = document.getElementById('checkoutMeta');
+  const currencySymbol = metaEl ? metaEl.dataset.currencySymbol : '£';
+
   const csrfMeta = document.querySelector('meta[name="csrf-token"]');
   const csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : null;
 
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     discountEl.innerText = discount.toFixed(2);
     finalEl.innerText = finalTotal.toFixed(2);
-    submitBtn.value = `Pay now £${finalTotal.toFixed(2)}`;
+    submitBtn.value = `Pay now ${currencySymbol}${finalTotal.toFixed(2)}`;
   }
 
   input.addEventListener('input', function () {
@@ -62,9 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         credentials: 'same-origin',
 
-        body: JSON.stringify({
-          voucher_code: code,
-        }),
+        body: JSON.stringify({ voucher_code: code }),
       })
         .then((response) => {
           if (!response.ok) {
@@ -101,6 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
     finalEl.innerText = finalTotal.toFixed(2);
 
     // update button text
-    submitBtn.value = `Pay £${finalTotal.toFixed(2)}`;
+    submitBtn.value = `Pay ${currencySymbol}${finalTotal.toFixed(2)}`;
   }
 });

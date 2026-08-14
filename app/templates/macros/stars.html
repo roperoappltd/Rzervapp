@@ -1,0 +1,19 @@
+{# Reusable star-rating renderer. Handles half-star precision (since an average
+rating is rarely a clean integer) and the zero-reviews case. Usage: {{
+render_stars(score, review_count) }} score: a float/int average (e.g. 4.3), or
+None/0 if no reviews exist. review_count: how many reviews the score is based on
+-- 0 means "not yet rated," rendered distinctly from an actual low score. #} {%
+macro render_stars(score, review_count) %} {% set rounded_score = ((score or 0)
+* 2) | round / 2 %}
+<div class="stars">
+  {% if not review_count %}
+  <span>{{ _("Room has no review yet!") }}</span>
+  {% else %} {% for i in range(1, 6) %} {% if i <= rounded_score %}
+  <i style="color: gold" class="bi bi-star-fill"></i>
+  {% elif (i - 0.5) == rounded_score %}
+  <i style="color: gold" class="bi bi-star-half"></i>
+  {% else %}
+  <i style="color: gold" class="bi bi-star"></i>
+  {% endif %} {% endfor %} {% endif %}
+</div>
+{% endmacro %}

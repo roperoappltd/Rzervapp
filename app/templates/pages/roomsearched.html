@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock
-head_css %} {% block content %}
+{% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {%
+block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
@@ -92,7 +92,7 @@ head_css %} {% block content %}
             <div class="room-image">
               <!-- src="{{ url_for('static', filename='img/hotel/room-1.webp')}}" -->
               <img
-                src="{{ url_for('static', filename='userpics/roompics/' + room.image1) }}"
+                src="{{ get_room_image_url(room.image1) }}"
                 alt="Deluxe Ocean Suite"
                 class="img-fluid"
               />
@@ -112,11 +112,9 @@ head_css %} {% block content %}
                   <!--Deluxe Ocean Suite-->
                 </h3>
                 <div class="room-rating">
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
-                  <i class="bi bi-star-fill"></i>
+                  {% set rating = ratings_by_room.get(room.id) %} {{
+                  render_stars(rating.score if rating else 0, rating.count if
+                  rating else 0) }}
                 </div>
               </div>
               <p class="room-description">

@@ -187,16 +187,37 @@ class RoomView(db.Model):
     def __repr__(self):
         return f"RoomView('{self.room_id}','{self.viewed_at}','{self.id}')"
 
+# class Deals(db.Model):
+#     __tablename__ = 'deals'
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(100), nullable=False)
+#     start_date = db.Column(db.Date)
+#     end_date = db.Column(db.Date)
+#     description = db.Column(db.Text)
+#     discount_percent = db.Column(db.Integer)
+#     image_file = db.Column(db.String(100))
+#     active = db.Column(db.Boolean, default=True)
+    
+#     # Display output
+#     def __repr__(self):
+#         return f"Deals('{self.name}','{self.start_date}','{self.end_date}'\
+#                        '{self.description}', '{self.discount_percent}', \
+#                        '{self.end_date}', '{self.active}')"
+
+
 class Deals(db.Model):
     __tablename__ = 'deals'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=True)  # AMENDED: was nullable=False -- host-set discounts don't need a campaign name, only the 3 existing platform campaigns do
+    room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), nullable=True, unique=True, index=True)  # NEW: NULL = global platform campaign (existing 3), set = this specific room's host-set discount. unique=True enforces one active discount per room; NULL room_id rows are exempt from the uniqueness check (standard SQL behavior), so multiple global campaigns still coexist fine.
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     description = db.Column(db.Text)
     discount_percent = db.Column(db.Integer)
     image_file = db.Column(db.String(100))
     active = db.Column(db.Boolean, default=True)
+    # =============================================================================
+    room = db.relationship('Rooms', backref=db.backref('host_deal', uselist=False))
     
     # Display output
     def __repr__(self):

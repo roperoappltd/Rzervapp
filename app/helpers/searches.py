@@ -55,8 +55,8 @@ def build_room_query(location=None, room_category=None, min_price=None,
         query = query.filter(Rooms.id.in_(available_room_ids))
  
     return {"query": query, "error": None}
-
-
+ 
+ 
 def serialize_room(room):
     '''
     converts a Rooms SQLAlchemy object into a plain JSON-safe dict 
@@ -70,8 +70,8 @@ def serialize_room(room):
     # as the representative photo for chat cards.
     image_url = None
     if getattr(room, "image1", None):
-        image_url = url_for('static', filename='userpics/roompics/' + room.image1)
-
+        image_url = get_room_image_url(room.image1)
+ 
     return {
         "id": room.id,
         "name": getattr(room, "room_name", None) or f"Room {room.id}",

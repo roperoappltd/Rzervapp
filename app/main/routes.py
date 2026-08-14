@@ -1,6 +1,6 @@
 from flask import (Blueprint, render_template, flash, redirect, url_for, session, 
                    current_app, request) 
-from flask_login import current_user, login_required
+from flask_login import current_user
 from app import db
 from app.models.roommodel import Rooms, Deals
 from app.models.bookmodel import Bookings
@@ -11,6 +11,7 @@ from .forms import ContactForm
 from flask_mail import Message
 from app import mail
 from app.rooms.notification.contactmail import karibu_contact
+from app.services.image_storage import get_room_image_url
 from sqlalchemy.sql.expression import func
 import os
 from dotenv import load_dotenv
@@ -21,6 +22,45 @@ load_dotenv()
 # Creating an instance of the blueprint class
 main = Blueprint('main', __name__)
 
+# @main.route("/")                                                     
+# @main.route("/home") 
+# def home():
+#     '''This function create a route to render the home page'''
+#     # Randomly query the fourth latest available rooms
+#     latest_rooms =  (Rooms.query.filter_by(status='Available')
+#                                  .order_by(db.func.random())
+#                                  .limit(3).all())
+#     # Every 4 rooms  
+#     featured_rooms = (Rooms.query.order_by(
+#                       Rooms.created_at.desc())
+#                      .offset(4).limit(4).all())
+#     # Latest room available
+#     spotlight =  (Rooms.query.order_by(
+#                   Rooms.updated_at.desc()).first())
+#     # weekend deals
+#     weekend_room = (Rooms.query.order_by(db.func.random()).first())
+#     wkend_deal = db.session.query(Deals).filter(Deals.name == 'Weekend Deal').first()
+#     offer_1 = float(weekend_room.price) - ( float(weekend_room.price) * (wkend_deal.discount_percent / 100)) #if wkend_deal and wkend_deal else 0
+#     # weekday deals
+#     weekday_room = (Rooms.query.order_by(db.func.random()).first())
+#     wkday_deal = db.session.query(Deals).filter(Deals.name == 'Weekday Deal').first()
+#     offer_2 = float(weekday_room.price) - ( float(weekday_room.price) * (wkday_deal.discount_percent / 100)) #if wkend_deal and wkend_deal else 0
+#     # Romantic deal
+#     romantic_room = (Rooms.query.order_by(db.func.random()).first())
+#     rom_deal = db.session.query(Deals).filter(Deals.name == 'Romantic Getaway').first()
+#     offer_3 = float(romantic_room.price) - ( float(romantic_room.price) * (rom_deal.discount_percent / 100))  #if romantic_room and rom_deal else 0
+
+#     # Query first image
+#     image1 = url_for('static', filename='userpics/roompics/' + spotlight.image1)
+
+#     return render_template('pages/homes.html',  title='Home', spotlight=spotlight, 
+#                             image1=image1, latest_rooms=latest_rooms, featured_rooms=featured_rooms,
+#                             weekend_room=weekend_room, weekday_room=weekday_room,
+#                             romantic_room=romantic_room, wkend_deal=wkend_deal,
+#                             wkday_deal=wkday_deal, rom_deal=rom_deal, offer_1=offer_1,
+#                             offer_2=offer_2, offer_3=offer_3)
+
+ 
 @main.route("/")                                                     
 @main.route("/home") 
 def home():
@@ -36,22 +76,39 @@ def home():
     # Latest room available
     spotlight =  (Rooms.query.order_by(
                   Rooms.updated_at.desc()).first())
+ 
+    # AMENDED: on a fresh/empty database (no rooms seeded yet), every
+    # .first() below can return None -- previously this crashed
+    # immediately with AttributeError the moment anyone visited "/".
+    # Guarding each one so the homepage degrades gracefully instead.
+ 
     # weekend deals
     weekend_room = (Rooms.query.order_by(db.func.random()).first())
     wkend_deal = db.session.query(Deals).filter(Deals.name == 'Weekend Deal').first()
-    offer_1 = float(weekend_room.price) - ( float(weekend_room.price) * (wkend_deal.discount_percent / 100)) 
+    offer_1 = None
+    if weekend_room and wkend_deal:
+        offer_1 = float(weekend_room.price) - (float(weekend_room.price) * (wkend_deal.discount_percent / 100))
+ 
     # weekday deals
     weekday_room = (Rooms.query.order_by(db.func.random()).first())
     wkday_deal = db.session.query(Deals).filter(Deals.name == 'Weekday Deal').first()
-    offer_2 = float(weekday_room.price) - ( float(weekday_room.price) * (wkday_deal.discount_percent / 100)) 
+    offer_2 = None
+    if weekday_room and wkday_deal:
+        offer_2 = float(weekday_room.price) - (float(weekday_room.price) * (wkday_deal.discount_percent / 100))
+ 
     # Romantic deal
     romantic_room = (Rooms.query.order_by(db.func.random()).first())
     rom_deal = db.session.query(Deals).filter(Deals.name == 'Romantic Getaway').first()
-    offer_3 = float(romantic_room.price) - ( float(romantic_room.price) * (rom_deal.discount_percent / 100))  
-
-    # Query first image
-    image1 = url_for('static', filename='userpics/roompics/' + spotlight.image1)
-
+    offer_3 = None
+    if romantic_room and rom_deal:
+        offer_3 = float(romantic_room.price) - (float(romantic_room.price) * (rom_deal.discount_percent / 100))
+ 
+    # Query first image -- guarded against no rooms existing at all,
+    # and against a room existing but never having had an image uploaded.
+    image1 = None
+    if spotlight and spotlight.image1:
+        image1 = get_room_image_url(spotlight.image1)
+ 
     return render_template('pages/homes.html',  title='Home', spotlight=spotlight, 
                             image1=image1, latest_rooms=latest_rooms, featured_rooms=featured_rooms,
                             weekend_room=weekend_room, weekday_room=weekday_room,

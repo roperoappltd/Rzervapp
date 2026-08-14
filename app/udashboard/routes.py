@@ -1,21 +1,22 @@
 from flask import (Blueprint, render_template, flash, redirect, url_for, 
                    request, abort, jsonify)
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import current_user, login_required
 from app import db
 from app.models.usermodel import User
-from app.models.roommodel import Rooms, Roomreviews, GuestReviews, RoomView
+from app.models.roommodel import Rooms, Roomreviews, GuestReviews, RoomView, Deals
 from app.models.bookmodel import Bookings, HostEarning, Withdrawal, Refund
 from app.models.chatmodel import Message, Conversation 
 from ..users.forms import (UpdateAccountForm)
 from app.rooms.forms import AddRoomForm, WithdrawalForm, GuestReviewForm
-from ..users.usermails.resetrequest import send_reset_email
-from ..users.usermails.joinusmail import member_regismail
+# from ..users.usermails.resetrequest import send_reset_email
+# from ..users.usermails.joinusmail import member_regismail
 from ..users.utils import save_picture
 from app.services.location_service import get_location
 from ..rooms.roomutils import sanitize_input, can_cancel, current_date
 from flask_socketio import (SocketIO, emit, join_room, leave_room)
 from app import socketio
 from datetime import datetime, date
+from decimal import Decimal
 from dateutil.relativedelta import relativedelta
 from sqlalchemy import extract
 import geopandas as gpd
@@ -26,11 +27,10 @@ from app.helpers.host_balance import get_host_balance
 from app.helpers.format_datime import format_message_time
 from app.helpers.email_verify import email_verified_required
 from app.helpers.room_stats import get_daily_view_counts
-from app.services.currency import get_currency, COUNTRY_CURRENCY
+from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates
 from flask_babel import _
 
 udash = Blueprint('udash', __name__)
-
 
 # Fetch monthly earnings
 @udash.route("/host/earnings-chart")
@@ -39,63 +39,82 @@ def host_earnings_chart():
     today = datetime.today()
     months = []
     earnings = []
-
+ 
     # Last 12 months
     for i in range(11, -1, -1):
         month_date = today - relativedelta(months=i)
-
+ 
         year = month_date.year
         month = month_date.month
-
-        total = db.session.query(db.func.sum(HostEarning.net_earning)
+ 
+        # AMENDED: converting each month's GBP total into the host's own
+        # preferred_currency before it reaches the chart. Using
+        # convert_currency (returns a plain number), not
+        # convert_and_format (returns a formatted string like "£1,234")
+        # -- Chart.js needs raw numbers to plot, not currency-symbol text.
+        total = db.session.query(db.func.sum(HostEarning.host_earning_gbp)
         ).filter(HostEarning.user_id == current_user.id,
             extract('year', HostEarning.created_at) == year,
             extract('month', HostEarning.created_at) == month).scalar() or 0
-
+        total = convert_currency(float(total), "GBP", current_user.preferred_currency)
+ 
         months.append( month_date.strftime("%b"))
         earnings.append(float(total))
-
+ 
     return jsonify({"labels": months, "values": earnings})
-
+ 
 # Top three most performing room
 @udash.route("/host/top-rooms-revenue")
 @login_required
 def top_rooms_revenue():
-
+ 
+    # host_earning_gbp, not host_earning_host: even though grouping by
+    # Rooms.id keeps each room's own sum currency-consistent, the
+    # total_revenue and percentage-of-total calculated below combine
+    # figures across DIFFERENT rooms -- if two rooms are priced in
+    # different currencies, adding their raw host-currency revenue
+    # together before computing percentages would still be wrong, even
+    # though each room's individual row would look fine in isolation.
     results = db.session.query(Rooms.room_name, db.func.sum(
-            HostEarning.net_earning).label("revenue"), db.func.count(
+            HostEarning.host_earning_gbp).label("revenue"), db.func.count(
             Bookings.id).label("booking_count")).join(
             Bookings, HostEarning.booking_id == Bookings.id
             ).join(Rooms, Bookings.room_id == Rooms.id).filter(
             HostEarning.user_id == current_user.id).group_by(
             Rooms.id, Rooms.room_name).order_by(db.desc("revenue")
                                                 ).limit(3).all()
-
+ 
     # Calculate total revenue
     total_revenue = sum(float(row.revenue)
                         for row in results)
     rooms = []
-
+ 
     for room, revenue, booking_count in results:
         revenue = float(revenue)
         percentage = 0
-
+ 
         if total_revenue > 0:
             percentage = round((revenue / total_revenue) * 100, 1)
-
+ 
+        # AMENDED: percentage is computed above from the raw GBP figures
+        # (a ratio is unaffected by which currency it's expressed in, so
+        # this stays correct regardless of conversion). Only the display
+        # value itself is converted, and only after the ratio math is done.
+        revenue = convert_currency(revenue, "GBP", current_user.preferred_currency)
+ 
         rooms.append({"room": room, "revenue": revenue,
                         "percentage": percentage, 
                         "booking_count": booking_count,
                     })
-
+ 
     return jsonify(rooms)
-    
+     
 # Room locations in world map user specific
 @udash.route("/host/room-locations")
 @login_required
 def room_locations():
     rooms = Rooms.query.filter_by(user_id=current_user.id).all()
-
+ 
     return jsonify([
         {
             "name":room.room_name,
@@ -107,15 +126,16 @@ def room_locations():
         }
         for room in rooms
     ])
+
 # public 
 @udash.route("/rooms/map-locations")
 @login_required
 def room_map_locations():
     rooms = Rooms.query.filter(Rooms.status=="Available").all()
     #rooms = Rooms.query.all()
-
+ 
     data=[]
-
+ 
     for room in rooms:
         data.append({
             "id": room.id,
@@ -126,10 +146,10 @@ def room_map_locations():
             "lat": room.latitude,
             "lng": room.longitude
         })
-
+ 
     return jsonify(data)
 
-# Routr with Map using Geopanda
+# Router with Map using Geopanda
 @udash.route("/api/map/rooms")
 def room_map_data():
     rooms = Rooms.query.filter(Rooms.status=="Available").all()
@@ -157,29 +177,55 @@ def room_map_data():
 
 # =========================================================================================
 
+
 @udash.route("/request-withdrawal", methods=["POST"])
 @login_required
 def request_withdrawal():
     form = WithdrawalForm()
-
+ 
     if form.validate_on_submit():
         amount = form.amount.data
-        balance = get_host_balance(current_user.id)
-
-        if amount > balance:
-            flash(_("Insufficient balance"),"danger")
-
+ 
+        # AMENDED: get_host_balance() now returns a GBP figure (see
+        # host_balance.py), but `amount` is still entered in the host's
+        # own currency -- comparing them directly would silently compare
+        # two different currencies as if they were the same number. The
+        # rate lookup + GBP conversion has to happen BEFORE the balance
+        # check now, not after it.
+        rates = get_exchange_rates()
+        host_currency = current_user.preferred_currency
+        raw_rate = rates.get(host_currency)
+ 
+        if raw_rate is None:
+            flash(_("Withdrawal currently unavailable: missing exchange rate for %(currency)s.", currency=host_currency), "danger")
             return redirect(url_for("udash.earnings"))
-
-        withdrawal = Withdrawal(user_id=current_user.id, amount=amount,
-                                status="Pending")
-
+ 
+        rate = Decimal(str(raw_rate))
+        amount_host = Decimal(str(amount))
+        amount_gbp = (amount_host / rate).quantize(Decimal('0.01'))
+ 
+        balance = get_host_balance(current_user.id)  # GBP
+ 
+        if amount_gbp > balance:
+            flash(_("Insufficient balance"),"danger")
+ 
+            return redirect(url_for("udash.earnings"))
+ 
+        withdrawal = Withdrawal(
+            user_id=current_user.id,
+            amount_host=amount_host,
+            amount_gbp=amount_gbp,
+            host_currency=host_currency,
+            withdraw_xchange_rate=rate,
+            status="Pending",
+        )
+ 
         db.session.add(withdrawal)
         db.session.commit()
-
+ 
         flash(_("Withdrawal request submitted"), "success")
     return redirect(url_for("udash.earnings"))
-
+ 
 @udash.route("/udashboard", methods=['GET', 'POST']) 
 @login_required
 def udashboard():
@@ -188,10 +234,18 @@ def udashboard():
     totrooms = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).count()
     totbook = Bookings.query.join(Rooms).filter(Rooms.user_id==current_user.id).count()
     
-    total_earnings = db.session.query(db.func.sum(HostEarning.net_earning)
+    # host_earning_gbp -- dashboard headline figure, same cross-currency
+    # aggregation reasoning as the other two fixes in this file.
+    total_earnings = db.session.query(db.func.sum(HostEarning.host_earning_gbp)
                                     ).filter(HostEarning.user_id == current_user.id,
                                             HostEarning.status == "Approved"
                                              ).scalar() or 0
+    # AMENDED: convert the GBP total into the host's preferred currency.
+    # Kept as a plain number (not convert_and_format's formatted string)
+    # so any existing numeric formatting/comparisons in the template
+    # keep working -- pass current_user.preferred_currency to the
+    # template too if you want the currency code/symbol shown alongside it.
+    total_earnings = convert_currency(float(total_earnings), "GBP", current_user.preferred_currency)
     
     total_withdrawals = db.session.query(db.func.sum(Withdrawal.amount)
                                         ).filter(Withdrawal.user_id==current_user.id,
@@ -200,7 +254,7 @@ def udashboard():
     
     # available_balance = get_host_balance(current_user.id) 
     earnings_state = calculate_monthly_earnings_change(current_user.id)
-
+ 
     return render_template('udashpages/Dashboard.html',  title='User Dashboard',
                             totbook=totbook,totrooms=totrooms, 
                             total_earnings=total_earnings, earnings_state=earnings_state, 
@@ -292,16 +346,21 @@ def earnings():
     withd_page = request.args.get('guest_page', 1, type=int)
     earn_page = request.args.get('host_page', 1, type=int)
     form = WithdrawalForm()
-
+ 
     available_balance = get_host_balance(current_user.id)
-
+    # AMENDED: get_host_balance() now returns GBP (see host_balance.py).
+    # Converting to the host's own currency for display here, same
+    # pattern as udashboard()'s total_earnings -- kept as a plain number
+    # so the template's existing formatting/comparisons keep working.
+    available_balance = convert_currency(float(available_balance), "GBP", current_user.preferred_currency)
+ 
     withdrawal = db.session.query(Withdrawal).filter(
                         Withdrawal.user_id==current_user.id
                         ).order_by(Withdrawal.requested_at.desc()
                                    ).paginate(page=withd_page, 
                                               per_page=3, 
                                               error_out=False)
-
+ 
     host_earning = HostEarning.query.filter_by(
                                             user_id=current_user.id
                                             ).order_by(HostEarning.created_at.desc()
@@ -409,16 +468,16 @@ def mylistings():
     '''This function create a route to render user listings page''' 
     page = request.args.get('page', 1, type=int)   
     form = AddRoomForm()
-
+ 
     roomlist = db.session.query(Rooms).filter(Rooms.user_id==current_user.id
                                               ).order_by(Rooms.created_at.desc()
                                                 ).paginate(page=page, 
                                                     per_page=6, error_out=False)
-
+ 
     if form.validate_on_submit():
         # Get the location coordinate
         location = get_location(form.room_location.data)
-
+ 
         if not location:
             flash("Unable to locate this city.", "danger")
             return redirect(url_for("udash.mylistings"))
@@ -435,13 +494,22 @@ def mylistings():
                             latitude=location["latitude"], longitude=location["longitude"],
                             user_id=current_user.id,
                             room_currency=COUNTRY_CURRENCY.get(location["country"], "GBP"))
-
+ 
             db.session.add(room_info)                                                               # adding the user to the database
+            db.session.flush()  # need room_info.id before creating the linked Deals row
+ 
+            # NEW: host-set discount, stored as a Deals row linked to
+            # this specific room (Option B -- Deals.room_id NULL stays
+            # reserved for the 3 existing platform-wide campaigns).
+            if form.discount_percent.data:
+                deal = Deals(room_id=room_info.id, discount_percent=form.discount_percent.data, active=True)
+                db.session.add(deal)
+ 
             db.session.commit()                                                                # saving the changes                                                               
             flash(_('Great! your room listing is now live.'), 'success')     # display validation message [ f'Account created for {form.username.data}!' ]
             # send account verification email to user
             #adslive_msg(user)
-
+ 
             return redirect(url_for('udash.mylistings'))
         else:
             flash(_('You need to fully complete your profile before you can make a room listing!'), 'warning')

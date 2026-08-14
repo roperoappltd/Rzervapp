@@ -6,6 +6,33 @@ from flask import url_for, current_app
 from flask_login import current_user
 from flask_mail import Message
 from app import mail
+from app.services.image_storage import upload_room_image
+from app import db
+from app.models.roommodel import Roomreviews
+
+def get_ratings_for_rooms(room_ids):
+    '''One query for every room's rating in a list, instead of a
+    separate query per card. Shared by room() and roomsearch() so the
+    same logic isn't duplicated across route files.
+    Returns {room_id: {'score': float, 'count': int}, ...} -- a room
+    with zero (or only unpublished) reviews simply won't be a key here.'''
+    if not room_ids:
+        return {}
+    rating_rows = (
+        db.session.query(
+            Roomreviews.room_id,
+            db.func.avg(Roomreviews.rate_us).label('avg_rating'),
+            db.func.count(Roomreviews.id).label('review_count'),
+        )
+        .filter(Roomreviews.room_id.in_(room_ids), Roomreviews.status == 'Published')
+        .group_by(Roomreviews.room_id)
+        .all()
+    )
+    return {
+        row.room_id: {'score': round(float(row.avg_rating), 1), 'count': row.review_count}
+        for row in rating_rows
+    }
+
 import cv2
 import bleach
 from datetime import *
@@ -14,22 +41,21 @@ from datetime import *
 
 # Create a function that handle profile picture
 def save_picture(form_picture):
-    '''This function add random hex byte & extension to a file a save to a location '''
+    '''This function resizes an uploaded picture and stores it via the
+    image storage abstraction (local disk or Cloudinary, per
+    Config.IMAGE_BACKEND) -- returns a KEY to save on the Rooms row,
+    never a full URL. See app/services/image_storage.py.'''
     # create a random hex of 4 bytes
     random_hex = secrets.token_hex(4)
-    # slice the file name and file extension of the picture update
-    _, file_ext = os.path.splitext(form_picture.filename)
-    # combine the random hex with the file extension in order set the name of the new uploaded file
-    uploaded_PicName = f'{current_user.username}' + random_hex + file_ext 
-    # extract and define the path where to save the file
-    picture_path = os.path.join(current_app.root_path, 'static/userpics/roompics/', uploaded_PicName)
-    # Resizing the  picture before saving
+    # combine with the username to build a unique key for this upload
+    key_hint = f'{current_user.username}' + random_hex
+    # Resizing the picture before saving
     img_sizer = (960, 640)
     new_img = Image.open(form_picture)
-    new_img.thumbnail(img_sizer) # 
-    # Saving the picture
-    new_img.save(picture_path)
-    return uploaded_PicName
+    new_img.thumbnail(img_sizer)
+    # Store via the active backend (local disk in dev, Cloudinary in
+    # production) -- returns the key, not a full URL.
+    return upload_room_image(new_img, key_hint)
 
 def list_sum(lst):
     res = (sum(lst))
@@ -96,4 +122,3 @@ def sanitize_input(text):
         attributes=ALLOWED_ATTRIBUTES,
         strip=True
     )
-

@@ -85,29 +85,42 @@ block content %}
                 </div>
               </td>
               <td>1</td>
-              <td class="text-end">£{{ room.price }}</td>
+              <td class="text-end">
+                {{ convert_and_format(payment.room_price_gbp, "GBP",
+                current_user.preferred_currency) }}
+              </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td colspan="2">Subtotal</td>
               <td class="text-end">
-                £{{ payment.total_paid - payment.discount }}
+                {{ convert_and_format(payment.accounting_amount -
+                payment.discount_gbp, "GBP", current_user.preferred_currency) }}
               </td>
             </tr>
             <tr>
               <td colspan="2">Service Fee</td>
-              <td class="text-end">£{{ book.serv_charge }}</td>
+              <td class="text-end">
+                {{ convert_and_format(book.serv_charge,
+                book.serv_charge_currency, current_user.preferred_currency) }}
+              </td>
             </tr>
 
             <tr>
               <td colspan="2">Discount</td>
-              <td class="text-danger text-end">-£{{ payment.discount }}</td>
+              <td class="text-danger text-end">
+                -{{ convert_and_format(payment.discount_gbp, "GBP",
+                current_user.preferred_currency) }}
+              </td>
             </tr>
 
             <tr class="fw-bold">
               <td colspan="2">TOTAL</td>
-              <td class="text-end">£{{ payment.total_paid }}</td>
+              <td class="text-end">
+                {{ convert_and_format(payment.accounting_amount, "GBP",
+                current_user.preferred_currency) }}
+              </td>
             </tr>
           </tfoot>
         </table>
