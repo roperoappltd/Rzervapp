@@ -2,6 +2,7 @@ from flask_mail import Message
 from app import mail
 from flask import url_for
 from datetime import datetime
+from flask_babel import _, force_locale
 
 #-----------------------------------------------------------------------------------------------------
 def member_regismail(user):
@@ -9,9 +10,39 @@ def member_regismail(user):
     now = datetime.now()
     date = now.strftime("%d/%m/%Y %H:%M")
     token = user.get_verification_token()
+
+    # AMENDED: previously every string below was hardcoded English, with
+    # no _() wrapping at all -- the email was always English regardless
+    # of the recipient's actual language. force_locale(user.language)
+    # temporarily overrides the active locale for the duration of this
+    # block, using the RECIPIENT's own stored preference (not whoever
+    # happens to be browsing when this function is called) -- this is
+    # flask_babel's documented pattern specifically for exactly this
+    # "translate content for someone other than the current viewer" case.
+    with force_locale(user.language):
+        subject = _('Verify & activate your Jambo account')
+
+        greeting = _('Hello %(name)s,', name=user.first_name)
+
+        intro = _(
+            'We would like to thank you for your registration received today '
+            '%(date)s. We wish you a warm welcome to the "Jambo community" '
+            'where you can reserve short stays safer, happier and cheaper. '
+            'Also, you can confidently add a room to start generating passive '
+            'income.',
+            date=date
+        )
+
+        cta_text = _('Click on the button below to verify and activate your account and start your Jambo adventure.')
+        button_text = _('Verify & Activate your account')
+        regards = _('Kind regards')
+        customer_service = _('Customer Service.')
+        copyright_text = _('Copyright © %(year)s Jambo. All Rights Reserved.', year=now.year)
+        powered_by = _('Powered by')
+
     # sending the password reset message
-    msg = Message('Verify & activate your Jambo account', 
-                  sender='dmc.partners@yahoo.com',
+    msg = Message(subject, 
+                  sender=('Jambo Booking', 'dmc.partners@yahoo.com'),
                   recipients=[user.email])
     msg.html = f'''\
 <!DOCTYPE html>
@@ -60,29 +91,27 @@ def member_regismail(user):
                 width="188"
                 height="100"
                 alt=""
-                src="{url_for('static', filename='/userpics/Modlogo.png')}"
+                src="{url_for('static', filename='userpics/pics/logojam.png', _external=True)}"
             />
         </div>
         &nbsp;<br>
 
-        <h2>Hello {user.first_name},</h2>
+        <h2>{greeting}</h2>
 
-        <p style="font-size: 18px; text-align:justify;"> We would like to thank you for your registration
-        received today {date}. We wish you a warn Welcome to the "Jambo community" where you can reserve
-        short stay safer, happier and cheaper. Also, you can confidently add a room to start generating
-        passive income. <br>
+        <p style="font-size: 18px; text-align:justify;"> {intro}
+        <br>
         &nbsp;<br>
-        Click on the button below to verify and activate your account and start your Jambo adventure.
+        {cta_text}
         </p>
 
         <div>&nbsp; &nbsp;</div>
         
         <a href="{ url_for('users.verify_email', token=token, _external=True)}">
-        <button class="favorite styled" type="button">Verify & Activate your account</button></a>
+        <button class="favorite styled" type="button">{button_text}</button></a>
 
         <div>&nbsp;</div>
-        <h3> Kind regards <br/> <b>Jambo</b> <br/> Customer Service.</h3>
-        <p  style="text-align:center">Copyright © 2026 Jambo. All Rights Reserved. | <small class="text-warning font-italic text-capitalize">Powered by <a href="https://tboss.ci/" style="text-decoration:none;">Techno Boss Intl.</a></small></p>
+        <h3> {regards} <br/> <b>Jambo</b> <br/> {customer_service}</h3>
+        <p  style="text-align:center">{copyright_text} | <small class="text-warning font-italic text-capitalize">{powered_by} <a href="https://tboss.ci/" style="text-decoration:none;">Techno Boss Intl.</a></small></p>
 
     </body>
 </html>

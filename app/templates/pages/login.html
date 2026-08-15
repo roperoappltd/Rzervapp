@@ -26,7 +26,10 @@
         </svg>
       </div>
       <h1>{{ _('Welcome to Jambo') }}</h1>
-      <p>{% trans %}Explore <b class="text-success">great & amazing</b> Stuffs!{% endtrans %}</p>
+      <p>
+        {% trans %}Explore <b class="text-success">great & amazing</b> Stuffs!{%
+        endtrans %}
+      </p>
     </div>
 
     <form method="post">
@@ -160,6 +163,10 @@
       </button>
     </form>
 
+    {# Hidden until real social login (Google/Facebook OAuth) is actually built
+    server-side -- these buttons were previously non-functional demo/placeholder
+    UI with no backend behind them at all. Remove this comment wrapper once that
+    feature is implemented. #} {#
     <div class="divider">
       <span>{{ _('or sign in with') }}</span>
     </div>
@@ -196,6 +203,7 @@
         Facebook
       </button>
     </div>
+    #}
 
     <div class="signup-link">
       <p>
@@ -224,6 +232,6 @@
 </div>
 
 <script src="{{ url_for('static', filename='login/shared/js/form-utils.js')}}"></script>
-<script src="{{ url_for('static', filename='login/js/script.js')}}"></script>
+<script src="{{ url_for('static', filename='js/password_toggle.js')}}"></script>
 
 {% endblock content %}

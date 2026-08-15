@@ -89,7 +89,7 @@
     <!-- =======================================================
   * Template Name: Rezerva
   * Updated: Jul 29 2025 with Bootstrap v5.3.7
-  * Author: Rezerva.com
+  * Author: Jambo.com
   ======================================================== -->
   </head>
 
@@ -315,6 +315,15 @@
                       {{ _("Profile") }} 👤
                   </a>
                 </li>
+                {% if current_user.is_admin %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item text-primary"
+                    href="{{ url_for('admin.index') }}">
+                      {{ _("Admin Panel") }} 🛡️
+                  </a>
+                </li>
+                {% endif %}
                 <li><hr class="dropdown-divider"></li>
                 <li>
                   <a class="dropdown-item text-danger"

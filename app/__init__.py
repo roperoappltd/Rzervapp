@@ -165,4 +165,17 @@ def create_app(config_name='default'):
             visitor_country=prefs.country,
         )
 
+    # ---------------- CLI commands ----------------
+    @app.cli.command("update-exchange-rates")
+    def update_exchange_rates_command():
+        '''Fetches current rates and updates ExchangeRate.
+        Test locally with: flask update-exchange-rates
+        Scheduled later via cron on the VPS -- see the crontab example
+        below. Provides its own Flask app context automatically, so it
+        can run standalone, outside of a live request.'''
+        from app.services.exchange_updater import update_exchange_rates
+        
+        success, message = update_exchange_rates()
+        print(message)
+
     return app

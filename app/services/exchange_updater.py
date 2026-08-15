@@ -21,6 +21,11 @@ SUPPORTED_CURRENCIES = [
 ]
 
 def update_exchange_rates():
+    '''Fetches current GBP-based rates and updates ExchangeRate.
+    Returns (success: bool, message: str) rather than printing directly
+    -- keeps this function reusable from any caller (CLI, a future admin
+    "refresh now" button, etc.) without hardcoding console output into
+    business logic that won't always be run from a console.'''
     API_KEY = current_app.config["XCHANGE_RATE_API_KEY"]
     url = (
         f"https://v6.exchangerate-api.com/v6/"
@@ -33,18 +38,10 @@ def update_exchange_rates():
 
         data = response.json()
     except requests.RequestException as e:
-
-        print("Exchange API connection failed")
-        print(e)
-
-        return False
+        return False, f"Exchange API connection failed: {e}"
 
     if data.get("result") != "success":
-
-        print("Exchange API returned an error")
-        print(data)
-
-        return False
+        return False, f"Exchange API returned an error: {data}"
 
     rates = data["conversion_rates"]
 
@@ -74,6 +71,4 @@ def update_exchange_rates():
 
     db.session.commit()
 
-    print("Exchange rates updated successfully.")
-
-    return True
+    return True, "Exchange rates updated successfully."

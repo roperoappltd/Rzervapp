@@ -218,7 +218,7 @@
                   data-bs-toggle="dropdown"
                 >
                   <img
-                    src="{{ url_for('static', filename='userpics/default.jpg') }}"
+                    src="{{ url_for('static', filename='/userpics/profile/') + current_user.image_file }}"
                     class="rounded-circle article-img me-1"
                     height="25px"
                     width="25px"
@@ -237,15 +237,15 @@
                     class="dropdown-item"
                     href="{{ url_for('udash.udashboard') }}"
                     ><i class="align-middle me-1" data-feather="pie-chart"></i>
-                    {{ _("Dashboard") }}</a
+                    {{ _("User Dashboard") }}</a
                   >
                   <div class="dropdown-divider"></div>
-                  <a
+                  <!-- <a
                     class="dropdown-item"
                     href="{{ url_for('udash.earnings') }}"
                     ><i class="align-middle me-1" data-feather="briefcase"></i>
                     {{ _("Piggybank") }}</a
-                  >
+                  > -->
                   <a class="dropdown-item" href="{{ url_for('main.contact') }}"
                     ><i
                       class="align-middle me-1"

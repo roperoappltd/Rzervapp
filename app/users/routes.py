@@ -9,6 +9,7 @@ from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPassword
 from app.rooms.forms import AddRoomForm, UpdateRoomForm
 from app.rooms.roomutils import can_cancel
 from app.helpers.cancel_checks import cancel_and_refund_if_paid
+from app.services.preference_service import VisitorPreferences
 from .usermails.resetrequest import send_reset_email
 from .usermails.joinusmail import member_regismail
 from .utils import save_picture
@@ -105,9 +106,13 @@ def signup():
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")    # Hashing user password
         user = User(first_name=form.first_name.data, last_name=form.last_name.data,
                     username=form.username.data, dob=form.dob.data, email=form.email.data,
-                    password=hashed_pass, terms=form.terms.data)
+                    password=hashed_pass,
+                    terms_accepted=form.terms.data,
+                    terms_accepted_at=datetime.utcnow(),
+                    language=VisitorPreferences().language)  # NEW: was never set, always sat at the 'en' 
+                                                             # default regardless of the visitor's actual detected language
 
-        db.session.add(user)                                                               # adding the user to the database
+        db.session.add(user)                                                               
         db.session.commit()  
         # send account verification email to user
         member_regismail(user)

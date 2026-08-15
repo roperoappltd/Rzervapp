@@ -12,7 +12,7 @@ from flask_mail import Message
 from app import mail
 from app.rooms.notification.contactmail import karibu_contact
 from app.services.image_storage import get_room_image_url
-from sqlalchemy.sql.expression import func
+# from sqlalchemy.sql.expression import func
 import os
 from dotenv import load_dotenv
 from flask_babel import gettext, _
@@ -61,14 +61,31 @@ main = Blueprint('main', __name__)
 #                             offer_2=offer_2, offer_3=offer_3)
 
  
+import random as pyrandom
+
+def get_random_rooms(n=1, status=None):
+    '''Returns up to n randomly-selected rooms. Deliberately avoids
+    func.random() -- SQLAlchemy emits that as the literal SQL random(),
+    which SQLite understands natively but MySQL does not (MySQL's
+    equivalent is RAND(), a different function name). Doing the
+    randomization in Python instead keeps this portable across both
+    without needing to branch on which dialect is active.'''
+    query = Rooms.query
+    if status:
+        query = query.filter_by(status=status)
+    room_ids = [r.id for r in query.with_entities(Rooms.id).all()]
+    if not room_ids:
+        return []
+    chosen_ids = pyrandom.sample(room_ids, min(n, len(room_ids)))
+    return Rooms.query.filter(Rooms.id.in_(chosen_ids)).all()
+
+
 @main.route("/")                                                     
 @main.route("/home") 
 def home():
     '''This function create a route to render the home page'''
     # Randomly query the fourth latest available rooms
-    latest_rooms =  (Rooms.query.filter_by(status='Available')
-                                 .order_by(db.func.random())
-                                 .limit(3).all())
+    latest_rooms = get_random_rooms(n=3, status='Available')
     # Every 4 rooms  
     featured_rooms = (Rooms.query.order_by(
                       Rooms.created_at.desc())
@@ -82,22 +99,24 @@ def home():
     # immediately with AttributeError the moment anyone visited "/".
     # Guarding each one so the homepage degrades gracefully instead.
  
-    # weekend deals
-    weekend_room = (Rooms.query.order_by(db.func.random()).first())
+    # weekend deals -- status filter intentionally left exactly as it
+    # was (none) -- not adding one as part of this fix, flagged
+    # separately as worth a decision.
+    weekend_room = (get_random_rooms(n=1) or [None])[0]
     wkend_deal = db.session.query(Deals).filter(Deals.name == 'Weekend Deal').first()
     offer_1 = None
     if weekend_room and wkend_deal:
         offer_1 = float(weekend_room.price) - (float(weekend_room.price) * (wkend_deal.discount_percent / 100))
  
     # weekday deals
-    weekday_room = (Rooms.query.order_by(db.func.random()).first())
+    weekday_room = (get_random_rooms(n=1) or [None])[0]
     wkday_deal = db.session.query(Deals).filter(Deals.name == 'Weekday Deal').first()
     offer_2 = None
     if weekday_room and wkday_deal:
         offer_2 = float(weekday_room.price) - (float(weekday_room.price) * (wkday_deal.discount_percent / 100))
  
     # Romantic deal
-    romantic_room = (Rooms.query.order_by(db.func.random()).first())
+    romantic_room = (get_random_rooms(n=1) or [None])[0]
     rom_deal = db.session.query(Deals).filter(Deals.name == 'Romantic Getaway').first()
     offer_3 = None
     if romantic_room and rom_deal:

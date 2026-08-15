@@ -247,10 +247,18 @@ def udashboard():
     # template too if you want the currency code/symbol shown alongside it.
     total_earnings = convert_currency(float(total_earnings), "GBP", current_user.preferred_currency)
     
-    total_withdrawals = db.session.query(db.func.sum(Withdrawal.amount)
+    # amount_gbp, not amount_host -- same cross-currency aggregation
+    # reasoning as total_earnings above. Withdrawal.amount was never a
+    # real column; it was split into amount_host/amount_gbp when that
+    # model was fixed.
+    total_withdrawals = db.session.query(db.func.sum(Withdrawal.amount_gbp)
                                         ).filter(Withdrawal.user_id==current_user.id,
                                         Withdrawal.status.in_(["Pending","Approved"]
                                         )).scalar() or 0
+    # Converted to the host's preferred currency for display, matching
+    # total_earnings' treatment -- kept as a plain number, not a
+    # formatted string.
+    total_withdrawals = convert_currency(float(total_withdrawals), "GBP", current_user.preferred_currency)
     
     # available_balance = get_host_balance(current_user.id) 
     earnings_state = calculate_monthly_earnings_change(current_user.id)
@@ -259,7 +267,7 @@ def udashboard():
                             totbook=totbook,totrooms=totrooms, 
                             total_earnings=total_earnings, earnings_state=earnings_state, 
                             total_withdrawals=total_withdrawals)
-
+                            
 @udash.route("/profile", methods=['GET', 'POST'])
 @login_required 
 def profile():
@@ -307,8 +315,8 @@ def profile():
         form.zip_code.data = current_user.zip_code
         form.aboutme.data = current_user.aboutme
             
-    # set cuurent user profile pictures to pass to the current default image
-    image_file = url_for('static', filename='userpics/' + current_user.image_file) 
+    # set curent user profile pictures to pass to the current default image
+    image_file = url_for('static', filename='userpics/profile/' + current_user.image_file) 
         
     return render_template('udashpages/usprofile.html', title='My Profile', image_file=image_file, 
                            form=form)

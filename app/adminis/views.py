@@ -18,6 +18,20 @@ class MyAdminIndexView(AdminIndexView):
 
         return self.render("adminpanel/admindash.html", **stats)
 
+    # FIXED: this view had no access control at all -- Flask-Admin's
+    # base AdminIndexView defaults is_accessible() to True unconditionally,
+    # so /admin (the dashboard, showing aggregate business stats) was
+    # reachable by anyone, logged in or not. Every other admin view
+    # already had this exact check; this one was missed.
+    def is_accessible(self):
+        return (
+            current_user.is_authenticated
+            and current_user.is_admin
+        )
+
+    def inaccessible_callback(self, name, **kwargs):
+        return render_template('errors/403.html'), 403
+
 # Pass the custom view to the Admin instance
 # admin = Admin(app, index_view=MyAdminIndexView())
 

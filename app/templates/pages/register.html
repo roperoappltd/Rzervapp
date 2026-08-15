@@ -18,11 +18,11 @@ head_css %} {% block content %}
           <circle cx="20" cy="20" r="3" fill="white" />
         </svg>
       </div>
-      <h1>{{ _('Greetings from Rezerva') }}</h1>
+      <h1>{{ _('Greetings from Jambo') }}</h1>
       <p>
         {{ _('Join a') }}
-        <b class="text-success">{{ _('great & wonderful') }}</b> {{ _('family')
-        }}!
+        <b class="text-success">{{ _('great & wonderful') }}</b> {{
+        _('community') }}!
       </p>
     </div>
 
@@ -160,14 +160,28 @@ head_css %} {% block content %}
         {{ _('Do you agree to the') }} <b>Jambo</b>
         <a href="#">{{ _('Terms of use') }}?</a>
       </h6>
-      <div class="text-center">
-        {% for subfield in form.terms %}
-        <tr>
-          <td>{{ subfield }}</td>
-          <td>{{ subfield.label }}</td>
-        </tr>
-        {% endfor %}
+      <div class="text-center form-check d-inline-block">
+        {{ form.terms(class="form-check-input") }} {{
+        form.terms.label(class="form-check-label") }} {% if form.terms.errors %}
+        {% for error in form.terms.errors %}
+        <span class="text-danger d-block">{{ error }}</span>
+        {% endfor %} {% endif %}
       </div>
+
+      <style>
+        /* Scoped to this one checkbox by id -- doesn't affect any other
+           checkbox elsewhere in the app. Bootstrap's default border is
+           1px and light gray; this makes it thicker and darker so it's
+           actually easy to see. */
+        #terms {
+          border-width: 2px;
+          border-color: #003366; /* matches the login button's navy gradient */
+        }
+        #terms:checked {
+          border-color: #003366;
+          background-color: #003366;
+        }
+      </style>
       <div>&nbsp;</div>
       <button
         type="submit"
@@ -210,6 +224,10 @@ head_css %} {% block content %}
       </button>
     </form>
 
+    {# Hidden until real social login (Google/Facebook OAuth) is actually built
+    server-side -- these buttons were previously non-functional demo/placeholder
+    UI with no backend behind them at all. Remove this comment wrapper once that
+    feature is implemented. #} {#
     <div class="divider">
       <span>{{ _('or sign up in with') }}</span>
     </div>
@@ -246,6 +264,7 @@ head_css %} {% block content %}
         Facebook
       </button>
     </div>
+    #}
 
     <div class="signup-link">
       <p>
@@ -274,6 +293,6 @@ head_css %} {% block content %}
 </div>
 
 <script src="{{ url_for('static', filename='login/shared/js/form-utils.js')}}"></script>
-<script src="{{ url_for('static', filename='login/js/script.js')}}"></script>
+<script src="{{ url_for('static', filename='js/password_toggle.js')}}"></script>
 
 {% endblock content %}

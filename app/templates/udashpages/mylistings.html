@@ -67,12 +67,10 @@ head_css %} {% block content %}
                     <form method="POST" action="">
                       {{ form.hidden_tag() }} {{ form.csrf_token }}
                       <!--START FORM FIELDS-->
-                      <div class="row pb-2 pt-2">
+                      <div class="row pb-1 pt-2">
                         <div class="col-md-6 pb-3">
                           <div class="form-group pl-3 pr-0 mt-2">
-                            <label class="pb-1"
-                              >{{ _('Enter Room name') }}</label
-                            >
+                            <label class="pb-1">{{ _('Room name') }}</label>
                             {{ form.room_name.label(class="form-control-label")
                             }} {% if form.room_name.errors %} {{
                             form.room_name(class="form-control form-control-sm
@@ -88,9 +86,7 @@ head_css %} {% block content %}
                         </div>
                         <div class="col-md-6">
                           <div class="form-group pl-0 pr-3 mt-2">
-                            <label class="pb-1"
-                              >{{ _('Enter Room City') }}</label
-                            >
+                            <label class="pb-1">{{ _('Room City') }}</label>
                             {{
                             form.room_location.label(class="form-control-label")
                             }} {% if form.room_location.errors %} {{
@@ -106,12 +102,10 @@ head_css %} {% block content %}
                           </div>
                         </div>
                       </div>
-                      <div class="row pb-2">
+                      <div class="row pb-1">
                         <div class="col-md-4">
                           <div class="form-group pl-3 pr-0">
-                            <label class="pb-1"
-                              >{{ _('Enter Room Price') }}</label
-                            >
+                            <label class="pb-1">{{ _('Room Price') }}</label>
                             {{ form.price.label(class="form-control-label") }}
                             {% if form.price.errors %} {{
                             form.price(class="form-control form-control-sm
@@ -127,9 +121,7 @@ head_css %} {% block content %}
                         </div>
                         <div class="col-md-4">
                           <div class="form-group pl-0 pr-0">
-                            <label class="pb-1"
-                              >{{ _('Select Room Category') }}</label
-                            >
+                            <label class="pb-1">{{ _('Room Category') }}</label>
                             {{
                             form.room_category.label(class="form-control-label")
                             }} {% if form.room_category.errors %} {{
@@ -146,7 +138,7 @@ head_css %} {% block content %}
                         </div>
                         <div class="col-md-4">
                           <div class="form-group pl-0 pr-3">
-                            <label class="pb-1">{{ _('Select Status') }}</label>
+                            <label class="pb-1">{{ _('Status') }}</label>
                             {{ form.status.label(class="form-control-label") }}
                             {% if form.status.errors %} {{
                             form.status(class="form-control form-control-sm
@@ -161,11 +153,11 @@ head_css %} {% block content %}
                           </div>
                         </div>
                       </div>
-                      <div class="row pb-2">
+                      <div class="row pb-1">
                         <div class="col-md-6">
                           <div class="form-group pl-3 pr-0">
                             <label class="pb-1"
-                              >{{ _('Type a Short Description') }}</label
+                              >{{ _('Short Description') }}</label
                             >
                             {{ form.short_desc.label(class="form-control-label")
                             }} {% if form.short_desc.errors %} {{
@@ -183,7 +175,7 @@ head_css %} {% block content %}
                         <div class="col-md-3">
                           <div class="form-group pl-0 pr-0">
                             <label class="pb-1"
-                              >{{ _('Select Room Size (m2)') }}</label
+                              >{{ _('Room Size (m2)') }}</label
                             >
                             {{ form.room_size.label(class="form-control-label")
                             }} {% if form.room_size.errors %} {{
@@ -216,7 +208,7 @@ head_css %} {% block content %}
                           </div>
                         </div>
                       </div>
-                      <div class="row pb-2">
+                      <div class="row pb-1">
                         <div class="col-md-3">
                           <div class="form-group pl-3 pr-0">
                             <label class="pb-1">{{ _('Ground Rule 1') }}</label>
@@ -233,9 +225,9 @@ head_css %} {% block content %}
                             form-control-sm") }} {% endif %}
                           </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                           <div class="form-group pl-0 pr-0">
-                            <label class="pb-1">{{ _('Ground Rule 2') }}</label>
+                            <label class="pb-1">{{ _('Rule 2') }}</label>
                             {{ form.rule2.label(class="form-control-label") }}
                             {% if form.rule2.errors %} {{
                             form.rule2(class="form-control form-control-sm
@@ -251,7 +243,7 @@ head_css %} {% block content %}
                         </div>
                         <div class="col-md-3">
                           <div class="form-group pl-0 pr-0">
-                            <label class="pb-1">{{ _('Ground Rule 3') }}</label>
+                            <label class="pb-1">{{ _('Rule 3') }}</label>
                             {{ form.rule3.label(class="form-control-label") }}
                             {% if form.rule3.errors %} {{
                             form.rule3(class="form-control form-control-sm
@@ -265,7 +257,7 @@ head_css %} {% block content %}
                             form-control-sm") }} {% endif %}
                           </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <div class="form-group pl-0 pr-3">
                             <label class="pb-1">{{ _('Discount') }}</label>
                             {{
@@ -280,14 +272,12 @@ head_css %} {% block content %}
                             </div>
                             {% else %} {{
                             form.discount_percent(class="form-control
-                            form-control-sm") }} {% endif %}
+                            form-control-sm form-select") }} {% endif %}
                           </div>
                         </div>
                       </div>
-                      <div class="form-group pl-3 pr-3 pb-3 pt-2">
-                        <label class="pb-1"
-                          >{{ _('Enter Room Description') }}</label
-                        >
+                      <div class="form-group pl-3 pr-3 pb-3 pt-1">
+                        <label class="pb-1">{{ _('Room Description') }}</label>
                         {{ form.description.label(class="form-control-label
                         lh-sm") }} {% if form.description.errors %} {{
                         form.description(class="form-control form-control-sm
