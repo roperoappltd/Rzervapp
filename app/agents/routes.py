@@ -120,6 +120,7 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "city": {"type": "string", "description": "City or location."},
+                "borough": {"type": "string", "description": "Optional neighborhood/borough within the city."},
                 "arrival": {"type": "string", "description": "Check-in date, YYYY-MM-DD."},
                 "departure": {"type": "string", "description": "Check-out date, YYYY-MM-DD."},
                 "guests": {"type": "integer", "description": "Number of guests."},
@@ -203,6 +204,7 @@ def _search_rooms_impl(params):
 
     result = build_room_query(
         location=params.get("city"),
+        borough=params.get("borough"),
         room_category=params.get("room_type"),
         min_price=None,
         max_price=params.get("max_price"),
@@ -233,6 +235,7 @@ def _search_rooms_impl(params):
     if not serialized and guests is not None:
         no_guest_filter = build_room_query(
             location=params.get("city"),
+            borough=params.get("borough"),
             room_category=params.get("room_type"),
             max_price=params.get("max_price"),
             arrival=params.get("arrival"),
@@ -421,8 +424,8 @@ def agent_chat():
         history.append({"role": "user", "content": tool_results})
  
     session['agent_messages'] = history
-    return jsonify(reply="Sorry, something went wrong processing that. Could you try again?", rooms=None, checkout_url=None)
-
+    return jsonify(reply="Sorry, something went wrong processing that. Could you try again?", 
+                        rooms=None, checkout_url=None)
  
 @agent.route("/api/agent/reset", methods=['POST'])
 def agent_reset():
@@ -431,4 +434,3 @@ def agent_reset():
     session.pop('pending_booking', None)
     session.pop('last_search_room_ids', None)
     return jsonify(status="cleared")
-

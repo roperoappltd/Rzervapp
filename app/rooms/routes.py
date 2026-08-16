@@ -137,6 +137,7 @@ def roomsearch():
  
     # Navbar search parameters
     location = request.args.get("location", "").strip()
+    borough = None
     arrival = request.args.get("arrival", "")
     departure = request.args.get("departure", "")
  
@@ -150,12 +151,14 @@ def roomsearch():
     if form.validate_on_submit():
         if form.room_location.data:
             location = form.room_location.data
+        if form.borough.data:
+            borough = form.borough.data
         room_category = form.room_category.data
         min_price = form.min_price.data
         max_price = form.max_price.data
  
     result = build_room_query(
-        location=location, room_category=room_category,
+        location=location, borough=borough, room_category=room_category,
         min_price=min_price, max_price=max_price,
         arrival=arrival, departure=departure,
     )

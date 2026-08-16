@@ -23,7 +23,7 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
         {{ form.hidden_tag() }} {{ form.csrf_token }}
         <div class="row g-3 align-items-center">
           <div class="col-lg-3 col-md-6">
-            <label class="form-label">{{ _("By Location") }}</label>
+            <label class="form-label">{{ _("Location") }}</label>
             {{ form.room_location.label(class="form-control-label lh-sm") }} {%
             if form.room_location.errors %} {{
             form.room_location(class="form-control form-control-sm is-invalid")
@@ -33,11 +33,11 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.room_location(class="form-control
-            form-control-sm") }} {% endif %}
+            {% else %} {{ form.room_location(class="form-control form-control-sm
+            form-select") }} {% endif %}
           </div>
           <div class="col-lg-3 col-md-6">
-            <label class="form-label">{{ _("By Room type") }}</label>
+            <label class="form-label">{{ _("Room type") }}</label>
             {{ form.room_category.label(class="form-control-label lh-sm") }} {%
             if form.room_category.errors %} {{
             form.room_category(class="form-control form-control-sm is-invalid")
@@ -47,8 +47,8 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.room_category(class="form-control
-            form-control-sm") }} {% endif %}
+            {% else %} {{ form.room_category(class="form-control form-control-sm
+            form-select") }} {% endif %}
           </div>
           <div class="col-lg-3 col-md-6">
             <label class="form-label">{{ _("Min Price") }}</label>
@@ -75,6 +75,19 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
             </div>
             {% else %} {{ form.max_price(class="form-control form-control-sm")
             }} {% endif %}
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <label class="form-label">{{ _("Borough") }}</label>
+            {{ form.borough.label(class="form-control-label lh-sm") }} {% if
+            form.borough.errors %} {{ form.borough(class="form-control
+            form-control-sm is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.borough.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.borough(class="form-control form-control-sm
+            form-select") }} {% endif %}
           </div>
           <div class="col-md-12 text-center">
             <!-- <label class="form-label">Search</label> -->

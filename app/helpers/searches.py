@@ -1,9 +1,10 @@
 from flask import url_for
 from app.models.roommodel import Rooms
+from app.services.image_storage import get_room_image_url
 from datetime import datetime
 from .is_avail import is_available
 
-def build_room_query(location=None, room_category=None, min_price=None,
+def build_room_query(location=None, borough=None, room_category=None, min_price=None,
                       max_price=None, arrival=None, departure=None, guests=None):
     '''
     Shared query-building logic used by both the HTML roomsearch route and
@@ -23,6 +24,8 @@ def build_room_query(location=None, room_category=None, min_price=None,
  
     if location:
         query = query.filter(Rooms.room_location.ilike(f"%{location}%"))
+    if borough:
+        query = query.filter(Rooms.borough.ilike(f"%{borough}%"))
     if room_category:
         query = query.filter(Rooms.room_category == room_category)
     if min_price is not None:
@@ -76,6 +79,7 @@ def serialize_room(room):
         "id": room.id,
         "name": getattr(room, "room_name", None) or f"Room {room.id}",
         "location": room.room_location,
+        "borough": room.borough,
         "category": room.room_category,
         "price": float(room.price) if room.price is not None else None,
         "max_occupancy": room.max_occupancy,

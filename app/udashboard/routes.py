@@ -267,7 +267,7 @@ def udashboard():
                             totbook=totbook,totrooms=totrooms, 
                             total_earnings=total_earnings, earnings_state=earnings_state, 
                             total_withdrawals=total_withdrawals)
-                            
+
 @udash.route("/profile", methods=['GET', 'POST'])
 @login_required 
 def profile():
@@ -315,7 +315,7 @@ def profile():
         form.zip_code.data = current_user.zip_code
         form.aboutme.data = current_user.aboutme
             
-    # set curent user profile pictures to pass to the current default image
+    # set cuurent user profile pictures to pass to the current default image
     image_file = url_for('static', filename='userpics/profile/' + current_user.image_file) 
         
     return render_template('udashpages/usprofile.html', title='My Profile', image_file=image_file, 
@@ -495,6 +495,7 @@ def mylistings():
             clean_description = sanitize_input(form.description.data)
             # room listing info   
             room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
+                            borough=form.borough.data,
                             room_country=location["country"], price=form.price.data, 
                             room_category=form.room_category.data, status=form.status.data,
                             short_desc=clean_short_desc, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 

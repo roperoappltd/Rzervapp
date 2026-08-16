@@ -28,6 +28,7 @@ class AddRoomForm(FlaskForm):
     # Defining some fields that can be updated with necessary validators
     room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30)])
     room_location =  StringField('', validators=[DataRequired(), Length(max=30)])
+    borough = StringField('', validators=[DataRequired(), Length(max=50)])
     room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
     short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=50)]) 
@@ -95,6 +96,10 @@ class UpdateRoomForm(FlaskForm):
     # Defining some fields that can be updated with necessary validators
     room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30)])
     #room_location =  StringField('', validators=[DataRequired(), Length(max=30)])
+    #borough = StringField('', validators=[DataRequired(), Length(max=50)])  
+    # LOCKED: same reasoning as room_location -- a room's physical location, 
+    # at any granularity, doesn't change post-creation. Genuine typo correction 
+    # goes through RoomAdmin instead, not routine self-service editing.
     room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
     short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100)]) 
@@ -209,6 +214,7 @@ class VouchersForm(FlaskForm):
 
 class RoomSearchForm(FlaskForm):
     room_location = SelectField('', choices = [ ], validators=[Optional()])
+    borough = SelectField('', choices = [ ], validators=[Optional()])
     room_category = SelectField('', choices = [ ], validators=[Optional()])
     min_price = FloatField('', validators=[Optional()])
     max_price = FloatField('', validators=[Optional()])

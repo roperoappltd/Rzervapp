@@ -18,20 +18,6 @@ class MyAdminIndexView(AdminIndexView):
 
         return self.render("adminpanel/admindash.html", **stats)
 
-    # FIXED: this view had no access control at all -- Flask-Admin's
-    # base AdminIndexView defaults is_accessible() to True unconditionally,
-    # so /admin (the dashboard, showing aggregate business stats) was
-    # reachable by anyone, logged in or not. Every other admin view
-    # already had this exact check; this one was missed.
-    def is_accessible(self):
-        return (
-            current_user.is_authenticated
-            and current_user.is_admin
-        )
-
-    def inaccessible_callback(self, name, **kwargs):
-        return render_template('errors/403.html'), 403
-
 # Pass the custom view to the Admin instance
 # admin = Admin(app, index_view=MyAdminIndexView())
 
@@ -91,7 +77,7 @@ class RoomAdmin(ModelView):
     column_list = ("id", "room_name", "price", "room_currency", "room_country", "status", "created_at")  # FIXED: 'currency' -> 'room_currency'; added 'status', useful at a glance
 
     # Search -- text fields only
-    column_searchable_list = ("room_name", "room_country", "room_location")  # FIXED: removed 'price' -- LIKE against a Numeric column works by accident on SQLite, likely breaks on MySQL
+    column_searchable_list = ("room_name", "room_country", "room_location", "borough")  # FIXED: removed 'price' -- LIKE against a Numeric column works by accident on SQLite, likely breaks on MySQL
 
     # Filters -- price belongs here (range/exact match), not in text search
     column_filters = ("room_country", "room_category", "status", "price", "room_currency")
@@ -112,7 +98,7 @@ class RoomAdmin(ModelView):
     # fields an admin can edit directly, e.g. leaving room ownership
     # (user_id) reassignment as an intentional inclusion, not an accident
     # of an unset default.
-    form_columns = ("room_name", "room_location", "room_country", "room_category",
+    form_columns = ("room_name", "room_location", "borough", "room_country", "room_category",
                      "price", "room_currency", "max_occupancy", "room_size",
                      "short_desc", "description", "status",
                      "rule1", "rule2", "rule3",
@@ -193,7 +179,7 @@ class PayAdmin(ModelView):
         pay_method='Method',
         accounting_amount='Total Paid',
         payment_currency='Currency',
-        transac_fee_host="Transaction Fee (Host Currency)",
+        transac_fee_host="Transac. Fee (Host Currency)",
     )
 
     # Sorting

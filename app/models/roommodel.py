@@ -10,6 +10,11 @@ class Rooms(db.Model):
     # ------------------------------------------------------------------------------------- 
     room_name = db.Column(db.String(30), nullable=False)  # FIXED: was globally unique=True -- two hosts could reasonably want the same name
     room_location = db.Column(db.String(30), nullable=False, index=True)  # NEW: index, this is a search filter
+    # NEW: index, this is a search filter
+    # NEW: host-typed (not geocoded -- OSM coverage for African cities like Abidjan 
+    # is too inconsistent to rely on). Indexed now since this becomes a search 
+    # filter in the next phase.
+    borough = db.Column(db.String(50), nullable=False, index=True)  
     # room_address = db.Column(db.String(150), nullable=True)
     room_country = db.Column(db.String(50), nullable=True)
     room_category = db.Column(db.String(30), nullable=False, index=True)  # NEW: index, this is a search filter
