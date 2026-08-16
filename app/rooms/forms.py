@@ -40,9 +40,9 @@ class AddRoomForm(FlaskForm):
     description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=350)])
     status =  SelectField('', choices=[('', ' '), ('Available', 'Available'),('Maintenance', 'Maintenance'),], 
                                 validators=[DataRequired()])
-    rule1 =  StringField('', validators=[Optional(), Length(min=10, max=60)])
-    rule2 =  StringField('', validators=[Optional(), Length(min=10, max=60)])
-    rule3 =  StringField('', validators=[Optional(), Length(min=10, max=60)])
+    rule1 =  StringField('', validators=[Optional(), Length(min=5, max=60)])
+    rule2 =  StringField('', validators=[Optional(), Length(min=5, max=60)])
+    rule3 =  StringField('', validators=[Optional(), Length(min=5, max=60)])
     # discount_percent = IntegerField('', validators=[Optional(), NumberRange(min=0, max=90)])
     discount_percent = SelectField('',choices=[('', ' '), ('10', '10'), ('15', '15'), ('20', '20'),('25', '25'),
                                         ('30', '30'), ('35', '35')], validators=[Optional()]) 

@@ -154,7 +154,7 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
                   <span class="price-from">{{ _("From") }}</span>
                   <span class="price-amount"
                     ><!--$289-->
-                    {{ room.price }}</span
+                    {{ format_room_price(room) }}</span
                   >
                   <span class="price-period">/ {{ _("night") }}</span>
                 </div>

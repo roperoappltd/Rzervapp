@@ -275,12 +275,11 @@ head_css %} {% block content %}
                         </div>
                         <div class="col-md-2">
                           <div class="form-group pl-0 pr-3">
-                            <label class="pb-1">{{ _('Discount') }}</label>
-                            {{
-                            form.discount_percent.label(class="form-control-label")
-                            }} {% if form.discount_percent.errors %} {{
+                            <label class="pb-1">{{ _('Discount (%%)') }}</label>
+                            {% if form.discount_percent.errors %} {{
                             form.discount_percent(class="form-control
-                            form-control-sm is-invalid") }}
+                            form-control-sm is-invalid", placeholder="e.g. 10")
+                            }}
                             <div class="invalid-feedback">
                               {% for error in form.discount_percent.errors %}
                               <span>{{ error }}</span>
@@ -288,7 +287,8 @@ head_css %} {% block content %}
                             </div>
                             {% else %} {{
                             form.discount_percent(class="form-control
-                            form-control-sm form-select") }} {% endif %}
+                            form-control-sm", placeholder="e.g. 10") }} {% endif
+                            %}
                           </div>
                         </div>
                       </div>
@@ -354,16 +354,7 @@ head_css %} {% block content %}
                         <td>{{ roo.room_location }}</td>
                         <td>{{ roo.room_category }}</td>
                         <td>{{ roo.status }}</td>
-                        {% if preferred_currency == roo.currency %}
-                        <td class="text-right">
-                          {{ format_money(roo.price, roo.currency) }}
-                        </td>
-                        {% else %}
-                        <td class="text-right">
-                          {{ convert_and_format(roo.price, roo.currency,
-                          preferred_currency) }}
-                        </td>
-                        {% endif %}
+                        <td class="text-right">{{ format_room_price(roo) }}</td>
                         <td class="text-right">
                           <!-- Example single danger button -->
                           <div class="dropdown">
@@ -414,11 +405,24 @@ head_css %} {% block content %}
                                 >
                               </li>
                               <li>
-                                <a
-                                  href="{{ url_for('bedrooms.delete_room', room_id=roo.id)}}"
-                                  class="dropdown-item"
-                                  >{{ _('Delete listing') }}</a
+                                <form
+                                  method="POST"
+                                  action="{{ url_for('bedrooms.delete_room', room_id=roo.id) }}"
+                                  class="confirm-before-submit"
+                                  data-confirm-message="{{ _('Are you sure you want to delete this listing? It will be removed from search.') }}"
                                 >
+                                  <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
+                                  />
+                                  <button
+                                    type="submit"
+                                    class="dropdown-item btn btn-link"
+                                  >
+                                    {{ _('Delete listing') }}
+                                  </button>
+                                </form>
                               </li>
                             </ul>
                           </div>
@@ -458,5 +462,8 @@ head_css %} {% block content %}
     </main>
   </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/confirm_submit.js') }}"></script>
+<script src="{{ url_for('static', filename='js/table_dropdown_fix.js') }}"></script>
 
 {% endblock content %}

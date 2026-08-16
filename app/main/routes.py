@@ -1,5 +1,6 @@
 from flask import (Blueprint, render_template, flash, redirect, url_for, session, 
                    current_app, request) 
+from decimal import Decimal
 from flask_login import current_user
 from app import db
 from app.models.roommodel import Rooms, Deals
@@ -12,6 +13,8 @@ from flask_mail import Message
 from app import mail
 from app.rooms.notification.contactmail import karibu_contact
 from app.services.image_storage import get_room_image_url
+from app.services.currency import convert_and_format, get_exchange_rates
+from app.services.preference_service import VisitorPreferences
 # from sqlalchemy.sql.expression import func
 import os
 from dotenv import load_dotenv
@@ -99,28 +102,62 @@ def home():
     # immediately with AttributeError the moment anyone visited "/".
     # Guarding each one so the homepage degrades gracefully instead.
  
-    # weekend deals -- status filter intentionally left exactly as it
-    # was (none) -- not adding one as part of this fix, flagged
-    # separately as worth a decision.
-    weekend_room = (get_random_rooms(n=1) or [None])[0]
-    wkend_deal = db.session.query(Deals).filter(Deals.name == 'Weekend Deal').first()
-    offer_1 = None
-    if weekend_room and wkend_deal:
-        offer_1 = float(weekend_room.price) - (float(weekend_room.price) * (wkend_deal.discount_percent / 100))
- 
-    # weekday deals
-    weekday_room = (get_random_rooms(n=1) or [None])[0]
-    wkday_deal = db.session.query(Deals).filter(Deals.name == 'Weekday Deal').first()
-    offer_2 = None
-    if weekday_room and wkday_deal:
-        offer_2 = float(weekday_room.price) - (float(weekday_room.price) * (wkday_deal.discount_percent / 100))
- 
-    # Romantic deal
-    romantic_room = (get_random_rooms(n=1) or [None])[0]
-    rom_deal = db.session.query(Deals).filter(Deals.name == 'Romantic Getaway').first()
-    offer_3 = None
-    if romantic_room and rom_deal:
-        offer_3 = float(romantic_room.price) - (float(romantic_room.price) * (rom_deal.discount_percent / 100))
+    # --------------------------------------------------
+    # Host-set discounted rooms -- up to 3 shown at random. Hosts don't
+    # choose a category when setting a discount (just a percentage), so
+    # each selected room gets a randomly-assigned display label purely
+    # for visual variety on the card -- these are NOT tied to any real
+    # weekend/weekday/romantic logic, just decorative copy. Replaces the
+    # old system of 3 fixed named campaigns each paired with a random
+    # room, since that's unrelated to actual host-set discounts.
+    # --------------------------------------------------
+    deal_card_styles = [
+        {"title": _("Weekend Getaway Deal"), "subtext": _("Perfect for a quick escape")},
+        {"title": _("Weekday Massive Deal"), "subtext": _("Great value any day of the week")},
+        {"title": _("Couples Great Savings"), "subtext": _("Available year-round")},
+    ]
+
+    active_deals = Deals.query.filter(Deals.room_id.isnot(None), Deals.active == True).all()
+    chosen_deals = pyrandom.sample(active_deals, min(3, len(active_deals)))
+    chosen_styles = pyrandom.sample(deal_card_styles, len(chosen_deals))  # no repeated label among the cards shown
+
+    # Same GBP-bridge pattern used everywhere else -- room.price is in
+    # the ROOM's own currency (e.g. XOF), not GBP, so it needs converting
+    # through GBP before being shown in the viewer's currency. Previously
+    # these cards had a hardcoded £, which would have been actively
+    # wrong the moment a non-GBP-priced room appeared here.
+    guest_currency = VisitorPreferences().currency
+    rates = get_exchange_rates()
+
+    deal_cards = []
+    for deal, style in zip(chosen_deals, chosen_styles):
+        room = deal.room
+        if not room:
+            continue  # defensive -- shouldn't happen given the FK, but don't let one bad row break the whole section
+
+        raw_room_rate = rates.get(room.room_currency)
+        if raw_room_rate is None:
+            continue  # no exchange rate available for this room's currency -- skip rather than show a wrong/crashing price
+
+        # Same Decimal/float mixing fix as convert_currency() --
+        # ExchangeRate.rate is a Numeric column (Decimal by default),
+        # and dividing a plain float by it throws TypeError. Cast back
+        # to float once the division is done, since the discount
+        # percentage math right below (deal.discount_percent / 100, a
+        # plain float) would hit the identical error again if
+        # price_gbp were left as a Decimal.
+        room_rate = Decimal(str(raw_room_rate))
+        price_gbp = float(Decimal(str(room.price)) / room_rate)
+        offer_price_gbp = price_gbp - (price_gbp * (deal.discount_percent / 100))
+
+        deal_cards.append({
+            "room": room,
+            "deal": deal,
+            "original_price_display": convert_and_format(price_gbp, "GBP", guest_currency),
+            "offer_price_display": convert_and_format(offer_price_gbp, "GBP", guest_currency),
+            "title": style["title"],
+            "subtext": style["subtext"],
+        })
  
     # Query first image -- guarded against no rooms existing at all,
     # and against a room existing but never having had an image uploaded.
@@ -130,10 +167,7 @@ def home():
  
     return render_template('pages/homes.html',  title='Home', spotlight=spotlight, 
                             image1=image1, latest_rooms=latest_rooms, featured_rooms=featured_rooms,
-                            weekend_room=weekend_room, weekday_room=weekday_room,
-                            romantic_room=romantic_room, wkend_deal=wkend_deal,
-                            wkday_deal=wkday_deal, rom_deal=rom_deal, offer_1=offer_1,
-                            offer_2=offer_2, offer_3=offer_3)
+                            deal_cards=deal_cards)
 
 @main.route("/about") 
 def about():

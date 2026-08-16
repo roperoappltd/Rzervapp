@@ -52,11 +52,7 @@ head_css %} {% block content %}
                         <td>{{ booh.rooms.room_location }}</td>
 
                         <td>
-                          {% if preferred_currency == booh.rooms.currency %} {{
-                          format_money(booh.rooms.price, booh.rooms.currency) }}
-                          {% else %} {{ convert_and_format(booh.rooms.price,
-                          booh.rooms.currency, preferred_currency) }} {% endif
-                          %}
+                          {{ format_room_price(booh.rooms) }}
                         </td>
 
                         <td>{{ booh.primary_guest }}</td>
@@ -204,17 +200,9 @@ head_css %} {% block content %}
                         <td>{{ boo.departure.strftime('%d %B %Y') }}</td>
                         <td>{{ boo.rooms.room_name }}</td>
                         <td>{{ boo.rooms.room_location }}</td>
-                        {% if preferred_currency == boo.rooms.currency %}
                         <td>
-                          {{ format_money(boo.rooms.price, boo.rooms.currency)
-                          }}
+                          {{ format_room_price(boo.rooms) }}
                         </td>
-                        {% else %}
-                        <td>
-                          {{ convert_and_format(boo.rooms.price,
-                          boo.rooms.currency, preferred_currency) }}
-                        </td>
-                        {% endif %}
                         <td>
                           {{ boo.rooms.user.first_name}} {{
                           boo.rooms.user.last_name}}

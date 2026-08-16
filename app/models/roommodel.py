@@ -10,11 +10,7 @@ class Rooms(db.Model):
     # ------------------------------------------------------------------------------------- 
     room_name = db.Column(db.String(30), nullable=False)  # FIXED: was globally unique=True -- two hosts could reasonably want the same name
     room_location = db.Column(db.String(30), nullable=False, index=True)  # NEW: index, this is a search filter
-    # NEW: index, this is a search filter
-    # NEW: host-typed (not geocoded -- OSM coverage for African cities like Abidjan 
-    # is too inconsistent to rely on). Indexed now since this becomes a search 
-    # filter in the next phase.
-    borough = db.Column(db.String(50), nullable=False, index=True)  
+    borough = db.Column(db.String(50), nullable=False, index=True)  # NEW: host-typed (not geocoded -- OSM coverage for African cities like Abidjan is too inconsistent to rely on). Indexed now since this becomes a search filter in the next phase.
     # room_address = db.Column(db.String(150), nullable=True)
     room_country = db.Column(db.String(50), nullable=True)
     room_category = db.Column(db.String(30), nullable=False, index=True)  # NEW: index, this is a search filter
@@ -29,6 +25,7 @@ class Rooms(db.Model):
     max_occupancy = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)  # FIXED: was room_price / Float -- kept as `price` to match existing code in search.py and create_booking()
     description = db.Column(db.Text, nullable=False)
+    content_language = db.Column(db.String(5), nullable=False, default='en')  # NEW: language the host actually wrote room_name/short_desc/description/rules in -- lets viewers see this before reading, since our _() translation system only covers static UI text, never user-generated content
     status = db.Column(db.String(20), nullable=False, default="Available")  # Available - Maintenance - Hidden
     rule1 = db.Column(db.String(50), nullable=True)
     rule2 = db.Column(db.String(50), nullable=True)

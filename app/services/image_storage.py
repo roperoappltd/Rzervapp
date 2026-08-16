@@ -82,7 +82,16 @@ def get_room_image_url(key):
     Safe to call from both Python code and Jinja templates (registered
     as a template global in app/__init__.py).
     '''
-    if not key:
+    # FIXED: the default placeholder ("roomdef1.jpg", from Rooms.image1's
+    # column default) is a permanent app asset bundled with the code --
+    # it's never actually uploaded via upload_room_image(), so it can
+    # never exist on Cloudinary. Previously only `if not key` was
+    # checked, which never caught this case (the string "roomdef1.jpg"
+    # is truthy), so it fell through to the Cloudinary branch whenever
+    # that backend was active and tried to fetch something that was
+    # never there. Routing this one specific filename to local static
+    # unconditionally, regardless of IMAGE_BACKEND.
+    if not key or key == 'roomdef1.jpg':
         return url_for('static', filename='userpics/roompics/roomdef1.jpg')
 
     backend = current_app.config.get("IMAGE_BACKEND", "local")

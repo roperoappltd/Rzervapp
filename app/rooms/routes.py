@@ -825,6 +825,7 @@ def update_room(room_id):
     # adding the logic to validate changes and add to db
     if form.validate_on_submit(): 
         room.room_name = form.room_name.data
+        room.content_language = VisitorPreferences().language  # NEW: re-captured on every edit, since this describes the CURRENT text, not a fixed fact like borough
         room.room_category = form.room_category.data
         room.short_desc = form.short_desc.data
         room.max_occupancy = form.max_occupancy.data
@@ -924,21 +925,50 @@ def update_roompics(room_id):
                             form=form, room=room)
 
 # route to delete a specific listing
-@bedrooms.route("/room/<int:room_id>/delete", methods=['GET', 'POST'])
+@bedrooms.route("/room/<int:room_id>/delete", methods=['POST'])
 @login_required
 def delete_room(room_id):
-    '''This function enable to delete a post'''
+    '''This function hides a listing rather than deleting the row --
+    Bookings, Roomreviews, and RoomView all have nullable=False FKs to
+    rooms.id, plus Deals/Roomextra/RoomBlock also reference it. A real
+    delete would throw an IntegrityError the moment this room has ANY
+    booking, review, or even a single logged page view -- which,
+    realistically, is almost immediately. Same reasoning as
+    delete_account()'s soft-delete: nothing actually gets removed, so
+    none of those relationships are ever threatened.'''
     # fetch the room by id if exist or return 404 if doesnt 
     room = Rooms.query.get_or_404(room_id)
     # Check if the user is the creator of the room first 
     if room.user_id != current_user.id:
         abort(403)
-    # delete the post in the db and commit the change
-    db.session.delete(room)
+
+    # Same check as delete_account()'s host-side block: don't let a host
+    # pull a listing out from under a guest who's already paid and
+    # expecting to stay there.
+    upcoming_guest = Bookings.query.filter(
+        Bookings.room_id == room.id,
+        Bookings.status == 'Confirmed',
+        Bookings.departure > date.today(),
+    ).first()
+
+    if upcoming_guest:
+        flash(_("This room has an upcoming guest booking and can't be removed. Please resolve it first."), "danger")
+        return redirect(url_for('udash.mylistings'))
+
+    # Soft delete -- reuses the existing 'Hidden' status, same as the
+    # cascade we already built for account deletion. Removes it from
+    # search without touching the row that Bookings/Roomreviews/RoomView
+    # /Deals still legitimately reference. Same reasoning as
+    # User.soft_delete() mangling email/username: room_name has a
+    # per-host UniqueConstraint, so leaving it untouched would permanently
+    # block the host from ever reusing that exact name, even after
+    # this listing is gone from search.
+    room.status = 'Hidden'
+    room.room_name = f"{room.room_name} (removed)"
     db.session.commit()
     # Display an update message to the user 
-    flash(_('Your listing has been successfully deleted!'), 'success')
-    return redirect(url_for('users.listings', room_id=room.id))
+    flash(_('Your listing has been removed from search.'), 'success')
+    return redirect(url_for('udash.mylistings'))
 
 @bedrooms.route("/review/<int:review_id>/helpful", methods=['POST'])
 @login_required

@@ -12,6 +12,7 @@ from app.rooms.forms import AddRoomForm, WithdrawalForm, GuestReviewForm
 # from ..users.usermails.joinusmail import member_regismail
 from ..users.utils import save_picture
 from app.services.location_service import get_location
+from app.services.preference_service import VisitorPreferences
 from ..rooms.roomutils import sanitize_input, can_cancel, current_date
 from flask_socketio import (SocketIO, emit, join_room, leave_room)
 from app import socketio
@@ -316,7 +317,7 @@ def profile():
         form.aboutme.data = current_user.aboutme
             
     # set cuurent user profile pictures to pass to the current default image
-    image_file = url_for('static', filename='userpics/profile/' + current_user.image_file) 
+    image_file = url_for('static', filename='userpics/' + current_user.image_file) 
         
     return render_template('udashpages/usprofile.html', title='My Profile', image_file=image_file, 
                            form=form)
@@ -496,13 +497,14 @@ def mylistings():
             # room listing info   
             room_info = Rooms(room_name=form.room_name.data, room_location=form.room_location.data,
                             borough=form.borough.data,
+                            content_language=VisitorPreferences().language,  # NEW: language the host is browsing in at the moment they write this listing
                             room_country=location["country"], price=form.price.data, 
                             room_category=form.room_category.data, status=form.status.data,
                             short_desc=clean_short_desc, room_size=form.room_size.data, max_occupancy=form.max_occupancy.data, 
                             description=clean_description, rule1=form.rule1.data, rule2=form.rule2.data, rule3=form.rule3.data,
                             latitude=location["latitude"], longitude=location["longitude"],
                             user_id=current_user.id,
-                            room_currency=COUNTRY_CURRENCY.get(location["country"], "GBP"))
+                            room_currency=COUNTRY_CURRENCY.get(location["country_code"], "GBP"))  # FIXED: was location["country"] (full name, e.g. "Côte d'Ivoire") against a dict keyed by 2-letter codes -- always silently fell back to GBP regardless of actual country
  
             db.session.add(room_info)                                                               # adding the user to the database
             db.session.flush()  # need room_info.id before creating the linked Deals row

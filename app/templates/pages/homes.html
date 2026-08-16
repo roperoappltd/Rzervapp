@@ -432,8 +432,7 @@ head_css %} {% block content %}
             </div>
             <div class="booking-section">
               <div class="price-display">
-                <span class="currency">£</span>
-                <span class="amount">{{ spotlight.price }}</span>
+                <span class="amount">{{ format_room_price(spotlight) }}</span>
                 <span class="period">{{ _('per night') }}</span>
               </div>
               <a href="#" class="primary-booking-btn">{{ _('Reserve now') }}</a>
@@ -496,7 +495,7 @@ head_css %} {% block content %}
               <div class="booking-row">
                 <div class="price">
                   <!-- $329-->
-                  {{spot.price}}<small> /{{ _('night') }}</small>
+                  {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
                 </div>
                 <a
                   href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
@@ -541,7 +540,7 @@ head_css %} {% block content %}
               </div>
               <div class="booking-row">
                 <div class="price">
-                  £{{ spot.price }}<small> /{{ _('night') }}</small>
+                  {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
                 </div>
                 <a
                   href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
@@ -584,7 +583,7 @@ head_css %} {% block content %}
               </div>
               <div class="booking-row">
                 <div class="price">
-                  £{{ spot.price }}<small> /{{ _('night') }}</small>
+                  {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
                 </div>
                 <a
                   href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
@@ -621,7 +620,7 @@ head_css %} {% block content %}
           <div class="room-summary">
             <h5>{{ feature.room_category }}</h5>
             <div class="price-tag">
-              £{{ feature.price }}<span> /{{ _('night') }}</span>
+              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
             </div>
             <div class="basic-amenities">
               <i class="bi bi-wifi"></i>
@@ -651,7 +650,7 @@ head_css %} {% block content %}
           <div class="room-summary">
             <h5>{{ feature.room_category }}</h5>
             <div class="price-tag">
-              £{{ feature.price }}<span> /{{ _('night') }}</span>
+              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
             </div>
             <div class="basic-amenities">
               <i class="bi bi-wifi"></i>
@@ -681,7 +680,7 @@ head_css %} {% block content %}
           <div class="room-summary">
             <h5>{{ feature.room_category }}</h5>
             <div class="price-tag">
-              £{{ feature.price }}<span> /{{ _('night') }}</span>
+              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
             </div>
             <div class="basic-amenities">
               <i class="bi bi-water"></i>
@@ -711,7 +710,7 @@ head_css %} {% block content %}
           <div class="room-summary">
             <h5>{{ feature.room_category }}</h5>
             <div class="price-tag">
-              {{ feature.price }}<span> /{{ _('night') }}</span>
+              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
             </div>
             <div class="basic-amenities">
               <i class="bi bi-star"></i>
@@ -1114,122 +1113,52 @@ head_css %} {% block content %}
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row g-4 deals-carousel">
-      {% if weekend_room and wkend_deal %}
-      <div class="col-lg-4 col-md-6">
-        <div class="offer-card" data-aos="zoom-in" data-aos-delay="200">
-          <div class="offer-badge">
-            <span class="discount">{{ weekend_room.room_location }}</span>
-          </div>
-          <div class="offer-image">
-            <img
-              src="{{ get_room_image_url(weekend_room.image1) }}"
-              alt="Weekend Getaway"
-              class="img-fluid"
-            />
-          </div>
-          <div class="offer-content">
-            <h3>{{ _('Weekend Getaway Deal') }}</h3>
-            <hr />
-            <h6>{{ weekend_room.room_name }}</h6>
-            <p style="text-align: justify">{{ weekend_room.description }}</p>
-            <div class="offer-details">
-              <div class="price-info">
-                <span class="original-price">£{{ weekend_room.price }}</span>
-                <span class="offer-price">£{{ offer_1 }}</span>
-                <span class="per-night">{{ _('per night') }}</span>
-              </div>
-              <div class="validity">
-                <i class="bi bi-calendar-check"></i>
-                <span>{{ _('Valid until') }} {{wkend_deal.end_date}}</span>
-              </div>
-            </div>
-            <a
-              href="{{ url_for('bedrooms.booknow', room_id=weekend_room.id, deal_id=wkend_deal.id ) }}"
-              class="btn-book"
-              >{{ _('Reserve Now') }}</a
-            >
-          </div>
-        </div>
-      </div>
-      {% endif %} {% if weekday_room and wkday_deal %}
+      {% for card in deal_cards %}
       <div class="col-lg-4 col-md-6">
         <div
-          class="offer-card featured"
+          class="offer-card"
           data-aos="zoom-in"
-          data-aos-delay="300"
+          data-aos-delay="{{ 200 + loop.index0 * 100 }}"
         >
           <div class="offer-badge">
-            <span class="discount">{{ weekday_room.room_location }}</span>
+            <span class="discount"
+              >{{ card.deal.discount_percent }}% {{ _('OFF') }}</span
+            >
           </div>
           <div class="offer-image">
             <img
-              src="{{ get_room_image_url(weekday_room.image1) }}"
-              alt="Extended Stay Deal"
+              src="{{ get_room_image_url(card.room.image1) }}"
+              alt="{{ card.title }}"
               class="img-fluid"
             />
           </div>
           <div class="offer-content">
-            <h3>{{ _('Weekday Massive Deal') }}</h3>
+            <h3>{{ card.title }}</h3>
             <hr />
-            <h6>{{ weekday_room.room_name }}</h6>
-            <p style="text-align: justify">{{ weekday_room.description }}</p>
+            <h6>{{ card.room.room_name }}</h6>
+            <p style="text-align: justify">{{ card.room.description }}</p>
             <div class="offer-details">
               <div class="price-info">
-                <span class="original-price">£{{ weekday_room.price }}</span>
-                <span class="offer-price">£{{ offer_2 }}</span>
+                <span class="original-price"
+                  >{{ card.original_price_display }}</span
+                >
+                <span class="offer-price">{{ card.offer_price_display }}</span>
                 <span class="per-night">{{ _('per night') }}</span>
               </div>
               <div class="validity">
                 <i class="bi bi-calendar-check"></i>
-                <span>{{ _('Book by Sunday every week.') }} </span>
+                <span>{{ card.subtext }}</span>
               </div>
             </div>
             <a
-              href="{{ url_for('bedrooms.booknow', room_id=weekday_room.id, deal_id=wkday_deal.id ) }}"
+              href="{{ url_for('bedrooms.booknow', room_id=card.room.id, deal_id=card.deal.id ) }}"
               class="btn-book"
               >{{ _('Reserve Now') }}</a
             >
           </div>
         </div>
       </div>
-      {% endif %} {% if romantic_room and rom_deal %}
-      <div class="col-lg-4 col-md-6">
-        <div class="offer-card" data-aos="zoom-in" data-aos-delay="400">
-          <div class="offer-badge">
-            <span class="discount">{{ romantic_room.room_location }}</span>
-          </div>
-          <div class="offer-image">
-            <img
-              src="{{ get_room_image_url(romantic_room.image1) }}"
-              alt="Advance Booking"
-              class="img-fluid"
-            />
-          </div>
-          <div class="offer-content">
-            <h3>{{ _('Couples Great Savings') }}</h3>
-            <hr />
-            <h6>{{ romantic_room.room_name }}</h6>
-            <p style="text-align: justify">{{ romantic_room.description }}</p>
-            <div class="offer-details">
-              <div class="price-info">
-                <span class="original-price">£{{ romantic_room.price }}</span>
-                <span class="offer-price">{{ offer_3 }}</span>
-                <span class="per-night">{{ _('per night') }}</span>
-              </div>
-              <div class="validity">
-                <i class="bi bi-calendar-check"></i>
-                <span>{{ _('Available year-round') }}</span>
-              </div>
-            </div>
-            <a
-              href="{{ url_for('bedrooms.booknow', room_id=romantic_room.id, deal_id=rom_deal.id ) }}"
-              class="btn-book"
-              >{{ _('Reserve Now') }}</a
-            >
-          </div>
-        </div>
-      </div>
-      {% endif %}
+      {% endfor %}
     </div>
 
     <style>
@@ -1337,423 +1266,5 @@ head_css %} {% block content %}
   </div>
 </section>
 <!-- /Call To Action Section -->
-
-<!-- Events Cards Section -->
-<!-- <section id="events-cards" class="events-cards section"> -->
-<!-- Section Title -->
-<!-- <div class="container section-title" data-aos="fade-up">
-          <span class="description-title">Events</span>
-          <h2>Events</h2>
-          <p>
-            Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-            consectetur velit
-          </p>
-        </div> -->
-<!-- End Section Title -->
-
-<!-- <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-              <div class="event-item" data-aos="fade-up" data-aos-delay="100">
-                <div class="event-header">
-                  <div class="event-icon">
-                    <i class="bi bi-heart-fill"></i>
-                  </div>
-                  <img
-                    src="{{url_for('static', filename='img/hotel/event-1.webp')}}"
-                    alt="Wedding Celebrations"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="event-content">
-                  <h4>Wedding Celebrations</h4>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-                    do eiusmod tempor
-                  </p>
-                  <div class="event-features">
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Premium Venues</span
-                    >
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Full Catering</span
-                    >
-                  </div>
-                  <a href="hotel-events.html" class="event-link">
-                    Explore Details <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-<!-- End Event Item -->
-
-<!-- <div class="col-lg-4 col-md-6">
-              <div class="event-item" data-aos="fade-up" data-aos-delay="200">
-                <div class="event-header">
-                  <div class="event-icon">
-                    <i class="bi bi-building"></i>
-                  </div>
-                  <img
-                    src="{{url_for('static', filename='img/hotel/event-4.webp')}}"
-                    alt="Business Conferences"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="event-content">
-                  <h4>Business Conferences</h4>
-                  <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium
-                  </p>
-                  <div class="event-features">
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Modern Tech</span
-                    >
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> WiFi Access</span
-                    >
-                  </div>
-                  <a href="hotel-events.html" class="event-link">
-                    Explore Details <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-<!-- End Event Item -->
-
-<!-- <div class="col-lg-4 col-md-6">
-              <div class="event-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="event-header">
-                  <div class="event-icon">
-                    <i class="bi bi-calendar-event"></i>
-                  </div>
-                  <img
-                    src="{{url_for('static', filename='img/hotel/event-8.webp')}}"
-                    alt="Special Occasions"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="event-content">
-                  <h4>Special Occasions</h4>
-                  <p>
-                    Ut enim ad minim veniam quis nostrud exercitation ullamco
-                    laboris nisi
-                  </p>
-                  <div class="event-features">
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Custom Setup</span
-                    >
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Event
-                      Coordination</span
-                    >
-                  </div>
-                  <a href="hotel-events.html" class="event-link">
-                    Explore Details <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-<!-- End Event Item -->
-
-<!-- <div class="col-lg-4 col-md-6">
-              <div class="event-item" data-aos="fade-up" data-aos-delay="100">
-                <div class="event-header">
-                  <div class="event-icon">
-                    <i class="bi bi-people"></i>
-                  </div>
-                  <img
-                    src="{{url_for('static', filename='img/hotel/event-5.webp')}}"
-                    alt="Corporate Retreats"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="event-content">
-                  <h4>Corporate Retreats</h4>
-                  <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore
-                  </p>
-                  <div class="event-features">
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Team Building</span
-                    >
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Outdoor
-                      Activities</span
-                    >
-                  </div>
-                  <a href="hotel-events.html" class="event-link">
-                    Explore Details <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-<!-- End Event Item -->
-
-<!-- <div class="col-lg-4 col-md-6">
-              <div class="event-item" data-aos="fade-up" data-aos-delay="200">
-                <div class="event-header">
-                  <div class="event-icon">
-                    <i class="bi bi-music-note-beamed"></i>
-                  </div>
-                  <img
-                    src="{{url_for('static', filename='img/hotel/event-6.webp')}}"
-                    alt="Entertainment Events"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="event-content">
-                  <h4>Entertainment Events</h4>
-                  <p>
-                    Excepteur sint occaecat cupidatat non proident sunt in culpa
-                    qui officia
-                  </p>
-                  <div class="event-features">
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Live Music</span
-                    >
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Dance Floor</span
-                    >
-                  </div>
-                  <a href="hotel-events.html" class="event-link">
-                    Explore Details <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-<!-- End Event Item -->
-
-<!-- <div class="col-lg-4 col-md-6">
-              <div class="event-item" data-aos="fade-up" data-aos-delay="300">
-                <div class="event-header">
-                  <div class="event-icon">
-                    <i class="bi bi-star"></i>
-                  </div>
-                  <img
-                    src="{{url_for('static', filename='img/hotel/event-9.webp')}}"
-                    alt="VIP Gatherings"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="event-content">
-                  <h4>VIP Gatherings</h4>
-                  <p>
-                    Mollit anim id est laborum at vero eos et accusamus et iusto
-                    odio dignissimos
-                  </p>
-                  <div class="event-features">
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Exclusive Access</span
-                    >
-                    <span class="feature-item"
-                      ><i class="bi bi-check-circle"></i> Premium Service</span
-                    >
-                  </div>
-                  <a href="hotel-events.html" class="event-link">
-                    Explore Details <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-<!-- End Event Item -->
-<!-- </div>
-        </div>
-      </section> -->
-<!-- /Events Cards Section -->
-
-<!-- Location Cards Section -->
-<!-- <section id="location-cards" class="location-cards section">
-  <div class="container section-title" data-aos="fade-up">
-    <span class="description-title">Location &amp; Activities</span>
-    <h2>Location &amp; Activities</h2>
-    <p>
-      Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-      consectetur velit
-    </p>
-  </div>
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row gy-5 align-items-center">
-      <div class="col-lg-8">
-        <div class="row gy-4">
-          <div class="col-md-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="area-highlight">
-              <div class="area-image-wrapper">
-                <img
-                  src="{{url_for('static', filename='img/hotel/location-3.webp')}}"
-                  alt="Entertainment District"
-                  class="img-fluid"
-                />
-                <div class="area-badge">
-                  <i class="bi bi-music-note-beamed"></i>
-                  <span>2 min walk</span>
-                </div>
-              </div>
-              <div class="area-info">
-                <h5>Entertainment Quarter</h5>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Vivamus lacinia odio vitae vestibulum.
-                </p>
-                <div class="quick-stats">
-                  <span><i class="bi bi-clock"></i> Open 24/7</span>
-                  <span><i class="bi bi-star-fill"></i> 4.8 Rating</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
-            <div class="area-highlight">
-              <div class="area-image-wrapper">
-                <img
-                  src="{{url_for('static', filename='img/hotel/location-6.webp')}}"
-                  alt="Waterfront Marina"
-                  class="img-fluid"
-                />
-                <div class="area-badge">
-                  <i class="bi bi-water"></i>
-                  <span>5 min drive</span>
-                </div>
-              </div>
-              <div class="area-info">
-                <h5>Waterfront Marina</h5>
-                <p>
-                  Sed do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua. Ut enim ad minim veniam.
-                </p>
-                <div class="quick-stats">
-                  <span
-                    ><i class="bi bi-brightness-high"></i> Scenic Views</span
-                  >
-                  <span><i class="bi bi-camera"></i> Photo Spot</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-in" data-aos-delay="400">
-            <div class="area-highlight">
-              <div class="area-image-wrapper">
-                <img
-                  src="{{url_for('static', filename='img/hotel/location-8.webp')}}"
-                  alt="Historic Quarter"
-                  class="img-fluid"
-                />
-                <div class="area-badge">
-                  <i class="bi bi-bank"></i>
-                  <span>10 min walk</span>
-                </div>
-              </div>
-              <div class="area-info">
-                <h5>Historic Quarter</h5>
-                <p>
-                  Quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                  ea commodo consequat duis aute.
-                </p>
-                <div class="quick-stats">
-                  <span><i class="bi bi-book"></i> Guided Tours</span>
-                  <span><i class="bi bi-bicycle"></i> Bike Friendly</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6" data-aos="zoom-in" data-aos-delay="500">
-            <div class="area-highlight">
-              <div class="area-image-wrapper">
-                <img
-                  src="{{url_for('static', filename='img/hotel/location-4.webp')}}"
-                  alt="Shopping Plaza"
-                  class="img-fluid"
-                />
-                <div class="area-badge">
-                  <i class="bi bi-shop"></i>
-                  <span>3 min walk</span>
-                </div>
-              </div>
-              <div class="area-info">
-                <h5>Premium Shopping Plaza</h5>
-                <p>
-                  Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                  qui officia deserunt mollit.
-                </p>
-                <div class="quick-stats">
-                  <span><i class="bi bi-credit-card"></i> Tax Free</span>
-                  <span><i class="bi bi-cup-hot"></i> Cafés Inside</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4" data-aos="fade-left" data-aos-delay="200">
-        <div class="location-overview">
-          <div class="overview-header">
-            <div class="location-marker">
-              <i class="bi bi-geo-alt-fill"></i>
-            </div>
-            <h3>Prime Location Benefits</h3>
-            <p class="overview-subtitle">
-              Maecenas faucibus mollis interdum. Nulla vitae elit libero, a
-              pharetra augue.
-            </p>
-          </div>
-
-          <div class="benefits-list">
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <i class="bi bi-train-front"></i>
-              </div>
-              <div class="benefit-content">
-                <h6>Public Transport Hub</h6>
-                <span>Metro station 200m away</span>
-              </div>
-            </div>
-
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <i class="bi bi-airplane"></i>
-              </div>
-              <div class="benefit-content">
-                <h6>Airport Connection</h6>
-                <span>Direct shuttle every 30 min</span>
-              </div>
-            </div>
-
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <i class="bi bi-car-front"></i>
-              </div>
-              <div class="benefit-content">
-                <h6>Valet Parking</h6>
-                <span>Complimentary for guests</span>
-              </div>
-            </div>
-
-            <div class="benefit-item">
-              <div class="benefit-icon">
-                <i class="bi bi-compass"></i>
-              </div>
-              <div class="benefit-content">
-                <h6>City Center Access</h6>
-                <span>Walking distance to main attractions</span>
-              </div>
-            </div>
-          </div>
-
-          <a href="location.html" class="location-guide-btn">
-            <span>View Full Location Guide</span>
-            <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!--JS World map -->
 
 {% endblock content %}

@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {%
-block head_css %} {{ super() }}
+from "macros/content_language.html" import content_language_badge %} {% block
+head_css %} {{ super() }}
 <link
   href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
   rel="stylesheet"
@@ -113,16 +114,7 @@ block head_css %} {{ super() }}
             </div>
           </div>
           <div class="room-price">
-            {% if preferred_currency == room.currency %}
-            <span class="price-amount"
-              >{{ format_money(roominfo.price, roominfo.currency) }}
-            </span>
-            {% else %}
-            <span class="price-amount">
-              {{ convert_and_format(roominfo.price, roominfo.currency,
-              preferred_currency) }}</span
-            >
-            {% endif %}
+            <span class="price-amount">{{ format_room_price(roominfo) }}</span>
             <span class="price-period">{{ _("per night") }}</span>
           </div>
           <!-----Modal Button ------>
@@ -204,7 +196,10 @@ block head_css %} {{ super() }}
     <div class="row mb-5">
       <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
         <div class="room-description">
-          <h3 class="section-subtitle">{{ _("Room Overview") }}</h3>
+          <h3 class="section-subtitle">
+            {{ _("Room Overview") }} {{
+            content_language_badge(roominfo.content_language) }}
+          </h3>
           <p>
             <!-- Indulge in the ultimate luxury experience with our Deluxe Ocean View
             Suite. This spacious retreat features floor-to-ceiling windows
@@ -517,17 +512,8 @@ block head_css %} {{ super() }}
           </div>
           <div class="col-lg-4 text-center text-lg-end">
             <div class="price-display">
-              {% if preferred_currency != room.currency %}
-              <span class="price"
-                >{{ convert_and_format(roominfo.price, roominfo.currency,
-                preferred_currency) }}</span
-              >
-              {% else %}
-              <span class="price">
-                {{ format_money(roominfo.price, roominfo.currency) }}</span
-              >
+              <span class="price">{{ format_room_price(roominfo) }}</span>
               <span class="period">{{ _("per night")}}</span>
-              {% endif %}
             </div>
             <a
               href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}"

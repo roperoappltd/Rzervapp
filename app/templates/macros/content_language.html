@@ -1,0 +1,16 @@
+{# Shows which language a room's own text (name/description/rules) was actually
+written in. This is necessary because the app's _() Babel translation system
+only ever covers static UI text (buttons, labels) -- it has no effect at all on
+user-generated content like a host's description, which is stored and displayed
+exactly as typed regardless of the viewer's own language setting. Usage: {{
+content_language_badge(room.content_language) }} #} {% macro
+content_language_badge(lang_code) %} {% set flags = {'en': '🇬🇧', 'fr': '🇫🇷'} %}
+{% set labels = {'en': _('English'), 'fr': _('French')} %}
+<span
+  class="content-lang-badge"
+  title="{{ _('This listing was written in') }} {{ labels.get(lang_code, lang_code) }}"
+>
+  {{ flags.get(lang_code, '🌐') }} {{ _('Listed in') }} {{ labels.get(lang_code,
+  lang_code) }}
+</span>
+{% endmacro %}

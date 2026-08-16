@@ -126,7 +126,7 @@ def create_app(config_name='default'):
         from app.adminis.views import MyAdminIndexView
 
         # ---------------- Services ----------------
-        from app.services.currency import format_money, convert_and_format, COUNTRY_CURRENCY
+        from app.services.currency import format_money, convert_and_format, format_room_price, COUNTRY_CURRENCY
         from app.services.geo_service import detect_country, detect_language
         from app.services.preference_service import VisitorPreferences
         from app.services.image_storage import get_room_image_url
@@ -149,7 +149,7 @@ def create_app(config_name='default'):
     # ---------------- Context processors ----------------
     @app.context_processor
     def inject_currency():
-        return dict(format_money=format_money, convert_and_format=convert_and_format)
+        return dict(format_money=format_money, convert_and_format=convert_and_format, format_room_price=format_room_price)
 
     @app.context_processor
     def inject_image_helpers():
