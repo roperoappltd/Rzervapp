@@ -18,7 +18,7 @@ from flask_babel import _
 from datetime import datetime, timedelta
 from app.helpers.login_security import (is_safe_redirect_url, MAX_FAILED_ATTEMPTS, 
                                         LOCKOUT_DURATION_MINUTES)
-import cv2
+# import cv2
 from datetime import date, timedelta
 
 users = Blueprint('users', __name__)
@@ -281,56 +281,56 @@ def delete_account():
     return render_template('pages/delete_account.html', title='Delete Account', form=form)
 
 # =======================================================================================
-@users.route("/capture_image") 
-def capture_image(camera_index=0):
-    ''' 
-        Capture an image from the specified webcam on click
-        args: 
-            camera_index: Index of the webcam to use (default: 0)
-    '''
-    # Initialize video capture object 
-    cap = cv2.VideoCapture(camera_index)
+# @users.route("/capture_image") 
+# def capture_image(camera_index=0):
+#     ''' 
+#         Capture an image from the specified webcam on click
+#         args: 
+#             camera_index: Index of the webcam to use (default: 0)
+#     '''
+#     # Initialize video capture object 
+#     cap = cv2.VideoCapture(camera_index)
 
-    # check if camera opened succesfully 
-    if not cap.isOpened():
-        print("Failed to open camera")
-        return
+#     # check if camera opened succesfully 
+#     if not cap.isOpened():
+#         print("Failed to open camera")
+#         return
     
-    # Create a window to display the webcam feed
-    cv2.namedWindow("Webcam Feed", cv2.WINDOW_NORMAL)
+#     # Create a window to display the webcam feed
+#     cv2.namedWindow("Webcam Feed", cv2.WINDOW_NORMAL)
 
-    # Track the click event 
-    clicked = False
-    def click_event(event, x, y, flags, param):
-        nonlocal clicked
-        # set clicked flag to True only on left mouse button event 
-        if event == cv2.EVENT_LBUTTONDOWN:
-            clicked = True
-    #set mouse click callback function 
-    cv2.setMouseCallback("Webcam Feed", click_event)
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
-        #check if the frame is read correctly
-        if not ret:
-            print("Fail to capture an image")
-            break
-        # Display the webcam feed
-        cv2.imshow("Webcam Feed", frame)
-        # Capture image on click 
-        if clicked:
-            # Get current timestamp for filemane 
-            #timestamp = str(int(round(time.time() + 1000)))
-            # Save captured image
-            #cv2.imwrite(f"webcam_image_{timestamp}.jpg", frame)
-            cv2.imwrite(f"app/static/userpics/takeapics/{current_user.username}.jpg", frame)  
-            print("Image captured successfully!")
-            # Reset clicked flag
-            clicked = False
-        # Exit on 'q' key press
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    # Release capture object
-    cap.release()
-    cv2.destroyAllWindows()
-    return '', 204
+#     # Track the click event 
+#     clicked = False
+#     def click_event(event, x, y, flags, param):
+#         nonlocal clicked
+#         # set clicked flag to True only on left mouse button event 
+#         if event == cv2.EVENT_LBUTTONDOWN:
+#             clicked = True
+#     #set mouse click callback function 
+#     cv2.setMouseCallback("Webcam Feed", click_event)
+#     while True:
+#         # Capture frame-by-frame
+#         ret, frame = cap.read()
+#         #check if the frame is read correctly
+#         if not ret:
+#             print("Fail to capture an image")
+#             break
+#         # Display the webcam feed
+#         cv2.imshow("Webcam Feed", frame)
+#         # Capture image on click 
+#         if clicked:
+#             # Get current timestamp for filemane 
+#             #timestamp = str(int(round(time.time() + 1000)))
+#             # Save captured image
+#             #cv2.imwrite(f"webcam_image_{timestamp}.jpg", frame)
+#             cv2.imwrite(f"app/static/userpics/takeapics/{current_user.username}.jpg", frame)  
+#             print("Image captured successfully!")
+#             # Reset clicked flag
+#             clicked = False
+#         # Exit on 'q' key press
+#         if cv2.waitKey(1) & 0xFF == ord('q'):
+#             break
+#     # Release capture object
+#     cap.release()
+#     cv2.destroyAllWindows()
+#     return '', 204

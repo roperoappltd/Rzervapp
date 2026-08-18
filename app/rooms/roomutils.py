@@ -1,5 +1,3 @@
-import logging
-import os
 import secrets
 from PIL import Image
 from flask import url_for, current_app
@@ -33,11 +31,8 @@ def get_ratings_for_rooms(room_ids):
         for row in rating_rows
     }
 
-import cv2
 import bleach
 from datetime import *
-
-
 
 # Create a function that handle profile picture
 def save_picture(form_picture):
