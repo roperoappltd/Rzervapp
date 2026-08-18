@@ -14,12 +14,22 @@ class Config :
     # Falls back to SQLite when DATABASE_URL isn't set, preserving the
     # existing local dev experience unchanged.
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///site.db")
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "connect_args": {
-            "check_same_thread": False,
-            "timeout": 20  # wait for lock instead of immediate failure
+
+    # FIXED: check_same_thread/timeout are SQLite-specific connect_args
+    # (they come from Python's own sqlite3 module) -- pymysql has no
+    # such parameters at all and rejects them outright with
+    # "unexpected keyword argument", crashing on startup the moment
+    # DATABASE_URL points anywhere other than SQLite. Only apply these
+    # when SQLite is actually the active backend.
+    if SQLALCHEMY_DATABASE_URI.startswith("sqlite"):
+        SQLALCHEMY_ENGINE_OPTIONS = {
+            "connect_args": {
+                "check_same_thread": False,
+                "timeout": 20  # wait for lock instead of immediate failure
+            }
         }
-    } 
+    else:
+        SQLALCHEMY_ENGINE_OPTIONS = {} 
 
     # responsive user interface
     FLASK_ADMIN_FLUID_LAYOUT = True
