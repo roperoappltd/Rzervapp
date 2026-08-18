@@ -4,11 +4,7 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item pl-3">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('main.home')}}"
-        >{{ _('Home') }}</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('main.home')}}">{{ _('Home') }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ _('User Dashboard') }}
@@ -40,19 +36,18 @@ head_css %} {% block content %}
                       </div>
                     </div>
                   </div>
-                  {% if totrooms < 10 %}
-                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                  {% if totrooms < 10 %} <h1 class="mt-1 mb-3 fw-bolder text-center">
                     0{{ totrooms }}
-                  </h1>
-                  {% else %}
-                  <h1 class="mt-1 mb-3 fw-bolder text-center">
-                    {{ totrooms }}
-                  </h1>
-                  {% endif %}
-                  <div class="mb-0">
-                    <span class="text-success">{{ _('Up-to-date') }}</span>
-                    <span class="text-muted">{{ _('total room') }}</span>
-                  </div>
+                    </h1>
+                    {% else %}
+                    <h1 class="mt-1 mb-3 fw-bolder text-center">
+                      {{ totrooms }}
+                    </h1>
+                    {% endif %}
+                    <div class="mb-0">
+                      <span class="text-success">{{ _('Up-to-date') }}</span>
+                      <span class="text-muted">{{ _('total room') }}</span>
+                    </div>
                 </div>
               </div>
               <div class="card">
@@ -68,17 +63,16 @@ head_css %} {% block content %}
                       </div>
                     </div>
                   </div>
-                  {% if totbook <= 9 %}
-                  <h1 class="mt-1 mb-3 fw-bolder text-center">
+                  {% if totbook <= 9 %} <h1 class="mt-1 mb-3 fw-bolder text-center">
                     0{{ totbook }}
-                  </h1>
-                  {% else %}
-                  <h1 class="mt-1 mb-3 fw-bolder text-center">{{ totbook }}</h1>
-                  {% endif %}
-                  <div class="mb-0">
-                    <span class="text-success">{{ _('Total host') }}</span>
-                    <span class="text-muted">{{ _('room bookings') }}</span>
-                  </div>
+                    </h1>
+                    {% else %}
+                    <h1 class="mt-1 mb-3 fw-bolder text-center">{{ totbook }}</h1>
+                    {% endif %}
+                    <div class="mb-0">
+                      <span class="text-success">{{ _('Total host') }}</span>
+                      <span class="text-muted">{{ _('room bookings') }}</span>
+                    </div>
                 </div>
               </div>
             </div>
@@ -100,19 +94,15 @@ head_css %} {% block content %}
                     {{ total_earnings }}
                   </h2>
                   <div class="mb-2">
-                    {% if earnings_state <= 0 %}
-                    <span class="text-danger"
-                      ><i class="align-middle" data-feather="arrow-down"></i>{{
-                      earnings_state }}%</span
-                    >
-                    <span class="text-muted">{{ _('Since last month') }}</span>
-                    {% else %}
-                    <span class="text-success"
-                      ><i class="align-middle" data-feather="arrow-up"></i>{{
-                      earnings_state }}%</span
-                    >
-                    <span class="text-muted">{{ _('Since last month') }}</span>
-                    {% endif %}
+                    {% if earnings_state <= 0 %} <span class="text-danger"><i class="align-middle"
+                        data-feather="arrow-down"></i>{{
+                      earnings_state }}%</span>
+                      <span class="text-muted">{{ _('vs last month') }}</span>
+                      {% else %}
+                      <span class="text-success"><i class="align-middle" data-feather="arrow-up"></i>{{
+                        earnings_state }}%</span>
+                      <span class="text-muted">{{ _('vs last month') }}</span>
+                      {% endif %}
                   </div>
                 </div>
               </div>
@@ -137,9 +127,7 @@ head_css %} {% block content %}
                   </h1>
                   <div class="mb-0">
                     <span class="text-danger">{{ _('Total') }}</span>
-                    <span class="text-muted"
-                      >{{ _('Withdraw up to date') }}</span
-                    >
+                    <span class="text-muted">{{ _('Withdraw update') }}</span>
                   </div>
                 </div>
               </div>
@@ -153,8 +141,7 @@ head_css %} {% block content %}
           <div class="card-header">
             <h5 class="card-title mb-0">{{ _('Earnings Progression') }}</h5>
 
-            <small class="text-muted"
-              >{{ _('Last 12 months earnings') }}
+            <small class="text-muted">{{ _('Last 12 months earnings') }}
             </small>
           </div>
 
@@ -173,8 +160,7 @@ head_css %} {% block content %}
           <div class="card flex-fill">
             <div class="card-header">
               <h5 class="card-title mb-0">{{ _('Top Performing Rooms') }}</h5>
-              <small class="text-muted"
-                >{{ _('Revenue generated to date') }}
+              <small class="text-muted">{{ _('Revenue generated to date') }}
               </small>
             </div>
 
@@ -238,18 +224,14 @@ head_css %} {% block content %}
           <div class="card-header">
             <h5 class="card-title mb-0">{{ _('Room Locations') }}</h5>
 
-            <small class="text-muted"
-              >{{ _('Worldwide room distribution') }}
+            <small class="text-muted">{{ _('Worldwide room distribution') }}
             </small>
           </div>
 
           <div class="card-body px-4">
             <div style="position: relative">
-              <div
-                id="world_map"
-                style="height: 350px"
-                data-room-url="{{ url_for('bedrooms.roomdetail', room_id=0) }}"
-              ></div>
+              <div id="world_map" style="height: 350px" data-room-url="{{ url_for('bedrooms.roomdetail', room_id=0) }}">
+              </div>
               <div id="mapTooltip" class="map-tooltip"></div>
             </div>
           </div>

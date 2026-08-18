@@ -178,4 +178,84 @@ def create_app(config_name='default'):
         success, message = update_exchange_rates()
         print(message)
 
+    @app.cli.command("run-booking-maintenance")
+    def run_booking_maintenance_command():
+        '''Periodic booking housekeeping -- previously split between this
+        and running inline on every /rooms page visit, now consolidated
+        here. Four independent things, each explicitly recorded via
+        status_reason where the status itself is ambiguous about cause:
+
+        1. Pending, abandoned mid-checkout, past the resume window ->
+           Expired, reason 'pending_timeout'.
+        2. Pending, never paid, and the stay dates have now ALSO passed
+           -> Expired, reason 'departure_passed_unpaid'. Explicitly
+           excludes anything already handled by #1, rather than relying
+           on query-ordering/autoflush timing to avoid double-processing.
+        3. Confirmed, stay concluded -> status stays Confirmed on purpose
+           (mybookings.html depends on this exact status for the Rate
+           Guest/Rate Stay buttons -- changing it would silently break
+           that feature). Only status_reason is set, as a marker layered
+           on top, skipping rows already marked so repeated runs don't
+           re-touch the same bookings.
+        4. Already-Cancelled bookings still flagged active=True ->
+           active set to False. Status itself untouched (was already
+           correct) -- moved here from room(), which ran this on every
+           single page visit.
+
+        Test locally with: flask run-booking-maintenance
+        Schedule via cron alongside update-exchange-rates.'''
+        from datetime import datetime, timedelta
+        from app.models.bookmodel import Bookings
+        from app.helpers.booking import PENDING_BOOKING_EXPIRY_MINUTES
+
+        now = datetime.utcnow()
+        resume_cutoff = now - timedelta(minutes=PENDING_BOOKING_EXPIRY_MINUTES)
+
+        # 1. Abandoned mid-checkout, resume window elapsed
+        timed_out = Bookings.query.filter(
+            Bookings.status == 'Pending',
+            Bookings.created_at < resume_cutoff,
+        ).all()
+        timed_out_ids = {b.id for b in timed_out}
+        for booking in timed_out:
+            booking.status = 'Expired'
+            booking.status_reason = 'pending_timeout'
+            booking.active = False
+
+        # 2. Never paid, stay dates also passed -- explicitly excludes
+        # #1's rows rather than relying on implicit query timing
+        never_paid_filters = [Bookings.status == 'Pending', Bookings.departure < now]
+        if timed_out_ids:
+            never_paid_filters.append(~Bookings.id.in_(timed_out_ids))
+        never_paid = Bookings.query.filter(*never_paid_filters).all()
+        for booking in never_paid:
+            booking.status = 'Expired'
+            booking.status_reason = 'departure_passed_unpaid'
+            booking.active = False
+
+        # 3. Successfully completed stays -- status stays Confirmed,
+        # only the reason marker is added. Skips already-marked rows so
+        # repeated runs don't keep re-touching the same bookings.
+        completed = Bookings.query.filter(
+            Bookings.status == 'Confirmed',
+            Bookings.departure < now,
+            Bookings.status_reason.is_(None),
+        ).all()
+        for booking in completed:
+            booking.status_reason = 'stay_completed'
+
+        # 4. Already-cancelled bookings still flagged active
+        still_active_cancelled = Bookings.query.filter(
+            Bookings.status == 'Cancelled',
+            Bookings.active == True,
+        ).all()
+        for booking in still_active_cancelled:
+            booking.active = False
+
+        db.session.commit()
+        print(f"Expired (checkout timeout): {len(timed_out)}")
+        print(f"Expired (unpaid, past departure): {len(never_paid)}")
+        print(f"Marked stay_completed: {len(completed)}")
+        print(f"Deactivated cancelled: {len(still_active_cancelled)}")
+
     return app

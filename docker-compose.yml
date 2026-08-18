@@ -1,0 +1,21 @@
+services:
+  jambo_web:
+    build: .
+    container_name: jambo_web
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      # host:container -- 8002 is unused on this VPS (80/81/82/443/444/
+      # 4443/3308/8000/8001/8080/9000/9443 are all already taken).
+      # NPM's Proxy Host entry should forward to localhost:8002.
+      - '8002:8000'
+    extra_hosts:
+      # IMPORTANT: from inside a container, 127.0.0.1 means the
+      # container itself, NOT the host machine -- this is what lets
+      # jambo_web actually reach the shared MariaDB container's
+      # published host port (3308) instead of trying to connect to
+      # itself. Requires Docker Engine 20.10+ (standard on any current
+      # install). See DATABASE_URL in .env.example -- it must use
+      # host.docker.internal, not 127.0.0.1 or localhost.
+      - 'host.docker.internal:host-gateway'

@@ -100,12 +100,20 @@ def add_days(d1, num_of_days):
     deadline = d1 + timedelta(days=num_of_days)
     return deadline
 
+# Excludes visually ambiguous characters (0/O, 1/I/L) -- easy to
+# misread or mistype when a guest reads this aloud or types it into a
+# search/support box. All uppercase for consistency with the JBA prefix.
+BOOKING_NUMBER_ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"
+
 def number_generator():
-    # create a random hex of 4 bytes
-    random_hex = secrets.token_hex(4)
-    a = 'BRZ00'
-    booking_number = f'{a}'+ random_hex
-    return booking_number
+    '''Generates a human-readable booking reference, e.g. "JBA-7K9XQP".
+    create_booking() already retries on a DB collision, so this only
+    needs to be low-collision, not perfectly unique on its own -- 6
+    characters from a 32-symbol alphabet gives over a billion possible
+    codes, comfortably enough for that retry logic to rarely, if ever,
+    actually need a second attempt.'''
+    code = ''.join(secrets.choice(BOOKING_NUMBER_ALPHABET) for _ in range(6))
+    return f'JBA-{code}'
 
 # transacion fee calculator helper function
 def fee_calculator(bill, percentage=10, divider=100):

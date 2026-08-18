@@ -4,11 +4,7 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('udash.mylistings')}}"
-        >Room Listings</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('udash.mylistings')}}">Room Listings</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ _('Room images') }}
@@ -47,16 +43,15 @@ head_css %} {% block content %}
                     <div class="col-md-4 mb-4">
                       <div class="card h-100">
                         <div class="card-body text-center">
-                          <h6 class="mb-2">{{ field.label.text }}</h6>
+                          <h6 class="mb-2">
+                            {{ field.label.text }}
+                            {% if loop.index0 < 2 %}<span class="text-danger">*</span>{% endif %}
+                          </h6>
 
                           {% if current_filename and current_filename !=
                           'roomdef1.jpg' %}
-                          <img
-                            src="{{ url_for('static', filename='userpics/roompics/' + current_filename) }}"
-                            class="img-fluid rounded mb-2"
-                            style="max-height: 120px; object-fit: cover"
-                            alt="{{ field.label.text }}"
-                          />
+                          <img src="{{ get_room_image_url(current_filename) }}" class="img-fluid rounded mb-2"
+                            style="max-height: 120px; object-fit: cover" alt="{{ field.label.text }}" />
                           {% else %}
                           <div class="text-muted small mb-2">
                             {{ _('No image set') }}
@@ -73,12 +68,13 @@ head_css %} {% block content %}
                   </div>
 
                   <p class="text-muted small">
-                    {{ _('Leave a slot empty to keep its current image
+                    {{ _('Image 1 and Image 2 are required for every listing.
+                    Leave any other slot empty to keep its current image
                     unchanged.') }}
                   </p>
 
-                  <div class="form-group text-right">
-                    {{ form.submit(class="btn btn-info mt-3") }}
+                  <div class="form-group text-end">
+                    {{ form.submit(class="btn btn-primary mt-3") }}
                   </div>
                 </form>
               </div>

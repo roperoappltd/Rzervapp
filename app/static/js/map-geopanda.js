@@ -40,9 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
   L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 
-    {
-      attribution: '&copy; OpenStreetMap contributors',
-    },
+    { attribution: '&copy; OpenStreetMap contributors' },
   ).addTo(map);
 
   // ==================================================
@@ -107,9 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const marker = L.marker(
           [latitude, longitude],
 
-          {
-            icon: roomIcon,
-          },
+          { icon: roomIcon },
         ).addTo(map);
 
         markers.push(marker);
@@ -144,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </p>
 
                 <h6 class="text-danger">
-                    £${room.price}
+                    ${room.price_display}
                     / night
                 </h6>
 
@@ -172,9 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
         map.fitBounds(
           group.getBounds(),
 
-          {
-            padding: [40, 40],
-          },
+          { padding: [40, 40] },
         );
       }
     })

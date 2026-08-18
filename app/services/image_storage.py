@@ -45,6 +45,12 @@ def upload_room_image(pil_image, key_hint):
     Stores an already-resized PIL Image and returns the KEY to save in
     Rooms.image1-6 -- never a full URL. `key_hint` is used to build a
     filename/public_id (e.g. "username1a2b3c4d").
+
+    quality=80 + optimize=True on every save below: optimize=True is
+    fully lossless (same pixels, just better Huffman-table encoding --
+    typically 2-10% smaller for free), and quality=80 is barely above
+    Pillow's own implicit default of 75, so there's no meaningful visual
+    difference -- just consistently smaller, faster-loading files.
     '''
     backend = current_app.config.get("IMAGE_BACKEND", "local")
 
@@ -55,7 +61,7 @@ def upload_room_image(pil_image, key_hint):
         # before, just a different destination.
         import io
         buffer = io.BytesIO()
-        pil_image.save(buffer, format="JPEG")
+        pil_image.save(buffer, format="JPEG", quality=80, optimize=True)
         buffer.seek(0)
 
         result = cloudinary.uploader.upload(
@@ -72,7 +78,7 @@ def upload_room_image(pil_image, key_hint):
         picture_path = os.path.join(
             current_app.root_path, 'static/userpics/roompics/', filename
         )
-        pil_image.save(picture_path)
+        pil_image.save(picture_path, format="JPEG", quality=80, optimize=True)
         return filename
 
 

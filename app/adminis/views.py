@@ -119,7 +119,7 @@ class RoomAdmin(ModelView):
 class BookAdmin(ModelView):
     # Columns displayed
     column_list = ("id", "booking_num", "arrival", "departure", "primary_guest",
-                   "pguest_email", "status", "active", "created_at")
+                   "pguest_email", "status", "status_reason", "active", "created_at") # "updated_at"
     # Search -- text fields only
     column_searchable_list = ("pguest_email", "primary_guest", "booking_num")  # FIXED: removed 'arrival' (Date column)
     # Filters -- date belongs here, not in text search
@@ -140,7 +140,10 @@ class BookAdmin(ModelView):
 
                         "created_at": lambda v, c, m, p:
                             m.created_at.strftime("%d-%m-%Y %H:%M")
-                            if m.created_at else ""
+                            if m.created_at else "",
+
+                        #"updated_at": lambda v, c, m, p: m.created_at.strftime("%d-%m-%Y %H:%M")
+
                         }
 
     # Maximally restrictive whitelist: dates, financial fields

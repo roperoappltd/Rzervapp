@@ -22,7 +22,7 @@ def karibu_contact(form):
     date = now.strftime("%d/%m/%Y %H:%M")
     # message
     msg = Message(f"Contact Form: { form.subject.data } ", 
-                  sender= 'dmc.partners@yahoo.com', 
+                  sender= ('Jambo Booking', 'ropero.app@gmail.com'), 
                   recipients=['dmc.partners1@gmail.com'],
                   reply_to=form.email.data)
     

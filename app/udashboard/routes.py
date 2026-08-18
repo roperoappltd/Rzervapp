@@ -28,7 +28,7 @@ from app.helpers.host_balance import get_host_balance
 from app.helpers.format_datime import format_message_time
 from app.helpers.email_verify import email_verified_required
 from app.helpers.room_stats import get_daily_view_counts
-from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates
+from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates, format_room_price
 from flask_babel import _
 
 udash = Blueprint('udash', __name__)
@@ -143,6 +143,7 @@ def room_map_locations():
             "name": room.room_name,
             "city": room.room_location,
             "price": room.price,
+            "price_display": format_room_price(room),  # NEW: converted to the current viewer's currency, formatted with the correct symbol -- the raw "price" field above was being shown with a hardcoded £ regardless of the room's actual currency
             "country": room.room_country,
             "lat": room.latitude,
             "lng": room.longitude
@@ -165,6 +166,7 @@ def room_map_data():
                 "name": room.room_name,
                 "city": room.room_location,
                 "price": room.price,
+                "price_display": format_room_price(room),  # NEW: same fix as the other map route
                 "image": room.image1,
                 "url": url_for("bedrooms.roomdetail", room_id=room.id)
             },
@@ -317,7 +319,7 @@ def profile():
         form.aboutme.data = current_user.aboutme
             
     # set cuurent user profile pictures to pass to the current default image
-    image_file = url_for('static', filename='userpics/' + current_user.image_file) 
+    image_file = url_for('static', filename='userpics/profile/' + current_user.image_file) 
         
     return render_template('udashpages/usprofile.html', title='My Profile', image_file=image_file, 
                            form=form)
@@ -329,7 +331,8 @@ def mybookings():
     guest_page = request.args.get('guest_page', 1, type=int)
     host_page = request.args.get('host_page', 1, type=int)
 
-    bookguest = (Bookings.query.filter(Bookings.user_id == current_user.id
+    bookguest = (Bookings.query.filter(Bookings.user_id == current_user.id,
+                                    Bookings.status != 'Expired'  # NEW: expired/abandoned bookings stay in the DB for audit (BookAdmin still shows them unfiltered), but shouldn't clutter the guest's own active bookings list
                                     ).options(
                                     db.joinedload(Bookings.conversation))
                                     .order_by(Bookings.created_at.desc())
@@ -337,7 +340,8 @@ def mybookings():
                                               per_page=4, error_out=False))
     
     bookhost = (Bookings.query.join(Rooms).filter(
-                        Rooms.user_id == current_user.id
+                        Rooms.user_id == current_user.id,
+                        Bookings.status != 'Expired'  # NEW: same reasoning as the guest-side filter above
                         ).options(db.joinedload(Bookings.conversation))
                         .order_by(Bookings.created_at.desc()
                         ).paginate(page=host_page, per_page=4, error_out=False))

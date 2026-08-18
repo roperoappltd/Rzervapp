@@ -42,7 +42,7 @@ def member_regismail(user):
 
     # sending the password reset message
     msg = Message(subject, 
-                  sender=('Jambo Booking', 'dmc.partners@yahoo.com'),
+                  sender=('Jambo Booking', 'ropero.app@gmail.com'),
                   recipients=[user.email])
     msg.html = f'''\
 <!DOCTYPE html>

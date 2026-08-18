@@ -29,15 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
         zoomOnScroll: false,
 
         regionStyle: {
-          initial: {
-            fill: '#e9ecef',
-            stroke: '#ffffff',
-            strokeWidth: 0.5,
-          },
+          initial: { fill: '#e9ecef', stroke: '#ffffff', strokeWidth: 0.5 },
 
-          hover: {
-            fill: '#ffccd5',
-          },
+          hover: { fill: '#ffccd5' },
         },
 
         markers: markers,
@@ -87,7 +81,7 @@ function showRoomCard(room) {
 
     <p>
       <strong>
-      £${room.price}
+      ${room.price_display}
       </strong>
       per night
     </p>

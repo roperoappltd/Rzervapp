@@ -1,6 +1,5 @@
-{% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {%
-from "macros/content_language.html" import content_language_badge %} {% block
-head_css %} {{ super() }}
+{% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {% from "macros/content_language.html" import content_language_badge %} {%
+block head_css %} {{ super() }}
 <link
   href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
   rel="stylesheet"
@@ -197,8 +196,8 @@ head_css %} {{ super() }}
       <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
         <div class="room-description">
           <h3 class="section-subtitle">
-            {{ _("Room Overview") }} {{
-            content_language_badge(roominfo.content_language) }}
+            {{ _("Room Overview") }}
+            {{ content_language_badge(roominfo.content_language) }}
           </h3>
           <p>
             <!-- Indulge in the ultimate luxury experience with our Deluxe Ocean View
@@ -612,16 +611,7 @@ head_css %} {{ super() }}
                     type="button"
                     class="helpful-btn {{ 'jw-active' if review.id in my_helpful_votes else '' }}"
                     data-review-id="{{ review.id }}"
-                    {%
-                    if
-                    not
-                    current_user.is_authenticated
-                    or
-                    review.user_id=""
-                    ="current_user.id"
-                    %}disabled{%
-                    endif
-                    %}
+                    {% if not current_user.is_authenticated or review.user_id == current_user.id %}disabled{% endif %}
                   >
                     <i
                       class="bi {{ 'bi-hand-thumbs-up-fill' if review.id in my_helpful_votes else 'bi-hand-thumbs-up' }}"
@@ -737,7 +727,7 @@ head_css %} {{ super() }}
               const modal = document.getElementById('availabilityModal');
 
               const calendarUrl =
-                "{{ url_for('rooms.room_calendar', room_id=room.id) }}";
+                "{{ url_for('bedrooms.room_calendar', room_id=room.id) }}";
 
               modal.addEventListener('shown.bs.modal', function () {
                 const calendarEl = document.getElementById('calendar');

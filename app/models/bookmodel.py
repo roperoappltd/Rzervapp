@@ -22,6 +22,7 @@ class Bookings(db.Model):
     pguest_email = db.Column(db.String(30), nullable=False)
     pguest_phone = db.Column(db.String(30), nullable=False)
     status = db.Column(db.String(20), nullable=True, default='Pending')
+    status_reason = db.Column(db.String(50), nullable=True)  # NEW: explicit audit trail for WHY a status change happened (e.g. 'pending_timeout') -- status alone only tells you the current state, not the cause, and that becomes ambiguous the moment a second mechanism could ever produce the same status
     active = db.Column(db.Boolean, default=False)
 
     serv_charge = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00) # 3 to 5% of total amount
@@ -248,8 +249,3 @@ class ExchangeRate(db.Model):
     def __repr__(self):
         return f"ExchangeRate('{self.base_currency}', '{self.target_currency}',\
                 '{self.rate}')"
-
-
-    
-
-        

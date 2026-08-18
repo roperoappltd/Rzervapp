@@ -1,0 +1,32 @@
+name: Deploy to OVH VPS
+
+# Runs automatically every time code is pushed to master.
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into VPS and redeploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd /home/ubuntu/Jambo
+
+            echo "Pulling latest code..."
+            git pull origin master
+
+            echo "Rebuilding and restarting containers..."
+            docker compose build
+            docker compose up -d --remove-orphans
+
+            echo "Cleaning up old, now-unused images..."
+            docker image prune -f
+
+            echo "Deploy finished."

@@ -104,16 +104,15 @@ def signup():
     form = RegistrationForm()
     if form.validate_on_submit():                                                          # form validation
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")    # Hashing user password
-        visitor_prefs = VisitorPreferences()  # single instance, reused below -- avoids a second geo-IP lookup
         user = User(first_name=form.first_name.data, last_name=form.last_name.data,
                     username=form.username.data, dob=form.dob.data, email=form.email.data,
                     password=hashed_pass,
                     terms_accepted=form.terms.data,
                     terms_accepted_at=datetime.utcnow(),
-                    language=visitor_prefs.language,        # was never set, always sat at the 'en' default regardless of the visitor's actual detected language
-                    preferred_currency=visitor_prefs.currency)  # NEW: same gap as language had -- was always sitting at the 'GBP' default regardless of the visitor's actual location
+                    language=VisitorPreferences().language)  # NEW: was never set, always sat at the 'en' 
+                                                             # default regardless of the visitor's actual detected language
 
-        db.session.add(user)                                                               # adding the user to the database
+        db.session.add(user)                                                               
         db.session.commit()  
         # send account verification email to user
         member_regismail(user)
@@ -265,7 +264,7 @@ def delete_account():
             Bookings.status.in_(['Pending', 'Confirmed']),
             Bookings.departure > date.today(),
         ).all():
-            cancel_and_refund_if_paid(booking)
+            cancel_and_refund_if_paid(booking, reason='account_deleted')
 
         # Hide every room this user hosts -- safe to do now, we already
         # confirmed above there are no upcoming guests booked into them.

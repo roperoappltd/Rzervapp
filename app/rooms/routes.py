@@ -16,11 +16,11 @@ from .roomutils import (save_picture, sanitize_input, fee_calculator,
 from .notification.bookmail import booking_confirm_email
 from .notification.bookcancel import book_cancellation_email
 # from sqlalchemy import func
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 # from sqlalchemy import or_
 from app.helpers.populate_search import populate_search_choices
 # from app.helpers.is_avail import is_available
-from app.helpers.booking import create_booking, get_room_active_deal
+from app.helpers.booking import create_booking, get_room_active_deal, PENDING_BOOKING_EXPIRY_MINUTES
 from app.helpers.searches import build_room_query
 from app.helpers.email_verify import email_verified_required
 from app.helpers.cancel_checks import cancel_and_refund_if_paid
@@ -99,30 +99,10 @@ def room():
     room_ids = [r.id for r in allrooms.items]
     ratings_by_room = get_ratings_for_rooms(room_ids)
  
-    # Search rooms with expired booking 
-    expired_bookings = Bookings.query.filter(
-                       Bookings.departure < datetime.now()
-                       ).all()
- 
-    # Iterate over the list of bookings
-    for booking in expired_bookings:
-        booking.active = False
-        booking.status = 'Expired'
-        #conversation.active = False
-    # Save the changes in db
-    db.session.commit()
- 
-    # Search for canccelled booking
-    cancelled_bookings = Bookings.query.filter(
-                         Bookings.status == 'Cancelled',
-                         Bookings.active == True
-                        ).all()
- 
-    for booking in cancelled_bookings:
-        booking.active = False
-        #conversation.active = False
- 
-    db.session.commit()
+    # NOTE: booking expiry/cleanup used to run here, on every single
+    # visit to this page. Moved to the run-booking-maintenance CLI
+    # command (app/__init__.py), run on a schedule instead -- see that
+    # command for the full logic.
  
     return render_template('pages/rooms.html', title='Rooms Pool', allrooms=allrooms,
                           form=form, ratings_by_room=ratings_by_room)
@@ -204,6 +184,32 @@ def booknow(room_id):
     '''This function create a route to render the booking page'''
     # fetch the room by id if exist or return 404 if doesnt
     room = Rooms.query.get_or_404(room_id)
+
+    # NEW: require a complete profile before booking -- same check
+    # mylistings() already uses before letting a host list a room.
+    # Framed positively: this is the moment to actually capture a
+    # guest's real address/phone, not just a validation gate.
+    if not (current_user.address and current_user.phone and current_user.zip_code != 'Change me'):
+        flash(_('Please complete your profile (address and phone) before booking.'), 'warning')
+        return redirect(url_for('udash.profile'))
+
+    # NEW: resume an existing, still-fresh Pending booking for this
+    # room instead of creating a duplicate -- e.g. the guest got
+    # interrupted mid-checkout (closed the tab, a CSRF hiccup, etc.)
+    # and came back within the resume window. Without this, clicking
+    # "Book Now" again would just create a second, orphaned Pending row.
+    resume_cutoff = datetime.utcnow() - timedelta(minutes=PENDING_BOOKING_EXPIRY_MINUTES)
+    existing_pending = Bookings.query.filter(
+        Bookings.user_id == current_user.id,
+        Bookings.room_id == room.id,
+        Bookings.status == 'Pending',
+        Bookings.created_at >= resume_cutoff,
+    ).order_by(Bookings.created_at.desc()).first()
+
+    if existing_pending:
+        flash(_('Resuming your existing booking for this room.'), 'info')
+        return redirect(url_for('bedrooms.checkout', room_id=room.id))
+
     # create room reviews form
     form = BookingForm()
 
@@ -400,7 +406,7 @@ def checkout(room_id):
  
     subtotal_host = room_price_host * bookdays
     subtotal_gbp = room_price_gbp * bookdays
-    subtotal_guest = subtotal_gbp * rate_guest
+    subtotal_guest = (subtotal_gbp * rate_guest).quantize(TWO_DP)  # FIXED: was never quantized, unlike total_paid_guest/discount_guest right below -- displayed as a raw, full-precision Decimal (e.g. "52.11662554230606165865851284")
  
     # Import the voucher form
     payform = PaymentForm()
@@ -904,7 +910,23 @@ def update_roompics(room_id):
             'image5',
             'image6'
         ]
- 
+
+        # NEW: image1 and image2 are required -- but that means the ROOM
+        # must end up with a real photo in these slots, not that the
+        # host has to re-select a file on every single visit. A slot
+        # that already has a real image from a previous upload can stay
+        # untouched (per "leave empty to keep unchanged" below); this
+        # only blocks submission if a slot would STILL be the default
+        # placeholder after this save.
+        for required_field in ('image1', 'image2'):
+            file = getattr(form, required_field).data
+            has_new_upload = file and file.filename != ''
+            current_value = getattr(room, required_field)
+            still_default_after_this = not has_new_upload and (not current_value or current_value == 'roomdef1.jpg')
+            if still_default_after_this:
+                flash(_('Image 1 and Image 2 are required -- please provide a photo for both before saving.'), 'danger')
+                return redirect(url_for('bedrooms.update_roompics', room_id=room.id))
+
         updated_any = False
         for field_name in image_fields:
             file = getattr(form, field_name).data

@@ -64,25 +64,19 @@
               <td>
                 <div class="d-flex mb-2">
                   <div class="flex-shrink-0">
-                    <img
-                      src="{{ url_for('static', filename='/userpics/roompics/'+ room.image1 ) }}"
-                      alt=""
-                      width="38"
-                      height="38"
-                    />
+                    <img src="{{ url_for('static', filename='/userpics/roompics/'+ room.image1 ) }}" alt="" width="38"
+                      height="38" />
                   </div>
                   <div class="flex-lg-grow-1 ms-3">
                     <h6 class="small mb-0">
-                      <span class="text-reset"
-                        >{{ room.room_category}} ({{room.room_name}}) {{ _('located at') }}
+                      <span class="text-reset">{{ room.room_category}} ({{room.room_name}}) {{ _('located at') }}
                         {{room.room_location}}
                       </span>
                     </h6>
                     {% if book %}
-                    <span class="small text-success"
-                      {{ _('Booked from') }} {{ book.arrival.strftime('%d %B %Y') }} {{ _('To') }} {{
-                      book.departure.strftime('%d %B %Y') }} {{ _('for') }}
-                      <b>{{ ( book.departure - book.arrival).days }} {{ _('days') }}</b>                    </span>
+                    <span class="small text-success" {{ _('Booked from') }} {{ book.arrival.strftime('%d %B %Y') }} {{
+                      _('To') }} {{ book.departure.strftime('%d %B %Y') }} {{ _('for') }} <b>{{ ( book.departure -
+                      book.arrival).days }} {{ _('days') }}</b> </span>
                     {% endif %}
                   </div>
                 </div>
@@ -95,22 +89,21 @@
             <tr>
               <td colspan="2">{{ _('Subtotal') }}</td>
               <td class="text-end">
-                {{ currency_symbol }}<span id="subtotal" data-value="{{ subtotal }}"
-                  >{{ subtotal }}</span
-                >
+                {{ currency_symbol }}<span id="subtotal" data-value="{{ subtotal }}">{{ "%.2f"|format(subtotal)
+                  }}</span>
               </td>
             </tr>
             <tr>
               <td colspan="2">{{ _('Service Fee') }}</td>
-              <td class="text-end">{{ convert_and_format(book.serv_charge, book.serv_charge_currency, guest_currency) }}</td>
+              <td class="text-end">{{ convert_and_format(book.serv_charge, book.serv_charge_currency, guest_currency) }}
+              </td>
             </tr>
 
             <tr>
               <td colspan="2">{{ _('Discount') }}</td>
               <td class="text-danger text-end">
-                -{{ currency_symbol }}<span id="discount" data-value="{{ discount }}"
-                  >{{ "%.2f"|format(discount) }}</span
-                >
+                -{{ currency_symbol }}<span id="discount" data-value="{{ discount }}">{{ "%.2f"|format(discount)
+                  }}</span>
               </td>
             </tr>
 
@@ -118,9 +111,7 @@
               <td colspan="2">{{ _('TOTAL') }}</td>
               <td class="text-end">
                 {{ currency_symbol }}
-                <span id="final-total" data-value="{{ total_paid }}"
-                  >{{ "%.2f"|format(total_paid) }}</span
-                >
+                <span id="final-total" data-value="{{ total_paid }}">{{ "%.2f"|format(total_paid) }}</span>
               </td>
             </tr>
           </tfoot>
@@ -134,9 +125,9 @@
           {{ payform.hidden_tag() }} {{ payform.csrf_token }}
           <div class="card mb-3">
             <!-- <div class="card-header"> -->
-            <label class="pb-2"
-              ><h5 class="card-header">{{ _('Select a payment method') }}:</h5></label
-            >
+            <label class="pb-2">
+              <h5 class="card-header">{{ _('Select a payment method') }}:</h5>
+            </label>
             <div>
               {% for subfield in payform.pay_method %}
               <tr>

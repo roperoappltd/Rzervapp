@@ -1,4 +1,3 @@
-
 from sqlalchemy.exc import IntegrityError
 from flask import session
 from app import db
@@ -16,6 +15,14 @@ from datetime import date
 # TODO: update to Decimal('0.03') - Decimal('0.05') once the service charge
 # actually launches. Zero for now per current business rules.
 SERVICE_CHARGE_RATE = Decimal('0.00')
+
+# How long a Pending (unpaid) booking stays resumable before being
+# considered abandoned. Shared between booknow() (checks this window to
+# resume an existing Pending booking instead of creating a duplicate)
+# and the run-booking-maintenance CLI command (marks anything older than
+# this as Expired) -- defined once here so both always agree on the
+# same cutoff.
+PENDING_BOOKING_EXPIRY_MINUTES = 30
 
 
 def get_room_active_deal(room_id):
@@ -132,4 +139,3 @@ def create_booking(room, arrival, departure, primary_guest, pguest_email,
  
     db.session.commit()
     return bookinfo, None
- 
