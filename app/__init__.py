@@ -20,6 +20,7 @@ from flask_wtf import CSRFProtect
 from flask_babel import Babel, _
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
+from sqlalchemy.exc import OperationalError
 
 # ============================================================
 # App-local
@@ -144,7 +145,24 @@ def create_app(config_name='default'):
         app.register_blueprint(administrator, url_prefix="/admin")
 
         # ---------------- Create tables ----------------
-        db.create_all()
+        # FIXED: db.create_all() ran here unconditionally, but Gunicorn
+        # launches multiple separate WORKER PROCESSES (--workers 3),
+        # each independently calling create_app() on startup -- all
+        # three race to create the same tables simultaneously. The
+        # first worker to reach a given CREATE TABLE succeeds; any
+        # other worker reaching the same statement moments later
+        # crashes with "table already exists", since MySQL (unlike
+        # SQLite locally, where this race never surfaced) doesn't
+        # silently no-op on a duplicate CREATE TABLE. Catching
+        # specifically MySQL's error code 1050 here -- it means another
+        # worker already succeeded, not a real problem -- while letting
+        # any other, genuine error still propagate and crash startup as
+        # it should.
+        try:
+            db.create_all()
+        except OperationalError as e:
+            if not (e.orig and getattr(e.orig, "args", [None])[0] == 1050):
+                raise
 
     # ---------------- Context processors ----------------
     @app.context_processor
