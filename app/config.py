@@ -29,7 +29,25 @@ class Config :
             }
         }
     else:
-        SQLALCHEMY_ENGINE_OPTIONS = {} 
+        # FIXED: MariaDB/MySQL closes idle connections after its own
+        # wait_timeout (commonly 8 hours by default) -- without these
+        # options, SQLAlchemy's connection pool doesn't know a
+        # connection died server-side and tries to reuse it anyway on
+        # the next request, causing "MySQL server has gone away" /
+        # "Connection reset by peer" on the first request after any
+        # idle period longer than that timeout.
+        #
+        # pool_pre_ping: tests each connection with a lightweight query
+        # before actually using it for a real request, transparently
+        # discarding and replacing it if it's already dead.
+        #
+        # pool_recycle: proactively recycles any connection older than
+        # this many seconds, refreshing it before MySQL's own timeout
+        # ever gets the chance to silently kill it server-side.
+        SQLALCHEMY_ENGINE_OPTIONS = {
+            "pool_pre_ping": True,
+            "pool_recycle": 3600,
+        }
 
     # responsive user interface
     FLASK_ADMIN_FLUID_LAYOUT = True
