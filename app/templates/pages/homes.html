@@ -254,7 +254,7 @@ head_css %} {% block content %}
       <div class="carousel-inner">
         {% for step in host_steps %}
         <div class="carousel-item {% if loop.first %}active{% endif %}">
-          <div class="d-flex justify-content-center">
+          <div class="item d-flex flex-column align-items-center">
             {{ host_step_card(step.img, step.name, step.title) }}
           </div>
         </div>
