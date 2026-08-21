@@ -35,12 +35,8 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="hero-buttons">
-            <a href="{{ url_for('users.signup') }}" class="btn btn-primary"
-              >{{ _('Join us now') }}</a
-            >
-            <a href="{{ url_for('bedrooms.room') }}" class="btn btn-outline"
-              >{{ _('View Rooms') }}</a
-            >
+            <a href="{{ url_for('users.signup') }}" class="btn btn-primary">{{ _('Join us now') }}</a>
+            <a href="{{ url_for('bedrooms.room') }}" class="btn btn-outline">{{ _('View Rooms') }}</a>
           </div>
         </div>
       </div>
@@ -48,18 +44,10 @@ head_css %} {% block content %}
       <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
         <div class="hero-images">
           <div class="main-image">
-            <img
-              src="{{url_for('static', filename='img/misc/welco3.png')}}"
-              alt="Luxury Hotel"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='img/misc/welco3.png')}}" alt="Luxury Hotel" class="img-fluid" />
           </div>
           <!--Customer floating review-->
-          <div
-            class="floating-card p-3 m-2"
-            data-aos="zoom-in"
-            data-aos-delay="400"
-          >
+          <div class="floating-card p-3 m-2" data-aos="zoom-in" data-aos-delay="400">
             <div class="card-content">
               <div class="rating">
                 <i class="bi bi-star-fill"></i>
@@ -74,11 +62,7 @@ head_css %} {% block content %}
                 process with vetted and trustworthy hosts.') }}
               </p>
               <div class="guest-info">
-                <img
-                  src="{{url_for('static', filename='img/person/djeney.png')}}"
-                  alt="Guest"
-                  class="guest-avatar"
-                />
+                <img src="{{url_for('static', filename='img/person/djeney.png')}}" alt="Guest" class="guest-avatar" />
                 <span>Djeney Diaby</span>
               </div>
             </div>
@@ -92,49 +76,29 @@ head_css %} {% block content %}
       <div class="row text-center">
         <div class="col-md-3 col-6">
           <div class="stat-item">
-            <span
-              class="stat-number purecounter"
-              data-purecounter-start="0"
-              data-purecounter-end="100"
-              data-purecounter-duration="1"
-              >100</span
-            >
+            <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="100"
+              data-purecounter-duration="1">100</span>
             <span class="stat-label">{{ _('Host Partners') }}</span>
           </div>
         </div>
         <div class="col-md-3 col-6">
           <div class="stat-item">
-            <span
-              class="stat-number purecounter"
-              data-purecounter-start="0"
-              data-purecounter-end="5"
-              data-purecounter-duration="1"
-              >5</span
-            >
+            <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="5"
+              data-purecounter-duration="1">5</span>
             <span class="stat-label">{{ _('Stars Service') }}</span>
           </div>
         </div>
         <div class="col-md-3 col-6">
           <div class="stat-item">
-            <span
-              class="stat-number purecounter"
-              data-purecounter-start="0"
-              data-purecounter-end="24"
-              data-purecounter-duration="1"
-              >24</span
-            >
+            <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="24"
+              data-purecounter-duration="1">24</span>
             <span class="stat-label">{{ _('Service & support') }}</span>
           </div>
         </div>
         <div class="col-md-3 col-6">
           <div class="stat-item">
-            <span
-              class="stat-number purecounter"
-              data-purecounter-start="0"
-              data-purecounter-end="98"
-              data-purecounter-duration="1"
-              >98</span
-            >
+            <span class="stat-number purecounter" data-purecounter-start="0" data-purecounter-end="98"
+              data-purecounter-duration="1">98</span>
             <span class="stat-label">{{ _('Guest Satisfaction') }}</span>
           </div>
         </div>
@@ -155,10 +119,7 @@ head_css %} {% block content %}
         </small>
       </div>
 
-      <div
-        class="card-body px-3 py-3"
-        style="background-image: url('static/userpics/ads/blue.avif')"
-      >
+      <div class="card-body px-3 py-3" style="background-image: url('static/userpics/ads/blue.avif')">
         <div class="map-container">
           <!-- <div
             id="world_map"
@@ -213,12 +174,8 @@ head_css %} {% block content %}
           <!-- End Stats Row -->
 
           <div class="about-actions">
-            <a href="{{ url_for('main.about') }}" class="btn-primary"
-              >{{ _('About us') }}</a
-            >
-            <a href="{{ url_for('main.contact') }}" class="btn-secondary"
-              >{{ _('Contact us') }}</a
-            >
+            <a href="{{ url_for('main.about') }}" class="btn-primary">{{ _('About us') }}</a>
+            <a href="{{ url_for('main.contact') }}" class="btn-secondary">{{ _('Contact us') }}</a>
           </div>
         </div>
       </div>
@@ -227,25 +184,17 @@ head_css %} {% block content %}
       <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
         <div class="about-images">
           <div class="main-image">
-            <img
-              src="{{url_for('static', filename='img/hotel/showcase-8.webp')}}"
-              alt="Grandview Resort Main View"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='img/hotel/showcase-8.webp')}}" alt="Grandview Resort Main View"
+              class="img-fluid" />
           </div>
           <div class="secondary-image">
-            <img
-              src="{{url_for('static', filename='img/hotel/room-12.webp')}}"
-              alt="Luxury Suite Interior"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='img/hotel/room-12.webp')}}" alt="Luxury Suite Interior"
+              class="img-fluid" />
           </div>
           <div class="experience-badge">
             <div class="badge-content">
               <span class="badge-number">6+</span>
-              <span class="badge-text"
-                >{{ _('Years') }}<br />{{ _('Experience') }}</span
-              >
+              <span class="badge-text">{{ _('Years') }}<br />{{ _('Experience') }}</span>
             </div>
           </div>
         </div>
@@ -266,13 +215,10 @@ head_css %} {% block content %}
         from the start throughout the grow of your business.') }}
       </p>
     </div>
-    <div class="row people">
+    <div class="row people host-steps-carousel">
       <div class="col-md-6 col-lg-4 item">
         <div class="box">
-          <img
-            class="rounded-circle"
-            src="{{url_for('static', filename='img/misc/register.png')}}"
-          />
+          <img class="rounded-circle" src="{{url_for('static', filename='img/misc/register.png')}}" />
           <h3 class="name">{{ _('Register') }}</h3>
           <p class="title">{{ _('To be a member') }}</p>
           <!-- <p class="description">
@@ -290,10 +236,7 @@ head_css %} {% block content %}
       </div>
       <div class="col-md-6 col-lg-4 item">
         <div class="box">
-          <img
-            class="rounded-circle"
-            src="{{url_for('static', filename='img/misc/vetting.png')}}"
-          />
+          <img class="rounded-circle" src="{{url_for('static', filename='img/misc/vetting.png')}}" />
           <h3 class="name">{{ _('Pass vetting') }}</h3>
           <p class="title">{{ _('Team visit') }}</p>
           <!-- <p class="description">
@@ -311,10 +254,7 @@ head_css %} {% block content %}
       </div>
       <div class="col-md-6 col-lg-4 item">
         <div class="box">
-          <img
-            class="rounded-circle"
-            src="{{ url_for('static', filename='img/misc/makecash1.png') }}"
-          />
+          <img class="rounded-circle" src="{{ url_for('static', filename='img/misc/makecash1.png') }}" />
           <h3 class="name">{{ _('Make Cash') }}</h3>
           <p class="title">{{ _('Go live') }}</p>
           <!-- <p class="description">
@@ -336,11 +276,7 @@ head_css %} {% block content %}
                 ><h4>Click here to become a host.</h4></a
               >
             </div> -->
-      <div
-        class="text-primary text-center"
-        data-aos="fade-up"
-        data-aos-delay="600"
-      >
+      <div class="text-primary text-center" data-aos="fade-up" data-aos-delay="600">
         <a href="{{ url_for('main.behost') }}" class="explore-all-link">
           <h5>
             {{ _('Learn more') }} <i class="bi bi-arrow-right-circle"></i>
@@ -351,6 +287,48 @@ head_css %} {% block content %}
     </div>
   </div>
 </div>
+
+<style>
+  /* Mobile/tablet carousel behavior for the 3 "become a host" steps.
+     Same pattern as .deals-carousel further down this page, but kept
+     completely separate (own class name) so neither section's styling
+     can ever affect the other. At lg and above, this whole block is
+     inactive and the cards fall back to Bootstrap's normal 3-column
+     grid, untouched. */
+  @media (max-width: 991.98px) {
+    .host-steps-carousel {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.5rem;
+      /* room for the scrollbar so it doesn't sit under the cards */
+    }
+
+    .host-steps-carousel::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .host-steps-carousel::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 999px;
+    }
+
+    .host-steps-carousel>[class*='col-'] {
+      scroll-snap-align: start;
+      flex: 0 0 85%;
+      max-width: 85%;
+    }
+  }
+
+  /* Tablet: show more of a second card peeking in, ~1.5-2 cards visible */
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    .host-steps-carousel>[class*='col-'] {
+      flex: 0 0 55%;
+      max-width: 55%;
+    }
+  }
+</style>
 
 <!-------------------------------------------------------------------------------------->
 <!-- Rooms Showcase Section -->
@@ -372,11 +350,7 @@ head_css %} {% block content %}
       <div class="col-xl-8" data-aos="zoom-in" data-aos-delay="200">
         <div class="hero-room-showcase">
           <div class="showcase-image-container">
-            <img
-              src="{{ image1 }}"
-              alt="Grand Presidential Suite"
-              class="img-fluid"
-            />
+            <img src="{{ image1 }}" alt="Grand Presidential Suite" class="img-fluid" />
             <div class="room-category-badge">
               <span>{{ _('SpotLight') }}</span>
             </div>
@@ -443,10 +417,8 @@ head_css %} {% block content %}
       <!-- End Hero Room -->
       {% else %}
       <div class="col-xl-8" data-aos="zoom-in" data-aos-delay="200">
-        <div
-          class="hero-room-showcase d-flex align-items-center justify-content-center text-center p-5"
-          style="min-height: 320px"
-        >
+        <div class="hero-room-showcase d-flex align-items-center justify-content-center text-center p-5"
+          style="min-height: 320px">
           <p class="text-muted mb-0">
             {{ _('No rooms available yet -- check back soon!') }}
           </p>
@@ -457,18 +429,10 @@ head_css %} {% block content %}
       <div class="col-xl-4">
         <div class="room-list-container">
           {% for spot in latest_rooms %}
-          <div
-            class="standard-room-card"
-            data-aos="slide-left"
-            data-aos-delay="250"
-          >
+          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="250">
             {% if loop.index == 1 %}
             <div class="card-image">
-              <img
-                src="{{ get_room_image_url(spot.image1) }}"
-                alt="Executive Room"
-                class="img-fluid"
-              />
+              <img src="{{ get_room_image_url(spot.image1) }}" alt="Executive Room" class="img-fluid" />
               <!-- src="{{url_for('static', filename='img/hotel/room-6.webp')}}" -->
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
@@ -487,8 +451,7 @@ head_css %} {% block content %}
                 <span><i class="bi bi-building"></i>{{spot.status}}</span>
                 &nbsp; &nbsp; &nbsp;
                 <!--City Views-->
-                <span
-                  ><i class="bi bi-geo-alt"></i>
+                <span><i class="bi bi-geo-alt"></i>
                   {{spot.room_location}}
                 </span>
               </div>
@@ -497,28 +460,16 @@ head_css %} {% block content %}
                   <!-- $329-->
                   {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
                 </div>
-                <a
-                  href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
-                  class="book-link"
-                  >{{ _('View') }}</a
-                >
+                <a href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}" class="book-link">{{ _('View') }}</a>
               </div>
             </div>
           </div>
           <!-- End Standard Room -->
-          <div
-            class="standard-room-card"
-            data-aos="slide-left"
-            data-aos-delay="300"
-          >
+          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="300">
             {% elif loop.index == 2 %}
             <div class="card-image">
               <!-- {{url_for('static', filename='img/hotel/room-19.webp')}} -->
-              <img
-                src="{{ get_room_image_url(spot.image1) }}"
-                alt="Garden View"
-                class="img-fluid"
-              />
+              <img src="{{ get_room_image_url(spot.image1) }}" alt="Garden View" class="img-fluid" />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
@@ -534,36 +485,22 @@ head_css %} {% block content %}
                 <span><i class="bi bi-building"></i>{{ spot.status }}</span>
                 <!-- Private Terrace -->
                 &nbsp; &nbsp; &nbsp;
-                <span
-                  ><i class="bi bi-geo-alt"></i>{{ spot.room_location }}</span
-                >
+                <span><i class="bi bi-geo-alt"></i>{{ spot.room_location }}</span>
               </div>
               <div class="booking-row">
                 <div class="price">
                   {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
                 </div>
-                <a
-                  href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
-                  class="book-link"
-                  >{{ _('View') }}</a
-                >
+                <a href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}" class="book-link">{{ _('View') }}</a>
               </div>
             </div>
           </div>
           <!-- End Standard Room -->
-          <div
-            class="standard-room-card"
-            data-aos="slide-left"
-            data-aos-delay="350"
-          >
+          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="350">
             {% elif loop.index == 3 %}
             <div class="card-image">
               <!--src="{{url_for('static', filename='img/hotel/room-12.webp')}}"-->
-              <img
-                src="{{ get_room_image_url(spot.image1) }}"
-                alt="Family Suite"
-                class="img-fluid"
-              />
+              <img src="{{ get_room_image_url(spot.image1) }}" alt="Family Suite" class="img-fluid" />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
@@ -575,21 +512,14 @@ head_css %} {% block content %}
               <div class="features-list">
                 <span><i class="bi bi-building"></i>{{ spot.status }}</span>
                 &nbsp; &nbsp; &nbsp;
-                <span
-                  ><i class="bi bi-geo-alt"></i
-                  ><!--Kids Area-->
-                  {{ spot.room_location }}</span
-                >
+                <span><i class="bi bi-geo-alt"></i><!--Kids Area-->
+                  {{ spot.room_location }}</span>
               </div>
               <div class="booking-row">
                 <div class="price">
                   {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
                 </div>
-                <a
-                  href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}"
-                  class="book-link"
-                  >{{ _('View') }}</a
-                >
+                <a href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}" class="book-link">{{ _('View') }}</a>
               </div>
               {% endif %}
             </div>
@@ -606,11 +536,7 @@ head_css %} {% block content %}
         <div class="minimal-room-card">
           {% if loop.index == 1 %}
           <div class="room-image">
-            <img
-              src="{{ get_room_image_url(feature.image1) }}"
-              alt="Classic Room"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(feature.image1) }}" alt="Classic Room" class="img-fluid" />
             <div class="hover-overlay">
               <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
@@ -636,11 +562,7 @@ head_css %} {% block content %}
         <div class="minimal-room-card">
           {% elif loop.index == 2 %}
           <div class="room-image">
-            <img
-              src="{{ get_room_image_url(feature.image1) }}"
-              alt="Superior Room"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(feature.image1) }}" alt="Superior Room" class="img-fluid" />
             <div class="hover-overlay">
               <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
@@ -666,11 +588,7 @@ head_css %} {% block content %}
         <div class="minimal-room-card">
           {% elif loop.index == 3 %}
           <div class="room-image">
-            <img
-              src="{{ get_room_image_url(feature.image1) }}"
-              alt="Premium Room"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(feature.image1) }}" alt="Premium Room" class="img-fluid" />
             <div class="hover-overlay">
               <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
@@ -696,11 +614,7 @@ head_css %} {% block content %}
         <div class="minimal-room-card">
           {% elif loop.index == 4 %}
           <div class="room-image">
-            <img
-              src="{{ get_room_image_url(feature.image1) }}"
-              alt="Luxury Suite"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(feature.image1) }}" alt="Luxury Suite" class="img-fluid" />
             <div class="hover-overlay">
               <a href="#" class="view-room">
                 <i class="bi bi-eye"></i>
@@ -736,229 +650,6 @@ head_css %} {% block content %}
 </section>
 <!-- /Rooms Showcase Section -->
 
-<!-- Amenities Cards Section -->
-<!-- <section id="amenities-cards" class="amenities-cards section"> -->
-<!-- Section Title -->
-<!-- <div class="container section-title" data-aos="fade-up">
-          <span class="description-title">Amenities</span>
-          <h2>Amenities</h2>
-          <p>
-            Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-            consectetur velit
-          </p>
-        </div> -->
-<!-- End Section Title -->
-
-<!-- <div class="container" data-aos="fade-up" data-aos-delay="100">
-          <div class="row g-5">
-            <div
-              class="col-lg-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <div class="facility-card">
-                <div class="facility-image">
-                  <img
-                    src="{{url_for('static', filename='img/hotel/amenities-1.webp')}}"
-                    alt="Wireless Internet"
-                    class="img-fluid"
-                  />
-                  <div class="facility-overlay">
-                    <i class="bi bi-wifi"></i>
-                  </div>
-                </div>
-                <div class="facility-info">
-                  <h4>High-Speed Internet</h4>
-                  <p>
-                    Complimentary wireless internet access throughout the hotel
-                    premises with enterprise-grade security and unlimited
-                    bandwidth for all your connectivity needs.
-                  </p>
-                  <div class="facility-features">
-                    <span
-                      ><i class="bi bi-check-circle"></i> 24/7 Available</span
-                    >
-                    <span><i class="bi bi-check-circle"></i> High Speed</span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-<!-- End Facility Card -->
-
-<!-- <div
-              class="col-lg-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="150"
-            >
-              <div class="facility-card">
-                <div class="facility-image">
-                  <img
-                    src="{{url_for('static', filename='img/hotel/amenities-3.webp')}}"
-                    alt="Swimming Pool"
-                    class="img-fluid"
-                  />
-                  <div class="facility-overlay">
-                    <i class="bi bi-droplet"></i>
-                  </div>
-                </div>
-                <div class="facility-info">
-                  <h4>Rooftop Pool</h4>
-                  <p>
-                    Luxurious rooftop swimming pool with breathtaking city
-                    skyline views. Features heated water, poolside service, and
-                    premium lounging areas for ultimate relaxation.
-                  </p>
-                  <div class="facility-features">
-                    <span><i class="bi bi-check-circle"></i> Heated Pool</span>
-                    <span><i class="bi bi-check-circle"></i> City Views</span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-<!-- End Facility Card -->
-
-<!-- <div
-              class="col-lg-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <div class="facility-card">
-                <div class="facility-image">
-                  <img
-                    src="{{url_for('static', filename='img/hotel/amenities-5.webp')}}"
-                    alt="Valet Parking"
-                    class="img-fluid"
-                  />
-                  <div class="facility-overlay">
-                    <i class="bi bi-car-front"></i>
-                  </div>
-                </div>
-                <div class="facility-info">
-                  <h4>Valet Parking</h4>
-                  <p>
-                    Premium valet parking service with secure underground
-                    facility. Professional attendants ensure your vehicle is
-                    safely parked and readily available upon request.
-                  </p>
-                  <div class="facility-features">
-                    <span><i class="bi bi-check-circle"></i> Secure</span>
-                    <span
-                      ><i class="bi bi-check-circle"></i> Valet Service</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div> -->
-<!-- End Facility Card -->
-
-<!-- <div
-              class="col-lg-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="250"
-            >
-              <div class="facility-card">
-                <div class="facility-image">
-                  <img
-                    src="{{url_for('static', filename='img/hotel/amenities-2.webp')}}"
-                    alt="Fitness Center"
-                    class="img-fluid"
-                  />
-                  <div class="facility-overlay">
-                    <i class="bi bi-heart-pulse"></i>
-                  </div>
-                </div>
-                <div class="facility-info">
-                  <h4>Modern Fitness Center</h4>
-                  <p>
-                    Cutting-edge fitness facility featuring premium equipment,
-                    personal training services, and wellness programs designed
-                    to maintain your health routine while traveling.
-                  </p>
-                  <div class="facility-features">
-                    <span><i class="bi bi-check-circle"></i> 24/7 Access</span>
-                    <span
-                      ><i class="bi bi-check-circle"></i> Personal
-                      Training</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div> -->
-<!-- End Facility Card -->
-
-<!-- <div
-              class="col-lg-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <div class="facility-card">
-                <div class="facility-image">
-                  <img
-                    src="{{url_for('static', filename='img/hotel/dining-2.webp')}}"
-                    alt="Fine Dining"
-                    class="img-fluid"
-                  />
-                  <div class="facility-overlay">
-                    <i class="bi bi-cup-hot"></i>
-                  </div>
-                </div>
-                <div class="facility-info">
-                  <h4>Signature Restaurant</h4>
-                  <p>
-                    Award-winning culinary experience featuring international
-                    cuisine crafted by renowned chefs. Elegant atmosphere with
-                    extensive wine selection and impeccable service.
-                  </p>
-                  <div class="facility-features">
-                    <span><i class="bi bi-check-circle"></i> Fine Dining</span>
-                    <span
-                      ><i class="bi bi-check-circle"></i> Wine Selection</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div> -->
-<!-- End Facility Card -->
-
-<!-- <div
-              class="col-lg-4 col-md-6"
-              data-aos="fade-up"
-              data-aos-delay="350"
-            >
-              <div class="facility-card">
-                <div class="facility-image">
-                  <img
-                    src="{{url_for('static', filename='img/hotel/amenities-4.webp')}}"
-                    alt="Spa Services"
-                    class="img-fluid"
-                  />
-                  <div class="facility-overlay">
-                    <i class="bi bi-flower1"></i>
-                  </div>
-                </div>
-                <div class="facility-info">
-                  <h4>Luxury Spa</h4>
-                  <p>
-                    Tranquil sanctuary offering therapeutic treatments,
-                    rejuvenating massages, and holistic wellness experiences.
-                    Escape the everyday stress in our serene environment.
-                  </p>
-                  <div class="facility-features">
-                    <span><i class="bi bi-check-circle"></i> Full Service</span>
-                    <span
-                      ><i class="bi bi-check-circle"></i> Wellness
-                      Programs</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div> -->
-<!-- End Facility Card -->
-<!-- </div>
-        </div>
-      </section> -->
-<!-- /Amenities Cards Section -->
-
 <!-- Testimonials Section -->
 <section id="testimonials" class="testimonials section light-background">
   <!-- Section Title -->
@@ -966,8 +657,8 @@ head_css %} {% block content %}
     <span class="description-title">{{ _('Testimonials') }}</span>
     <h2>{{ _('Testimonials') }}</h2>
     <p>
-      Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-      consectetur velit
+      {{_('At Jambo, our customers stand at the heart of our achievements. Thus, our main goal is not just simply to
+      satisfy them, but rather to amaze them. Here is what some clients have to say about us.')}}
     </p>
   </div>
   <!-- End Section Title -->
@@ -983,21 +674,18 @@ head_css %} {% block content %}
             </div>
             <div class="testimonial-content">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-                tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo. Sed
-                non mauris vitae erat consequat auctor eu in elit.
+                {{_('I booked a room in Abidjan while I was still in London, and seeing the price instantly in my own
+                currency made the whole process feel effortless. No guesswork, no surprises at checkout — just a clear,
+                honest price from start to finish. Jambo made booking across borders feel as simple as booking a hotel
+                at home.')}}
               </p>
             </div>
             <div class="testimonial-author">
-              <img
-                src="{{url_for('static', filename='img/person/person-m-5.webp')}}"
-                alt="Client"
-                class="img-fluid rounded-circle"
-                loading="lazy"
-              />
+              <img src="{{url_for('static', filename='img/person/Damara.jpeg')}}" alt="Client"
+                class="img-fluid rounded-circle" loading="lazy" />
               <div class="author-info">
-                <h4>Robert Johnson</h4>
-                <span>Chief Executive Officer</span>
+                <h4>Amara Dialo</h4>
+                <span>Frequent Traveler</span>
               </div>
             </div>
           </div>
@@ -1012,21 +700,17 @@ head_css %} {% block content %}
             </div>
             <div class="testimonial-content">
               <p>
-                Proin iaculis purus consequat sem cure digni ssim donec
-                porttitora entum suscipit rhoncus. Accusantium quam, ultricies
-                eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                {{_('Listing my first room on Jambo took less than ten minutes, and within a week I had my first
+                booking. Being able to set my own discount and track my earnings right from my dashboard gives me real
+                control over my own listing. It\'s turned a spare room into a genuine, reliable source of income.')}}
               </p>
             </div>
             <div class="testimonial-author">
-              <img
-                src="{{url_for('static', filename='img/person/person-f-7.webp')}}"
-                alt="Client"
-                class="img-fluid rounded-circle"
-                loading="lazy"
-              />
+              <img src="{{url_for('static', filename='img/person/JB-Kouassi.jpeg')}}" alt="Client"
+                class="img-fluid rounded-circle" loading="lazy" />
               <div class="author-info">
-                <h4>Sarah Williams</h4>
-                <span>Marketing Director</span>
+                <h4>Jean-Baptiste Kouassi</h4>
+                <span>Host, Cocody</span>
               </div>
             </div>
           </div>
@@ -1115,22 +799,12 @@ head_css %} {% block content %}
     <div class="row g-4 deals-carousel">
       {% for card in deal_cards %}
       <div class="col-lg-4 col-md-6">
-        <div
-          class="offer-card"
-          data-aos="zoom-in"
-          data-aos-delay="{{ 200 + loop.index0 * 100 }}"
-        >
+        <div class="offer-card" data-aos="zoom-in" data-aos-delay="{{ 200 + loop.index0 * 100 }}">
           <div class="offer-badge">
-            <span class="discount"
-              >{{ card.deal.discount_percent }}% {{ _('OFF') }}</span
-            >
+            <span class="discount">{{ card.deal.discount_percent }}% {{ _('OFF') }}</span>
           </div>
           <div class="offer-image">
-            <img
-              src="{{ get_room_image_url(card.room.image1) }}"
-              alt="{{ card.title }}"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(card.room.image1) }}" alt="{{ card.title }}" class="img-fluid" />
           </div>
           <div class="offer-content">
             <h3>{{ card.title }}</h3>
@@ -1139,9 +813,7 @@ head_css %} {% block content %}
             <p style="text-align: justify">{{ card.room.description }}</p>
             <div class="offer-details">
               <div class="price-info">
-                <span class="original-price"
-                  >{{ card.original_price_display }}</span
-                >
+                <span class="original-price">{{ card.original_price_display }}</span>
                 <span class="offer-price">{{ card.offer_price_display }}</span>
                 <span class="per-night">{{ _('per night') }}</span>
               </div>
@@ -1150,11 +822,8 @@ head_css %} {% block content %}
                 <span>{{ card.subtext }}</span>
               </div>
             </div>
-            <a
-              href="{{ url_for('bedrooms.booknow', room_id=card.room.id, deal_id=card.deal.id ) }}"
-              class="btn-book"
-              >{{ _('Reserve Now') }}</a
-            >
+            <a href="{{ url_for('bedrooms.booknow', room_id=card.room.id, deal_id=card.deal.id ) }}" class="btn-book">{{
+              _('Reserve Now') }}</a>
           </div>
         </div>
       </div>
@@ -1173,16 +842,20 @@ head_css %} {% block content %}
           overflow-x: auto;
           scroll-snap-type: x mandatory;
           -webkit-overflow-scrolling: touch;
-          padding-bottom: 0.5rem; /* room for the scrollbar so it doesn't sit under the cards */
+          padding-bottom: 0.5rem;
+          /* room for the scrollbar so it doesn't sit under the cards */
         }
+
         .deals-carousel::-webkit-scrollbar {
           height: 6px;
         }
+
         .deals-carousel::-webkit-scrollbar-thumb {
           background: rgba(0, 0, 0, 0.15);
           border-radius: 999px;
         }
-        .deals-carousel > [class*='col-'] {
+
+        .deals-carousel>[class*='col-'] {
           scroll-snap-align: start;
           flex: 0 0 85%;
           max-width: 85%;
@@ -1191,7 +864,7 @@ head_css %} {% block content %}
 
       /* Tablet: show more of a second card peeking in, ~1.5-2 cards visible */
       @media (min-width: 576px) and (max-width: 991.98px) {
-        .deals-carousel > [class*='col-'] {
+        .deals-carousel>[class*='col-'] {
           flex: 0 0 55%;
           max-width: 55%;
         }
@@ -1236,23 +909,16 @@ head_css %} {% block content %}
             </li>
           </ul>
           <div class="cta-buttons">
-            <a href="{{ url_for('main.contact') }}" class="btn-primary"
-              >{{ _('Contact us') }}</a
-            >
-            <a href="{{ url_for('bedrooms.room') }}" class="btn-secondary"
-              >{{ _('View Rooms') }}</a
-            >
+            <a href="{{ url_for('main.contact') }}" class="btn-primary">{{ _('Contact us') }}</a>
+            <a href="{{ url_for('bedrooms.room') }}" class="btn-secondary">{{ _('View Rooms') }}</a>
           </div>
         </div>
       </div>
 
       <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
         <div class="image-wrapper">
-          <img
-            src="{{ url_for('static', filename='img/hotel/showcase-9-1.jpg') }}"
-            alt="Luxury Hotel Experience"
-            class="img-fluid"
-          />
+          <img src="{{ url_for('static', filename='img/hotel/showcase-9-1.jpg') }}" alt="Luxury Hotel Experience"
+            class="img-fluid" />
 
           <div class="overlay-content">
             <div class="special-offer">
