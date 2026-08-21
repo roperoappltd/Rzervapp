@@ -215,118 +215,90 @@ head_css %} {% block content %}
         from the start throughout the grow of your business.') }}
       </p>
     </div>
-    <div class="row people host-steps-carousel">
-      <div class="col-md-6 col-lg-4 item">
-        <div class="box">
-          <img class="rounded-circle" src="{{url_for('static', filename='img/misc/register.png')}}" />
-          <h3 class="name">{{ _('Register') }}</h3>
-          <p class="title">{{ _('To be a member') }}</p>
-          <!-- <p class="description">
-            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus.
-            Praesent aliquam in tellus eu gravida. Aliquam varius finibus est,
-            et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper
-            massa.
-          </p>
-          <div class="social">
-            <a href="#"><i class="fa fa-facebook-official"></i></a
-            ><a href="#"><i class="fa fa-twitter"></i></a
-            ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 item">
-        <div class="box">
-          <img class="rounded-circle" src="{{url_for('static', filename='img/misc/vetting.png')}}" />
-          <h3 class="name">{{ _('Pass vetting') }}</h3>
-          <p class="title">{{ _('Team visit') }}</p>
-          <!-- <p class="description">
-            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus.
-            Praesent aliquam in tellus eu gravida. Aliquam varius finibus est,
-            et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper
-            massa.
-          </p>
-          <div class="social">
-            <a href="#"><i class="fa fa-facebook-official"></i></a
-            ><a href="#"><i class="fa fa-twitter"></i></a
-            ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 item">
-        <div class="box">
-          <img class="rounded-circle" src="{{ url_for('static', filename='img/misc/makecash1.png') }}" />
-          <h3 class="name">{{ _('Make Cash') }}</h3>
-          <p class="title">{{ _('Go live') }}</p>
-          <!-- <p class="description">
-            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus.
-            Praesent aliquam in tellus eu gravida. Aliquam varius finibus est,
-            et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper
-            massa.
-          </p>
-          <div class="social">
-            <a href="#"><i class="fa fa-facebook-official"></i></a
-            ><a href="#"><i class="fa fa-twitter"></i></a
-            ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div> -->
-        </div>
-      </div>
-      <!--BUTTONS---------------------------------------------->
-      <!-- <div class="text-center">
-              <a href="about.html" class="btn btn-link text-danger"
-                ><h4>Click here to become a host.</h4></a
-              >
-            </div> -->
-      <div class="text-primary text-center" data-aos="fade-up" data-aos-delay="600">
-        <a href="{{ url_for('main.behost') }}" class="explore-all-link">
-          <h5>
-            {{ _('Learn more') }} <i class="bi bi-arrow-right-circle"></i>
-          </h5>
-        </a>
-      </div>
-      <!--END BUTTONS---------------------------------------------->
+
+    {% macro host_step_card(img, name, title) %}
+    <div class="box">
+      <img class="rounded-circle" src="{{ url_for('static', filename='img/misc/' + img) }}" />
+      <h3 class="name">{{ name }}</h3>
+      <p class="title">{{ title }}</p>
     </div>
+    {% endmacro %}
+
+    {% set host_steps = [
+    {'img': 'register.png', 'name': _('Register'), 'title': _('To be a member')},
+    {'img': 'vetting.png', 'name': _('Pass vetting'), 'title': _('Team visit')},
+    {'img': 'makecash1.png', 'name': _('Make Cash'), 'title': _('Go live')},
+    ] %}
+
+    <!-- Desktop/tablet-large: unchanged normal 3-column grid -->
+    <div class="row people d-none d-lg-flex">
+      {% for step in host_steps %}
+      <div class="col-lg-4 item">
+        {{ host_step_card(step.img, step.name, step.title) }}
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Mobile/tablet: real Bootstrap carousel, one card at a time,
+         dot indicators to jump between them, swipe support built in.
+         No scrollbar at all -- this is slide-based (transform),
+         not scroll-based, unlike the .deals-carousel pattern
+         elsewhere on this page. -->
+    <div id="hostStepsCarousel" class="carousel slide host-steps-mobile-carousel d-lg-none">
+      <div class="carousel-indicators">
+        {% for step in host_steps %}
+        <button type="button" data-bs-target="#hostStepsCarousel" data-bs-slide-to="{{ loop.index0 }}" {% if loop.first
+          %}class="active" aria-current="true" {% endif %} aria-label="{{ _('Slide') }} {{ loop.index }}"></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for step in host_steps %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <div class="d-flex justify-content-center">
+            {{ host_step_card(step.img, step.name, step.title) }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!--BUTTONS---------------------------------------------->
+    <!-- Learn more -- now sits OUTSIDE both layouts above, so it
+         always appears below the cards/carousel, never beside them
+         as a stray extra slide. -->
+    <div class="text-primary text-center" data-aos="fade-up" data-aos-delay="600">
+      <a href="{{ url_for('main.behost') }}" class="explore-all-link">
+        <h5>
+          {{ _('Learn more') }} <i class="bi bi-arrow-right-circle"></i>
+        </h5>
+      </a>
+    </div>
+    <!--END BUTTONS---------------------------------------------->
   </div>
 </div>
 
 <style>
-  /* Mobile/tablet carousel behavior for the 3 "become a host" steps.
-     Same pattern as .deals-carousel further down this page, but kept
-     completely separate (own class name) so neither section's styling
-     can ever affect the other. At lg and above, this whole block is
-     inactive and the cards fall back to Bootstrap's normal 3-column
-     grid, untouched. */
-  @media (max-width: 991.98px) {
-    .host-steps-carousel {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 0.5rem;
-      /* room for the scrollbar so it doesn't sit under the cards */
-    }
-
-    .host-steps-carousel::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .host-steps-carousel::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.15);
-      border-radius: 999px;
-    }
-
-    .host-steps-carousel>[class*='col-'] {
-      scroll-snap-align: start;
-      flex: 0 0 85%;
-      max-width: 85%;
-    }
+  /* Dot indicators: Bootstrap's default styling is thin white bars,
+     designed for dark image carousels -- invisible against this
+     section's light background. Overriding to visible, round dots
+     matching the app's navy brand color. */
+  .host-steps-mobile-carousel .carousel-indicators {
+    position: static;
+    margin-top: 1rem;
   }
 
-  /* Tablet: show more of a second card peeking in, ~1.5-2 cards visible */
-  @media (min-width: 576px) and (max-width: 991.98px) {
-    .host-steps-carousel>[class*='col-'] {
-      flex: 0 0 55%;
-      max-width: 55%;
-    }
+  .host-steps-mobile-carousel .carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    opacity: 1;
+    margin: 0 6px;
+    border: none;
+  }
+
+  .host-steps-mobile-carousel .carousel-indicators .active {
+    background-color: #003366;
   }
 </style>
 
