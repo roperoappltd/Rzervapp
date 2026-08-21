@@ -44,9 +44,22 @@ class Config :
         # pool_recycle: proactively recycles any connection older than
         # this many seconds, refreshing it before MySQL's own timeout
         # ever gets the chance to silently kill it server-side.
+        # connect_args timeouts: pool_pre_ping's own test query can
+        # itself hang indefinitely if the underlying connection is
+        # silently dropped (black-holed) rather than cleanly closed --
+        # these force pymysql to give up and raise a real, catchable
+        # error after a bounded wait, instead of hanging forever. This
+        # is what turns "the page spins with a blank white screen
+        # forever" into "the page fails fast, then works again on the
+        # next attempt once pool_pre_ping discards the bad connection."
         SQLALCHEMY_ENGINE_OPTIONS = {
             "pool_pre_ping": True,
             "pool_recycle": 3600,
+            "connect_args": {
+                "connect_timeout": 10,
+                "read_timeout": 10,
+                "write_timeout": 10,
+            },
         }
 
     # responsive user interface
