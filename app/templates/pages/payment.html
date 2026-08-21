@@ -1,15 +1,14 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }}
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-{% endblock %} {% block content %}
+{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock %} {%
+block content %}
 
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">{{ _('Checkout') }}</h1>
+    <h1 class="mb-2 mb-lg-0">Booking Summary</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
-        <li class="current">{{ _('Checkout') }}</li>
+        <li><a href="{{ url_for('main.home') }}">Home</a></li>
+        <li class="current">Booking summary</li>
       </ol>
     </nav>
   </div>
@@ -19,6 +18,7 @@
 <!-- Booking summary Section -->
 <section id="contact" class="contact section">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!--HOST & GUEST INFO BOX-------------------------------------------->
     <div class="row g-4 mb-3" data-aos="fade-up" data-aos-delay="300">
       <div class="col-md-6">
         <div class="contact-info-card">
@@ -26,10 +26,10 @@
             <i class="bi bi-person-check"></i>
           </div>
           <div class="info-content">
-            <h4>{{ _('Host') }}</h4>
+            <h4>Host</h4>
             <p>{{ room.user.first_name }} {{ room.user.last_name }}</p>
-            <p>{{ _('Email') }}: {{ room.user.email }}</p>
-            <p>{{ _('Phone') }}: {{ room.user.phone }}</p>
+            <p>Email: {{ room.user.email }}</p>
+            <p>Phone: {{ room.user.phone }}</p>
           </div>
         </div>
       </div>
@@ -39,22 +39,20 @@
             <i class="bi bi-person-raised-hand"></i>
           </div>
           <div class="info-content">
-            <h4>{{ _('Primary Guest') }}</h4>
+            <h4>Primary Guest</h4>
             <p>{{ book.primary_guest }}</p>
-            <p>{{ _('Email') }}: {{ book.pguest_email}}</p>
-            <p>{{ _('Phone') }}: {{ book.pguest_phone}}</p>
+            <p>Email: {{ book.pguest_email}}</p>
+            <p>Phone: {{ book.pguest_phone}}</p>
           </div>
         </div>
       </div>
     </div>
+    <!------------------------------------->
 
-    <!----------------------APPLY VOUCHER-------->
-
-    <!-------------------------END APPLY VOUNCHER-->
     <!----------Payment summary------------>
     <div class="card mb-3">
       <h5 class="card-header">
-        {{ _('Short Room rental') }} | {{ _('Booking Number') }}: {{ book.booking_num }}
+        Short Room rental | Booking Number: {{ book.booking_num }}
       </h5>
       <div class="card-body">
         <!-- <h5 class="card-title">Room booked</h5> -->
@@ -64,129 +62,117 @@
               <td>
                 <div class="d-flex mb-2">
                   <div class="flex-shrink-0">
-                    <img src="{{ url_for('static', filename='/userpics/roompics/'+ room.image1 ) }}" alt="" width="38"
+                    <img src="{{ url_for('static', filename='userpics/roompics/'+ room.image1 ) }}" alt="" width="38"
                       height="38" />
                   </div>
                   <div class="flex-lg-grow-1 ms-3">
                     <h6 class="small mb-0">
-                      <span class="text-reset">{{ room.room_category}} ({{room.room_name}}) {{ _('located at') }}
+                      <span class="text-reset">{{ room.room_category}} ({{room.room_name}}) located at
                         {{room.room_location}}
                       </span>
                     </h6>
-                    {% if book %}
-                    <span class="small text-success" {{ _('Booked from') }} {{ book.arrival.strftime('%d %B %Y') }} {{
-                      _('To') }} {{ book.departure.strftime('%d %B %Y') }} {{ _('for') }} <b>{{ ( book.departure -
-                      book.arrival).days }} {{ _('days') }}</b> </span>
-                    {% endif %}
+                    <span class="small text-success">Booked from {{ book.arrival.strftime('%d %B %Y') }} To {{
+                      book.departure.strftime('%d %B %Y') }} for
+                      <b>{{ ( book.departure - book.arrival).days }} days</b>
+                    </span>
                   </div>
                 </div>
               </td>
               <td>1</td>
-              <td class="text-end">{{ currency_symbol }}{{ room_price_guest }}</td>
+              <td class="text-end">
+                {{ convert_and_format(payment.room_price_gbp, "GBP",
+                current_user.preferred_currency) }}
+              </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2">{{ _('Subtotal') }}</td>
+              <td colspan="2">Subtotal</td>
               <td class="text-end">
-                {{ currency_symbol }}<span id="subtotal" data-value="{{ subtotal }}">{{ "%.2f"|format(subtotal)
-                  }}</span>
+                {{ convert_and_format(payment.accounting_amount -
+                payment.discount_gbp, "GBP", current_user.preferred_currency) }}
               </td>
             </tr>
             <tr>
-              <td colspan="2">{{ _('Service Fee') }}</td>
-              <td class="text-end">{{ convert_and_format(book.serv_charge, book.serv_charge_currency, guest_currency) }}
+              <td colspan="2">Service Fee</td>
+              <td class="text-end">
+                {{ convert_and_format(book.serv_charge,
+                book.serv_charge_currency, current_user.preferred_currency) }}
               </td>
             </tr>
 
             <tr>
-              <td colspan="2">{{ _('Discount') }}</td>
+              <td colspan="2">Discount</td>
               <td class="text-danger text-end">
-                -{{ currency_symbol }}<span id="discount" data-value="{{ discount }}">{{ "%.2f"|format(discount)
-                  }}</span>
+                -{{ convert_and_format(payment.discount_gbp, "GBP",
+                current_user.preferred_currency) }}
               </td>
             </tr>
 
             <tr class="fw-bold">
-              <td colspan="2">{{ _('TOTAL') }}</td>
+              <td colspan="2">TOTAL</td>
               <td class="text-end">
-                {{ currency_symbol }}
-                <span id="final-total" data-value="{{ total_paid }}">{{ "%.2f"|format(total_paid) }}</span>
+                {{ convert_and_format(payment.accounting_amount, "GBP",
+                current_user.preferred_currency) }}
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
     </div>
+    <!----------------------APPLY VOUCHER-------->
+    <!-- <div class="col-md-12 pb-3">
+      <div class="contact-info-card">
+        <div class="info-content">
+          <form method="POST" action="">
+            {{ form2.hidden_tag() }} {{ form2.csrf_token }}
+            <div class="row g-3">
+              <div class="col-md-12">
+                <div class="form-group1">
+                  {{ form2.code.label(class="form2-control-label") }} {% if
+                  form2.code.errors %} {{ form2.code(class="form2-control
+                  form2-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form2.code.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                  {% else %} {{ form2.code(class="form2-control
+                  form2-control-lg") }} {% endif %}
+                </div>
+                <div class="pt-2 text-end">
+                  {{ form2.submit2(class="btn btn-outline-secondary") }}
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div> -->
+    <!-------------------------END APPLY VOUNCHER-->
     <!----CHECKOUT--------------------------------->
-    <div class="col-md-14 pb-1">
+    <div class="col-md-12 pb-3">
       <div class="info-content">
         <form method="POST" action="">
-          {{ payform.hidden_tag() }} {{ payform.csrf_token }}
-          <div class="card mb-3">
-            <!-- <div class="card-header"> -->
-            <label class="pb-2">
-              <h5 class="card-header">{{ _('Select a payment method') }}:</h5>
-            </label>
-            <div>
-              {% for subfield in payform.pay_method %}
-              <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ subfield }}</td>
-                <td>{{ subfield.label }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
-              </tr>
-              {% endfor %}
-            </div>
-            <hr />
-            <!-- </div> -->
-          </div>
-          <div class="col-md-14">
-            <div class="contact-info-card">
-              {% if deal_booking %}
-              <!-- <div class="alert alert-info"> -->
-              <strong> {{ _('Deal dicount') }}:</strong>{{ _('A') }} {{ currency_symbol }}{{ "%.2f"|format(discount) }}
-              {{ _('promotional discount has been successfully applied. Takecare and
-              See you very soon!') }}
-              <!-- </div> -->
-              {% else %}
-              <div class="form-group1">
-                {{ payform.voucher_code.label(class="payform-control-label pb-1
-                ") }} {% if payform.voucher_code.errors %} {{
-                payform.voucher_code(class="payform-control payform-control-sm
-                is-invalid", id="voucher_code") }}
-                <div class="invalid-feedback">
-                  {% for error in payform.voucher_code.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% else %} {{ payform.voucher_code(class="payform-control
-                payform-control-sm", id="voucher_code") }} {% endif %}
-              </div>
-              <div id="msg"></div>
-              {% endif %}
-            </div>
+          {{ form.hidden_tag() }} {{ form.csrf_token }}
+          <div>
+            {% for subfield in form.pay_method %}
+            <tr>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ subfield }}</td>
+              <td>{{ subfield.label }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+            {% endfor %}
           </div>
           <hr />
           <div class="form-group1 form-actions text-end">
-            {{ payform.submit(class="btn btn-primary", id="submit-btn",
-            value=_("Pay %(symbol)s%(amount).2f", symbol=currency_symbol, amount=total_paid)) }}
+            {{ form.submit(class="btn btn-primary") }}
           </div>
         </form>
       </div>
     </div>
     <!------------------------------END CHECKOUT--->
-
-    <!--------------------------Button- move to next page-->
-    <!-- <div class="col-md-12 pb-3">
-      <div class="d-grid gap-2">
-        <button class="btn btn-primary" type="button">Go to checkout</button>
-      </div>
-    </div> -->
-    <!----------------------------------------------------->
-    <!-- Carries data for voucher.js -- avoids mixing Jinja syntax
-         directly inside a <script> tag. -->
-    <div id="checkoutMeta" data-currency-symbol="{{ currency_symbol }}" style="display:none;"></div>
   </div>
 </section>
-<script src="{{ url_for('static', filename='js/voucher.js') }}"></script>
+<!-- /Confirmation Section -->
 
 {% endblock content %}

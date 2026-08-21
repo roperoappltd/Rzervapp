@@ -1,9 +1,7 @@
-{% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {% from "macros/content_language.html" import content_language_badge %} {%
+{% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {% from "macros/content_language.html"
+import content_language_badge %} {%
 block head_css %} {{ super() }}
-<link
-  href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css"
-  rel="stylesheet"
-/>
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
 <style>
   #calendar {
     font-family:
@@ -11,17 +9,21 @@ block head_css %} {{ super() }}
       -apple-system,
       sans-serif;
   }
+
   .fc {
     border-radius: 12px;
     overflow: hidden;
   }
+
   .fc-toolbar-title {
     font-size: 1.3rem;
     font-weight: 600;
   }
+
   .fc-daygrid-event {
     padding: 2px 4px;
   }
+
   .calendar-legend {
     padding: 10px 12px;
     background: #f8f9fa;
@@ -66,18 +68,11 @@ block head_css %} {{ super() }}
     <div class="row align-items-center mb-5">
       <div class="col-lg-7" data-aos="fade-right" data-aos-delay="200">
         <div class="room-header-image">
-          <img
-            src="{{ get_room_image_url(roominfo.image1) }}"
-            alt="Deluxe Ocean View Suite"
-            class="img-fluid rounded"
-            width="1024"
-            height="683"
-          />
+          <img src="{{ get_room_image_url(roominfo.image1) }}" alt="Deluxe Ocean View Suite" class="img-fluid rounded"
+            width="1024" height="683" />
           <!-- src="{{ url_for('static', filename='img/hotel/room-15.webp')}}" -->
           <div class="room-badge">
-            <span class="text-white"
-              >{{ _("Located in") }} {{roominfo.room_location}}<!--Premium Room--></span
-            >
+            <span class="text-white">{{ _("Located in") }} {{roominfo.room_location}}<!--Premium Room--></span>
           </div>
         </div>
       </div>
@@ -98,10 +93,8 @@ block head_css %} {{ super() }}
           <div class="room-capacity mb-4">
             <div class="capacity-item">
               <i class="bi bi-people"></i>
-              <span
-                >{{ _("Up to") }} {{ roominfo.max_occupancy }} {{ _("guests")
-                }}</span
-              >
+              <span>{{ _("Up to") }} {{ roominfo.max_occupancy }} {{ _("guests")
+                }}</span>
             </div>
             <div class="capacity-item">
               <i class="bi bi-grid"></i>
@@ -117,20 +110,14 @@ block head_css %} {{ super() }}
             <span class="price-period">{{ _("per night") }}</span>
           </div>
           <!-----Modal Button ------>
-          <button
-            class="btn btn-outline-secondary btn-lg shadow-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#availabilityModal"
-          >
+          <button class="btn btn-outline-secondary btn-lg shadow-sm" data-bs-toggle="modal"
+            data-bs-target="#availabilityModal">
             📅 {{ _("Availability") }}
           </button>
           &nbsp; &nbsp;
           <!------------------------->
-          <a
-            href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}"
-            class="btn btn-book-now"
-            >{{ _("Book Now") }}</a
-          >
+          <a href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}" class="btn btn-book-now">{{ _("Book Now")
+            }}</a>
         </div>
       </div>
     </div>
@@ -143,49 +130,29 @@ block head_css %} {{ super() }}
           <!-- href="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
           <a href="{{ get_room_image_url(roominfo.image2) }}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-12.webp')}}" -->
-            <img
-              src="{{ get_room_image_url(roominfo.image2) }}"
-              alt="Suite Interior"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(roominfo.image2) }}" alt="Suite Interior" class="img-fluid" />
           </a>
         </div>
         <div class="gallery-thumbnails">
           <!-- href="{{ url_for('static', filename='img/hotel/room-8.webp')}}" -->
           <a href="{{ get_room_image_url(roominfo.image3)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-8.webp')}}" -->
-            <img
-              src="{{ get_room_image_url(roominfo.image3)}}"
-              alt="Bedroom View"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(roominfo.image3)}}" alt="Bedroom View" class="img-fluid" />
           </a>
           <!-- href="{{ url_for('static', filename='img/hotel/room-6.webp')}}" -->
           <a href="{{ get_room_image_url(roominfo.image4)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-6.webp')}}" -->
-            <img
-              src="{{ get_room_image_url(roominfo.image4)}}"
-              alt="Living Area"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(roominfo.image4)}}" alt="Living Area" class="img-fluid" />
           </a>
           <!-- href="{{ url_for('static', filename='img/hotel/room-18.webp')}}" -->
           <a href="{{ get_room_image_url(roominfo.image5)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/room-18.webp')}}" -->
-            <img
-              src="{{ get_room_image_url(roominfo.image5)}}"
-              alt="Ocean View"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(roominfo.image5)}}" alt="Ocean View" class="img-fluid" />
           </a>
           <!-- href="{{ url_for('static', filename='img/hotel/dining-4.webp')}}" -->
           <a href="{{ get_room_image_url(roominfo.image6)}}" class="glightbox">
             <!-- src="{{ url_for('static', filename='img/hotel/dining-4.webp')}}" -->
-            <img
-              src="{{ get_room_image_url(roominfo.image6)}}"
-              alt="Bathroom"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(roominfo.image6)}}" alt="Bathroom" class="img-fluid" />
           </a>
         </div>
       </div>
@@ -316,60 +283,32 @@ block head_css %} {{ super() }}
     <div class="room-tabs mb-5" data-aos="fade-up" data-aos-delay="200">
       <ul class="nav nav-tabs" id="room-detailsRoomTabs" role="tablist">
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="room-details-policies-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#room-details-policies"
-            type="button"
-            role="tab"
-          >
+          <button class="nav-link active" id="room-details-policies-tab" data-bs-toggle="tab"
+            data-bs-target="#room-details-policies" type="button" role="tab">
             {{ _("Policies")}}
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="room-details-location-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#room-details-location"
-            type="button"
-            role="tab"
-          >
+          <button class="nav-link" id="room-details-location-tab" data-bs-toggle="tab"
+            data-bs-target="#room-details-location" type="button" role="tab">
             {{ _("Trust")}}
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="room-details-services-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#room-details-services"
-            type="button"
-            role="tab"
-          >
+          <button class="nav-link" id="room-details-services-tab" data-bs-toggle="tab"
+            data-bs-target="#room-details-services" type="button" role="tab">
             {{ _("Guests")}}
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="room-details-services-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#room-details-rules"
-            type="button"
-            role="tab"
-          >
+          <button class="nav-link" id="room-details-services-tab" data-bs-toggle="tab"
+            data-bs-target="#room-details-rules" type="button" role="tab">
             {{ _("Ground rules")}}
           </button>
         </li>
       </ul>
       <div class="tab-content" id="room-detailsRoomTabsContent">
-        <div
-          class="tab-pane fade show active"
-          id="room-details-policies"
-          role="tabpanel"
-        >
+        <div class="tab-pane fade show active" id="room-details-policies" role="tabpanel">
           <div class="tab-content-wrapper">
             <div class="row">
               <div class="col-md-4">
@@ -514,11 +453,8 @@ block head_css %} {{ super() }}
               <span class="price">{{ format_room_price(roominfo) }}</span>
               <span class="period">{{ _("per night")}}</span>
             </div>
-            <a
-              href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}"
-              class="btn btn-primary btn-lg"
-              >{{ _("Book now !")}}</a
-            >
+            <a href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}" class="btn btn-primary btn-lg">{{ _("Book
+              now !")}}</a>
           </div>
         </div>
       </div>
@@ -529,103 +465,76 @@ block head_css %} {{ super() }}
 <!---------------------------READ REVIEWS----------------------------------->
 <section id="contact" class="contact section pt-1 pb-1">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div
-      class="row justify-content-center mb-2"
-      data-aos="fade-up"
-      data-aos-delay="200"
-    >
+    <div class="row justify-content-center mb-2" data-aos="fade-up" data-aos-delay="200">
       <div class="col-lg-10">
         <div class="contact-form-wrapper">
           <!-- Read comments -->
           <p>
-            <button
-              class="btn btn-dark dropdown-toggle"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseReview"
-              aria-expanded="false"
-              aria-controls="collapseReview"
-            >
-              {% if totalrev <= 1 %} {{ totalrev }} {{ _("Review to read") }} {%
-              elif totalrev > 1 %} {{ totalrev }} {{ _("Reviews to read") }} {%
-              endif %}
+            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseReview" aria-expanded="false" aria-controls="collapseReview">
+              {% if totalrev <= 1 %} {{ totalrev }} {{ _("Review to read") }} {% elif totalrev> 1 %} {{ totalrev }} {{
+                _("Reviews to read") }} {%
+                endif %}
             </button>
           </p>
           <div class="collapse" id="collapseReview">
             <div class="card card-body">
-              {% if totalrev <= 1 %}
-              <h4 class="mb-0">
+              {% if totalrev <= 1 %} <h4 class="mb-0">
                 {{ totalrev }} {{ _("Review for this room.")}}
-              </h4>
-              <p class="fw-light mb-4 pb-2">{{ _("Latest user Review")}}</p>
-              {% elif totalrev > 1 %}
-              <h4 class="mb-0">
-                {{ totalrev }} {{ _("Reviews for this room.")}}
-              </h4>
-              <p class="fw-light mb-4 pb-2">{{ _("Latest users Reviews")}}</p>
-              {% endif %} {% for review in reviews %}
-              <div class="d-flex flex-start">
-                <img
-                  class="rounded-circle shadow-1-strong me-3"
-                  src="{{ url_for('static', filename='userpics/' + review.user.image_file) }}"
-                  alt="avatar"
-                  width="60"
-                  height="60"
-                />
-                <div>
-                  <h6 class="fw-bold mb-1">{{ review.user.first_name }}</h6>
-                  <div class="d-flex align-items-center mb-3">
-                    <p class="mb-0">
-                      {{ review.date_posted.strftime('%d %B %Y') }}
-                      <!-- FIXED: was checking review.status == 'Unverified'/'Verified',
+                </h4>
+                <p class="fw-light mb-4 pb-2">{{ _("Latest user Review")}}</p>
+                {% elif totalrev > 1 %}
+                <h4 class="mb-0">
+                  {{ totalrev }} {{ _("Reviews for this room.")}}
+                </h4>
+                <p class="fw-light mb-4 pb-2">{{ _("Latest users Reviews")}}</p>
+                {% endif %} {% for review in reviews %}
+                <div class="d-flex flex-start">
+                  <img class="rounded-circle shadow-1-strong me-3"
+                    src="{{ url_for('static', filename='userpics/' + review.user.image_file) }}" alt="avatar" width="60"
+                    height="60" />
+                  <div>
+                    <h6 class="fw-bold mb-1">{{ review.user.first_name }}</h6>
+                    <div class="d-flex align-items-center mb-3">
+                      <p class="mb-0">
+                        {{ review.date_posted.strftime('%d %B %Y') }}
+                        <!-- FIXED: was checking review.status == 'Unverified'/'Verified',
                            which never matched (real values are Published/Flagged/Removed) --
                            this badge never rendered. Replaced with the real Verified Stay
                            badge, which is genuinely always true now that booking_id is required. -->
-                      <span
-                        class="verified-badge"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="{{ _('Stayed') }} {{ review.booking.arrival.strftime('%B %Y') }}"
-                      >
-                        <i class="bi bi-patch-check-fill"></i>
-                        {{ _('Verified Stay') }}
-                      </span>
-                    </p>
-                    <!-- FIXED: was 5 near-identical if/elif branches -- one loop instead -->
-                    <div class="stars">
-                      {% for i in range(1, 6) %}
-                      <i
-                        style="color: gold"
-                        class="bi {{ 'bi-star-fill' if i <= review.rate_us else 'bi-star' }}"
-                      ></i>
-                      {% endfor %}
+                        <span class="verified-badge" data-bs-toggle="tooltip" data-bs-placement="top"
+                          title="{{ _('Stayed') }} {{ review.booking.arrival.strftime('%B %Y') }}">
+                          <i class="bi bi-patch-check-fill"></i>
+                          {{ _('Verified Stay') }}
+                        </span>
+                      </p>
+                      <!-- FIXED: was 5 near-identical if/elif branches -- one loop instead -->
+                      <div class="stars">
+                        {% for i in range(1, 6) %}
+                        <i style="color: gold"
+                          class="bi {{ 'bi-star-fill' if i <= review.rate_us else 'bi-star' }}"></i>
+                        {% endfor %}
+                      </div>
                     </div>
-                  </div>
-                  <p class="mb-2">{{ review.message}}</p>
+                    <p class="mb-2">{{ review.message}}</p>
 
-                  <!-- Helpful vote -- count is the cached column, no
+                    <!-- Helpful vote -- count is the cached column, no
                        extra query. "Active" state comes from the
                        my_helpful_votes set computed once in the route,
                        not a per-review lookup. -->
-                  <button
-                    type="button"
-                    class="helpful-btn {{ 'jw-active' if review.id in my_helpful_votes else '' }}"
-                    data-review-id="{{ review.id }}"
-                    {% if not current_user.is_authenticated or review.user_id == current_user.id %}disabled{% endif %}
-                  >
-                    <i
-                      class="bi {{ 'bi-hand-thumbs-up-fill' if review.id in my_helpful_votes else 'bi-hand-thumbs-up' }}"
-                    ></i>
-                    {{ _('Helpful') }}
-                    <span class="helpful-count"
-                      >{{ review.helpful_count }}</span
-                    >
-                  </button>
+                    <button type="button" class="helpful-btn {{ 'jw-active' if review.id in my_helpful_votes else '' }}"
+                      data-review-id="{{ review.id }}" {% if not current_user.is_authenticated or
+                      review.user_id==current_user.id %}disabled{% endif %}>
+                      <i
+                        class="bi {{ 'bi-hand-thumbs-up-fill' if review.id in my_helpful_votes else 'bi-hand-thumbs-up' }}"></i>
+                      {{ _('Helpful') }}
+                      <span class="helpful-count">{{ review.helpful_count }}</span>
+                    </button>
 
-                  <hr class="my-0 mb-2 mt-2" style="height: 1px" />
+                    <hr class="my-0 mb-2 mt-2" style="height: 1px" />
+                  </div>
                 </div>
-              </div>
-              {% endfor %}
+                {% endfor %}
             </div>
           </div>
         </div>
@@ -637,11 +546,7 @@ block head_css %} {{ super() }}
 <section id="contact" class="contact section pt-1 pb-1">
   <div class="container" data-aos="fade-up" data-aos-delay="100" id="reviews">
     <!-- Contact Form -->
-    <div
-      class="row justify-content-center mb-2"
-      data-aos="fade-up"
-      data-aos-delay="200"
-    >
+    <div class="row justify-content-center mb-2" data-aos="fade-up" data-aos-delay="200">
       <div class="col-lg-10">
         <div class="contact-form-wrapper">
           <h2 class="text-center mb-4">{{ _("Review this Room")}}</h2>
@@ -651,9 +556,7 @@ block head_css %} {{ super() }}
             <div class="row g-3">
               <div class="col-12">
                 <div class="form-group1">
-                  <label class="form-label"
-                    >{{ _("Select a score")}}: ⭐⭐⭐⭐⭐</label
-                  >
+                  <label class="form-label">{{ _("Select a score")}}: ⭐⭐⭐⭐⭐</label>
                   {{ form.rate_us.label(class="form-control-label") }} {% if
                   form.rate_us.errors %} {{ form.rate_us(class="form-control
                   form-control-sm is-invalid") }}
@@ -669,9 +572,7 @@ block head_css %} {{ super() }}
 
               <div class="col-12">
                 <div class="form-group1">
-                  <label class="form-label"
-                    >{{ _("Enter your review message")}}: ᯓ 💌</label
-                  >
+                  <label class="form-label">{{ _("Enter your review message")}}: ᯓ 💌</label>
                   {{ form.message.label(class="form-control-label") }} {% if
                   form.message.errors %} {{ form.message(class="form-control
                   form-control-sm is-invalid") }}
@@ -702,11 +603,7 @@ block head_css %} {{ super() }}
       <!-- Header -->
       <div class="modal-header bg-secondary">
         <h5 class="modal-title text-white">{{ _("Room Availability")}}</h5>
-        <button
-          type="button"
-          class="btn-close btn-close-white"
-          data-bs-dismiss="modal"
-        ></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <!-- Body -->
       <div class="modal-body p-4">
@@ -785,5 +682,5 @@ block head_css %} {{ super() }}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <!--Revuew helpful -->
-<script src="{{url_for('static', filename='/js/helpful-vote.js')}}"></script>
+<script src="{{url_for('static', filename='js/helpful-vote.js')}}"></script>
 {% endblock content %}

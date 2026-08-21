@@ -1,366 +1,300 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% if title %}
-    <title>{{ _("Jambo") }} - {{ _(title) }}</title>
-    {% else %}
-    <title>{{ _("Jambo") }}</title>
-    {% endif %}
-    
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta
-      name="keywords"
-      content="Booking app, bootstrap, dashboard, booking, css, sass, html, theme, front-end, ui kit, web"
-    />
-    <!-- Favicons -->
-    <link href="{{url_for('static', filename='img/fav/favicon.ico')}}" rel="icon" />
-    <link
-      href="{{url_for('static', filename='img/fav/apple-touch-icon.png ')}}"
-      rel="apple-touch-icon"
-    />
-    
-    <!---Map Leaflet CSS-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Vendor CSS Files -->
-    <link
-      href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css')}}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{url_for('static', filename='vendor/aos/aos.css')}}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{url_for('static', filename='vendor/glightbox/css/glightbox.min.css')}}"
-      rel="stylesheet"
-    />
-    <link
-      href="{{url_for('static', filename='vendor/swiper/swiper-bundle.min.css')}}"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap CSS -->
-    <link 
-      rel="stylesheet" 
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-      rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-      crossorigin="anonymous">
-    <!---Bootstrap Icons-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <!---Fonts Awesome-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-    <!-- Main CSS File -->
-    <link
-      href="{{url_for('static', filename='css/main.css')}}"
-      rel="stylesheet"
-    />
-    <!-- log in Style -->
-    <link
-      rel="stylesheet"
-      href="{{url_for('static', filename='login/css/stylelogin.css')}}"
-    />
-    <link
-      href="{{url_for('static', filename='css/banner.css')}}"
-      rel="stylesheet"
-    />
-    <!---------------------------------------------------------------------------->
+  {% if title %}
+  <title>{{ _("Jambo") }} - {{ _(title) }}</title>
+  {% else %}
+  <title>{{ _("Jambo") }}</title>
+  {% endif %}
 
-    <!-- =======================================================
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <meta name="keywords"
+    content="Booking app, bootstrap, dashboard, booking, css, sass, html, theme, front-end, ui kit, web" />
+  <!-- Favicons -->
+  <link href="{{url_for('static', filename='img/fav/favicon.ico')}}" rel="icon" />
+  <link href="{{url_for('static', filename='img/fav/apple-touch-icon.png ')}}" rel="apple-touch-icon" />
+
+  <!---Map Leaflet CSS-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Vendor CSS Files -->
+  <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
+  <link href="{{url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet" />
+  <link href="{{url_for('static', filename='vendor/aos/aos.css')}}" rel="stylesheet" />
+  <link href="{{url_for('static', filename='vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet" />
+  <link href="{{url_for('static', filename='vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!---Bootstrap Icons-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!---Fonts Awesome-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <!-- Main CSS File -->
+  <link href="{{url_for('static', filename='css/main.css')}}" rel="stylesheet" />
+  <!-- log in Style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='login/css/stylelogin.css')}}" />
+  <link href="{{url_for('static', filename='css/banner.css')}}" rel="stylesheet" />
+  <!---------------------------------------------------------------------------->
+
+  <!-- =======================================================
   * Template Name: Rezerva
   * Updated: Jul 29 2025 with Bootstrap v5.3.7
   * Author: Jambo.com
   ======================================================== -->
-  </head>
+</head>
 
-  <body class="index-page">
-    <header id="header" class="header sticky-top">
-      <div class="topbar d-flex align-items-center dark-background">
-        <div
-          class="container d-flex justify-content-center justify-content-md-between"
-        >
-          <div class="contact-info d-flex align-items-center">
-            <i class="bi bi-envelope d-flex align-items-center"
-              ><a href="mailto:contact@example.com"
-                >dmc.partners1@gmail.com</a
-              ></i
-            >
-            <i class="bi bi-phone d-flex align-items-center ms-4"
-              ><span>+44 78 18 29 52 92</span></i
-            >
-            
-          </div>
-          <div class="social-links d-none d-md-flex align-items-center">
-            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
+<body class="index-page">
+  <header id="header" class="header sticky-top">
+    <div class="topbar d-flex align-items-center dark-background">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a
+              href="mailto:contact@example.com">dmc.partners1@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+44 78 18 29 52 92</span></i>
+
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
-      <!-- End Top Bar -->
-      <!--NAV start------>        
-        <nav class="airbnb-nav">
-          <!-- LEFT: Logo -->
-          <a class="nav-logo ml-3 pl-2" href="{{ url_for('main.home') }}">
-              <img src="{{ url_for('static', filename='userpics/pics/logojam.png') }}"
-                width="175" height="65">
-          </a>  
-          <!-- CENTER: Floating Pill -->
-                                     <!------Mobile Toggle----->
-          <button class="pill-toggle d-lg-none" id="pillToggle">
-            <i class="bi bi-list"></i>
+    </div>
+    <!-- End Top Bar -->
+    <!--NAV start------>
+    <nav class="airbnb-nav">
+      <!-- LEFT: Logo -->
+      <a class="nav-logo ml-3 pl-2" href="{{ url_for('main.home') }}">
+        <img src="{{ url_for('static', filename='userpics/pics/logojam.png') }}" width="175" height="65">
+      </a>
+      <!-- CENTER: Floating Pill -->
+      <!------Mobile Toggle----->
+      <button class="pill-toggle d-lg-none" id="pillToggle">
+        <i class="bi bi-list"></i>
+      </button>
+      <!----Desktop pill---------->
+      <div class="nav-pill">
+        <a href="{{ url_for('main.home') }}" class="pill-item">
+          <span>{{ _("Home") }}🏠</span>
+        </a>
+        <a href="{{ url_for('bedrooms.room') }}" class="pill-item">
+          <span>{{ _("Rooms") }}🧳</span>
+        </a>
+        <a href="{{ url_for('main.behost') }}" class="pill-item">
+          <span>{{ _("Become host") }}📢</span>
+        </a>
+      </div>
+      <!-- Search Icon -->
+      <!------------------------------>
+      <div class="search-wrapper">
+        <!-- collapsed pill -->
+        <button class="search-pill" id="searchToggle">
+          🔍 <!--<i class="bi bi-search"></i> -->
+          <!-- <span class="search-text">Search</span> -->
+        </button>
+        <!-- expanded form -->
+        <div class="search-pop" id="searchPanel">
+          <form action="{{ url_for('bedrooms.roomsearch') }}" method="GET">
+            <div class="search-grid">
+              <input type="text" name="location" placeholder="{{ _('Destination') }}">
+              <input type="date" name="arrival">
+              <input type="date" name="departure">
+              <button type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!------------------------------>
+
+      <!-- RIGHT: Actions -->
+      <div class="nav-actions">
+        <!-- Language Switcher -->
+        <div class="dropdown">
+          <button class="lang-btn" data-bs-toggle="dropdown">
+            {% if current_language == "fr" %}
+            <img src="{{ url_for('static',
+                  filename='userpics/pics/france.png') }}" width="22" height="16">
+            {% else %}
+            <img src="{{ url_for('static',
+                  filename='userpics/pics/gb.png') }}" width="22" height="16">
+            {% endif %}
           </button>
-                                    <!----Desktop pill---------->
-          <div class="nav-pill">
-            <a href="{{ url_for('main.home') }}" class="pill-item">
-              <span>{{ _("Home") }}🏠</span>
-            </a>
-            <a href="{{ url_for('bedrooms.room') }}" class="pill-item">
-              <span>{{ _("Rooms") }}🧳</span>
-            </a>
-            <a href="{{ url_for('main.behost') }}" class="pill-item">
-              <span>{{ _("Become host") }}📢</span>
-            </a>
-          </div>
-          <!-- Search Icon -->
-          <!------------------------------>
-          <div class="search-wrapper">
-            <!-- collapsed pill -->
-            <button class="search-pill" id="searchToggle">
-              🔍 <!--<i class="bi bi-search"></i> -->
-              <!-- <span class="search-text">Search</span> -->
-            </button>
-            <!-- expanded form -->
-            <div class="search-pop" id="searchPanel">
-              <form action="{{ url_for('bedrooms.roomsearch') }}" method="GET">
-                <div class="search-grid">
-                  <input type="text" name="location" placeholder="{{ _('Destination') }}">
-                  <input type="date" name="arrival">
-                  <input type="date" name="departure">
-                  <button type="submit">
-                    <i class="bi bi-search"></i>
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <!------------------------------>
-
-          <!-- RIGHT: Actions -->
-          <div class="nav-actions">
-            <!-- Language Switcher -->
-            <div class="dropdown">
-              <button class="lang-btn" data-bs-toggle="dropdown">
-                {% if current_language == "fr" %}
-                <img
-                  src="{{ url_for('static',
-                  filename='userpics/pics/france.png') }}"
-                  width="22"
-                  height="16">
-                {% else %}
-                <img
-                  src="{{ url_for('static',
-                  filename='userpics/pics/gb.png') }}"
-                  width="22"
-                  height="16">
-                {% endif %}
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                  <a class="dropdown-item"
-                    href="{{ url_for('main.set_language',
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_language',
                     lang='en') }}">
-                    <img
-                      src="{{ url_for('static',
-                      filename='userpics/pics/gb.png') }}"
-                      width="20">
-                      English
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item"
-                    href="{{ url_for('main.set_language',
+                <img src="{{ url_for('static',
+                      filename='userpics/pics/gb.png') }}" width="20">
+                English
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_language',
                     lang='fr') }}">
-                    <img
-                      src="{{ url_for('static',
-                      filename='userpics/pics/france.png') }}"
-                      width="20">
-                      Français
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <!--Currency dropdown-->
-            <div class="dropdown ms-2">
-              <button 
-                class="currency-btn"
-                data-bs-toggle="dropdown">
-                {{ preferred_currency }}
-              </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li class="dropdown-header">
-                    {{ _("Select Currency") }}
-                  </li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                <img src="{{ url_for('static',
+                      filename='userpics/pics/france.png') }}" width="20">
+                Français
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!--Currency dropdown-->
+        <div class="dropdown ms-2">
+          <button class="currency-btn" data-bs-toggle="dropdown">
+            {{ preferred_currency }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li class="dropdown-header">
+              {{ _("Select Currency") }}
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='GBP') }}">
-                      GBP
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                GBP
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='EUR') }}">
-                      EUR
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                EUR
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='USD') }}">
-                      USD
-                    </a>
-                  </li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li class="dropdown-header">
-                    Africa
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                USD
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-header">
+              Africa
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='XOF') }}">
-                      XOF
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                XOF
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='XAF') }}">
-                      XAF
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                XAF
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='NGN') }}">
-                      NGN
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                NGN
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='GHS') }}">
-                      GHS
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item"
-                      href="{{ url_for('main.set_currency',
+                GHS
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.set_currency',
                       currency='KES') }}">
-                      KES
-                    </a>
-                  </li>
-                </ul>
-            </div>
-            <!-- User -->
-            <div class="dropdown user-menu">
-              <!-- Trigger button -->
-              <button class="user-menu-btn dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >
+                KES
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!-- User -->
+        <div class="dropdown user-menu">
+          <!-- Trigger button -->
+          <button class="user-menu-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-               <i class="bi bi-person-circle text-success"></i>
-              {% if current_user.is_authenticated %}
-                <span class="user-name">{{ current_user.username }}</span>
-              {% endif %}
-              </button>
-              <!-- Dropdown -->
-              <ul class="dropdown-menu dropdown-menu-end">
-                {% if current_user.is_authenticated %}
-                <li>
-                  <a class="dropdown-item"
-                    href="{{ url_for('udash.udashboard') }}">
-                      {{ _("Dashboard") }} 🖥️
-                  </a>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <a class="dropdown-item"
-                    href="{{ url_for('udash.profile') }}">
-                      {{ _("Profile") }} 👤
-                  </a>
-                </li>
-                {% if current_user.is_admin %}
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <a class="dropdown-item text-primary"
-                    href="{{ url_for('admin.index') }}">
-                      {{ _("Admin Panel") }} 🛡️
-                  </a>
-                </li>
-                {% endif %}
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                  <a class="dropdown-item text-danger"
-                    href="{{ url_for('users.logout') }}">
-                      {{ _("Log out") }} ⏻
-                  </a>
-                </li>
-                {% else %}
-                <li>
-                  <a class="dropdown-item" href="{{ url_for('users.login') }}">
-                    {{ _("Log in") }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 🔑
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="{{ url_for('users.signup') }}">
-                    {{ _("Register") }} &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; ✍
-                  </a>
-                </li>
-                {% endif %}
-              </ul>
-            </div>
-          </div>
-          <!------Mobile menu------->
-          <div class="pill-mobile-menu" id="pillMenu">
-            <a href="{{ url_for('main.home') }}">{{ _("Home") }}</a>
-            <a href="{{ url_for('bedrooms.room') }}">{{ _("Rooms") }}</a>
-            <a href="{{ url_for('main.behost') }}">{{ _("Become host") }}</a>
-          </div>
-          
-        </nav>        
-        <!-- </div>
+            <i class="bi bi-person-circle text-success"></i>
+            {% if current_user.is_authenticated %}
+            <span class="user-name">{{ current_user.username }}</span>
+            {% endif %}
+          </button>
+          <!-- Dropdown -->
+          <ul class="dropdown-menu dropdown-menu-end">
+            {% if current_user.is_authenticated %}
+            <li>
+              <a class="dropdown-item" href="{{ url_for('udash.udashboard') }}">
+                {{ _("Dashboard") }} 🖥️
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('udash.profile') }}">
+                {{ _("Profile") }} 👤
+              </a>
+            </li>
+            {% if current_user.is_admin %}
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item text-primary" href="{{ url_for('admin.index') }}">
+                {{ _("Admin Panel") }} 🛡️
+              </a>
+            </li>
+            {% endif %}
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" href="{{ url_for('users.logout') }}">
+                {{ _("Log out") }} ⏻
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a class="dropdown-item" href="{{ url_for('users.login') }}">
+                {{ _("Log in") }} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 🔑
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('users.signup') }}">
+                {{ _("Register") }} &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; ✍
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <!------Mobile menu------->
+      <div class="pill-mobile-menu" id="pillMenu">
+        <a href="{{ url_for('main.home') }}">{{ _("Home") }}</a>
+        <a href="{{ url_for('bedrooms.room') }}">{{ _("Rooms") }}</a>
+        <a href="{{ url_for('main.behost') }}">{{ _("Become host") }}</a>
+      </div>
+
+    </nav>
+    <!-- </div>
       </div> -->
-    </header>
+  </header>
 
-    <main role="main">
-      <!--Floating Action Button-->
-      <!-- {% if current_user.is_authenticated %}
+  <main role="main">
+    <!--Floating Action Button-->
+    <!-- {% if current_user.is_authenticated %}
       <div class="floating-parent" style="z-index: 9999">
         <div class="right-button">
           <span class="widgetlabel">
@@ -370,166 +304,152 @@
         </div>
       </div>
       {% endif %} -->
-      <div class="row">
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %} {% for category, message in messages %}
-        <div
-          class="alert alert-{{ category }} alert-dismissible fade show text-center fw-bold mt-3 mb-0"
-        >
-          {{ message }}
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock
-        content %}
+    <div class="row">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show text-center fw-bold mt-3 mb-0">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-    </main>
+      {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock
+      content %}
+    </div>
+  </main>
 
-    <footer id="footer" class="footer position-relative dark-background">
-      <div class="footer-top">
-        <div class="container">
-          <div class="row gy-4">
-            <div class="col-lg-4 col-md-6 footer-about">
-              <a href="{{ url_for('main.home') }}">
-                <!--class="logo d-flex align-items-center"-->
-                <!-- <h3 class="sitename">karibu</h3> -->
-                <img
-                  src="{{ url_for('static', filename='userpics/pics/jamnew01.png')}} "
-                  width="160"
-                  
-                />
-              </a>
-              <div class="footer-contact pt-3">
-                <p>18 Perry Hill</p>
-                <p>London, UK SE6 4AD</p>
-                <p class="mt-2">
-                  <i class="bi bi-phone"> </i><span>+44 78 18 29 52 92</span></i>
-                </p>
-                <p>
-                  <i class="bi bi-envelope"><span> dmc.partners1@gmail.com</span></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="col-lg-2 col-md-3 footer-links">
-              <h4>{{ _("Quick Links") }}</h4>
-              <ul>
-                <li><a href="{{ url_for('main.home') }}">{{ _("Home") }}</a></li>
-                <li><a href="{{ url_for('main.about') }}">{{ _("About") }}</a></li>
-                <li><a href="{{ url_for('bedrooms.room') }}">{{ _("Rooms") }}</a></li>
-                <li><a href="#">{{ _("Booking") }}</a></li>
-              </ul>
-            </div>
-
-            <div class="col-lg-2 col-md-3 footer-links">
-              <h4>{{ _("Connect with us") }}</h4>
-              <ul>
-                <li><a href="{{ url_for('users.login') }}">{{ _("Log in") }}</a></li>
-                <li><a href="{{ url_for('users.signup') }}">{{ _("Register") }}</a></li>
-                <li><a href="{{ url_for('main.contact') }}">{{ _("Contact us") }}</a></li>
-                <li><a href="{{ url_for('main.behost') }}">{{ _("Become host") }}</a></li>
-                <!-- <li><a href="#">Events</a></li> -->
-              </ul>
-            </div>
-
-            <div class="col-lg-2 col-md-3 footer-links">
-              <h4>{{ _("Useful links") }}</h4>
-              <ul>
-                <li><a href="#">{{ _("Africa tourism") }}</a></li>
-                <li><a href="#">{{ _("Health & Wellbeing") }}</a></li>
-                <li><a href="#">{{ _("Visa information") }}</a></li>
-                <li><a href="#">{{ _("Currency Exchange") }}</a></li>
-                <!-- <li><a href="#">Weather forecast</a></li> -->
-              </ul>
-            </div>
-
-            <div class="col-lg-2 col-md-3 footer-links">
-              <h4>{{ _("Legal") }}</h4>
-              <ul>
-                <li><a href="#">{{ _("Terms of service") }}</a></li>
-                <li><a href="#">{{ _("Privacy policy") }}</a></li>
-                <li><a href="#">{{ _("Refund policy") }}</a></li>
-                <li><a href="#">{{ _("Booking policy") }}</a></li>
-                <!-- <li><a href="#">Flexo</a></li> -->
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="copyright text-center">
-        <div
-          class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center"
-        >
-          <div
-            class="d-flex flex-column align-items-center align-items-lg-start"
-          >
-            <div>
-              2026 © Copyright <strong><span>Jambo</span></strong
-              >. {{ _("All rights reserved") }} - Powered by
-              <a href="https://tboss.ci"
-                ><span class="text-warning"> Techno|BOSS IntL.</span></a
-              >
+  <footer id="footer" class="footer position-relative dark-background">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="{{ url_for('main.home') }}">
+              <!--class="logo d-flex align-items-center"-->
+              <!-- <h3 class="sitename">karibu</h3> -->
+              <img src="{{ url_for('static', filename='userpics/pics/jamnew01.png')}} " width="160" />
+            </a>
+            <div class="footer-contact pt-3">
+              <p>18 Perry Hill</p>
+              <p>London, UK SE6 4AD</p>
+              <p class="mt-2">
+                <i class="bi bi-phone"> </i><span>+44 78 18 29 52 92</span></i>
+              </p>
+              <p>
+                <i class="bi bi-envelope"><span> dmc.partners1@gmail.com</span></i>
+              </p>
             </div>
           </div>
 
-          <!-- <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>{{ _("Quick Links") }}</h4>
+            <ul>
+              <li><a href="{{ url_for('main.home') }}">{{ _("Home") }}</a></li>
+              <li><a href="{{ url_for('main.about') }}">{{ _("About") }}</a></li>
+              <li><a href="{{ url_for('bedrooms.room') }}">{{ _("Rooms") }}</a></li>
+              <li><a href="#">{{ _("Booking") }}</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>{{ _("Connect with us") }}</h4>
+            <ul>
+              <li><a href="{{ url_for('users.login') }}">{{ _("Log in") }}</a></li>
+              <li><a href="{{ url_for('users.signup') }}">{{ _("Register") }}</a></li>
+              <li><a href="{{ url_for('main.contact') }}">{{ _("Contact us") }}</a></li>
+              <li><a href="{{ url_for('main.behost') }}">{{ _("Become host") }}</a></li>
+              <!-- <li><a href="#">Events</a></li> -->
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>{{ _("Useful links") }}</h4>
+            <ul>
+              <li><a href="#">{{ _("Africa tourism") }}</a></li>
+              <li><a href="#">{{ _("Health & Wellbeing") }}</a></li>
+              <li><a href="#">{{ _("Visa information") }}</a></li>
+              <li><a href="#">{{ _("Currency Exchange") }}</a></li>
+              <!-- <li><a href="#">Weather forecast</a></li> -->
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>{{ _("Legal") }}</h4>
+            <ul>
+              <li><a href="#">{{ _("Terms of service") }}</a></li>
+              <li><a href="#">{{ _("Privacy policy") }}</a></li>
+              <li><a href="#">{{ _("Refund policy") }}</a></li>
+              <li><a href="#">{{ _("Booking policy") }}</a></li>
+              <!-- <li><a href="#">Flexo</a></li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright text-center">
+      <div
+        class="container d-flex flex-column flex-lg-row justify-content-center justify-content-lg-between align-items-center">
+        <div class="d-flex flex-column align-items-center align-items-lg-start">
+          <div>
+            2026 © Copyright <strong><span>Jambo</span></strong>. {{ _("All rights reserved") }} - Powered by
+            <a href="https://tboss.ci"><span class="text-warning"> Techno|BOSS IntL.</span></a>
+          </div>
+        </div>
+
+        <!-- <div class="social-links order-first order-lg-last mb-3 mb-lg-0">
             <a href=""><i class="bi bi-twitter-x"></i></a>
             <a href=""><i class="bi bi-facebook"></i></a>
             <a href=""><i class="bi bi-instagram"></i></a>
             <a href=""><i class="bi bi-linkedin"></i></a>
             <a href=""><i class="bi bi-youtube"></i></a>
           </div> -->
-        </div>
       </div>
-    </footer>
-    <!-- Scroll Top -->
-    <a
-      href="#"
-      id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+    </div>
+  </footer>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
-    <!----JS Toggle operation----->
-    <script src="{{ url_for('static', filename='js/toggler.js') }}"></script>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!----JS Toggle operation----->
+  <script src="{{ url_for('static', filename='js/toggler.js') }}"></script>
 
-    <!---Floating search bar JS-->
-    <script src="{{ url_for('static', filename='js/searchbar.js') }}">
-      var csrf_token = "{{ csrf_token() }}";
-    </script>
+  <!---Floating search bar JS-->
+  <script src="{{ url_for('static', filename='js/searchbar.js') }}">
+    var csrf_token = "{{ csrf_token() }}";
+  </script>
 
-    <!--Bootstrap tooltips activation-->
-    <script>
-      document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
-    </script>
+  <!--Bootstrap tooltips activation-->
+  <script>
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
+  </script>
 
-    <!-- Vendor JS Files -->
-    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/php-email-form/validate.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/aos/aos.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/purecounter/purecounter_vanilla.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/glightbox/js/glightbox.min.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/swiper/swiper-bundle.min.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
-    <script src="{{url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+  <!-- Vendor JS Files -->
+  <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/aos/aos.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/purecounter/purecounter_vanilla.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/glightbox/js/glightbox.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/swiper/swiper-bundle.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
 
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
-    <!-- Main JS File -->
-    <script src="{{url_for('static', filename='/js/main.js')}}"></script>
-    <!----Leaflet Map-->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"> </script>
-    <script src="{{ url_for('static', filename='js/map-geopanda.js') }}"></script>
-    <!---Booking AI-Agent-->
-    {% include "partials/booking_chat_widget.html" %}
-  </body>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+    integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+    crossorigin="anonymous"></script>
+  <!-- Main JS File -->
+  <script src="{{url_for('static', filename='js/main.js')}}"></script>
+  <!----Leaflet Map-->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"> </script>
+  <script src="{{ url_for('static', filename='js/map-geopanda.js') }}"></script>
+  <!---Booking AI-Agent-->
+  {% include "partials/booking_chat_widget.html" %}
+</body>
+
 </html>
