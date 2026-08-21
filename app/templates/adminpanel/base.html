@@ -1,348 +1,253 @@
 <!doctype html>
 <html lang="{{ g.locale }}">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta
-      name="description"
-      content="Responsive User Dashboard based on Bootstrap 5"
-    />
-    <meta name="author" content="Jambo" />
-    <meta
-      name="keywords"
-      content="Booking app, bootstrap, bootstrap 5, admin, dashboard, booking, css, sass, html, theme, front-end, ui kit, web"
-    />
 
-    <!---Icons-->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      rel="shortcut icon"
-      href="{{url_for('static', filename='img/fav/favicon2.ico')}}"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Responsive User Dashboard based on Bootstrap 5" />
+  <meta name="author" content="Jambo" />
+  <meta name="keywords"
+    content="Booking app, bootstrap, bootstrap 5, admin, dashboard, booking, css, sass, html, theme, front-end, ui kit, web" />
 
-    <link rel="canonical" href="#" />
+  <!---Icons-->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="shortcut icon" href="{{url_for('static', filename='img/fav/favicon2.ico')}}" />
 
-    <!--Platform title-->
-    {% if title %}
-    <title>Jambo Admin - {{ _(title) }}</title>
-    {% else %}
-    <title>Jambo Admin</title>
-    {% endif %}
+  <link rel="canonical" href="#" />
 
-    <!--Main CSS-->
-    <link
-      href="{{ url_for('static', filename='resources/css/app.css')}}"
-      rel="stylesheet"
-    />
-    <!--Other CSS files-->
-    <link
-      href="{{ url_for('static', filename='resources/css/userpro.css')}}"
-      rel="stylesheet"
-    />
+  <!--Platform title-->
+  {% if title %}
+  <title>Jambo Admin - {{ _(title) }}</title>
+  {% else %}
+  <title>Jambo Admin</title>
+  {% endif %}
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <!--Fonts-->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  <!--Main CSS-->
+  <link href="{{ url_for('static', filename='resources/css/app.css')}}" rel="stylesheet" />
+  <!--Other CSS files-->
+  <link href="{{ url_for('static', filename='resources/css/userpro.css')}}" rel="stylesheet" />
 
-  <body>
-    <div class="wrapper">
-      <nav id="sidebar" class="sidebar js-sidebar">
-        <div class="sidebar-content js-simplebar">
-          <a class="sidebar-brand text-center" href="#">
-            <!-- <span class="align-middle">Jambo</span> -->
-            <img
-              src="{{url_for('static', filename='userpics/pics/jamnew01.png')}}"
-              width="180"
-              height="62"
-              alt="logo"
-            />
-          </a>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!--Fonts-->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
 
-          <ul class="sidebar-nav">
-            <!-- <li class="sidebar-header">Pages</li> -->
-            <li class="sidebar-item active">
-              <a class="sidebar-link" href="{{ url_for('admin.index') }}">
-                <i class="align-middle" data-feather="sliders"></i>
-                <span class="align-middle">{{ _("Dashboard") }}</span>
-              </a>
+<body>
+  <div class="wrapper">
+    <nav id="sidebar" class="sidebar js-sidebar">
+      <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand text-center" href="#">
+          <!-- <span class="align-middle">Jambo</span> -->
+          <img src="{{url_for('static', filename='userpics/pics/jamnew01.png')}}" width="180" height="62" alt="logo" />
+        </a>
+
+        <ul class="sidebar-nav">
+          <!-- <li class="sidebar-header">Pages</li> -->
+          <li class="sidebar-item active">
+            <a class="sidebar-link" href="{{ url_for('admin.index') }}">
+              <i class="align-middle" data-feather="sliders"></i>
+              <span class="align-middle">{{ _("Dashboard") }}</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ url_for('user.index_view') }}">
+              <i class="align-middle" data-feather="user-plus"></i>
+              <span class="align-middle">{{ _("Users") }}</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ url_for('rooms.index_view') }}">
+              <i class="align-middle" data-feather="box"></i>
+              <span class="align-middle">{{ _("Rooms") }}</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ url_for('bookings.index_view') }}">
+              <i class="align-middle" data-feather="bookmark"></i>
+              <span class="align-middle">{{ _("Bookings") }}</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ url_for('payments.index_view') }}">
+              <i class="align-middle" data-feather="compass"></i>
+              <span class="align-middle">{{ _("Payments") }}</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="#">
+              <i class="align-middle" data-feather="filter"></i>
+              <span class="align-middle">{{ _("Refunds") }}</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="#">
+              <i class="align-middle" data-feather="smile"></i>
+              <span class="align-middle">Reviews</span>
+            </a>
+          </li>
+
+          <li class="sidebar-header">{{ _("Go to") }}</li>
+
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{{ url_for('main.home') }}">
+              <i class="align-middle" data-feather="home"></i>
+              <span class="align-middle">{{ _("Home") }}</span>
+            </a>
+          </li>
+        </ul>
+
+        <a class="sidebar-brand text-center pt-1" href="#">
+          <!-- <span>Powered by</span> -->
+          <img src="{{url_for('static', filename='resources/img/logo/techno.png')}}" width="140" height="45"
+            alt="logo" />
+        </a>
+      </div>
+    </nav>
+
+    <div class="main">
+      <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+        <div class="navbar-collapse collapse">
+          <ul class="navbar-nav navbar-align">
+            <li class="nav-item">
+              <a class="nav-icon" href="{{ url_for('main.home') }}">🌐</a>
             </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ url_for('user.index_view') }}">
-                <i class="align-middle" data-feather="user-plus"></i>
-                <span class="align-middle">{{ _("Users") }}</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ url_for('rooms.index_view') }}">
-                <i class="align-middle" data-feather="box"></i>
-                <span class="align-middle">{{ _("Rooms") }}</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a
-                class="sidebar-link"
-                href="{{ url_for('bookings.index_view') }}"
-              >
-                <i class="align-middle" data-feather="bookmark"></i>
-                <span class="align-middle">{{ _("Bookings") }}</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a
-                class="sidebar-link"
-                href="{{ url_for('payments.index_view') }}"
-              >
-                <i class="align-middle" data-feather="compass"></i>
-                <span class="align-middle">{{ _("Payments") }}</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#">
-                <i class="align-middle" data-feather="filter"></i>
-                <span class="align-middle">{{ _("Refunds") }}</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#">
-                <i class="align-middle" data-feather="smile"></i>
-                <span class="align-middle">Reviews</span>
-              </a>
-            </li>
-
-            <li class="sidebar-header">{{ _("Go to") }}</li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ url_for('main.home') }}">
-                <i class="align-middle" data-feather="home"></i>
-                <span class="align-middle">{{ _("Home") }}</span>
-              </a>
-            </li>
-          </ul>
-
-          <a class="sidebar-brand text-center pt-1" href="#">
-            <!-- <span>Powered by</span> -->
-            <img
-              src="{{url_for('static', filename='resources/img/logo/techno.png')}}"
-              width="140"
-              height="45"
-              alt="logo"
-            />
-          </a>
-        </div>
-      </nav>
-
-      <div class="main">
-        <nav class="navbar navbar-expand navbar-light navbar-bg">
-          <a class="sidebar-toggle js-sidebar-toggle">
-            <i class="hamburger align-self-center"></i>
-          </a>
-
-          <div class="navbar-collapse collapse">
-            <ul class="navbar-nav navbar-align">
-              <li class="nav-item">
-                <a class="nav-icon" href="{{ url_for('main.home') }}">🌐</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-icon dropdown-toggle"
-                  href="#"
-                  id="alertsDropdown"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <div class="position-relative">
-                    <i class="align-middle" data-feather="message-circle"> </i>
-                    <span
-                      id="chatBadge"
-                      class="indicator"
-                      style="background-color: #ff385c; display: none"
-                    >
-                      0
-                    </span>
-                  </div>
-                </a>
-                <div
-                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                  aria-labelledby="alertsDropdown"
-                >
-                  <!-- Header -->
-                  <div id="chatNotificationHeader" class="dropdown-menu-header">
-                    {{ _("No New Messages") }}
-                  </div>
-                  <!-- Dynamic messages inserted here -->
-                  <div id="chatNotificationList" class="list-group"></div>
-                  <!-- Footer -->
-                  <div class="dropdown-menu-footer">
-                    <a
-                      href="{{ url_for('udash.mybookings') }}"
-                      class="text-muted"
-                    >
-                      {{ _("view bookings") }}
-                    </a>
-                  </div>
+            <li class="nav-item dropdown">
+              <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <div class="position-relative">
+                  <i class="align-middle" data-feather="message-circle"> </i>
+                  <span id="chatBadge" class="indicator" style="background-color: #ff385c; display: none">
+                    0
+                  </span>
                 </div>
-              </li>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+                <!-- Header -->
+                <div id="chatNotificationHeader" class="dropdown-menu-header">
+                  {{ _("No New Messages") }}
+                </div>
+                <!-- Dynamic messages inserted here -->
+                <div id="chatNotificationList" class="list-group"></div>
+                <!-- Footer -->
+                <div class="dropdown-menu-footer">
+                  <a href="{{ url_for('udash.mybookings') }}" class="text-muted">
+                    {{ _("view bookings") }}
+                  </a>
+                </div>
+              </div>
+            </li>
 
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-icon dropdown-toggle d-inline-block d-sm-none"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                >
-                  <i class="align-middle" data-feather="settings"></i>
-                </a>
+            <li class="nav-item dropdown">
+              <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
 
-                <a
-                  class="nav-link dropdown-toggle d-none d-sm-inline-block"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                >
-                  <img
-                    src="{{ url_for('static', filename='/userpics/profile/') + current_user.image_file }}"
-                    class="rounded-circle article-img me-1"
-                    height="25px"
-                    width="25px"
-                    alt="Profile picture"
-                  />
-                  <span class="text-dark"
-                    >{{ _("Hi") }} {{current_user.first_name}}</span
-                  >
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <a class="dropdown-item" href="{{ url_for('udash.profile') }}"
-                    ><i class="align-middle me-1" data-feather="user"></i> {{
-                    _("Profile") }}</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="{{ url_for('udash.udashboard') }}"
-                    ><i class="align-middle me-1" data-feather="pie-chart"></i>
-                    {{ _("User Dashboard") }}</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <!-- <a
+              <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                {% if current_user.is_authenticated %}
+                <img src="{{ url_for('static', filename='userpics/profile/' + current_user.image_file) }}"
+                  class="rounded-circle article-img me-1" height="25px" width="25px" alt="Profile picture" />
+                <span class="text-dark">{{ _("Hi") }} {{current_user.first_name}}</span>
+                {% endif %}
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="{{ url_for('udash.profile') }}"><i class="align-middle me-1"
+                    data-feather="user"></i> {{
+                  _("Profile") }}</a>
+                <a class="dropdown-item" href="{{ url_for('udash.udashboard') }}"><i class="align-middle me-1"
+                    data-feather="pie-chart"></i>
+                  {{ _("User Dashboard") }}</a>
+                <div class="dropdown-divider"></div>
+                <!-- <a
                     class="dropdown-item"
                     href="{{ url_for('udash.earnings') }}"
                     ><i class="align-middle me-1" data-feather="briefcase"></i>
                     {{ _("Piggybank") }}</a
                   > -->
-                  <a class="dropdown-item" href="{{ url_for('main.contact') }}"
-                    ><i
-                      class="align-middle me-1"
-                      data-feather="help-circle"
-                    ></i>
-                    {{ _("Help Center") }}</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ url_for('users.logout') }}"
-                    >{{ _("Log out") }}</a
-                  >
-                </div>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        {% block admincontent %} {% endblock %}
-
-        <footer class="footer">
-          <div class="container-fluid">
-            <div class="row text-muted">
-              <div class="col-6 text-start">
-                <small class="mb-0">
-                  ©️2026 - {{ _("All rights reserved") }} Jambo | Powered by
-                  <a
-                    class="text-info"
-                    href="https://tboss.ci/"
-                    style="text-decoration: none"
-                    target="_blank"
-                  >
-                    <b>Techno|BOSS</b>💖
-                  </a>
-                </small>
+                <a class="dropdown-item" href="{{ url_for('main.contact') }}"><i class="align-middle me-1"
+                    data-feather="help-circle"></i>
+                  {{ _("Help Center") }}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('users.logout') }}">{{ _("Log out") }}</a>
               </div>
-              <div class="col-6 text-end">
-                <ul class="list-inline">
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="#"
-                      ><small>{{ _("Contact us") }}</small></a
-                    >
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="#"
-                      ><small>{{ _("Privacy") }}</small></a
-                    >
-                  </li>
-                  <li class="list-inline-item">
-                    <a class="text-muted" href="#"
-                      ><small>{{ _("Terms") }}</small></a
-                    >
-                  </li>
-                </ul>
-              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      {% block admincontent %} {% endblock %}
+
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row text-muted">
+            <div class="col-6 text-start">
+              <small class="mb-0">
+                ©️2026 - {{ _("All rights reserved") }} Jambo | Powered by
+                <a class="text-info" href="https://tboss.ci/" style="text-decoration: none" target="_blank">
+                  <b>Techno|BOSS</b>💖
+                </a>
+              </small>
+            </div>
+            <div class="col-6 text-end">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <a class="text-muted" href="#"><small>{{ _("Contact us") }}</small></a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="text-muted" href="#"><small>{{ _("Privacy") }}</small></a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="text-muted" href="#"><small>{{ _("Terms") }}</small></a>
+                </li>
+              </ul>
             </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
+  </div>
 
-    <script src="{{ url_for('static', filename='resources/js/app.js')}}"></script>
-    <!----Bootstrap JS files-->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-      integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-      crossorigin="anonymous"
-    ></script>
+  <script src="{{ url_for('static', filename='resources/js/app.js')}}"></script>
+  <!----Bootstrap JS files-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+    integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+    crossorigin="anonymous"></script>
 
-    <!--Datepicker-->
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-        var defaultDate =
-          date.getUTCFullYear() +
-          '-' +
-          (date.getUTCMonth() + 1) +
-          '-' +
-          date.getUTCDate();
-        document
-          .getElementById('datetimepicker-dashboard')
-          .flatpickr({
-            inline: true,
-            prevArrow: '<span title="Previous month">&laquo;</span>',
-            nextArrow: '<span title="Next month">&raquo;</span>',
-            defaultDate: defaultDate,
-          });
-      });
-    </script>
-  </body>
+  <!--Datepicker-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
+      var defaultDate =
+        date.getUTCFullYear() +
+        '-' +
+        (date.getUTCMonth() + 1) +
+        '-' +
+        date.getUTCDate();
+      document
+        .getElementById('datetimepicker-dashboard')
+        .flatpickr({
+          inline: true,
+          prevArrow: '<span title="Previous month">&laquo;</span>',
+          nextArrow: '<span title="Next month">&raquo;</span>',
+          defaultDate: defaultDate,
+        });
+    });
+  </script>
+</body>
+
 </html>
