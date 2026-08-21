@@ -225,9 +225,9 @@ head_css %} {% block content %}
     {% endmacro %}
 
     {% set host_steps = [
-    {'img': 'register.png', 'name': _('Register'), 'title': _('To be a member')},
-    {'img': 'vetting.png', 'name': _('Pass vetting'), 'title': _('Team visit')},
-    {'img': 'makecash1.png', 'name': _('Make Cash'), 'title': _('Go live')},
+    {'img': 'register.png', 'name': _('Be a Member'), 'title': _('Register')},
+    {'img': 'vetting.png', 'name': _('Team visit'), 'title': _('Pass vetting')},
+    {'img': 'makecash3.jpeg', 'name': _('Go Live'), 'title': _('Make Cash')},
     ] %}
 
     <!-- Desktop/tablet-large: unchanged normal 3-column grid -->
@@ -266,7 +266,7 @@ head_css %} {% block content %}
     <!-- Learn more -- now sits OUTSIDE both layouts above, so it
          always appears below the cards/carousel, never beside them
          as a stray extra slide. -->
-    <div class="text-primary text-center" data-aos="fade-up" data-aos-delay="600">
+    <div class="text-primary text-center pb-3" data-aos="fade-up" data-aos-delay="600">
       <a href="{{ url_for('main.behost') }}" class="explore-all-link">
         <h5>
           {{ _('Learn more') }} <i class="bi bi-arrow-right-circle"></i>
