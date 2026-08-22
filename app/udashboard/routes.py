@@ -235,7 +235,14 @@ def udashboard():
     '''This function create a route to render user dashboard page''' 
     # find the user total listing
     totrooms = db.session.query(Rooms).filter(Rooms.user_id==current_user.id).count()
-    totbook = Bookings.query.join(Rooms).filter(Rooms.user_id==current_user.id).count()
+    # FIXED: was counting every booking regardless of status --
+    # including Pending ones where the guest never actually completed
+    # payment (abandoned mid-checkout). Only Confirmed bookings should
+    # count toward this headline stat.
+    totbook = Bookings.query.join(Rooms).filter(
+        Rooms.user_id == current_user.id,
+        Bookings.status == "Confirmed"
+    ).count()
     
     # host_earning_gbp -- dashboard headline figure, same cross-currency
     # aggregation reasoning as the other two fixes in this file.

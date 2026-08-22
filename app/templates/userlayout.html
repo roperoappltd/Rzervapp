@@ -150,6 +150,47 @@
             <li class="nav-item">
               <a class="nav-icon" href="{{ url_for('main.home') }}">🌐</a>
             </li>
+
+            <!-- Language -->
+            <li class="nav-item dropdown">
+              <a class="nav-icon dash-lang-btn dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {% if current_language == "fr" %}
+                <img src="{{ url_for('static', filename='userpics/pics/france.png') }}" width="20" alt="fr">
+                {% else %}
+                <img src="{{ url_for('static', filename='userpics/pics/gb.png') }}" width="20" alt="en">
+                {% endif %}
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="{{ url_for('main.set_language', lang='en') }}">
+                  <img src="{{ url_for('static', filename='userpics/pics/gb.png') }}" width="18" class="me-1" alt="en">
+                  English
+                </a>
+                <a class="dropdown-item" href="{{ url_for('main.set_language', lang='fr') }}">
+                  <img src="{{ url_for('static', filename='userpics/pics/france.png') }}" width="18" class="me-1"
+                    alt="fr"> Français
+                </a>
+              </div>
+            </li>
+
+            <!-- Currency -->
+            <li class="nav-item dropdown">
+              <a class="nav-icon dash-currency-btn dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                {{ preferred_currency }}
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='GBP') }}">GBP</a>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='EUR') }}">EUR</a>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='USD') }}">USD</a>
+                <h6 class="dropdown-header">{{ _("Africa") }}</h6>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='XOF') }}">XOF</a>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='XAF') }}">XAF</a>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='NGN') }}">NGN</a>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='GHS') }}">GHS</a>
+                <a class="dropdown-item" href="{{ url_for('main.set_currency', currency='KES') }}">KES</a>
+              </div>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -222,6 +263,47 @@
           </ul>
         </div>
       </nav>
+
+      <style>
+        /* Language/currency buttons in the dashboard top nav -- .nav-icon
+           is styled for plain icon glyphs, no background at all, which
+           looks fine for an emoji/icon but left the currency text
+           ("GBP") looking like a bare, unstyled link. Giving these two
+           the same white circular look, sized to fit this navbar's own
+           height. Scoped to these two new classes only -- doesn't touch
+           .nav-icon itself, so the emoji/bell icons next to them are
+           unaffected. */
+        .dash-lang-btn,
+        .dash-currency-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          border-radius: 50%;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          transition: 0.2s;
+          width: 36px;
+          height: 36px;
+          padding: 0;
+        }
+
+        .dash-lang-btn {
+          margin-right: 12px;
+          /* a bit more breathing room before the currency pill */
+        }
+
+        .dash-currency-btn {
+          font-size: 0.7rem;
+          /* smaller than the lang button's icon -- "GBP" needs to comfortably fit inside a 36px circle, which has less usable width than a rectangle at the same height */
+          font-weight: 700;
+          color: #333;
+        }
+
+        .dash-lang-btn:hover,
+        .dash-currency-btn:hover {
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+        }
+      </style>
       {% endif %} {% block content %} {% endblock content %}
 
       <!-------Chat Modal------>
