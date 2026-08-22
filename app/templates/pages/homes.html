@@ -226,7 +226,7 @@ head_css %} {% block content %}
 
     {% set host_steps = [
     {'img': 'register.png', 'name': _('Be a Member'), 'title': _('Register')},
-    {'img': 'vetting.png', 'name': _('Team visit'), 'title': _('Pass vetting')},
+    {'img': 'vetting.png', 'name': _('Pass vetting'), 'title': _('Team visit')},
     {'img': 'makecash3.jpeg', 'name': _('Go Live'), 'title': _('Make Cash')},
     ] %}
 
@@ -645,7 +645,7 @@ head_css %} {% block content %}
               <i class="bi bi-quote"></i>
             </div>
             <div class="testimonial-content">
-              <p>
+              <p style="text-align: justify;">
                 {{_('I booked a room in Abidjan while I was still in London, and seeing the price instantly in my own
                 currency made the whole process feel effortless. No guesswork, no surprises at checkout — just a clear,
                 honest price from start to finish. Jambo made booking across borders feel as simple as booking a hotel
@@ -671,7 +671,7 @@ head_css %} {% block content %}
               <i class="bi bi-quote"></i>
             </div>
             <div class="testimonial-content">
-              <p>
+              <p style="text-align: justify;">
                 {{_('Listing my first room on Jambo took less than ten minutes, and within a week I had my first
                 booking. Being able to set my own discount and track my earnings right from my dashboard gives me real
                 control over my own listing. It\'s turned a spare room into a genuine, reliable source of income.')}}
@@ -690,62 +690,55 @@ head_css %} {% block content %}
         <!-- End Testimonial Item -->
 
         <!-- Testimonial Item 3 -->
-        <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="testimonial-card">
-                  <div class="quote-mark">
-                    <i class="bi bi-quote"></i>
-                  </div>
-                  <div class="testimonial-content">
-                    <p>
-                      Enim nisi quem export duis labore cillum quae magna enim
-                      sint quorum nulla quem veniam duis minim tempor labore
-                      quem eram duis noster aute amet eram fore quis sint minim.
-                    </p>
-                  </div>
-                  <div class="testimonial-author">
-                    <img
-                      src="{{url_for('static', filename='img/person/person-m-9.webp')}}"
-                      alt="Client"
-                      class="img-fluid rounded-circle"
-                      loading="lazy"
-                    />
-                    <div class="author-info">
-                      <h4>Michael Davis</h4>
-                      <span>Product Manager</span>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+          <div class="testimonial-card">
+            <div class="quote-mark">
+              <i class="bi bi-quote"></i>
+            </div>
+            <div class="testimonial-content">
+              <p style="text-align: justify;">
+                {{_('My family is originally from Dakar, and I go back every year to visit. Being able to browse
+                listings and book everything in French, with prices shown in euros before I even convert anything in my
+                head, makes the whole process so much less stressful. Jambo genuinely feels like it was built with
+                people like me in mind.')}}
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img src="{{url_for('static', filename='img/person/fatou.jpeg')}}" alt="Client"
+                class="img-fluid rounded-circle" loading="lazy" />
+              <div class="author-info">
+                <h4>Fatou Ndiaye</h4>
+                <span>Guest, Paris</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- End Testimonial Item -->
 
         <!-- Testimonial Item 4 -->
-        <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="500">
-                <div class="testimonial-card">
-                  <div class="quote-mark">
-                    <i class="bi bi-quote"></i>
-                  </div>
-                  <div class="testimonial-content">
-                    <p>
-                      Fugiat enim eram quae cillum dolore dolor amet nulla culpa
-                      multos export minim fugiat minim velit minim dolor enim
-                      duis veniam ipsum anim magna sunt elit fore quem dolore
-                      labore.
-                    </p>
-                  </div>
-                  <div class="testimonial-author">
-                    <img
-                      src="{{url_for('static', filename='img/person/person-f-3.webp')}}"
-                      alt="Client"
-                      class="img-fluid rounded-circle"
-                      loading="lazy"
-                    />
-                    <div class="author-info">
-                      <h4>Emily Thompson</h4>
-                      <span>Design Lead</span>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="500">
+          <div class="testimonial-card">
+            <div class="quote-mark">
+              <i class="bi bi-quote"></i>
+            </div>
+            <div class="testimonial-content">
+              <p style="text-align: justify;">
+                {{_('I was nervous about hosting for the first time, but the review system gave me confidence — guests
+                could see I was trustworthy before they even messaged me, and I could see the same about them. Payments
+                land in my account already converted, no confusion about exchange rates. Its been a genuinely reliable
+                way to earn extra income from a room I was not using.')}}
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <img src="{{url_for('static', filename='img/person/kamau.jpeg')}}" alt="Client"
+                class="img-fluid rounded-circle" loading="lazy" />
+              <div class="author-info">
+                <h4>Wanjiru Kamau</h4>
+                <span>Host, Nairobi</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- End Testimonial Item -->
       </div>
     </div>
