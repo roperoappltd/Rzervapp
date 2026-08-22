@@ -93,6 +93,18 @@ body {
   .nav-logo {
     margin-left: 10px;
   }
+  /* The header (topbar + navbar) was inheriting the body's own side
+     padding, leaving visible white space on both edges where the
+     body's background showed through instead of the header's own
+     background color. Pulling it out with matching negative margins
+     so it extends edge-to-edge, without touching the padding itself
+     -- everything else on the page still gets the breathing room it
+     was already getting. */
+  .header {
+    margin-left: -14px;
+    margin-right: -14px;
+    width: calc(100% + 28px);
+  }
 }
 
 /*@media (max-width: 768px) {
