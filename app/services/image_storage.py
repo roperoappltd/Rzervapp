@@ -67,6 +67,15 @@ def upload_room_image(pil_image, key_hint):
         result = cloudinary.uploader.upload(
             buffer,
             public_id=f"jambo/roompics/{key_hint}",
+            # FIXED: slashes in public_id alone don't organize anything
+            # in the Media Library on accounts using Cloudinary's
+            # "dynamic folder mode" (the default for every account
+            # created since June 2024) -- they only shape the delivery
+            # URL. Without this, every upload lands flat in the account
+            # root regardless of the path-looking public_id. This is
+            # the actual, separate parameter that controls visible
+            # folder placement.
+            asset_folder="jambo/roompics",
             overwrite=True,
         )
         # Store the public_id, not result["secure_url"] -- keeps the

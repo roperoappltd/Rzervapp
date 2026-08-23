@@ -92,7 +92,7 @@ class Roomextra(db.Model):
     pool = db.Column(db.String(10), nullable=False)
     workspace = db.Column(db.String(10), nullable=False)
     washing = db.Column(db.String(10), nullable=False)
-    Sport = db.Column(db.String(10), nullable=False)
+    sport = db.Column(db.String(10), nullable=False)
     parking = db.Column(db.String(10), nullable=False)
     # ====================================================================
     room_id = db.Column(db.Integer, db.ForeignKey('rooms.id'), unique=True)

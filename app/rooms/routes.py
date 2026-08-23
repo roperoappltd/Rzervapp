@@ -797,17 +797,17 @@ def roomextra(room_id):
     if form.validate_on_submit():
         # room listing info   
         room_extra = Roomextra(sleeping=form.sleeping.data, hot_water=form.hot_water.data,
-                        tv=form.tv.data, internet=form.internet.data, kitchen=form.kitchen.data, 
+                        smart_tv=form.smart_tv.data, internet=form.internet.data, kitchen=form.kitchen.data, 
                         towels=form.towels.data, resto=form.resto.data, bar=form.bar.data, 
                         spa=form.spa.data, car=form.car.data, shop=form.shop.data, 
                         concierge=form.concierge.data, aircon=form.aircon.data, pool=form.pool.data,
                         workspace=form.workspace.data, washing=form.washing.data, sport=form.sport.data,
-                        parking=form.parkin.data, room_id=room.id)
+                        parking=form.parking.data, room_id=room.id)
 
         db.session.add(room_extra)                                          # adding data to the database
         db.session.commit()                                                 # saving the changes                                                               
         flash(
-            _(f"Your room extra has been added successfully.", 'success')
+            _("Your room extra has been added successfully."), 'success'
             )   # display validation message 
 
         return redirect(url_for('udash.mylistings', room_id=room.id))

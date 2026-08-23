@@ -167,22 +167,8 @@ block head_css %} {{ super() }}
             {{ content_language_badge(roominfo.content_language) }}
           </h3>
           <p>
-            <!-- Indulge in the ultimate luxury experience with our Deluxe Ocean View
-            Suite. This spacious retreat features floor-to-ceiling windows
-            showcasing panoramic ocean vistas, creating a serene atmosphere
-            perfect for romantic getaways or family vacations. The elegantly
-            appointed living space seamlessly blends modern comfort with coastal
-            charm, featuring premium furnishings and thoughtful design elements. -->
             {{ roominfo.description }}
           </p>
-          <!-- <p>
-            The suite includes a separate living area with comfortable seating,
-            a work desk for business travelers, and a private balcony where you
-            can enjoy your morning coffee while watching the sunrise over the
-            ocean. The bedroom features a plush king-size bed with luxury
-            linens, ensuring a restful night's sleep, while the sofa bed in the
-            living area provides additional accommodation for up to two guests.
-          </p> -->
         </div>
       </div>
       <!-- <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
@@ -204,7 +190,7 @@ block head_css %} {{ super() }}
 
     <!-- Amenities and Features -->
     <div class="room-amenities mb-5" data-aos="fade-up" data-aos-delay="200">
-      <h3 class="section-subtitle mb-4">{{ _("Room Amenities") }}</h3>
+      <h3 class="section-subtitle mb-4">{{ _("Room Amenities & Services") }}</h3>
       <div class="row">
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="amenity-category">
@@ -214,12 +200,14 @@ block head_css %} {{ super() }}
                 <i class="bi bi-check2"></i> {{ _("Bed size") }}:
                 {{roomextra.sleeping}}
               </li>
-              <li><i class="bi bi-check2"></i> {{ _("Sitting area") }}: Yes</li>
+              <li><i class="bi bi-check2"></i> {{ _("Clean towels") }}: {{roomextra.towels}}</li>
               <li>
-                <i class="bi bi-check2"></i>{{ _("Access to kitchen") }}:
+                <i class="bi bi-check2"></i>{{ _("Kitchen available") }}:
                 {{roomextra.kitchen}}
               </li>
-              <!-- <li><i class="bi bi-check2"></i> Blackout curtains</li> -->
+              <li><i class="bi bi-check2"></i> {{ _("Hot water") }}:
+                {{roomextra.hot_water}}</li>
+              <i class="bi bi-check2"></i> {{ _("Clean Bedsheet")}}: Yes
             </ul>
           </div>
         </div>
@@ -233,12 +221,15 @@ block head_css %} {{ super() }}
               </li>
               <li>
                 <i class="bi bi-check2"></i> {{ _("Smart TV")}}:
-                {{roomextra.tv}}
+                {{roomextra.smart_tv}}
               </li>
               <li>
                 <i class="bi bi-check2"></i> {{ _("Electric Sockets")}}: Yes
               </li>
-              <!-- <li><i class="bi bi-check2"></i> USB charging ports</li> -->
+              <li><i class="bi bi-check2"></i> {{ _("Washing Machine")}}:
+                {{roomextra.washing}}</li>
+              <li><i class="bi bi-check2"></i> {{ _("Car rental")}}:
+                {{roomextra.car}}</li>
             </ul>
           </div>
         </div>
@@ -247,32 +238,39 @@ block head_css %} {{ super() }}
             <h5>{{ _("Comfort")}}</h5>
             <ul>
               <li>
-                <i class="bi bi-check2"></i> {{ _("Climate control")}}: Yes
+                <i class="bi bi-check2"></i> {{ _("Climate control")}}: {{roomextra.aircon}}
               </li>
               <li>
-                <i class="bi bi-check2"></i> {{ _("Noise reduction")}}: Yes
+                <i class="bi bi-check2"></i> {{ _("Work Space")}}: {{roomextra.workspace}}
               </li>
               <!-- <li><i class="bi bi-check2"></i> Coffee machine</li> -->
               <li>
-                <i class="bi bi-check2"></i> {{ _("Safe deposit box")}}: No
+                <i class="bi bi-check2"></i> {{ _("Swimming Pool")}}: {{roomextra.pool}}
               </li>
+              <li><i class="bi bi-check2"></i> {{ _("Spa")}}:
+                {{roomextra.spa}}</li>
+              <li><i class="bi bi-check2"></i> {{ _("Concierge")}}:
+                {{roomextra.concierge}}</li>
             </ul>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="amenity-category">
-            <h5>{{ _("Bathroom")}}</h5>
+            <h5>{{ _("Service")}}</h5>
             <ul>
-              <li><i class="bi bi-check2"></i>{{ _("Clean bathroom")}}: Yes</li>
+              <li><i class="bi bi-check2"></i>{{ _("Sport room")}}: {{roomextra.sport}}</li>
               <li>
-                <i class="bi bi-check2"></i>{{ _("Hot water")}}:
-                {{roomextra.hot_water}}
+                <i class="bi bi-check2"></i>{{ _("Car Parking")}}:
+                {{roomextra.parking}}
               </li>
               <li>
-                <i class="bi bi-check2"></i>{{ _("Clean towels")}}:
-                {{roomextra.towels}}
+                <i class="bi bi-check2"></i>{{ _("Bar")}}:
+                {{roomextra.bar}}
               </li>
-              <!-- <li><i class="bi bi-check2"></i> Heated floors</li> -->
+              <li><i class="bi bi-check2"></i> {{ _("Shop")}}:
+                {{roomextra.shop}}</li>
+              <li><i class="bi bi-check2"></i> {{ _("Resto")}}:
+                {{roomextra.resto}}</li>
             </ul>
           </div>
         </div>
@@ -314,7 +312,7 @@ block head_css %} {{ super() }}
               <div class="col-md-4">
                 <h6>{{ _("Check-in")}} / {{ _("Check-out")}}</h6>
                 <p>
-                  {{ _("Check-in")}}: 3:00 PM<br />{{ _("Check-out")}}: 11:00 AM
+                  {{ _("Check-in")}}: 3:00 PM<br />{{ _("Check-out")}}: 12:00 Noon
                 </p>
               </div>
               <div class="col-md-4">
@@ -322,8 +320,8 @@ block head_css %} {{ super() }}
                 <p>{{ _("Free cancellation up to 48 hours before arrival")}}</p>
               </div>
               <div class="col-md-4">
-                <h6>{{ _("Pets")}}</h6>
-                <p>{{ _("Pet-friendly with additional fee")}}</p>
+                <h6>{{ _("Support")}}</h6>
+                <p>{{ _("Available 24/7 just contact us.")}}</p>
               </div>
             </div>
           </div>
@@ -377,15 +375,15 @@ block head_css %} {{ super() }}
             <div class="row">
               <div class="col-md-4">
                 <h6>{{ _("Rule 1")}}</h6>
-                <p>{{ roominfo.usp1 }}</p>
+                <p>{{ roominfo.rule1 }}</p>
               </div>
               <div class="col-md-4">
                 <h6>{{ _("Rule 2")}}</h6>
-                <p>{{ roominfo.usp2 }}</p>
+                <p>{{ roominfo.rule2 }}</p>
               </div>
               <div class="col-md-4">
                 <h6>{{ _("Rule 3")}}</h6>
-                <p>{{ roominfo.usp3 }}</p>
+                <p>{{ roominfo.rule3 }}</p>
               </div>
             </div>
           </div>

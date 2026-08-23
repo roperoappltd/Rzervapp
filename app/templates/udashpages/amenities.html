@@ -4,11 +4,8 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('udash.mylistings')}}"
-        >{{ _('Listings') }}</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('udash.mylistings')}}">{{ _('Listings')
+        }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ _('Room Amenities') }}
@@ -72,15 +69,15 @@ head_css %} {% block content %}
                     </div>
                     <div class="form-group col-md-4">
                       <label class="pb-2">{{ _('Smart Tv') }}</label>
-                      {{ form.tv.label(class="form-control-label") }} {% if
-                      form.tv.errors %} {{ form.tv(class="form-control
+                      {{ form.smart_tv.label(class="form-control-label") }} {% if
+                      form.smart_tv.errors %} {{ form.smart_tv(class="form-control
                       form-control-sm is-invalid") }}
                       <div class="invalid-feedback">
-                        {% for error in form.tv.errors %}
+                        {% for error in form.smart_tv.errors %}
                         <span>{{ error }}</span>
                         {% endfor %}
                       </div>
-                      {% else %} {{ form.tv(class="form-control form-control-sm
+                      {% else %} {{ form.smart_tv(class="form-control form-control-sm
                       form-select") }} {% endif %}
                     </div>
                   </div>
@@ -212,9 +209,7 @@ head_css %} {% block content %}
                       form-select") }} {% endif %}
                     </div>
                   </div>
-                  <span style="font-size: 20px"
-                    >{{ _('Comfort & Leisure') }}</span
-                  >
+                  <span style="font-size: 20px">{{ _('Comfort & Leisure') }}</span>
                   <hr style="background-color: black" />
                   <div class="row pb-3">
                     <div class="form-group col-md-4">

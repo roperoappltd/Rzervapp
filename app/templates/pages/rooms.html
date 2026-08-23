@@ -104,17 +104,11 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
         <div class="col-xl-4 col-lg-6">
           <div class="room-card">
             <div class="room-image">
-              <img
-                src="{{ get_room_image_url(room.image1) }}"
-                alt="Deluxe Ocean Suite"
-                class="img-fluid"
-              />
+              <img src="{{ get_room_image_url(room.image1) }}" alt="Deluxe Ocean Suite" class="img-fluid" />
               <div class="room-features">
                 <!-- {% if room.status == 'Available' %} -->
                 <!-- <span class="badge text-bg-warning">{{room.status}}</span> -->
-                <span class="feature-badge" style="background-color: #ff385c"
-                  >{{room.room_location}}</span
-                >
+                <span class="feature-badge" style="background-color: #ff385c">{{room.room_location}}</span>
                 <!-- {% else %}
                 <span class="badge text-bg-danger">{{room.status}}</span>
                 <span class="feature-badge ocean">{{room.room_location}}</span>
@@ -137,32 +131,23 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
                 </div>
               </div>
               <p class="room-description">
-                <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. -->
                 {{ room.short_desc }}
               </p>
               <div class="room-amenities">
-                <span
-                  ><i class="bi bi-people"></i> {{ _("Up to") }} {{
-                  room.max_occupancy }} {{ _("guests") }}</span
-                >
+                <span><i class="bi bi-people"></i> {{ _("Up to") }} {{
+                  room.max_occupancy }} {{ _("guests") }}</span>
                 <span><i class="bi bi-wifi"></i> {{ _("Free WiFi") }}</span>
                 <span><i class="bi bi-tv"></i> {{ room.room_category }}</span>
               </div>
               <div class="room-footer">
                 <div class="room-price">
                   <span class="price-from">{{ _("From") }}</span>
-                  <span class="price-amount"
-                    ><!--$289-->
-                    {{ format_room_price(room) }}</span
-                  >
+                  <span class="price-amount"><!--$289-->
+                    {{ format_room_price(room) }}</span>
                   <span class="price-period">/ {{ _("night") }}</span>
                 </div>
-                <a
-                  href="{{ url_for('bedrooms.roomdetail', room_id=room.id) }}"
-                  class="btn-room-details"
-                  >{{ _("View Details") }}</a
-                >
+                <a href="{{ url_for('bedrooms.roomdetail', room_id=room.id) }}" class="btn-room-details">{{ _("View
+                  Details") }}</a>
               </div>
             </div>
           </div>
@@ -190,17 +175,10 @@ block head_css %} {{ super() }} {% endblock head_css %} {% block content %}
     {% for page_num in allrooms.iter_pages(left_edge=1, right_edge=1,
     left_current=1, right_current=2) %} {% if page_num %} {% if allrooms.page ==
     page_num %}
-    <a
-      class="btn btn-success pt-2 mt-2 mb-2"
-      href="{{ url_for('bedrooms.room', page=page_num) }}"
-      >{{ page_num }}</a
-    >
+    <a class="btn btn-success pt-2 mt-2 mb-2" href="{{ url_for('bedrooms.room', page=page_num) }}">{{ page_num }}</a>
     {% else %}
-    <a
-      class="btn btn-success-info pt-2 mt-2 mb-2"
-      href="{{ url_for('bedrooms.room', page=page_num) }}"
-      >{{ page_num }}</a
-    >
+    <a class="btn btn-success-info pt-2 mt-2 mb-2" href="{{ url_for('bedrooms.room', page=page_num) }}">{{ page_num
+      }}</a>
     {% endif %} {% else %} ... {% endif %} {% endfor %}
   </div>
 </section>

@@ -58,7 +58,7 @@ class RoomExtraForm(FlaskForm):
                                 validators=[DataRequired()])
     hot_water = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')],
                                 validators=[DataRequired()]) 
-    tv = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
+    smart_tv = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
                                  validators=[DataRequired()]) 
     internet = SelectField('', choices=[('',''), ('Yes', 'Yes'), ('No', 'No')], 
                                  validators=[DataRequired()])
