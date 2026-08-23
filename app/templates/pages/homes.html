@@ -625,7 +625,7 @@ head_css %} {% block content %}
 <!-- Testimonials Section -->
 <section id="testimonials" class="testimonials section light-background">
   <!-- Section Title -->
-  <div class="container section-title" data-aos="fade-up">
+  <div class="container section-title pb-1 mb-1" data-aos="fade-up">
     <span class="description-title">{{ _('Testimonials') }}</span>
     <h2>{{ _('Testimonials') }}</h2>
     <p>
@@ -637,114 +637,73 @@ head_css %} {% block content %}
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="testimonials-wrapper">
-      <div class="row g-4">
-        <!-- Testimonial Item 1 -->
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-          <div class="testimonial-card">
-            <div class="quote-mark">
-              <i class="bi bi-quote"></i>
-            </div>
-            <div class="testimonial-content">
-              <p style="text-align: justify;">
-                {{_('I booked a room in Abidjan while I was still in London, and seeing the price instantly in my own
-                currency made the whole process feel effortless. No guesswork, no surprises at checkout — just a clear,
-                honest price from start to finish. Jambo made booking across borders feel as simple as booking a hotel
-                at home.')}}
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <img src="{{url_for('static', filename='img/person/Damara.jpeg')}}" alt="Client"
-                class="img-fluid rounded-circle" loading="lazy" />
-              <div class="author-info">
-                <h4>Amara Dialo</h4>
-                <span>Frequent Traveler</span>
+      <div id="testimonialCarousel" class="carousel slide testimonial-carousel" data-bs-ride="carousel"
+        data-bs-interval="6000">
+        <div class="carousel-inner">
+          {% for t in testimonials %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="testimonial-card">
+                  <div class="quote-mark">
+                    <i class="bi bi-quote"></i>
+                  </div>
+                  <div class="testimonial-content">
+                    <p style="text-align: justify;">{{ t.quote }}</p>
+                  </div>
+                  <div class="testimonial-author">
+                    <img src="{{ url_for('static', filename='img/person/' + t.image) }}" alt="{{ t.name }}"
+                      class="img-fluid rounded-circle" loading="lazy" />
+                    <div class="author-info">
+                      <h4>{{ t.name }}</h4>
+                      <span>{{ t.role }}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        <!-- End Testimonial Item -->
-
-        <!-- Testimonial Item 2 -->
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-          <div class="testimonial-card">
-            <div class="quote-mark">
-              <i class="bi bi-quote"></i>
-            </div>
-            <div class="testimonial-content">
-              <p style="text-align: justify;">
-                {{_('Listing my first room on Jambo took less than ten minutes, and within a week I had my first
-                booking. Being able to set my own discount and track my earnings right from my dashboard gives me real
-                control over my own listing. It\'s turned a spare room into a genuine, reliable source of income.')}}
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <img src="{{url_for('static', filename='img/person/JB-Kouassi.jpeg')}}" alt="Client"
-                class="img-fluid rounded-circle" loading="lazy" />
-              <div class="author-info">
-                <h4>Jean-Baptiste Kouassi</h4>
-                <span>Host, Cocody</span>
-              </div>
-            </div>
-          </div>
+        <div class="carousel-indicators">
+          {% for t in testimonials %}
+          <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="{{ loop.index0 }}" {% if
+            loop.first %}class="active" aria-current="true" {% endif %}
+            aria-label="{{ _('Slide') }} {{ loop.index }}"></button>
+          {% endfor %}
         </div>
-        <!-- End Testimonial Item -->
-
-        <!-- Testimonial Item 3 -->
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-          <div class="testimonial-card">
-            <div class="quote-mark">
-              <i class="bi bi-quote"></i>
-            </div>
-            <div class="testimonial-content">
-              <p style="text-align: justify;">
-                {{_('My family is originally from Dakar, and I go back every year to visit. Being able to browse
-                listings and book everything in French, with prices shown in euros before I even convert anything in my
-                head, makes the whole process so much less stressful. Jambo genuinely feels like it was built with
-                people like me in mind.')}}
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <img src="{{url_for('static', filename='img/person/fatou.jpeg')}}" alt="Client"
-                class="img-fluid rounded-circle" loading="lazy" />
-              <div class="author-info">
-                <h4>Fatou Ndiaye</h4>
-                <span>Guest, Paris</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Testimonial Item -->
-
-        <!-- Testimonial Item 4 -->
-        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="500">
-          <div class="testimonial-card">
-            <div class="quote-mark">
-              <i class="bi bi-quote"></i>
-            </div>
-            <div class="testimonial-content">
-              <p style="text-align: justify;">
-                {{_('I was nervous about hosting for the first time, but the review system gave me confidence — guests
-                could see I was trustworthy before they even messaged me, and I could see the same about them. Payments
-                land in my account already converted, no confusion about exchange rates. Its been a genuinely reliable
-                way to earn extra income from a room I was not using.')}}
-              </p>
-            </div>
-            <div class="testimonial-author">
-              <img src="{{url_for('static', filename='img/person/kamau.jpeg')}}" alt="Client"
-                class="img-fluid rounded-circle" loading="lazy" />
-              <div class="author-info">
-                <h4>Wanjiru Kamau</h4>
-                <span>Host, Nairobi</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Testimonial Item -->
       </div>
     </div>
   </div>
 </section>
 <!-- /Testimonials Section -->
+
+<style>
+  /* Testimonial carousel dot indicators -- Bootstrap's default styling
+     is thin white bars, meant for dark image carousels, invisible
+     against this section's light background. Scoped to this carousel
+     only via .testimonial-carousel, same pattern as the "become a
+     host" mobile carousel's own indicator override elsewhere on this
+     page -- kept separate since they're two independent components. */
+  .testimonial-carousel .carousel-indicators {
+    position: static;
+    margin-top: 1.5rem;
+  }
+
+  .testimonial-carousel .carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    opacity: 1;
+    margin: 0 6px;
+    border: none;
+  }
+
+  .testimonial-carousel .carousel-indicators .active {
+    background-color: #003366;
+  }
+</style>
 
 <!-- Offer Cards Section -->
 <section id="offer-cards" class="offer-cards section">

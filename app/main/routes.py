@@ -165,9 +165,44 @@ def home():
     if spotlight and spotlight.image1:
         image1 = get_room_image_url(spotlight.image1)
  
+    # --------------------------------------------------
+    # Testimonials -- shown as an auto-advancing carousel, reordered
+    # randomly on every page load so the same testimonial isn't always
+    # the first one visitors see. Randomized server-side (same
+    # pyrandom.sample pattern as deal_cards above) rather than client-
+    # side JS, so it still works correctly even if JS fails to load.
+    # --------------------------------------------------
+    testimonials = [
+        {
+            "quote": _("I booked a room in Abidjan while I was still in London, and seeing the price instantly in my own currency made the whole process feel effortless. No guesswork, no surprises at checkout — just a clear, honest price from start to finish. Jambo made booking across borders feel as simple as booking a hotel at home."),
+            "image": "Damara.jpeg",
+            "name": "Amara Dialo",
+            "role": _("Frequent Traveler"),
+        },
+        {
+            "quote": _("Listing my first room on Jambo took less than ten minutes, and within a week I had my first booking. Being able to set my own discount and track my earnings right from my dashboard gives me real control over my own listing. It's turned a spare room into a genuine, reliable source of income."),
+            "image": "JB-Kouassi.jpeg",
+            "name": "Jean-Baptiste Kouassi",
+            "role": _("Host, Cocody"),
+        },
+        {
+            "quote": _("My family is originally from Dakar, and I go back every year to visit. Being able to browse listings and book everything in French, with prices shown in euros before I even convert anything in my head, makes the whole process so much less stressful. Jambo genuinely feels like it was built with people like me in mind."),
+            "image": "fatou.jpeg",
+            "name": "Fatou Ndiaye",
+            "role": _("Guest, Paris"),
+        },
+        {
+            "quote": _("I was nervous about hosting for the first time, but the review system gave me confidence — guests could see I was trustworthy before they even messaged me, and I could see the same about them. Payments land in my account already converted, no confusion about exchange rates. Its been a genuinely reliable way to earn extra income from a room I was not using."),
+            "image": "kamau.jpeg",
+            "name": "Wanjiru Kamau",
+            "role": _("Host, Nairobi"),
+        },
+    ]
+    testimonials = pyrandom.sample(testimonials, len(testimonials))
+
     return render_template('pages/homes.html',  title='Home', spotlight=spotlight, 
                             image1=image1, latest_rooms=latest_rooms, featured_rooms=featured_rooms,
-                            deal_cards=deal_cards)
+                            deal_cards=deal_cards, testimonials=testimonials)
 
 @main.route("/about") 
 def about():
