@@ -111,7 +111,7 @@ def number_generator():
     return f'JBA-{code}'
 
 # transacion fee calculator helper function
-def fee_calculator(bill, percentage=10, divider=100):
+def fee_calculator(bill, percentage=15, divider=100):
     trasaction_fee = (bill * percentage ) / divider
     return trasaction_fee
 

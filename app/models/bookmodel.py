@@ -82,6 +82,21 @@ class Payments(db.Model):
     transac_fee_host = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
     transac_fee_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
 
+    # NEW: Paystack's own processing fee -- kept separate from
+    # transac_fee_* above (Jambo's own 15% commission, calculated
+    # independently of any payment gateway). Never touches
+    # HostEarning.host_earning_* at all, since Jambo absorbs this cost
+    # itself rather than passing it to the host. Populated once
+    # Paystack's verify endpoint confirms the transaction, using the
+    # real fee amount it reports -- not a value Jambo calculates itself,
+    # since the rate varies by channel (1.95% mobile money, 3.2% local
+    # card, 3.8% international card) and could drift from Paystack's
+    # own figures if replicated independently.
+    gateway_fee_guest = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
+    gateway_fee_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
+    gateway_channel = db.Column(db.String(30), nullable=True)
+    gateway_reference = db.Column(db.String(60), nullable=True)
+
     total_paid_guest = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=False)
     payment_currency = db.Column(db.String(3))
 
