@@ -91,7 +91,7 @@ class Payments(db.Model):
     # real fee amount it reports -- not a value Jambo calculates itself,
     # since the rate varies by channel (1.95% mobile money, 3.2% local
     # card, 3.8% international card) and could drift from Paystack's
-    # own figures if replicated independently.
+    # own figures if replicated independently. so that records are consistent.
     gateway_fee_guest = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
     gateway_fee_gbp = db.Column(db.Numeric(10,2 , asdecimal=True), nullable=True)
     gateway_channel = db.Column(db.String(30), nullable=True)
