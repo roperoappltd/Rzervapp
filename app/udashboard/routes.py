@@ -273,7 +273,7 @@ def udashboard():
     # available_balance = get_host_balance(current_user.id) 
     earnings_state = calculate_monthly_earnings_change(current_user.id)
  
-    return render_template('udashpages/Dashboard.html',  title='User Dashboard',
+    return render_template('udashpages/dashboard.html',  title='User Dashboard',
                             totbook=totbook,totrooms=totrooms, 
                             total_earnings=total_earnings, earnings_state=earnings_state, 
                             total_withdrawals=total_withdrawals)

@@ -304,4 +304,4 @@ Sender Message: { clean_msg }
     except Exception as e:
         current_app.logger.error(f"Mail send failed: {e}")
             
-    return render_template('/pages/getintouch.html', title='Contact us', form=form)
+    return render_template('pages/getintouch.html', title='Contact us', form=form)
