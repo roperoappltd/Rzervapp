@@ -85,6 +85,15 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Email is taken!. Please change.') 
 
 # Create a form to request password reset form
+class ResendVerificationForm(FlaskForm):
+    '''Form for requesting a fresh email-verification link. Deliberately
+    has no custom validator checking whether the email exists (unlike
+    RequestResetForm below) -- the route itself shows the same generic
+    message regardless, so this form can't be used to enumerate which
+    emails are registered on the site.'''
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Resend Verification Email')
+
 class RequestResetForm(FlaskForm):
     '''This class enable to generate request password reset form'''
     email = StringField('Email', validators=[DataRequired(), Email()])  

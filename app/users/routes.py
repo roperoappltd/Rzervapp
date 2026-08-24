@@ -5,7 +5,7 @@ from app.models.usermodel import User
 from app.models.roommodel import Rooms, Roomreviews
 from app.models.bookmodel import Bookings, HostEarning, Withdrawal
 from .forms import (LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm,
-                    DeleteAccountForm)
+                    DeleteAccountForm, ResendVerificationForm)
 from app.rooms.forms import AddRoomForm, UpdateRoomForm
 from app.rooms.roomutils import can_cancel
 from app.helpers.cancel_checks import cancel_and_refund_if_paid
@@ -204,6 +204,27 @@ def verify_email(token):
 
     flash(_('Your email has been verified! You can now log in.'), 'success')
     return redirect(url_for('users.login'))
+
+@users.route("/resend-verification", methods=['GET', 'POST'])
+def resend_verification():
+    '''Lets someone request a fresh verification email if the original
+    was lost, never arrived, or its 24h token expired. Deliberately
+    shows the same message regardless of whether the email exists or
+    is already verified -- this form must never be usable to check
+    which emails are registered on the site.'''
+    if current_user.is_authenticated and current_user.email_verified:
+        return redirect(url_for('main.home'))
+
+    form = ResendVerificationForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and not user.email_verified:
+            member_regismail(user)  # generates a fresh token internally, so the expired/lost one is simply superseded
+
+        flash(_('If an account with that email exists and needs verifying, a fresh link is on its way.'), 'info')
+        return redirect(url_for('users.login'))
+
+    return render_template('pages/resend_verification.html', title='Resend Verification', form=form)
 
 @users.route("/delete-account", methods=['GET', 'POST'])
 @login_required

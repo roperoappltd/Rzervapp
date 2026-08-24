@@ -10,7 +10,12 @@ def email_verified_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not current_user.email_verified:
-            flash(_('Please verify your email before booking or listing a room.'), 'warning')
-            return redirect(url_for('main.home'))
+            # AMENDED: previously redirected to home with a generic
+            # message and no way to act on it -- this is exactly the
+            # moment someone discovers they're blocked, so a dead end
+            # here is the worst place for one. Now states the reason
+            # and sends them straight to the fix.
+            flash(_("Unverified email. Please use the link provided in your email to verify. Alternatively, enter your email to obtain a new verification link."), 'warning')
+            return redirect(url_for('users.resend_verification'))
         return f(*args, **kwargs)
     return decorated_function
