@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv
+.env
+venv/
+.venv/
+
+# C extensions
+*.so
+
+# ---------------- Secrets -- never commit these ----------------
+.env
+.env.*
+!.env.example
+env/
+
+# ---------------- Local database ----------------
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# ---------------- Python ----------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+build/
+dist/
+*.egg
+
+# ---------------- Editor / OS clutter ----------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---------------- Logs ----------------
+*.log
+#------------------my files ------------
+app/old-init.py
+tester.py
+htmltester.html

@@ -3,7 +3,7 @@ from flask import (Blueprint, render_template, flash, abort, redirect, request, 
 from flask_login import current_user, login_required
 from app import db
 from wtforms.validators import ValidationError
-# from app.models.usermodel import User
+from app.models.usermodel import User
 from app.models.roommodel import (Rooms, Roomextra, Roomreviews, Deals, RoomBlock, 
                                   ReviewHelpful, RoomView)
 from app.models.bookmodel import Bookings, Vouchers, Payments, HostEarning, VoucherUsage
@@ -670,7 +670,18 @@ def payment_callback():
         gateway_channel=gateway_channel, gateway_reference=reference,
     )
     db.session.add(payment)
-    current_user.rzerv_points = (current_user.rzerv_points or 0) + points
+    # FIXED: was current_user.rzerv_points, which awards points to
+    # whoever is currently logged in when this callback runs -- not
+    # necessarily the original booker. If the guest closes their
+    # browser right after paying and someone else later visits this
+    # same callback URL (e.g. a stolen/logged reference) while logged
+    # into their own account, points would go to the wrong person. The
+    # Payments record itself was already correctly attributed via
+    # user_id from metadata; this makes the points award consistent
+    # with that.
+    points_user = User.query.get(user_id)
+    if points_user:
+        points_user.rzerv_points = (points_user.rzerv_points or 0) + points
     db.session.flush()
 
     host_discount_host = discount_host if discount_funded_by == 'host' else Decimal('0.00')
@@ -770,13 +781,19 @@ def checkvoucher():
 @login_required
 def paysuccess(booking_id):
     '''This function create a route to render payment confirmation page''' 
-    # query the db about specific user reviews
-    #room = Rooms.query.get_or_404(room_id)
     booking = ( Bookings.query
                 .filter_by(id=booking_id)
                 .first_or_404()
             )
-    # payment = Payments.query.get_or_404(current_user.id)
+    # FIXED: @login_required alone only confirmed *someone* was logged
+    # in -- it never checked that the logged-in user actually owns
+    # THIS specific booking. Without this, any registered Jambo user
+    # could view another guest's room, dates, and amount paid simply
+    # by changing the number in the URL, and would also trigger a
+    # re-send of the confirmation email plus a flash message leaking
+    # part of the real guest's email address.
+    if booking.user_id != current_user.id:
+        abort(403)
     if booking:
         booking_confirm_email(booking, booking.id)
         flash(_(f'Link to view booking summary sent to {booking.pguest_email}'), 'success')
