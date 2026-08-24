@@ -25,7 +25,7 @@ class AddRoomForm(FlaskForm):
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
     short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=50)]) 
     room_size = SelectField('',choices=[('', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
-                               ('30–45', '30–45'), ('40–60', '40–60')], validators=[DataRequired()]) 
+                               ('30–45', '30–45'), ('40–60+', '40–60+')], validators=[DataRequired()]) 
     max_occupancy = SelectField('', choices=[('', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
                                               ('5', '5')], validators=[DataRequired()])
     price = FloatField('', validators=[DataRequired()])
