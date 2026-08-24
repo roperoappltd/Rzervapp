@@ -17,7 +17,15 @@ def get_location(city):
         return None
 
     try:
-        location = geolocator.geocode(city, language="en", timeout=10)
+        # FIXED: addressdetails=True is required for location.raw to
+        # include the structured "address" object at all (confirmed
+        # directly in geopy's own docs) -- without it, city/country/
+        # country_code below always come back empty, even when the
+        # location itself is found correctly (lat/lon and the
+        # human-readable display_name still resolve fine either way).
+        # This silently defaulted every room's currency to GBP,
+        # regardless of the room's actual country.
+        location = geolocator.geocode(city, language="en", timeout=10, addressdetails=True)
 
         if not location:
             return None
