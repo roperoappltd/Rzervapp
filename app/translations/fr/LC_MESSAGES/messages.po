@@ -2445,7 +2445,7 @@ msgstr "Retirer"
 
 #: app/templates/udashpages/dashboard.html:130
 msgid "Withdraw update"
-msgstr "Mise à jour du retrait"
+msgstr "Mise à jour"
 
 #: app/templates/udashpages/mybookings.html:23
 msgid "My Bookings"
@@ -2457,7 +2457,7 @@ msgstr "Réservations en tant qu'hôte"
 
 #: app/templates/udashpages/mybookings.html:34
 msgid "Total Host bookings"
-msgstr "Total des réservations en tant qu'hôte"
+msgstr "Total des réservations hôte"
 
 #: app/templates/udashpages/mybookings.html:41
 #: app/templates/udashpages/mybookings.html:192
@@ -2527,19 +2527,19 @@ msgstr "Suivant"
 
 #: app/templates/udashpages/mybookings.html:179
 msgid "Bookings as Guest"
-msgstr "Réservations en tant qu'invité"
+msgstr "Réservations Invité"
 
 #: app/templates/udashpages/mybookings.html:184
 msgid "Total Guest bookings"
-msgstr "Total des réservations en tant qu'invité"
+msgstr " Réservations Total Invité"
 
 #: app/templates/udashpages/mybookings.html:252
 msgid "Cancel booking"
-msgstr "Annuler la réservation"
+msgstr "Annuler réservation"
 
 #: app/templates/udashpages/mybookings.html:299
 msgid "Rate stay"
-msgstr "Évaluer le séjour"
+msgstr "Évaluer séjour"
 
 #: app/templates/udashpages/mybookings.html:347
 msgid "Rate your guest"
@@ -2595,7 +2595,7 @@ msgstr "Cliquez sur le bouton flottant pour demander un retrait"
 
 #: app/templates/udashpages/myearnings.html:107
 msgid "Request Date"
-msgstr "Date de la demande"
+msgstr "Date de requête"
 
 #: app/templates/udashpages/myearnings.html:108
 #: app/templates/udashpages/myrefund.html:39
@@ -2624,11 +2624,11 @@ msgstr "Annonces de chambres"
 
 #: app/templates/udashpages/mylistings.html:37
 msgid "Add Room"
-msgstr "Ajouter une chambre"
+msgstr "Ajouter chambre"
 
 #: app/templates/udashpages/mylistings.html:47
 msgid "Fill all fields to add a room"
-msgstr "Remplissez tous les champs pour ajouter une chambre"
+msgstr "Remplissez tous les champs SVP"
 
 #: app/templates/udashpages/mylistings.html:72
 msgid "Room City"
@@ -2669,7 +2669,7 @@ msgstr "Description de la chambre"
 
 #: app/templates/udashpages/mylistings.html:303
 msgid "add Pics"
-msgstr "ajouter des photos"
+msgstr "ajouter images"
 
 #: app/templates/udashpages/mylistings.html:304
 msgid "Title"
@@ -2677,7 +2677,7 @@ msgstr "Titre"
 
 #: app/templates/udashpages/mylistings.html:341
 msgid "Add amenities"
-msgstr "Ajouter des équipements"
+msgstr "Ajout commodités"
 
 #: app/templates/udashpages/mylistings.html:345
 msgid "View room"
