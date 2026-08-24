@@ -35,7 +35,13 @@ class User(db.Model, UserMixin):
  
     # Contact info
     company_name = db.Column(db.String(30), nullable=True, default='Change me')
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    # FIXED: was db.String(20) -- the generated filename is 16 hex
+    # chars + extension (secrets.token_hex(8)), which exactly hits 20
+    # for a 4-char extension like .jpg with zero headroom, and would
+    # exceed it entirely for a 5-char one like .jpeg or .webp (both
+    # very common, especially .webp from phone cameras) -- the same
+    # "Data too long" crash as the room images, just not yet triggered.
+    image_file = db.Column(db.String(100), nullable=False, default='default.jpg')
     phone = db.Column(db.String(30), nullable=True, default='Change me')
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
