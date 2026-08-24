@@ -62,8 +62,7 @@ block content %}
               <td>
                 <div class="d-flex mb-2">
                   <div class="flex-shrink-0">
-                    <img src="{{ url_for('static', filename='userpics/roompics/'+ room.image1 ) }}" alt="" width="38"
-                      height="38" />
+                    <img src="{{ get_room_image_url(room.image1) }}" alt="" width="38" height="38" />
                   </div>
                   <div class="flex-lg-grow-1 ms-3">
                     <h6 class="small mb-0">
@@ -80,8 +79,7 @@ block content %}
               </td>
               <td>1</td>
               <td class="text-end">
-                {{ convert_and_format(payment.room_price_gbp, "GBP",
-                current_user.preferred_currency) }}
+                {{ room_price_guest }} {{ guest_currency }}
               </td>
             </tr>
           </tbody>
@@ -89,8 +87,7 @@ block content %}
             <tr>
               <td colspan="2">Subtotal</td>
               <td class="text-end">
-                {{ convert_and_format(payment.accounting_amount -
-                payment.discount_gbp, "GBP", current_user.preferred_currency) }}
+                {{ subtotal }} {{ guest_currency }}
               </td>
             </tr>
             <tr>
@@ -104,16 +101,14 @@ block content %}
             <tr>
               <td colspan="2">Discount</td>
               <td class="text-danger text-end">
-                -{{ convert_and_format(payment.discount_gbp, "GBP",
-                current_user.preferred_currency) }}
+                -{{ discount }} {{ guest_currency }}
               </td>
             </tr>
 
             <tr class="fw-bold">
               <td colspan="2">TOTAL</td>
               <td class="text-end">
-                {{ convert_and_format(payment.accounting_amount, "GBP",
-                current_user.preferred_currency) }}
+                {{ total_paid }} {{ guest_currency }}
               </td>
             </tr>
           </tfoot>
@@ -121,7 +116,8 @@ block content %}
       </div>
     </div>
     <!----------------------APPLY VOUCHER-------->
-    <!-- <div class="col-md-12 pb-3">
+    {#
+    <div class="col-md-12 pb-3">
       <div class="contact-info-card">
         <div class="info-content">
           <form method="POST" action="">
@@ -148,24 +144,63 @@ block content %}
           </form>
         </div>
       </div>
-    </div> -->
+    </div>
+    #}
     <!-------------------------END APPLY VOUNCHER-->
     <!----CHECKOUT--------------------------------->
     <div class="col-md-12 pb-3">
       <div class="info-content">
         <form method="POST" action="">
-          {{ form.hidden_tag() }} {{ form.csrf_token }}
-          <div>
-            {% for subfield in form.pay_method %}
-            <tr>
-              <td>&nbsp;&nbsp;&nbsp;&nbsp;{{ subfield }}</td>
-              <td>{{ subfield.label }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            </tr>
-            {% endfor %}
+          {{ payform.hidden_tag() }} {{ payform.csrf_token }}
+
+          <div class="paystack-panel">
+            <div class="paystack-panel-header">
+              <span class="paystack-panel-title">
+                <i class="bi bi-shield-lock-fill"></i>
+                {{ _("Secure Payment") }}
+              </span>
+              <!-- Paystack's official logo file -- download from your
+                   Paystack dashboard's brand assets and save it to
+                   static/img/paystack-logo.png. Third-party logo sites
+                   aren't a reliable, legitimate source for a brand mark
+                   like this, so this is left as a placeholder path
+                   rather than pointing at one of them. -->
+              <img src="{{ url_for('static', filename='img/paystack-logo1.png') }}" alt="Paystack"
+                class="paystack-panel-logo" style="width:140px;height:25px;" />
+            </div>
+
+            <p class="paystack-panel-sub">
+              {{ _("You'll be securely redirected to Paystack to complete your payment.") }}
+            </p>
+
+            <div class="paystack-methods">
+              <span class="paystack-method-badge">
+                <i class="bi bi-credit-card-2-front"></i> Visa
+              </span>
+              <span class="paystack-method-badge">
+                <i class="bi bi-credit-card-2-front"></i> Mastercard
+              </span>
+              <span class="paystack-method-badge">
+                <i class="bi bi-phone"></i> Orange Money
+              </span>
+              <span class="paystack-method-badge">
+                <i class="bi bi-phone"></i> MTN MoMo
+              </span>
+              <span class="paystack-method-badge">
+                <i class="bi bi-phone"></i> Wave
+              </span>
+            </div>
+
+            <!-- pay_method removed from the form itself (see forms.py) --
+                 the real payment-method choice now happens on Paystack's
+                 own checkout page, not here. A selector on this page
+                 offering options Paystack doesn't even support (e.g.
+                 "Paypal") would be actively misleading now that this is
+                 a real, redirect-based integration. -->
           </div>
-          <hr />
+
           <div class="form-group1 form-actions text-end">
-            {{ form.submit(class="btn btn-primary") }}
+            {{ payform.submit(class="btn btn-primary paystack-submit-btn") }}
           </div>
         </form>
       </div>
@@ -174,5 +209,80 @@ block content %}
   </div>
 </section>
 <!-- /Confirmation Section -->
+
+<style>
+  /* Premium-styled single-provider payment panel, replacing what was
+     previously a bare, unstyled radio-button list offering payment
+     methods (Paypal, generic "card") that were never actually wired
+     to any real gateway. Scoped entirely to .paystack-* classes, so
+     nothing else on this page is affected. */
+  .paystack-panel {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+
+  .paystack-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .paystack-panel-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #003366;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .paystack-panel-title i {
+    color: #2ecc71;
+  }
+
+  .paystack-panel-logo {
+    height: 26px;
+    width: auto;
+  }
+
+  .paystack-panel-sub {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+
+  .paystack-methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .paystack-method-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f7f8fa;
+    border: 1px solid #eee;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .paystack-submit-btn {
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+</style>
 
 {% endblock content %}

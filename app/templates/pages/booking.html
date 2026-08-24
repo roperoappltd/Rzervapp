@@ -19,11 +19,7 @@ head_css %} {% block content %}
 <section id="booking" class="booking section">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="reservation-wrapper">
-      <div
-        class="reservation-header text-center"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
+      <div class="reservation-header text-center" data-aos="fade-up" data-aos-delay="200">
         <h2>{{ _('Reserve Your Stay') }}</h2>
         <p class="lead">
           {{ _('Experience unmatched hospitality with our streamlined booking
@@ -32,11 +28,7 @@ head_css %} {% block content %}
       </div>
 
       <div class="booking-grid">
-        <div
-          class="booking-form-section"
-          data-aos="fade-right"
-          data-aos-delay="300"
-        >
+        <div class="booking-form-section" data-aos="fade-right" data-aos-delay="300">
           <div class="form-container">
             <form method="POST" action="" class="reservation-form">
               {{ form.hidden_tag() }} {{ form.csrf_token }}
@@ -118,9 +110,7 @@ head_css %} {% block content %}
                 <h4>{{ _('Guest Information') }}</h4>
                 <div class="form-grid">
                   <div class="form-group1 full-width">
-                    <label class="pb-1"
-                      >{{ _('Primary Guest full name') }}</label
-                    >
+                    <label class="pb-1">{{ _('Primary Guest full name') }}</label>
                     {{ form.primary_guest.label(class="form-control-label") }}
                     {% if form.primary_guest.errors %} {{
                     form.primary_guest(class="form-control form-control-lg
@@ -179,11 +169,7 @@ head_css %} {% block content %}
             </h6>
           </div>
           <div class="showcase-image">
-            <img
-              src="{{ url_for('static', filename='userpics/roompics/' + room.image1) }}"
-              alt="Hotel luxury showcase"
-              class="img-fluid"
-            />
+            <img src="{{ get_room_image_url(room.image1) }}" alt="Hotel luxury showcase" class="img-fluid" />
           </div>
 
           <div class="hotel-highlights pt-1">
@@ -264,9 +250,7 @@ head_css %} {% block content %}
                 Jambo
               </p>
               <div class="text-end">
-                <a href="#" class="btn btn-primary"
-                  >{{ _('Read our Terms & Conditions') }}</a
-                >
+                <a href="#" class="btn btn-primary">{{ _('Read our Terms & Conditions') }}</a>
               </div>
             </div>
           </div>

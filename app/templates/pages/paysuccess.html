@@ -4,61 +4,219 @@ head_css %} {% block content %}
 <!-- Page Title -->
 <div class="page-title light-background">
   <div class="container d-lg-flex justify-content-between align-items-center">
-    <h1 class="mb-2 mb-lg-0">Payment confirmation</h1>
+    <h1 class="mb-2 mb-lg-0">{{ _("Payment confirmation") }}</h1>
     <nav class="breadcrumbs">
       <ol>
-        <li><a href="{{ url_for('main.home') }}">Home</a></li>
-        <li class="current">Payment confirmation</li>
+        <li><a href="{{ url_for('main.home') }}">{{ _("Home") }}</a></li>
+        <li class="current">{{ _("Payment confirmation") }}</li>
       </ol>
     </nav>
   </div>
 </div>
 <!-- End Page Title -->
 
-<!-- Contact Section -->
 <section id="contact" class="contact section">
-  <div class="container" data-aos="fade-up" data-aos-delay="300">
-    <div
-      class="row g-4 text-center pb-0 mb-0"
-      data-aos="fade-up"
-      data-aos-delay="300"
-    >
-      <h4>
-        Payment successful .... We wish you a pleasant stay. See you very soon!
-        {{ current_user.first_name}}
-      </h4>
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <!-- Success indicator -->
+    <div class="text-center mb-3">
+      <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js" type="module"></script>
+      <dotlottie-wc src="https://lottie.host/d68083eb-3dd6-4380-a0a4-85ecb476ee7f/oC9vBlFMLc.lottie"
+        style="width: 130px; height: 130px; margin: 0 auto; display: block;" autoplay loop></dotlottie-wc>
+      <h2 class="success-headline">{{ _("Booking Confirmed!") }}</h2>
+      <p class="success-subtext">
+        {{ _("Thank you, %(name)s -- we've sent the details to your email. We wish you a pleasant stay!",
+        name=current_user.first_name) }}
+      </p>
     </div>
 
-    <!-- Lottie animation -->
-    <div
-      class="row justify-content-center pb-0 pt-0"
-      data-aos="fade-up"
-      data-aos-delay="200"
-    >
-      <script
-        src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.10/dist/dotlottie-wc.js"
-        type="module"
-      ></script>
-      <dotlottie-wc
-        src="https://lottie.host/d68083eb-3dd6-4380-a0a4-85ecb476ee7f/oC9vBlFMLc.lottie"
-        style="width: 450px; height: 450px"
-        autoplay
-        loop
-      ></dotlottie-wc>
-      <div
-        class="text-center mb-1 pb-1 mt-0 pt-0"
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
-        <img
-          src="{{ url_for('static', filename='userpics/pics/Rlogo2.png')}} "
-          width="300"
-          height="70"
-        />
+    <!-- Receipt card -->
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="receipt-card">
+
+          <div class="receipt-header">
+            <span class="receipt-label">{{ _("Confirmation Number") }}</span>
+            <span class="receipt-confirmation-num">{{ booking.booking_num }}</span>
+          </div>
+
+          <div class="receipt-room">
+            <img src="{{ get_room_image_url(booking.rooms.image1) }}" alt="{{ booking.rooms.room_name }}"
+              class="receipt-room-img" />
+            <div>
+              <div class="receipt-room-name">{{ booking.rooms.room_name }}</div>
+              <div class="receipt-room-location">{{ booking.rooms.room_location }}</div>
+            </div>
+          </div>
+
+          <hr class="receipt-divider">
+
+          <div class="receipt-row">
+            <span>{{ _("Check-in") }}</span>
+            <strong>{{ booking.arrival.strftime('%d %b %Y') }}</strong>
+          </div>
+          <div class="receipt-row">
+            <span>{{ _("Check-out") }}</span>
+            <strong>{{ booking.departure.strftime('%d %b %Y') }}</strong>
+          </div>
+          <div class="receipt-row">
+            <span>{{ _("Guests") }}</span>
+            <strong>{{ booking.num_guests }}</strong>
+          </div>
+
+          {% if booking.payment %}
+          <hr class="receipt-divider">
+
+          <div class="receipt-row">
+            <span>{{ _("Paid via") }}</span>
+            <strong>{{ booking.payment.gateway_channel or 'Paystack' }}</strong>
+          </div>
+          <div class="receipt-row receipt-total">
+            <span>{{ _("Total paid") }}</span>
+            <strong>{{ booking.payment.total_paid_guest }} {{ booking.payment.payment_currency }}</strong>
+          </div>
+          <!-- Paystack only ever charges in XOF (the merchant account's
+               only enabled currency), regardless of what currency the
+               guest was browsing in -- the amount above is the real,
+               actual transaction. If the guest's own preferred display
+               currency differs from XOF, show a converted reference
+               line underneath so it's still meaningful to them, without
+               implying it was a second, separate charge. -->
+          {% if current_user.preferred_currency and current_user.preferred_currency != booking.payment.payment_currency
+          %}
+          <div class="receipt-row receipt-total-secondary">
+            <span></span>
+            <span>{{ _("approx.") }} {{ convert_and_format(booking.payment.total_paid_guest,
+              booking.payment.payment_currency, current_user.preferred_currency) }}</span>
+          </div>
+          {% endif %}
+          {% endif %}
+
+        </div>
+
+        <div class="receipt-actions">
+          <a href="{{ url_for('udash.mybookings') }}" class="btn btn-primary receipt-btn-primary">
+            {{ _("View My Bookings") }}
+          </a>
+          <a href="{{ url_for('main.home') }}" class="btn btn-outline-secondary receipt-btn-secondary">
+            {{ _("Back to Home") }}
+          </a>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
-<!-- /Contact Section -->
+
+<style>
+  .success-headline {
+    font-weight: 700;
+    color: #003366;
+    margin-top: 10px;
+  }
+
+  .success-subtext {
+    color: #666;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .receipt-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    padding: 28px;
+  }
+
+  .receipt-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 18px;
+  }
+
+  .receipt-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #999;
+  }
+
+  .receipt-confirmation-num {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #003366;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  .receipt-room {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .receipt-room-img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .receipt-room-name {
+    font-weight: 700;
+    color: #333;
+  }
+
+  .receipt-room-location {
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .receipt-divider {
+    margin: 18px 0;
+    border-top: 1px dashed #ddd;
+  }
+
+  .receipt-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 0.92rem;
+    color: #555;
+  }
+
+  .receipt-total {
+    font-size: 1.05rem;
+    color: #003366;
+  }
+
+  .receipt-total strong {
+    font-size: 1.15rem;
+  }
+
+  .receipt-total-secondary {
+    padding-top: 0;
+    font-size: 0.8rem;
+    color: #999;
+    font-style: italic;
+  }
+
+  .receipt-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .receipt-btn-primary,
+  .receipt-btn-secondary {
+    flex: 1;
+    padding: 11px 0;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+</style>
 
 {% endblock content %}

@@ -27,7 +27,11 @@ from app.helpers.cancel_checks import cancel_and_refund_if_paid
 from decimal import Decimal
 from app.services.currency import get_exchange_rates, get_symbol 
 from app.services.preference_service import VisitorPreferences
+from app.services.paystack_service import initialize_transaction, verify_transaction
 from flask_babel import _
+import json
+import uuid
+import requests
 
 # Creating an instance of the blueprint class
 bedrooms = Blueprint('bedrooms', __name__)
@@ -469,66 +473,82 @@ def checkout(room_id):
         transac_fee_guest = Decimal(str(fee_calculator(total_paid_guest)))
         transac_fee_gbp = (transac_fee_guest / rate_guest).quantize(TWO_DP)
         transac_fee_host = (transac_fee_gbp * rate_host).quantize(TWO_DP)
- 
+
         # Loyalty points from the GBP-normalized total, not the
         # currency-varying total_paid -- otherwise the same stay is
         # worth wildly different points depending on the guest's currency.
         points = int(total_paid_gbp // 30)
- 
-        # Create payment record
-        payment = Payments(
-            pay_method=payform.pay_method.data, room_price_original=room_price_host,
-            room_price_gbp=room_price_gbp.quantize(TWO_DP), room_price_currency=host_currency,
-            room_price_exchange_rate=rate_host, book_days=bookdays,
-            discount_host=discount_host, discount_gbp=discount_gbp,
-            discount_funded_by=discount_funded_by, transac_fee_host=transac_fee_host,
-            transac_fee_gbp=transac_fee_gbp, total_paid=total_paid_guest,
-            payment_currency=guest_currency, payment_exchange_rate=rate_guest,
-            accounting_currency='GBP', accounting_amount=total_paid_gbp,
-            status='Paid', points_earned=points, user_id=current_user.id,
-            booking_id=book.id, voucher_id=voucher.id if voucher else None,
-            deal_id=book.deal_id if book.deal_id else None,
-        )
-        db.session.add(payment)
-        # Award loyalty points
-        current_user.rzerv_points = (current_user.rzerv_points or 0) + points
-        
-        db.session.flush()
- 
-        # Create hostearning record. Only a HOST-funded discount (deal)
-        # reduces host_earning_*; an app-funded voucher is tracked
-        # separately (voucher_amount_*) and does not reduce it.
-        host_discount_host = discount_host if discount_funded_by == 'host' else Decimal('0.00')
-        host_discount_gbp = discount_gbp if discount_funded_by == 'host' else Decimal('0.00')
-        voucher_amount_host = discount_host if voucher else Decimal('0.00')
-        voucher_amount_gbp = discount_gbp if voucher else Decimal('0.00')
- 
-        earning = HostEarning(
-            user_id=book.rooms.user_id, booking_id=book.id, payment_id=payment.id,
-            gross_amount_host=subtotal_host, gross_amount_gbp=subtotal_gbp.quantize(TWO_DP),
-            host_currency=host_currency,exchange_rate=rate_host,
-            discount_host=host_discount_host, discount_gbp=host_discount_gbp,
-            voucher_amount_host=voucher_amount_host,voucher_amount_gbp=voucher_amount_gbp,
-            platform_fee_host=transac_fee_host,platform_fee_gbp=transac_fee_gbp,
-            host_earning_host=(subtotal_host - transac_fee_host - host_discount_host).quantize(TWO_DP),
-            host_earning_gbp=(subtotal_gbp - transac_fee_gbp - host_discount_gbp).quantize(TWO_DP),
-            # status left unset -- defaults to 'Pending' per the model
-        )
-        db.session.add(earning)
-        # Update booking & room status
-        book.status = 'Confirmed'
-        book.active = True
-        #room.status = 'Occupied'
-        db.session.commit() 
-        # Create voucher usage record
-        if voucher:
-            db.session.flush()
-            usage = VoucherUsage(voucher_id=voucher.id, user_id=current_user.id,
-                             payment_id=payment.id)
-            db.session.add(usage)
-            db.session.commit()
-        
-        return redirect(url_for('bedrooms.paysuccess', booking_id=book.id))
+
+        # AMENDED: the Paystack merchant account only has XOF enabled
+        # (confirmed directly against the dashboard) -- it rejects any
+        # other currency outright with "unsupported_currency", regardless
+        # of what currency the guest was browsing in. guest_currency
+        # remains what's shown throughout the site for browsing/
+        # comparison; the actual charge is always computed and sent in
+        # XOF specifically, via the same GBP bridge used everywhere else
+        # in the app. XOF has no subunit in real use, so this is rounded
+        # to a whole number rather than two decimal places.
+        raw_xof_rate = rates.get('XOF')
+        if raw_xof_rate is None:
+            flash(_("Checkout currently unavailable: missing exchange rate for XOF."), "danger")
+            return redirect(url_for('bedrooms.roomdetail', room_id=room.id))
+        rate_xof = Decimal(str(raw_xof_rate))
+        total_paid_xof = (total_paid_gbp * rate_xof).quantize(Decimal('1'))
+
+        # AMENDED: no longer creates Payments/HostEarning immediately --
+        # that assumed payment success the instant the form was
+        # submitted, with no real gateway involved at all. Now: package
+        # everything needed to build those records later into Paystack's
+        # metadata (Decimals as strings, since JSON can't serialize
+        # Decimal directly), start a real transaction, and send the
+        # guest to Paystack's own checkout. Records only get created
+        # once /payment/callback verifies the payment genuinely succeeded.
+        reference = f"{book.booking_num}-{uuid.uuid4().hex[:8]}"
+
+        metadata = {
+            "booking_id": book.id,
+            "voucher_id": voucher.id if voucher else None,
+            "deal_id": book.deal_id if book.deal_id else None,
+            "discount_funded_by": discount_funded_by,
+            "discount_host": str(discount_host),
+            "discount_gbp": str(discount_gbp),
+            "subtotal_host": str(subtotal_host),
+            "subtotal_gbp": str(subtotal_gbp),
+            "room_price_host": str(room_price_host),
+            "room_price_gbp": str(room_price_gbp.quantize(TWO_DP)),
+            "rate_host": str(rate_host),
+            "rate_xof": str(rate_xof),
+            "host_currency": host_currency,
+            "guest_currency": guest_currency,  # what the guest was browsing in, for reference only -- NOT the actual charge currency
+            "bookdays": bookdays,
+            "transac_fee_guest": str(transac_fee_guest),
+            "transac_fee_gbp": str(transac_fee_gbp),
+            "transac_fee_host": str(transac_fee_host),
+            "points": points,
+            "user_id": current_user.id,
+        }
+
+        try:
+            init_response = initialize_transaction(
+                email=current_user.email,
+                amount=total_paid_xof,
+                currency="XOF",
+                reference=reference,
+                callback_url=url_for('bedrooms.payment_callback', _external=True),
+                metadata=metadata,
+            )
+        except requests.exceptions.RequestException as e:
+            current_app.logger.error(f"Paystack initialize failed: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                current_app.logger.error(f"Paystack response body: {e.response.text}")
+            flash(_("We couldn't reach the payment provider. Please try again in a moment."), "danger")
+            return redirect(url_for('bedrooms.checkout', room_id=room.id))
+
+        if not init_response.get("status"):
+            flash(_("Payment could not be started. Please try again."), "danger")
+            return redirect(url_for('bedrooms.checkout', room_id=room.id))
+
+        return redirect(init_response["data"]["authorization_url"])
     # Pass text to submit button    
     payform.submit.label.text = f"Pay now {total_paid_guest} {guest_currency}"
     return render_template('pages/payment.html',  title='Checkout', 
@@ -538,6 +558,150 @@ def checkout(room_id):
                           room_price_guest=room_price_guest,
                           currency_symbol=get_symbol(guest_currency),
                           guest_currency=guest_currency)
+
+
+@bedrooms.route("/payment/callback")
+@login_required
+def payment_callback():
+    '''Paystack redirects here after the guest completes (or abandons)
+    checkout on their side. This is the ONLY place a payment is ever
+    trusted as genuine -- never the redirect itself, always a fresh,
+    server-side verify call to Paystack directly.'''
+    reference = request.args.get('reference')
+    if not reference:
+        flash(_("Missing payment reference."), "danger")
+        return redirect(url_for('bedrooms.room'))
+
+    try:
+        verify_response = verify_transaction(reference)
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f"Paystack verify failed: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            current_app.logger.error(f"Paystack response body: {e.response.text}")
+        flash(_("We couldn't confirm your payment. If you were charged, please contact support with reference %(reference)s.", reference=reference), "danger")
+        return redirect(url_for('bedrooms.room'))
+
+    data = verify_response.get("data", {})
+
+    if data.get("status") != "success":
+        flash(_("Payment was not completed."), "warning")
+        return redirect(url_for('bedrooms.room'))
+
+    metadata = data.get("metadata", {})
+    booking_id = metadata.get("booking_id")
+    if not booking_id:
+        flash(_("Payment reference could not be matched to a booking."), "danger")
+        return redirect(url_for('bedrooms.room'))
+
+    # AMENDED: Paystack's metadata is documented as "a stringified JSON
+    # object" -- values sent as real ints (e.g. points=3) come back as
+    # strings ("3") in the verify response, regardless of their
+    # original type in the initialize call. Every value expected to be
+    # an int is explicitly cast here rather than trusted to have
+    # survived the round trip as-is.
+    book = Bookings.query.get(int(booking_id))
+    if not book or book.status != "Pending":
+        # Already processed (guest hit back/refresh and landed here twice)
+        # or the booking expired in the meantime -- either way, don't
+        # create a second Payments record for the same transaction.
+        flash(_("This booking has already been processed."), "info")
+        return redirect(url_for('bedrooms.room'))
+
+    # Security check, per Paystack's own guidance: confirm the amount
+    # actually paid matches what was expected, not just that *a*
+    # payment succeeded. A mismatch is a sign of tampering, not
+    # something to wave through. Checked against XOF specifically --
+    # the merchant account's only enabled currency, and therefore the
+    # only currency Paystack could have actually charged in, regardless
+    # of what guest_currency the guest was browsing in.
+    total_paid_xof = Decimal(str(data["amount"])) / 100
+    if data.get("currency") != "XOF":
+        flash(_("Payment currency mismatch. Please contact support with reference %(reference)s.", reference=reference), "danger")
+        return redirect(url_for('bedrooms.room'))
+
+    rate_host = Decimal(metadata["rate_host"])
+    rate_xof = Decimal(metadata["rate_xof"])
+    host_currency = metadata["host_currency"]
+
+    transac_fee_guest = Decimal(metadata["transac_fee_guest"])
+    transac_fee_gbp = Decimal(metadata["transac_fee_gbp"])
+    transac_fee_host = Decimal(metadata["transac_fee_host"])
+
+    discount_host = Decimal(metadata["discount_host"])
+    discount_gbp = Decimal(metadata["discount_gbp"])
+    discount_funded_by = metadata["discount_funded_by"]
+
+    room_price_host = Decimal(metadata["room_price_host"])
+    room_price_gbp = Decimal(metadata["room_price_gbp"])
+    subtotal_host = Decimal(metadata["subtotal_host"])
+    subtotal_gbp = Decimal(metadata["subtotal_gbp"])
+    points = int(metadata["points"])
+    bookdays = int(metadata["bookdays"])
+    user_id = int(metadata["user_id"])
+
+    total_paid_gbp = (total_paid_xof / rate_xof).quantize(TWO_DP)
+
+    # Real numbers from Paystack itself -- not calculated here, since
+    # the rate varies by channel and could drift from Paystack's own
+    # figures if replicated independently.
+    gateway_fee_xof = Decimal(str(data.get("fees") or 0)) / 100
+    gateway_fee_gbp = (gateway_fee_xof / rate_xof).quantize(TWO_DP)
+    gateway_channel = data.get("channel")
+
+    voucher_id = metadata.get("voucher_id")
+    voucher = Vouchers.query.get(int(voucher_id)) if voucher_id else None
+
+    deal_id = metadata.get("deal_id")
+    deal_id = int(deal_id) if deal_id else None
+
+    payment = Payments(
+        pay_method='Paystack', room_price_original=room_price_host,
+        room_price_gbp=room_price_gbp, room_price_currency=host_currency,
+        room_price_exchange_rate=rate_host, book_days=bookdays,
+        discount_host=discount_host, discount_gbp=discount_gbp,
+        discount_funded_by=discount_funded_by, transac_fee_host=transac_fee_host,
+        transac_fee_gbp=transac_fee_gbp, total_paid_guest=total_paid_xof.quantize(TWO_DP),
+        payment_currency="XOF", pay_exchange_rate=rate_xof,
+        accounting_currency='GBP', accounting_amount=total_paid_gbp,
+        status='Paid', points_earned=points, user_id=user_id,
+        booking_id=book.id, voucher_id=voucher.id if voucher else None,
+        deal_id=deal_id,
+        gateway_fee_guest=gateway_fee_xof.quantize(TWO_DP), gateway_fee_gbp=gateway_fee_gbp,
+        gateway_channel=gateway_channel, gateway_reference=reference,
+    )
+    db.session.add(payment)
+    current_user.rzerv_points = (current_user.rzerv_points or 0) + points
+    db.session.flush()
+
+    host_discount_host = discount_host if discount_funded_by == 'host' else Decimal('0.00')
+    host_discount_gbp = discount_gbp if discount_funded_by == 'host' else Decimal('0.00')
+    voucher_amount_host = discount_host if voucher else Decimal('0.00')
+    voucher_amount_gbp = discount_gbp if voucher else Decimal('0.00')
+
+    earning = HostEarning(
+        user_id=book.rooms.user_id, booking_id=book.id, payment_id=payment.id,
+        gross_amount_host=subtotal_host, gross_amount_gbp=subtotal_gbp,
+        host_currency=host_currency, exchange_rate=rate_host,
+        discount_host=host_discount_host, discount_gbp=host_discount_gbp,
+        voucher_amount_host=voucher_amount_host, voucher_amount_gbp=voucher_amount_gbp,
+        platform_fee_host=transac_fee_host, platform_fee_gbp=transac_fee_gbp,
+        host_earning_host=(subtotal_host - transac_fee_host - host_discount_host).quantize(TWO_DP),
+        host_earning_gbp=(subtotal_gbp - transac_fee_gbp - host_discount_gbp).quantize(TWO_DP),
+        # status left unset -- defaults to 'Pending' per the model
+    )
+    db.session.add(earning)
+    book.status = 'Confirmed'
+    book.active = True
+    db.session.commit()
+
+    if voucher:
+        db.session.flush()
+        usage = VoucherUsage(voucher_id=voucher.id, user_id=user_id,
+                         payment_id=payment.id)
+        db.session.add(usage)
+        db.session.commit()
+
+    return redirect(url_for('bedrooms.paysuccess', booking_id=book.id))
 
 # Voucher checker helper function 
 @bedrooms.route("/check-voucher", methods=["POST"])

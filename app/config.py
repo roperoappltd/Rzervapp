@@ -83,6 +83,14 @@ class Config :
     XCHANGE_RATE_API_KEY = os.getenv("XCHANGE_RATE_API_KEY")
 
     #-------------------------------------------
+    # Paystack -- test keys during development, live keys only once
+    # Registered Business activation is complete. sk_ vs pk_ and
+    # _test_ vs _live_ are baked into the key string itself, so a quick
+    # glance confirms which environment is actually configured.
+    PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+    PAYSTACK_PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
+
+    #-------------------------------------------
     # Image storage backend: 'local' (default, no setup needed for dev)
     # or 'cloudinary' (production). Switching later to another provider
     # (e.g. R2) only ever needs a change in app/services/image_storage.py

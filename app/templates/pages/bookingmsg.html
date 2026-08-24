@@ -895,7 +895,7 @@
                                                                       margin: 0;
                                                                       max-width: 100%;
                                                                     " width="90" height="128" alt=""
-                                                                  src="{{ url_for('static', filename='userpics/roompics/'+ booking.rooms.image1 ) }}" />
+                                                                  src="{{ get_room_image_url(booking.rooms.image1) }}" />
                                                               </div>
                                                             </td>
                                                             <td class="t69" style="
@@ -1117,27 +1117,42 @@
                                                                                   %Y') }}
                                                                                   <hr />
                                                                                   {{ _('Price per night') }}:
-                                                                                  £{{ booking.payment.price_per_night }}
+                                                                                  {{
+                                                                                  convert_and_format(booking.payment.room_price_gbp,
+                                                                                  "GBP", "XOF") }}
                                                                                   <hr />
                                                                                   {{_('Number of days') }}:
                                                                                   {{ booking.payment.book_days }}
                                                                                   <hr />
-                                                                                  <b>{{ _('Total') }}:
-                                                                                    £{{ (booking.payment.price_per_night
-                                                                                    *
-                                                                                    booking.payment.book_days) }}</b>
+                                                                                  <b>{{ _('Subtotal') }}:
+                                                                                    {{
+                                                                                    convert_and_format(booking.payment.room_price_gbp
+                                                                                    * booking.payment.book_days, "GBP",
+                                                                                    "XOF") }}</b>
                                                                                   <hr />
                                                                                   {{ _('Discount') }}:
-                                                                                  £{{ booking.payment.discount }}
+                                                                                  {{
+                                                                                  convert_and_format(booking.payment.discount_gbp,
+                                                                                  "GBP", "XOF") }}
                                                                                   <hr />
                                                                                   <b>{{ _('Your bill') }}:
-                                                                                    £{{
-                                                                                    (booking.payment.price_per_night
-                                                                                    *
-                                                                                    booking.payment.book_days
-                                                                                    )-
-                                                                                    booking.payment.discount
+                                                                                    {{ booking.payment.total_paid_guest
+                                                                                    }} {{
+                                                                                    booking.payment.payment_currency
                                                                                     }}</b>
+                                                                                  {% if current_user.is_authenticated
+                                                                                  and current_user.preferred_currency
+                                                                                  and current_user.preferred_currency !=
+                                                                                  booking.payment.payment_currency %}
+                                                                                  <br />
+                                                                                  <span
+                                                                                    style="font-size: 12px; color: #888;">
+                                                                                    {{ _("approx.") }} {{
+                                                                                    convert_and_format(booking.payment.total_paid_guest,
+                                                                                    booking.payment.payment_currency,
+                                                                                    current_user.preferred_currency) }}
+                                                                                  </span>
+                                                                                  {% endif %}
                                                                                 </h1>
                                                                               </td>
                                                                             </tr>

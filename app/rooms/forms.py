@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField, FloatField, 
-                     SelectField, DateField, RadioField, TextAreaField, IntegerField,
+                     SelectField, DateField, TextAreaField, IntegerField,
                      MultipleFileField, HiddenField)
 from app import db
 #from wtforms.widgets import ListWidget, CheckboxInput
@@ -14,14 +14,6 @@ from app.models.bookmodel import Bookings, Vouchers
 from datetime import date
 #import pycountry
 
-# Queries
-# locations = db.session.query(Rooms.room_location
-#                             ).distinct().order_by(Rooms.room_location).all()
-# category = db.session.query(Rooms.room_category).distinct().all()
-
-
-# Create a room listing form class 
- 
 # Create a room listing form class 
 class AddRoomForm(FlaskForm):
     '''This class enable to model the room listing process'''
@@ -182,9 +174,11 @@ class PaymentForm(FlaskForm):
     '''This class enable to generate payment form'''
     # Define the field and the validators
     #vcode = HiddenField()
-    pay_method = RadioField(' ', choices=[('Debit/Credit Card',
-                            'Debit/Credit Card'), ('Paypal', 'Paypal'), ('Cash on Arrival', 'Cash on Arrival')],  
-                            validators=[DataRequired()])
+    # pay_method removed -- was a cosmetic radio selector (Card/Paypal/
+    # Cash) that never drove any real logic even before Paystack, and
+    # would now be actively misleading (e.g. offering "Paypal" when
+    # Paystack doesn't support it). The real payment method choice
+    # happens on Paystack's own checkout page after redirect.
     voucher_code =  StringField('Enter a voucher code (Optional): ', validators=[Optional()])
     submit = SubmitField('')
     # def validate_code(self, code):

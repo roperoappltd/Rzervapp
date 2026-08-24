@@ -896,7 +896,7 @@
                                                                       margin: 0;
                                                                       max-width: 100%;
                                                                     " width="90" height="128" alt=""
-                                                                  src="{{ url_for('static', filename='userpics/roompics/'+ booking.rooms.image1 ) }}" />
+                                                                  src="{{ get_room_image_url(booking.rooms.image1) }}" />
                                                               </div>
                                                             </td>
                                                             <td class="t69" style="
@@ -1126,16 +1126,43 @@
                                                                                   }}
                                                                                   <hr />
                                                                                   {{ _('Price per night') }}:
-                                                                                  £{{ booking.payment.price_per_night }}
+                                                                                  {{
+                                                                                  convert_and_format(booking.payment.room_price_gbp,
+                                                                                  "GBP", "XOF") }}
                                                                                   <hr />
                                                                                   {{ _('Number of days') }}:
                                                                                   {{ booking.payment.book_days }}
                                                                                   <hr />
                                                                                   {{ _('Discount') }}:
-                                                                                  £{{ booking.payment.discount }}
+                                                                                  {{
+                                                                                  convert_and_format(booking.payment.discount_gbp,
+                                                                                  "GBP", "XOF") }}
                                                                                   <hr />
+                                                                                  {% if booking.refund %}
                                                                                   <b>{{ _('Amount Refundable') }}:
-                                                                                    £{{ booking.refund.amount }}</b>
+                                                                                    {{
+                                                                                    booking.refund.amount_refund_guest
+                                                                                    }} {{ booking.refund.refund_currency
+                                                                                    }}</b>
+                                                                                  {% if current_user.is_authenticated
+                                                                                  and current_user.preferred_currency
+                                                                                  and current_user.preferred_currency !=
+                                                                                  booking.refund.refund_currency %}
+                                                                                  <br />
+                                                                                  <span
+                                                                                    style="font-size: 12px; color: #888;">
+                                                                                    {{ _("approx.") }} {{
+                                                                                    convert_and_format(booking.refund.amount_refund_guest,
+                                                                                    booking.refund.refund_currency,
+                                                                                    current_user.preferred_currency) }}
+                                                                                  </span>
+                                                                                  {% endif %}
+                                                                                  {% else %}
+                                                                                  <b>{{ _('Your refund is being
+                                                                                    processed. You will receive a
+                                                                                    separate confirmation once the
+                                                                                    amount is finalized.') }}</b>
+                                                                                  {% endif %}
                                                                                 </h1>
                                                                               </td>
                                                                             </tr>
