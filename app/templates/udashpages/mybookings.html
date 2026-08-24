@@ -4,11 +4,8 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item pl-3">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('udash.udashboard')}}"
-        >{{ _('Dashboard') }}</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('udash.udashboard')}}">{{ _('Dashboard')
+        }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ _('Bookings') }}
@@ -52,7 +49,7 @@ head_css %} {% block content %}
                         <td>{{ booh.rooms.room_location }}</td>
 
                         <td>
-                          {{ format_room_price(booh.rooms) }}
+                          {{ booh.rooms.price }} {{ booh.rooms.room_currency }}
                         </td>
 
                         <td>{{ booh.primary_guest }}</td>
@@ -70,17 +67,13 @@ head_css %} {% block content %}
                         <!-- Anytime before departure: Need help and chat, throughout the booking period -->
                         <td>
                           <div class="btn-group">
-                            <button
-                              class="btn rounded-pill btn-danger btn-sm dropdown-toggle"
-                              style="background-color: #ff385c; border-color: #ff385c;"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
+                            <button class="btn rounded-pill btn-danger btn-sm dropdown-toggle"
+                              style="background-color: #ff385c; border-color: #ff385c;" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
                               {{ _('Action') }}
                             </button>
                             <div class="dropdown-menu">
-                              
+
                               href="{{ url_for('main.contact') }}"
                               class="dropdown-item pt-0 mt-0"
                               >{{ _('Need help') }}</a>
@@ -89,13 +82,13 @@ head_css %} {% block content %}
                               {% if booh.conversation %}
                               {% set other = booh.conversation.other_user_for(current_user.id) %}
                               {% if other %}
-                              
-                                class="chat-launch-btn dropdown-item"
-                                data-conversation="{{ booh.conversation.id }}"
-                                data-user="{{ other.username }}"
+
+                              class="chat-launch-btn dropdown-item"
+                              data-conversation="{{ booh.conversation.id }}"
+                              data-user="{{ other.username }}"
                               >
-                                <i class="bi bi-chat-dots"></i>
-                                {{ _('Message') }} {{ other.username }}
+                              <i class="bi bi-chat-dots"></i>
+                              {{ _('Message') }} {{ other.username }}
                               </a>
                               {% endif %}
                               {% endif %}
@@ -104,40 +97,32 @@ head_css %} {% block content %}
                           </div>
                         </td>
 
-                        {% elif booh.status == 'Confirmed' and booh.departure <= today %}
-                        <!-- Stay has ended: rate the guest, or look up their existing reviews -->
-                        <td>
-                          <span class="text-muted me-2"><b>{{ booh.status }}</b></span>
+                        {% elif booh.status == 'Confirmed' and booh.departure <= today %} <!-- Stay has ended: rate the
+                          guest, or look up their existing reviews -->
+                          <td>
+                            <span class="text-muted me-2"><b>{{ booh.status }}</b></span>
 
-                          <button
-                            type="button"
-                            class="btn rounded-pill btn-primary btn-sm"
-                            style="background-color: #ff385c; border-color: #ff385c;"
-                            data-bs-toggle="modal"
-                            data-bs-target="#rateGuestModal"
-                            data-action-url="{{ url_for('udash.rate_guest', booking_id=booh.id) }}"
-                            data-guest-name="{{ booh.user.username }}"
-                          >
-                            {{ _('Rate Guest') }}
-                          </button>
+                            <button type="button" class="btn rounded-pill btn-primary btn-sm"
+                              style="background-color: #ff385c; border-color: #ff385c;" data-bs-toggle="modal"
+                              data-bs-target="#rateGuestModal"
+                              data-action-url="{{ url_for('udash.rate_guest', booking_id=booh.id) }}"
+                              data-guest-name="{{ booh.user.username }}">
+                              {{ _('Rate Guest') }}
+                            </button>
 
-                          <button
-                            type="button"
-                            class="btn rounded-pill btn-outline-secondary btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#guestReviewsModal"
-                            data-api-url="{{ url_for('udash.api_guest_reviews', guest_id=booh.user.id) }}"
-                            data-guest-name="{{ booh.user.username }}"
-                          >
-                            {{ _('View reviews') }}
-                          </button>
-                        </td>
+                            <button type="button" class="btn rounded-pill btn-outline-secondary btn-sm"
+                              data-bs-toggle="modal" data-bs-target="#guestReviewsModal"
+                              data-api-url="{{ url_for('udash.api_guest_reviews', guest_id=booh.user.id) }}"
+                              data-guest-name="{{ booh.user.username }}">
+                              {{ _('View reviews') }}
+                            </button>
+                          </td>
 
-                        {% else %}
-                        <!-- Fallback for any status not explicitly handled above -->
-                        <td><b>{{ booh.status }}</b></td>
-                        {% endif %}
-                        <!---------------End here------>
+                          {% else %}
+                          <!-- Fallback for any status not explicitly handled above -->
+                          <td><b>{{ booh.status }}</b></td>
+                          {% endif %}
+                          <!---------------End here------>
                       </tr>
                       {% endif %}
                     </tbody>
@@ -147,11 +132,9 @@ head_css %} {% block content %}
                   <div class="pagination">
                     {% if bookhost.has_prev %}
                     <a
-                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.prev_num) }}"
-                    >
+                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.prev_num) }}">
                       {{ _('Previous') }}
-                      <i class="now-ui-icons arrows-1_minimal-left"></i
-                    ></a>
+                      <i class="now-ui-icons arrows-1_minimal-left"></i></a>
                     {% endif %}
                     <span class="mx-2">
                       {{ _('Page') }} {{ bookhost.page }} of {{ bookhost.pages
@@ -159,8 +142,7 @@ head_css %} {% block content %}
                     </span>
                     {% if bookhost.has_next %}
                     <a
-                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.next_num) }}"
-                    >
+                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.next_num) }}">
                       {{ _('Next') }}
                       <i class="now-ui-icons arrows-1_minimal-right"></i>
                     </a>
@@ -220,55 +202,32 @@ head_css %} {% block content %}
                         <!-- Anytime before departure: full action dropdown, chat always available regardless of whether travel has started -->
                         <td>
                           <div class="btn-group">
-                            <button
-                              type="button"
-                              class="btn rounded-pill btn-danger btn-sm dropdown-toggle"
-                              style="
+                            <button type="button" class="btn rounded-pill btn-danger btn-sm dropdown-toggle" style="
                                 background-color: #ff385c;
                                 border-color: #ff385c;
-                              "
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
+                              " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               {{ _('Action') }}
                             </button>
                             <div class="dropdown-menu">
                               {% if can_cancel(boo.status, boo.arrival) == True
                               %}
-                              <form
-                                method="POST"
-                                action="{{ url_for('bedrooms.cancel_booking', booking_id=boo.id) }}"
-                              >
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="{{ csrf_token() }}"
-                                />
-                                <button
-                                  type="submit"
-                                  class="dropdown-item btn btn-link"
-                                >
+                              <form method="POST" action="{{ url_for('bedrooms.cancel_booking', booking_id=boo.id) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                                <button type="submit" class="dropdown-item btn btn-link">
                                   {{ _('Cancel booking') }}
                                 </button>
                               </form>
                               {% else %}
-                              <a
-                                href="{{ url_for('main.contact') }}"
-                                class="dropdown-item pt-0 mt-0"
-                                >{{ _('Need help') }}</a
-                              >
+                              <a href="{{ url_for('main.contact') }}" class="dropdown-item pt-0 mt-0">{{ _('Need help')
+                                }}</a>
                               {% endif %}
 
                               <!---------Message link -- available the whole way up to departure--------------->
                               {% if boo.conversation %} {% set other =
                               boo.conversation.other_user_for(current_user.id)
                               %} {% if other %}
-                              <a
-                                class="chat-launch-btn dropdown-item"
-                                data-conversation="{{ boo.conversation.id }}"
-                                data-user="{{ other.username }}"
-                              >
+                              <a class="chat-launch-btn dropdown-item" data-conversation="{{ boo.conversation.id }}"
+                                data-user="{{ other.username }}">
                                 <i class="bi bi-chat-dots"></i>
                                 {{ _('Message') }} {{ other.username }}
                               </a>
@@ -278,32 +237,23 @@ head_css %} {% block content %}
                           </div>
                         </td>
 
-                        {% elif boo.status == 'Confirmed' and boo.departure <=
-                        today %}
-                        <!-- Stay has ended: status and rate-stay shown together -->
-                        <td>
-                          <span class="text-muted me-2"
-                            ><b>{{ boo.status }}</b></span
-                          >
-                          <a
-                            href="{{ url_for('bedrooms.roomdetail', room_id=boo.rooms.id) }}#reviews"
-                          >
-                            <button
-                              type="button"
-                              class="btn rounded-pill btn-primary btn-sm"
-                              style="
+                        {% elif boo.status == 'Confirmed' and boo.departure <= today %} <!-- Stay has ended: status and
+                          rate-stay shown together -->
+                          <td>
+                            <span class="text-muted me-2"><b>{{ boo.status }}</b></span>
+                            <a href="{{ url_for('bedrooms.roomdetail', room_id=boo.rooms.id) }}#reviews">
+                              <button type="button" class="btn rounded-pill btn-primary btn-sm" style="
                                 background-color: #ff385c;
                                 border-color: #ff385c;
-                              "
-                            >
-                              {{ _('Rate stay') }}
-                            </button>
-                          </a>
-                        </td>
-                        {% else %}
-                        <!-- Fallback for any status not explicitly handled above -->
-                        <td><b>{{ boo.status }}</b></td>
-                        {% endif %}
+                              ">
+                                {{ _('Rate stay') }}
+                              </button>
+                            </a>
+                          </td>
+                          {% else %}
+                          <!-- Fallback for any status not explicitly handled above -->
+                          <td><b>{{ boo.status }}</b></td>
+                          {% endif %}
                       </tr>
                     </tbody>
                     {% endfor %}
@@ -311,19 +261,14 @@ head_css %} {% block content %}
                   <!------------------>
                   <div class="pagination">
                     {% if bookguest.has_prev %}
-                    <a
-                      href="{{ url_for('udash.mybookings', guest_page=bookguest.prev_num, host_page=bookhost.page) }}"
-                    >
-                      {{ _('Previous') }} <i class="bi bi-arrow-left-short"></i
-                    ></a>
+                    <a href="{{ url_for('udash.mybookings', guest_page=bookguest.prev_num, host_page=bookhost.page) }}">
+                      {{ _('Previous') }} <i class="bi bi-arrow-left-short"></i></a>
                     {% endif %}
                     <span class="mx-2">
                       Page {{ bookguest.page }} of {{ bookguest.pages }}
                     </span>
                     {% if bookguest.has_next %}
-                    <a
-                      href="{{ url_for('udash.mybookings', guest_page=bookguest.next_num, host_page=bookhost.page) }}"
-                    >
+                    <a href="{{ url_for('udash.mybookings', guest_page=bookguest.next_num, host_page=bookhost.page) }}">
                       {{ _('Next') }} <i class="bi bi-arrow-right-short"></i>
                     </a>
                     {% endif %}
@@ -347,22 +292,12 @@ head_css %} {% block content %}
           <div class="modal-title">{{ _('Rate your guest') }}</div>
           <div class="jw-subtitle" id="rateGuestSubtitle"></div>
         </div>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="jw-modal-body">
         <form id="rateGuestForm" method="POST" action="">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          <input
-            type="hidden"
-            name="rate_us"
-            id="rateGuestRateInput"
-            value=""
-          />
+          <input type="hidden" name="rate_us" id="rateGuestRateInput" value="" />
 
           <div class="jw-star-picker" id="rateGuestStars">
             <i class="bi bi-star" data-value="1"></i>
@@ -372,15 +307,9 @@ head_css %} {% block content %}
             <i class="bi bi-star" data-value="5"></i>
           </div>
 
-          <textarea
-            class="form-control"
-            name="message"
-            id="rateGuestMessage"
-            minlength="20"
-            maxlength="200"
+          <textarea class="form-control" name="message" id="rateGuestMessage" minlength="20" maxlength="200"
             placeholder="{{ _('Share what it was like hosting this guest (min. 20 characters)...') }}"
-            required
-          ></textarea>
+            required></textarea>
           <div class="jw-char-count">
             <span id="rateGuestCharCount">0</span>/200
           </div>
@@ -405,12 +334,7 @@ head_css %} {% block content %}
           <div class="modal-title">{{ _('Guest reviews') }}</div>
           <div class="jw-subtitle" id="guestReviewsSubtitle"></div>
         </div>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="jw-modal-body" id="guestReviewsBody">
         <div class="jw-loading">{{ _('Loading...') }}</div>

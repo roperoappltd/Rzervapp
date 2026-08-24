@@ -322,7 +322,7 @@ head_css %} {% block content %}
                         <td>{{ roo.room_category }}</td>
                         <td>{{ roo.status }}</td>
                         <td class="text-right">
-                          {{ format_room_price(roo) }}
+                          {{ roo.price }} {{ roo.room_currency }}
                         </td>
                         <td class="text-right">
                           <!-- Example single danger button -->
