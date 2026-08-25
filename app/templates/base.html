@@ -48,6 +48,14 @@
   <link href="{{url_for('static', filename='css/banner.css')}}" rel="stylesheet" />
   <!---------------------------------------------------------------------------->
 
+  <!-- FIXED: this was missing entirely -- 36 templates define their own
+       head_css block for page-specific styles and extra stylesheet
+       links, but with no matching block here, Jinja simply discarded
+       all of that content. It was never a caching or specificity issue;
+       the browser never received any of it. Placed last so page-specific
+       CSS can override the shared stylesheets above it. -->
+  {% block head_css %}{% endblock %}
+
   <!-- =======================================================
   * Template Name: Jambo
   * Updated: Jul 29 2025 with Bootstrap v5.3.7
