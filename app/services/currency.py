@@ -77,10 +77,18 @@ def get_symbol(currency):
     return CURRENCY_SYMBOLS.get(currency, currency)
 
 
+# Currencies with no minor unit actually used in practice, confirmed
+# against ISO 4217's official "exponent 0" list -- e.g. XOF's centime is
+# described by name as "theoretical (unused)". Limited to currencies
+# this app actually supports; the full ISO list is longer.
+ZERO_DECIMAL_CURRENCIES = {"XOF", "XAF", "UGX", "RWF", "JPY"}
+
 def format_money(amount, currency="GBP"):
     if amount is None:
         amount = 0
     symbol = get_symbol(currency)
+    if currency in ZERO_DECIMAL_CURRENCIES:
+        return f"{symbol} {amount:,.0f}"
     return f"{symbol} {amount:,.2f}"
 
 

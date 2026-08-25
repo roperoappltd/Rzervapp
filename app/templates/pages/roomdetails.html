@@ -43,6 +43,29 @@ block head_css %} {{ super() }}
     font-weight: 500;
     color: #495057;
   }
+
+  /* Availability + Book Now buttons -- gap works correctly whether
+     they sit side-by-side (desktop) or stack (mobile), unlike the
+     &nbsp; spacing this replaced, which only provided horizontal
+     space and collapsed to nothing once the buttons wrapped to
+     separate lines on a narrow screen. */
+  .room-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 767px) {
+    .room-action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .room-action-buttons .btn {
+      width: 100%;
+    }
+  }
 </style>
 
 {% endblock head_css %} {% block content %}
@@ -110,14 +133,15 @@ block head_css %} {{ super() }}
             <span class="price-period">{{ _("per night") }}</span>
           </div>
           <!-----Modal Button ------>
-          <button class="btn btn-outline-secondary btn-lg shadow-sm" data-bs-toggle="modal"
-            data-bs-target="#availabilityModal">
-            📅 {{ _("Availability") }}
-          </button>
-          &nbsp; &nbsp;
-          <!------------------------->
-          <a href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}" class="btn btn-book-now">{{ _("Book Now")
-            }}</a>
+          <div class="room-action-buttons">
+            <button class="btn btn-outline-secondary btn-lg shadow-sm" data-bs-toggle="modal"
+              data-bs-target="#availabilityModal">
+              📅 {{ _("Availability") }}
+            </button>
+            <!------------------------->
+            <a href="{{ url_for('bedrooms.booknow', room_id=roominfo.id) }}" class="btn btn-book-now">{{ _("Book Now")
+              }}</a>
+          </div>
         </div>
       </div>
     </div>

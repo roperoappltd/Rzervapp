@@ -8,7 +8,13 @@ class Rooms(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # ------------------------------------------------------------------------------------- 
-    room_name = db.Column(db.String(30), nullable=False)  # FIXED: was globally unique=True -- two hosts could reasonably want the same name
+    # FIXED: was db.String(30) -- the form correctly caps new room
+    # names at 30 chars (see RoomForm), but delete_room() appends
+    # " (removed)" (10 chars) on soft-delete, which can push an
+    # already-valid, already-saved name past the old limit. Same bug
+    # class as the image columns: never accounted for text appended
+    # after the original value was already validated and stored.
+    room_name = db.Column(db.String(50), nullable=False)  # FIXED: was globally unique=True -- two hosts could reasonably want the same name
     room_location = db.Column(db.String(30), nullable=False, index=True)  # NEW: index, this is a search filter
     borough = db.Column(db.String(50), nullable=False, index=True)  # NEW: host-typed (not geocoded -- OSM coverage for African cities like Abidjan is too inconsistent to rely on). Indexed now since this becomes a search filter in the next phase.
     # room_address = db.Column(db.String(150), nullable=True)

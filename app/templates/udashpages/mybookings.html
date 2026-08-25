@@ -49,7 +49,7 @@ head_css %} {% block content %}
                         <td>{{ booh.rooms.room_location }}</td>
 
                         <td>
-                          {{ booh.rooms.price }} {{ booh.rooms.room_currency }}
+                          {{ convert_and_format(booh.rooms.price, booh.rooms.room_currency, booh.rooms.room_currency) }}
                         </td>
 
                         <td>{{ booh.primary_guest }}</td>
