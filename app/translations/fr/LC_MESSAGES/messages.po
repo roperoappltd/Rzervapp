@@ -1458,7 +1458,7 @@ msgstr "Devenir membre"
 
 #: app/templates/pages/homes.html:229
 msgid "Pass vetting"
-msgstr "Réussir la vérification"
+msgstr "Vérification"
 
 #: app/templates/pages/homes.html:229
 msgid "Team visit"
@@ -1489,8 +1489,8 @@ msgid ""
 "We present to you our most popular room listing this week chosen by\n"
 "      the Jambo community."
 msgstr ""
-"Nous vous présentons notre annonce de chambre la plus populaire de la "
-"semaine, choisie par la communauté Jambo."
+"Nous vous présentons notre annonce la plus populaire de la semaine, "
+"choisie par la communauté Jambo."
 
 #: app/templates/pages/homes.html:327
 msgid "SpotLight"

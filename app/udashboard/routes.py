@@ -12,6 +12,7 @@ from app.rooms.forms import AddRoomForm, WithdrawalForm, GuestReviewForm
 # from ..users.usermails.joinusmail import member_regismail
 from ..users.utils import save_picture
 from app.services.location_service import get_location
+from app.services.image_storage import get_room_image_url
 from app.services.preference_service import VisitorPreferences
 from ..rooms.roomutils import sanitize_input, can_cancel, current_date
 from flask_socketio import (SocketIO, emit, join_room, leave_room)
@@ -167,7 +168,7 @@ def room_map_data():
                 "city": room.room_location,
                 "price": room.price,
                 "price_display": format_room_price(room),  # NEW: same fix as the other map route
-                "image": room.image1,
+                "image": get_room_image_url(room.image1),  # FIXED: was room.image1 raw -- the JS built a local-only static path from this, which breaks entirely once IMAGE_BACKEND=cloudinary, since the real image lives on Cloudinary's CDN, not at that local path
                 "url": url_for("bedrooms.roomdetail", room_id=room.id)
             },
             "geometry": {

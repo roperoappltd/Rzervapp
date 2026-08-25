@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="room-popup">
 
                 <img
-                src="static/userpics/roompics/${room.image}"
+                src="${room.image}"
 
                 class="img-fluid rounded mb-2"
                 style="
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 height:130px;
                 object-fit:cover;
                 "
-                onerror="this.src='/static/images/no-image1.jpg'"
+                onerror="this.src='/static/userpics/roompics/roomdef1.jpg'"
                 >
 
                 <h6 class="fw-bold">
