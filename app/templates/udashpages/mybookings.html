@@ -85,6 +85,7 @@ head_css %} {% block content %}
                   {% else %}
                   <span class="notif-channel-title">{{ _('Booking Notifications') }}</span>
                   <form method="POST" action="{{ url_for('udash.set_notification_channel') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <div class="notif-channel-options">
                       <span>
                         <input type="radio" id="notif-none" name="notification_channel" value="none" {% if
