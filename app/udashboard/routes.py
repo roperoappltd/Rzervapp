@@ -460,6 +460,34 @@ def rate_guest(booking_id):
 
     return redirect(url_for('udash.mybookings'))
 
+@udash.route("/set-notification-channel", methods=['POST'])
+@login_required
+def set_notification_channel():
+    '''Lets a host choose between no notifications, SMS, or WhatsApp
+    for new bookings. Requires a real phone number for either paid
+    option -- checked here server-side regardless of the template.'''
+    channel = request.form.get('notification_channel', 'none')
+
+    if channel not in ('none', 'sms', 'whatsapp'):
+        flash(_('Invalid selection.'), 'danger')
+        return redirect(url_for('udash.mybookings'))
+
+    if channel != 'none' and current_user.phone == 'Change me':
+        flash(_('Please add a phone number to your profile before enabling booking notifications.'), 'warning')
+        return redirect(url_for('udash.mybookings'))
+
+    current_user.notification_channel = channel
+    db.session.commit()
+
+    if channel == 'none':
+        flash(_('Booking notifications turned off.'), 'info')
+    elif channel == 'sms':
+        flash(_('SMS booking notifications enabled.'), 'success')
+    else:
+        flash(_('WhatsApp booking notifications enabled.'), 'success')
+
+    return redirect(url_for('udash.mybookings'))
+
 @udash.route("/api/guest-reviews/<int:guest_id>")
 @login_required
 def api_guest_reviews(guest_id):
@@ -503,7 +531,7 @@ def mylistings():
             flash("Unable to locate this city.", "danger")
             return redirect(url_for("udash.mylistings"))
     
-        if current_user.address and current_user.phone and current_user.zip_code != 'Change me':  
+        if current_user.address and current_user.phone != 'Change me' and current_user.zip_code != 'Change me':  
             clean_short_desc = sanitize_input(form.short_desc.data)
             clean_description = sanitize_input(form.description.data)
             # room listing info   

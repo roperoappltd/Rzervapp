@@ -28,6 +28,8 @@ from decimal import Decimal
 from app.services.currency import get_exchange_rates, get_symbol 
 from app.services.preference_service import VisitorPreferences
 from app.services.paystack_service import initialize_transaction, verify_transaction
+from app.services.sms_service import send_sms, build_booking_notification
+from app.services.whatsapp_service import send_whatsapp
 from flask_babel import _
 import json
 import uuid
@@ -689,6 +691,40 @@ def payment_callback():
     voucher_amount_host = discount_host if voucher else Decimal('0.00')
     voucher_amount_gbp = discount_gbp if voucher else Decimal('0.00')
 
+    # NEW: booking notification (SMS or WhatsApp), for hosts who've
+    # paid to opt into one. Deliberately only charges the fee if the
+    # notification actually sent -- never charge for one that failed
+    # to deliver. A failed or skipped send never blocks booking
+    # confirmation itself.
+    notification_fee_host = Decimal('0.00')
+    notification_fee_gbp = Decimal('0.00')
+    notification_channel_used = None
+    host_user = User.query.get(book.rooms.user_id)
+    channel = host_user.notification_channel if host_user else 'none'
+
+    if host_user and channel != 'none' and host_user.phone and host_user.phone != 'Change me':
+        sent = False
+        if channel == 'sms':
+            message = build_booking_notification(
+                host_name=host_user.first_name,
+                guest_name=book.primary_guest,
+                room_name=book.rooms.room_name,
+                arrival_date=book.arrival.strftime('%d %b %Y'),
+            )
+            sent = send_sms(host_user.phone, message)
+            fee_gbp_setting = current_app.config['SMS_FEE_GBP']
+        elif channel == 'whatsapp':
+            sent = send_whatsapp(
+                host_user.phone,
+                template_params=[book.primary_guest, book.rooms.room_name, book.arrival.strftime('%d %b %Y')],
+            )
+            fee_gbp_setting = current_app.config['WHATSAPP_FEE_GBP']
+
+        if sent:
+            notification_channel_used = channel
+            notification_fee_gbp = fee_gbp_setting.quantize(TWO_DP)
+            notification_fee_host = (notification_fee_gbp * rate_host).quantize(TWO_DP)
+
     earning = HostEarning(
         user_id=book.rooms.user_id, booking_id=book.id, payment_id=payment.id,
         gross_amount_host=subtotal_host, gross_amount_gbp=subtotal_gbp,
@@ -696,8 +732,10 @@ def payment_callback():
         discount_host=host_discount_host, discount_gbp=host_discount_gbp,
         voucher_amount_host=voucher_amount_host, voucher_amount_gbp=voucher_amount_gbp,
         platform_fee_host=transac_fee_host, platform_fee_gbp=transac_fee_gbp,
-        host_earning_host=(subtotal_host - transac_fee_host - host_discount_host).quantize(TWO_DP),
-        host_earning_gbp=(subtotal_gbp - transac_fee_gbp - host_discount_gbp).quantize(TWO_DP),
+        notification_fee_host=notification_fee_host, notification_fee_gbp=notification_fee_gbp,
+        notification_channel_used=notification_channel_used,
+        host_earning_host=(subtotal_host - transac_fee_host - host_discount_host - notification_fee_host).quantize(TWO_DP),
+        host_earning_gbp=(subtotal_gbp - transac_fee_gbp - host_discount_gbp - notification_fee_gbp).quantize(TWO_DP),
         # status left unset -- defaults to 'Pending' per the model
     )
     db.session.add(earning)

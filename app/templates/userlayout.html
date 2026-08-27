@@ -37,6 +37,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <!--Fonts-->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <!-- FIXED: this was missing entirely -- dashboard templates define
+       their own head_css block for page-specific styles, but with no
+       matching block here, Jinja simply discarded all of that content. -->
+  {% block head_css %}{% endblock %}
 </head>
 
 <body>

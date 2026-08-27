@@ -65,6 +65,11 @@ class User(db.Model, UserMixin):
     rzerv_points = db.Column(db.Integer, nullable=False, default=0)
     language = db.Column(db.String(5), default="en")
     preferred_currency = db.Column(db.String(3), default="GBP")
+
+    # Single choice field rather than separate booleans -- enabling
+    # both SMS and WhatsApp would double-charge for a redundant
+    # notification about the same event.
+    notification_channel = db.Column(db.String(10), nullable=False, default='none')
  
     # ==============================================================
     roomads = db.relationship('Rooms', backref='user', lazy=True)

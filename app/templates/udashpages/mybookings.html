@@ -1,4 +1,50 @@
-{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+{% extends "userlayout.html" %} {% block head_css %} {{ super() }}
+<style>
+  .notif-channel-banner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    background: #f7f8fa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+  }
+
+  .notif-channel-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .notif-channel-cost {
+    /* Forces its own line even inside the flex row above -- inside a
+       flex container, plain display:block no longer causes a line
+       break on its own the way it does outside one. */
+    flex-basis: 100%;
+    font-size: 0.8rem;
+    color: #888;
+  }
+
+  .notif-channel-banner form {
+    margin: 0;
+  }
+
+  .notif-channel-options {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .notif-channel-options label {
+    font-size: 0.88rem;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+</style>
+{% endblock
 head_css %} {% block content %}
 <!----Breadcrumb------>
 <nav aria-label="breadcrumb">
@@ -26,6 +72,46 @@ head_css %} {% block content %}
                 <h5 class="about mb-0">{{ _('Bookings as host') }} 👑</h5>
               </div>
               <div class="card-body">
+
+                <!-- Booking notification channel -->
+                <div class="notif-channel-banner">
+                  {% if current_user.phone == 'Change me' %}
+                  <span class="notif-channel-title">
+                    📱 {{ _('Add a phone number to your profile to enable booking notifications.') }}
+                  </span>
+                  <a href="{{ url_for('udash.profile') }}" class="btn btn-sm btn-outline-secondary">
+                    {{ _('Add Phone Number') }}
+                  </a>
+                  {% else %}
+                  <span class="notif-channel-title">{{ _('Booking Notifications') }}</span>
+                  <form method="POST" action="{{ url_for('udash.set_notification_channel') }}">
+                    <div class="notif-channel-options">
+                      <span>
+                        <input type="radio" id="notif-none" name="notification_channel" value="none" {% if
+                          current_user.notification_channel=='none' or not current_user.notification_channel %}checked{%
+                          endif %} onchange="this.form.submit()">
+                        <label for="notif-none">{{ _('Off') }}</label>
+                      </span>
+                      <span>
+                        <input type="radio" id="notif-sms" name="notification_channel" value="sms" {% if
+                          current_user.notification_channel=='sms' %}checked{% endif %} onchange="this.form.submit()">
+                        <label for="notif-sms">{{ _('SMS') }}</label>
+                      </span>
+                      <span>
+                        <input type="radio" id="notif-whatsapp" name="notification_channel" value="whatsapp" {% if
+                          current_user.notification_channel=='whatsapp' %}checked{% endif %}
+                          onchange="this.form.submit()">
+                        <label for="notif-whatsapp">{{ _('WhatsApp') }}</label>
+                      </span>
+                    </div>
+                  </form>
+                  <span class="notif-channel-cost">
+                    {{ _('SMS: £0.05 per message') }} &middot; {{ _('WhatsApp: £0.02 per message') }} &middot;
+                    {{ _('deducted automatically from your earnings when sent.') }}
+                  </span>
+                  {% endif %}
+                </div>
+
                 <div class="table-responsive">
                   <h6 style="text-transform: capitalize; color: navy">
                     {{ _('Total Host bookings') }}: {{ bookhost.total }}

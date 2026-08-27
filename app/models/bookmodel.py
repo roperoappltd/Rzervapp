@@ -190,6 +190,17 @@ class HostEarning(db.Model):
     platform_fee_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
     platform_fee_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=False)
 
+    # NEW: per-notification charge for hosts who've opted into paid
+    # booking notifications (SMS or WhatsApp). Populated only when a
+    # notification was actually sent for this specific booking --
+    # nullable, since most bookings won't have one (host not opted in,
+    # send failed, or no valid phone number). notification_channel_used
+    # records which channel this particular booking actually used, in
+    # case the host's own preference changes between bookings.
+    notification_fee_host = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00)
+    notification_fee_gbp = db.Column(db.Numeric(10, 2, asdecimal=True), nullable=True, default=0.00)
+    notification_channel_used = db.Column(db.String(10), nullable=True)
+
     exchange_rate = db.Column(db.Numeric(18, 8))  # host_currency -> GBP; correct as a single field,
                                                   # this table never involves a third payment currency
     status = db.Column(db.String(20), default='Pending')  # Paid - Pending - Refunded

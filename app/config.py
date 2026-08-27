@@ -1,4 +1,5 @@
 import os
+from decimal import Decimal
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -89,6 +90,35 @@ class Config :
     # glance confirms which environment is actually configured.
     PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
     PAYSTACK_PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY")
+
+    #-------------------------------------------
+    # SMS -- provider not yet finalized (candidates: Africa's Talking,
+    # Twilio). Left generic on purpose so sms_service.py's actual API
+    # call can be filled in once a provider is chosen.
+    SMS_API_KEY = os.getenv("SMS_API_KEY")
+    SMS_API_URL = os.getenv("SMS_API_URL")
+    SMS_SENDER_ID = os.getenv("SMS_SENDER_ID", "Jambo")
+
+    # Placeholder rate -- Africa's Talking's actual cost is roughly
+    # $0.025-0.03/SMS to Cote d'Ivoire; needs to comfortably clear that
+    # plus real margin once set for real.
+    SMS_FEE_GBP = Decimal(os.getenv("SMS_FEE_GBP", "0.05"))
+
+    #-------------------------------------------
+    # WhatsApp -- also provider-agnostic. Unlike SMS, requires a
+    # Meta-approved message template for any business-initiated
+    # conversation -- free-text isn't an option here, so
+    # WHATSAPP_TEMPLATE_NAME is the name of that pre-approved template,
+    # not the message text itself.
+    WHATSAPP_API_KEY = os.getenv("WHATSAPP_API_KEY")
+    WHATSAPP_API_URL = os.getenv("WHATSAPP_API_URL")
+    WHATSAPP_TEMPLATE_NAME = os.getenv("WHATSAPP_TEMPLATE_NAME", "booking_notification")
+
+    # Placeholder rate -- WhatsApp's "utility" category is typically
+    # well under $0.01, genuinely cheaper than SMS in most markets --
+    # still needs a real, confirmed figure before this stops being a
+    # placeholder.
+    WHATSAPP_FEE_GBP = Decimal(os.getenv("WHATSAPP_FEE_GBP", "0.02"))
 
     #-------------------------------------------
     # Image storage backend: 'local' (default, no setup needed for dev)
