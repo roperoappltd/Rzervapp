@@ -1,4 +1,5 @@
-{% extends "userlayout.html" %} {% block head_css %} {{ super() }}
+{% extends "userlayout.html" %} {% block flash_messages %}{% endblock flash_messages %} {% block head_css %} {{ super()
+}}
 <style>
   .notif-channel-banner {
     display: flex;
@@ -70,6 +71,13 @@ head_css %} {% block content %}
             <div class="card">
               <div class="card-header">
                 <h5 class="about mb-0">{{ _('Bookings as host') }} 👑</h5>
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show text-center fw-bold mt-2 mb-0">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %} {% endif %} {% endwith %}
               </div>
               <div class="card-body">
 

@@ -309,7 +309,25 @@
           box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
         }
       </style>
-      {% endif %} {% block content %} {% endblock content %}
+      {% endif %}
+
+      <!-- FIXED: this was missing entirely from this layout -- every
+           dashboard page extending userlayout.html was never able to
+           display flash messages at all. Wrapped in a named block so
+           a specific page that builds its own flash display can
+           override this with nothing, rather than every page losing
+           flash display entirely to avoid one page showing it twice. -->
+      {% block flash_messages %}
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show text-center fw-bold mt-3 mb-0">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+      {% endblock flash_messages %}
+
+      {% block content %} {% endblock content %}
 
       <!-------Chat Modal------>
       <div id="chatModal" class="chat-modal">
