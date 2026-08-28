@@ -1,0 +1,157 @@
+{% extends "base.html" %} {% block head_css %} {{ super() }}
+<style>
+  .policy-logo-wrap {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .policy-logo-wrap img {
+    max-width: 160px;
+    height: auto;
+  }
+
+  .policy-content {
+    max-width: 820px;
+    margin: 0 auto;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  .policy-content h2 {
+    font-size: 1.35rem;
+    color: #003366;
+    margin-top: 34px;
+    margin-bottom: 12px;
+  }
+
+  .policy-content h3 {
+    font-size: 1.1rem;
+    color: #003366;
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+
+  .policy-content p {
+    margin-bottom: 14px;
+  }
+
+  .policy-content ol,
+  .policy-content ul {
+    margin-bottom: 14px;
+    padding-left: 22px;
+  }
+
+  .policy-effective-date {
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+  }
+</style>
+{% endblock
+head_css %} {% block content %}
+
+<!-- Page Title -->
+<div class="page-title light-background">
+  <div class="container d-lg-flex justify-content-between align-items-center">
+    <h1 class="mb-2 mb-lg-0">{{ _('Payment Policy') }}</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Payment Policy') }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- End Page Title -->
+
+<section id="payment-policy" class="section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="policy-logo-wrap">
+      <img src="{{ url_for('static', filename='userpics/pics/logojam.png') }}" alt="Jambo" />
+    </div>
+
+    <p class="policy-effective-date">
+      SERVCI Sas — {{ _('operating the Jambo platform') }}<br />
+      {{ _('Effective date') }}: 28 {{ _('August') }} 2026
+    </p>
+
+    <div class="policy-content">
+
+      <h2>1. {{ _('Scope') }}</h2>
+      <p>
+        {{ _('This policy explains how payments are processed on Jambo, how host payouts work, and the terms under which a guest or host may cancel a confirmed booking. It applies to every booking made through the Jambo platform.') }}
+      </p>
+
+      <h2>2. {{ _('How Payment Works') }}</h2>
+      <p>
+        {{ _('When a guest books a room, payment is collected in full by Jambo through our payment processor, Paystack. Jambo does not directly handle or store card details -- this is managed entirely by Paystack, a licensed payment service provider.') }}
+      </p>
+      <p>
+        {{ _('All bookings are processed and settled in West African CFA Francs (XOF), regardless of the currency a guest may have been viewing prices in while browsing the site.') }}
+      </p>
+
+      <h2>3. {{ _('Platform Commission') }}</h2>
+      <p>
+        {{ _('Jambo retains a 15%% commission on the total booking value. This fee covers platform operation, payment processing, customer support, and the trust and safety measures built into the booking process.') }}
+      </p>
+
+      <h2>4. {{ _('Host Payouts') }}</h2>
+      <p>
+        {{ _("The remaining 85%% of the booking value is transferred to the host's agreed payment method within 5 working days of Jambo receiving the guest's payment.") }}
+      </p>
+      <p>
+        {{ _("Hosts are responsible for providing accurate, up-to-date payout details. Jambo is not responsible for delays caused by incorrect or outdated payment information provided by the host.") }}
+      </p>
+
+      <h2>5. {{ _('Guest Cancellations & Refunds') }}</h2>
+
+      <h3>5.1 {{ _('Free Cancellation Window') }}</h3>
+      <p>
+        {{ _('A guest may cancel a confirmed booking and receive a full refund, free of charge, provided the cancellation is made at least 48 hours before the scheduled arrival date.') }}
+      </p>
+
+      <h3>5.2 {{ _('Cancellations After the Free Window') }}</h3>
+      <p>
+        {{ _('If a guest wishes to cancel less than 48 hours before arrival, the booking is no longer eligible for automatic, free cancellation. To request a refund at this stage, the guest must:') }}
+      </p>
+      <ol>
+        <li>{{ _('Email ropero.app@gmail.com with the booking reference and reason for the request.') }}</li>
+        <li>{{ _('A 20%% service charge will be deducted from the refund amount, to cover processing and administrative costs already incurred.') }}</li>
+        <li>{{ _("The remaining balance will be refunded to the guest's original payment method.") }}</li>
+      </ol>
+
+      <h3>5.3 {{ _('Refund Currency') }}</h3>
+      <p>
+        {{ _("Refunds are issued in the same currency the original payment was processed in (XOF), regardless of the guest's browsing currency preference.") }}
+      </p>
+
+      <h3>5.4 {{ _('Refund Processing Time') }}</h3>
+      <p>
+        {{ _('Approved refunds are processed within 10 working days.') }}
+      </p>
+
+      <h2>6. {{ _('Host Cancellations') }}</h2>
+      <p>
+        {{ _("If a host cancels a confirmed booking before the guest's arrival without reasonable cause, the host will be charged a fee equal to 15%% of the total booking amount, deducted from their earnings.") }}
+      </p>
+      <p>
+        {{ _('The guest will receive a full refund for a booking cancelled by the host under this section.') }}
+      </p>
+
+      <h2>7. {{ _('Disputes') }}</h2>
+      <p>
+        {{ _('Any disputes regarding a charge, refund, or payout should be directed to ropero.app@gmail.com in the first instance.') }}
+      </p>
+
+      <h2>8. {{ _('Changes to This Policy') }}</h2>
+      <p>
+        {{ _('Jambo may update this policy from time to time. Continued use of the platform after changes are published constitutes acceptance of the revised terms.') }}
+      </p>
+
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

@@ -618,7 +618,7 @@ h6 {
 }
 
 .footer .footer-links ul a:hover {
-  color: var(--accent-color);
+  color: #ffc107;
 }
 
 .footer .footer-contact p {

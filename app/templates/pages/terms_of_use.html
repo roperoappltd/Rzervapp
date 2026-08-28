@@ -1,0 +1,199 @@
+{% extends "base.html" %} {% block head_css %} {{ super() }}
+<style>
+  .policy-logo-wrap {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .policy-logo-wrap img {
+    max-width: 160px;
+    height: auto;
+  }
+
+  .policy-content {
+    max-width: 820px;
+    margin: 0 auto;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  .policy-content h2 {
+    font-size: 1.35rem;
+    color: #003366;
+    margin-top: 34px;
+    margin-bottom: 12px;
+  }
+
+  .policy-content h3 {
+    font-size: 1.1rem;
+    color: #003366;
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+
+  .policy-content p {
+    margin-bottom: 14px;
+  }
+
+  .policy-content ol,
+  .policy-content ul {
+    margin-bottom: 14px;
+    padding-left: 22px;
+  }
+
+  .policy-effective-date {
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+  }
+</style>
+{% endblock
+head_css %} {% block content %}
+
+<!-- Page Title -->
+<div class="page-title light-background">
+  <div class="container d-lg-flex justify-content-between align-items-center">
+    <h1 class="mb-2 mb-lg-0">{{ _('Terms of Use') }}</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Terms of Use') }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- End Page Title -->
+
+<section id="terms-of-use" class="section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="policy-logo-wrap">
+      <img src="{{ url_for('static', filename='userpics/pics/jamnew2.png') }}" alt="Jambo" />
+    </div>
+
+    <p class="policy-effective-date">
+      SERVCI Sas — {{ _('operating the Jambo platform') }}<br />
+      {{ _('Effective date') }}: 28 {{ _('August') }} 2026
+    </p>
+
+    <div class="policy-content">
+
+      <h2>1. {{ _('Acceptance of These Terms') }}</h2>
+      <p>
+        {{ _('By creating an account or using the Jambo platform in any way, you agree to be bound by these Terms of
+        Use. If you do not agree, please do not use the platform.') }}
+      </p>
+
+      <h2>2. {{ _('Eligibility') }}</h2>
+      <p>
+        {{ _('You must be at least 18 years old to register for or use a Jambo account. By registering, you confirm that
+        you meet this requirement.') }}
+      </p>
+
+      <h2>3. {{ _('Your Account') }}</h2>
+      <p>
+        {{ _('You are responsible for keeping your account credentials secure and for all activity that occurs under
+        your account. You agree to provide accurate, current information when registering, and to keep it up to date.')
+        }}
+      </p>
+      <p>
+        {{ _('Each person may hold only one Jambo account. Creating multiple accounts to circumvent platform rules,
+        restrictions, or penalties is prohibited.') }}
+      </p>
+
+      <h2>4. {{ _('Host Responsibilities') }}</h2>
+      <p>
+        {{ _('If you list a room on Jambo, you confirm that:') }}
+      </p>
+      <ul>
+        <li>{{ _('You have the legal right to offer the property for short-term rental.') }}</li>
+        <li>{{ _('The listing accurately describes the property, its condition, and its amenities.') }}</li>
+        <li>{{ _('The property is safe, habitable, and complies with any applicable local laws and regulations.') }}
+        </li>
+        <li>{{ _('You will honor confirmed bookings, except as permitted under the Payment Policy.') }}</li>
+      </ul>
+
+      <h2>5. {{ _('Guest Responsibilities') }}</h2>
+      <p>
+        {{ _('If you book a room on Jambo, you agree to:') }}
+      </p>
+      <ul>
+        <li>{{ _('Provide accurate information when making a booking.') }}</li>
+        <li>{{ _("Respect the property and follow the host's reasonable house rules during your stay.") }}</li>
+        <li>{{ _('Pay for your booking in full through the Jambo platform.') }}</li>
+      </ul>
+
+      <h2>6. {{ _('Prohibited Conduct') }}</h2>
+      <p>
+        {{ _('The following are strictly prohibited on Jambo:') }}
+      </p>
+      <ul>
+        <li>{{ _("Listing a property you do not have the legal right to rent out, or that is used for any illegal
+          purpose.") }}</li>
+        <li>{{ _('Discrimination against any user on the basis of race, gender, religion, nationality, disability,
+          sexual orientation, or any other protected characteristic.') }}</li>
+        <li>{{ _('Fraud or misrepresentation, including fake listings, fake reviews, or false information provided to
+          another user or to Jambo.') }}</li>
+        <li>{{ _('Harassment, threats, or abusive behavior directed at any other user, including through Jambo\'s
+          messaging system.') }}</li>
+        <li>{{ _('Attempting to arrange payment outside the Jambo platform for a booking made through Jambo.') }}</li>
+        <li>{{ _('Creating multiple accounts to evade a suspension, restriction, or penalty.') }}</li>
+        <li>{{ _('Uploading content -- photos, descriptions, or messages -- that is illegal, offensive, or infringes on
+          the rights of others.') }}</li>
+      </ul>
+
+      <h2>7. {{ _('Content You Provide') }}</h2>
+      <p>
+        {{ _('When you upload photos, descriptions, or other content to a listing, you grant Jambo a license to display
+        that content on the platform for the purpose of operating the service. You remain responsible for ensuring you
+        have the right to share it.') }}
+      </p>
+
+      <h2>8. {{ _('Reviews') }}</h2>
+      <p>
+        {{ _('Reviews must reflect your genuine experience as a guest or host. Jambo may remove a review that violates
+        this policy or the prohibited conduct rules above.') }}
+      </p>
+
+      <h2>9. {{ _('Suspension and Termination') }}</h2>
+      <p>
+        {{ _('Jambo reserves the right to suspend or terminate an account that violates these Terms of Use, including
+        the prohibited conduct listed in Section 6.') }}
+      </p>
+
+      <h2>10. {{ _('Jambo\'s Role and Limitation of Liability') }}</h2>
+      <p>
+        {{ _('Jambo is a marketplace that connects hosts and guests. Jambo does not own, manage, or inspect the
+        properties listed on the platform, and is not responsible for the actual condition, safety, or legality of a
+        listed property. Jambo\'s role in payment processing is described separately in the Payment Policy.') }}
+      </p>
+
+      <h2>11. {{ _('Payments') }}</h2>
+      <p>
+        {{ _('All payments, host payouts, and cancellation terms are governed by Jambo\'s Payment Policy, available
+        separately on the platform.') }}
+      </p>
+
+      <h2>12. {{ _('Governing Law') }}</h2>
+      <p>
+        {{ _("These Terms of Use are governed by the laws of Côte d'Ivoire. Any dispute arising from your use of Jambo
+        will be subject to the exclusive jurisdiction of the courts of Côte d'Ivoire.") }}
+      </p>
+
+      <h2>13. {{ _('Changes to These Terms') }}</h2>
+      <p>
+        {{ _('Jambo may update these Terms of Use from time to time. Continued use of the platform after changes are
+        published constitutes acceptance of the revised terms.') }}
+      </p>
+
+      <h2>14. {{ _('Contact') }}</h2>
+      <p>
+        {{ _('Questions about these Terms of Use can be directed to ropero.app@gmail.com.') }}
+      </p>
+
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

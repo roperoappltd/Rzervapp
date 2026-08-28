@@ -210,6 +210,18 @@ def about():
     
     return render_template('pages/aboutus.html', title='About us')
 
+@main.route("/terms-of-use")
+def terms_of_use():
+    '''This function create a route to render the terms of use page'''
+
+    return render_template('pages/terms_of_use.html', title='Terms of Use')
+
+@main.route("/payment-policy")
+def payment_policy():
+    '''This function create a route to render the paymenty policy page'''
+
+    return render_template('pages/payment_policy.html', title='Terms of Use')
+
 @main.route("/behost") 
 def behost():
     '''This function create a route to render the Be host page'''
