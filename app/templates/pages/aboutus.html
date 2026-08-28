@@ -21,16 +21,9 @@ head_css %} {% block content %}
     <div class="row align-items-center">
       <div class="col-lg-5">
         <div class="image-stack">
-          <div
-            class="main-image-wrapper"
-            data-aos="fade-right"
-            data-aos-delay="200"
-          >
-            <img
-              src="{{url_for('static', filename='userpics/ads/afconv2.png')}}"
-              alt="{{ _('Hotel Exterior') }}"
-              class="img-fluid main-image"
-            />
+          <div class="main-image-wrapper" data-aos="fade-right" data-aos-delay="200">
+            <img src="{{url_for('static', filename='userpics/ads/afconv2.png')}}" alt="{{ _('Hotel Exterior') }}"
+              class="img-fluid main-image" />
             <div class="floating-card" data-aos="zoom-in" data-aos-delay="400">
               <div class="card-icon">
                 <i class="bi bi-star-fill"></i>
@@ -40,11 +33,8 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="secondary-image" data-aos="fade-up" data-aos-delay="300">
-            <img
-              src="{{url_for('static', filename='userpics/ads/afconv1.avif')}}"
-              alt="{{ _('Luxury Suite') }}"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='userpics/ads/afconv1.avif')}}" alt="{{ _('Luxury Suite') }}"
+              class="img-fluid" />
           </div>
         </div>
       </div>
@@ -52,22 +42,22 @@ head_css %} {% block content %}
       <div class="col-lg-7">
         <div class="content-wrapper" data-aos="fade-left" data-aos-delay="200">
           <div class="badge">
-            <span>Est. 2020</span>
+            <span>Est. 2025</span>
           </div>
 
-          <h4 class="text-justify">
-            {% trans %}Over the years, Jambo has steadily been building a
+          <h4 style="text-align: justify;">
+            {% trans %}Over the past year, Jambo has steadily been building a
             trustworthy and hospitable community step by step.{% endtrans %}
           </h4>
 
-          <p class="lead text-justify">
-            {% trans %}Jambo was founded in 2020 when the concept of regrouping
+          <p style="text-align: justify;">
+            {% trans %}Jambo was founded in 2025 when the concept of regrouping
             individuals with available space and willing to share their homes
-            was introduced. Next, we broadened our services to encompass guest
-            houses and small to medium-sized hotels.{% endtrans %}
+            was introduced. Next, we thought that broadening our services to encompass guest
+            houses and small to medium-sized hotels will be ideal.{% endtrans %}
           </p>
 
-          <p class="text-justify">
+          <p style="text-align: justify;">
             {% trans %}The primary objective was to blend traditional African
             conviviality into guests' experiences, aiming to forge a lasting
             memory. Essentially, the focus was on building a trusted community
@@ -76,39 +66,40 @@ head_css %} {% block content %}
           </p>
 
           <div class="milestone-timeline">
-            <div
-              class="milestone-item"
-              data-aos="slide-up"
-              data-aos-delay="250"
-            >
-              <div class="milestone-year">2020</div>
+            <div class="milestone-item" data-aos="slide-up" data-aos-delay="250">
+              <div class="milestone-year">Jul 2025</div>
               <div class="milestone-content">
-                <h5>{{ _('Community building') }}</h5>
+                <h5>{{ _('The idea was born') }}</h5>
                 <p>
-                  {{ _('Started as a platform where home could generate passive incomes.') }}
+                  {{ _('Started working on the idea.') }}
                 </p>
               </div>
             </div>
-            <div
-              class="milestone-item"
-              data-aos="slide-up"
-              data-aos-delay="300"
-            >
-              <div class="milestone-year">2022</div>
+            <div class="milestone-item" data-aos="slide-up" data-aos-delay="300">
+              <div class="milestone-year">Jan 2026</div>
               <div class="milestone-content">
-                <h5>{{ _('Extended the community') }}</h5>
-                <p>{{ _('Guest houses and hotel join the Jambo family') }}</p>
+                <h5>{{ _('Platform building') }}</h5>
+                <p>
+                  {{ _('We began digitally transforming all our ideas into reality.') }}
+                </p>
               </div>
             </div>
-            <div
-              class="milestone-item"
-              data-aos="slide-up"
-              data-aos-delay="350"
-            >
-              <div class="milestone-year">2025</div>
+            <div class="milestone-item" data-aos="slide-up" data-aos-delay="350">
+              <div class="milestone-year">May 2026</div>
               <div class="milestone-content">
-                <h5>{{ _('Big Innovation') }}</h5>
-                <p>{{ _('Local touch for an unique experience') }}</p>
+                <h5>{{ _('Platform milestone') }}</h5>
+                <p>
+                  {{ _('The digital platform is 95 percent completed.') }}
+                </p>
+              </div>
+            </div>
+            <div class="milestone-item" data-aos="slide-up" data-aos-delay="400">
+              <div class="milestone-year">Jun 2026</div>
+              <div class="milestone-content">
+                <h5>{{ _('Community Building') }}</h5>
+                <p>
+                  {{ _('We began diligently building a trustworthy community.') }}
+                </p>
               </div>
             </div>
           </div>
@@ -132,15 +123,11 @@ head_css %} {% block content %}
 
     <div class="row features-showcase mt-0">
       <div class="col-12">
-        <div
-          class="features-header text-center"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
+        <div class="features-header text-center" data-aos="fade-up" data-aos-delay="100">
           <h3>{{ _('Memorable moments') }}</h3>
           <p>
             {% trans %}Here we share some of the Jambo family memorable &
-            fantastic moments. Happiness never far with Jambo!{% endtrans %}
+            fantastic moments during the community building phase.!{% endtrans %}
           </p>
         </div>
       </div>
@@ -150,11 +137,8 @@ head_css %} {% block content %}
       <div class="col-lg-4 col-md-6">
         <div class="feature-card" data-aos="flip-up" data-aos-delay="200">
           <div class="feature-visual">
-            <img
-              src="{{url_for('static', filename='userpics/ads/diabfam.png')}}"
-              alt="Spa Services"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='userpics/ads/diabfam.png')}}" alt="Spa Services"
+              class="img-fluid" />
             <div class="feature-overlay">
               <div class="feature-icon">
                 <i class="bi bi-flower1"></i>
@@ -163,21 +147,16 @@ head_css %} {% block content %}
           </div>
           <div class="feature-details">
             <h4>{{ _('Maisonette at Abidjan') }}</h4>
-            <p>
-              {{ _("The Diaby's familly occupying their Jambo booked property
-              for 2 weeks.") }}
-            </p>
+            <!-- <p>
+              {{ _("We visited the Diaby's family for for a vetting mission.") }}
+            </p> -->
           </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="feature-card" data-aos="flip-up" data-aos-delay="250">
           <div class="feature-visual">
-            <img
-              src="{{url_for('static', filename='userpics/ads/dasilva.png')}}"
-              alt="Fine Dining"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='userpics/ads/dasilva.png')}}" alt="Fine Dining" class="img-fluid" />
             <div class="feature-overlay">
               <div class="feature-icon">
                 <i class="bi bi-cup-hot"></i>
@@ -185,21 +164,18 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="feature-details">
-            <h4>{{ _('Flat at Pretoria') }}</h4>
-            <p>
+            <h4>{{ _('Flat at Accra') }}</h4>
+            <!-- <p>
               {{ _('A host in South Africa welcoming his Guests for 4 days stay.') }}
-            </p>
+            </p> -->
           </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="feature-card" data-aos="flip-up" data-aos-delay="300">
           <div class="feature-visual">
-            <img
-              src="{{url_for('static', filename='userpics/ads/safari.png')}}"
-              alt="Prime Location"
-              class="img-fluid"
-            />
+            <img src="{{url_for('static', filename='userpics/ads/safari.png')}}" alt="Prime Location"
+              class="img-fluid" />
             <div class="feature-overlay">
               <div class="feature-icon">
                 <i class="bi bi-geo-alt"></i>
@@ -207,66 +183,49 @@ head_css %} {% block content %}
             </div>
           </div>
           <div class="feature-details">
-            <h4>{{ _('Bungalow in Cotonou') }}</h4>
-            <p>
+            <h4>{{ _('Bungalow in Assinie') }}</h4>
+            <!-- <p>
               {{ _('Couple enjoying sunrise in their Jambo booked bungalow in Cotonou') }}.
-            </p>
+            </p> -->
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row achievements-section">
+    <!--COUNTER-->
+    <!-- <div class="row achievements-section">
       <div class="col-lg-8 offset-lg-2">
         <div class="achievements-grid" data-aos="fade-up" data-aos-delay="200">
           <div class="achievement-stat">
             <div class="stat-counter">
-              <span
-                data-purecounter-start="0"
-                data-purecounter-end="100"
-                data-purecounter-duration="2"
-                class="purecounter"
-              ></span>
+              <span data-purecounter-start="0" data-purecounter-end="100" data-purecounter-duration="2"
+                class="purecounter"></span>
             </div>
             <div class="stat-description">{{ _('Number of hosts') }}</div>
           </div>
           <div class="achievement-stat">
             <div class="stat-counter">
-              <span
-                data-purecounter-start="80"
-                data-purecounter-end="98"
-                data-purecounter-duration="2"
-                class="purecounter"
-              ></span
-              >%
+              <span data-purecounter-start="80" data-purecounter-end="98" data-purecounter-duration="2"
+                class="purecounter"></span>%
             </div>
             <div class="stat-description">{{ _('Satisfaction Rate') }}</div>
           </div>
           <div class="achievement-stat">
             <div class="stat-counter">
-              <span
-                data-purecounter-start="0"
-                data-purecounter-end="85000"
-                data-purecounter-duration="1"
-                class="purecounter"
-              ></span>
+              <span data-purecounter-start="0" data-purecounter-end="85000" data-purecounter-duration="1"
+                class="purecounter"></span>
             </div>
             <div class="stat-description">{{ _('Number of Booking') }}</div>
           </div>
           <div class="achievement-stat">
             <div class="stat-counter">
-              <span
-                data-purecounter-start="90"
-                data-purecounter-end="6"
-                data-purecounter-duration="2"
-                class="purecounter"
-              ></span>
+              <span data-purecounter-start="90" data-purecounter-end="6" data-purecounter-duration="2"
+                class="purecounter"></span>
             </div>
             <div class="stat-description">{{ _('Years of Excellence') }}</div>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 <!-- /About Section -->
