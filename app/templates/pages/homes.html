@@ -1,5 +1,29 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }} {% endblock
+{% extends "base.html" %} {% block head_css %} {{ super() }}
+<style>
+  .maintenance-badge {
+    position: fixed;
+    left: 12px;
+    top: 140px;
+    width: auto;
+    max-width: 36px;
+    display: inline-block;
+    writing-mode: vertical-rl;
+    background-color: #ffc107;
+    color: #212529;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 14px 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1030;
+    white-space: nowrap;
+  }
+</style>
+{% endblock
 head_css %} {% block content %}
+<div class="maintenance-badge">{{ _('Under Maintenance') }}</div>
 <section id="hotel-hero" class="hotel-hero section pb-1">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <div class="row gy-4 align-items-center">

@@ -247,9 +247,11 @@ def udashboard():
     
     # host_earning_gbp -- dashboard headline figure, same cross-currency
     # aggregation reasoning as the other two fixes in this file.
+    # FIXED: same issue as get_host_balance() -- 'Approved' is never
+    # actually set anywhere, so this always summed to 0.
     total_earnings = db.session.query(db.func.sum(HostEarning.host_earning_gbp)
                                     ).filter(HostEarning.user_id == current_user.id,
-                                            HostEarning.status == "Approved"
+                                            HostEarning.status != "Refunded"
                                              ).scalar() or 0
     # AMENDED: convert the GBP total into the host's preferred currency.
     # Kept as a plain number (not convert_and_format's formatted string)

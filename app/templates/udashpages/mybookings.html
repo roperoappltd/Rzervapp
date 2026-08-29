@@ -188,6 +188,71 @@ head_css %} {% block content %}
                               {% endif %}
                               {% endif %}
                               <!------------------------------->
+
+                              <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal"
+                                data-bs-target="#hostCancelModal{{ booh.id }}">
+                                <i class="bi bi-x-circle"></i>
+                                {{ _('Cancel Booking') }}
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Host cancellation modal -->
+                          <div class="modal fade" id="hostCancelModal{{ booh.id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <form method="POST"
+                                  action="{{ url_for('bedrooms.host_cancel_booking', booking_id=booh.id) }}">
+                                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">{{ _('Cancel Booking') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p class="text-muted small">
+                                      {{ _('The guest will be refunded in full. Whether a 15%% fee applies depends on
+                                      the reason selected below.') }}
+                                    </p>
+
+                                    <label class="form-label">{{ _('Reason for cancelling') }}</label>
+                                    <select name="reason_code" class="form-select" required
+                                      onchange="document.getElementById('otherDetail{{ booh.id }}').style.display = (this.value === 'other') ? 'block' : 'none';">
+                                      <option value="" disabled selected>{{ _('Select a reason') }}</option>
+                                      <optgroup label="{{ _('No fee -- reasonable cause') }}">
+                                        <option value="property_damage">{{ _('Property damage or safety issue') }}
+                                        </option>
+                                        <option value="natural_disaster">{{ _('Natural disaster / force majeure') }}
+                                        </option>
+                                        <option value="death_illness">{{ _('Death or serious illness (host or immediate
+                                          family)') }}</option>
+                                        <option value="legal_issue">{{ _('Legal issue affecting the property') }}
+                                        </option>
+                                        <option value="guest_violation">{{ _('Guest violated a house rule before
+                                          arrival') }}</option>
+                                      </optgroup>
+                                      <optgroup label="{{ _('15%% fee applies') }}">
+                                        <option value="better_offer">{{ _('Found a better-paying booking') }}</option>
+                                        <option value="changed_mind">{{ _('Changed my mind about hosting') }}</option>
+                                        <option value="double_booking">{{ _('Accidental double-booking / calendar
+                                          error') }}</option>
+                                        <option value="personal_use">{{ _('Want to use the property myself') }}</option>
+                                        <option value="other">{{ _('Other') }}</option>
+                                      </optgroup>
+                                    </select>
+
+                                    <div id="otherDetail{{ booh.id }}" style="display: none;" class="mt-2">
+                                      <label class="form-label">{{ _('Please describe the reason') }}</label>
+                                      <textarea name="reason_detail" class="form-control" rows="2"></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{
+                                      _('Back') }}</button>
+                                    <button type="submit" class="btn btn-danger">{{ _('Confirm Cancellation')
+                                      }}</button>
+                                  </div>
+                                </form>
+                              </div>
                             </div>
                           </div>
                         </td>

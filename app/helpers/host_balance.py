@@ -12,9 +12,16 @@ def get_host_balance(user_id):
     # one currency guaranteed consistent across every HostEarning/
     # Withdrawal row for this user, regardless of which currency each
     # individual room or withdrawal request was actually in.
+    # FIXED: was filtering for status == "Approved", but nothing
+    # anywhere in the codebase ever sets a HostEarning row to that
+    # value -- every row defaults to 'Pending' and stays there, so this
+    # always matched zero rows regardless of real earnings. Excluding
+    # 'Refunded' instead correctly includes all real, current data
+    # while still excluding earnings voided by a refund (e.g. a host
+    # cancellation).
     total_earned = db.session.query(db.func.sum(HostEarning.host_earning_gbp)
                                     ).filter(HostEarning.user_id == user_id,
-                                            HostEarning.status == "Approved"
+                                            HostEarning.status != "Refunded"
                                              ).scalar() or 0
  
     total_withdrawn = db.session.query(db.func.sum(Withdrawal.amount_gbp)
@@ -23,4 +30,3 @@ def get_host_balance(user_id):
                                         ["Pending", "Approved"])).scalar() or 0
  
     return total_earned - total_withdrawn
- 

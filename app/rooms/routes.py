@@ -354,6 +354,102 @@ def cancel_booking(booking_id):
     return redirect(url_for('bedrooms.bookings'))
     
  
+HOST_CANCELLATION_PENALTY_RATE = Decimal('0.15')  # matches the Payment Policy's Section 6 -- keep these in sync if either changes
+
+# Fixed set of specific reasons a host can select, each with a
+# deterministic classification -- not free text requiring subjective
+# review. 'other' deliberately defaults to False (penalty applies):
+# an unclassified reason can't be safely auto-judged, so this stays
+# conservative by default rather than assuming good faith.
+HOST_CANCELLATION_REASONS = {
+    'property_damage': True,
+    'natural_disaster': True,
+    'death_illness': True,
+    'legal_issue': True,
+    'guest_violation': True,
+    'better_offer': False,
+    'changed_mind': False,
+    'double_booking': False,
+    'personal_use': False,
+    'other': False,
+}
+
+@bedrooms.route("/host-cancel-booking/<int:booking_id>", methods=['POST'])
+@login_required
+def host_cancel_booking(booking_id):
+    '''Lets a host cancel a confirmed booking before the guest's
+    arrival. Per the Payment Policy: the guest is refunded in full.
+    Whether the host is charged 15% of the total booking amount is
+    determined automatically from the specific reason selected --
+    see HOST_CANCELLATION_REASONS above for exactly which reasons
+    waive the penalty.'''
+    booking = Bookings.query.get_or_404(booking_id)
+
+    # Security check -- must be the room's owner, not the booking's
+    # own user_id (that's the guest, a completely different check).
+    if booking.rooms.user_id != current_user.id:
+        abort(403)
+
+    if booking.status != "Confirmed":
+        flash(_("Only a confirmed booking can be cancelled this way."), "warning")
+        return redirect(url_for('udash.mybookings'))
+
+    reason_code = request.form.get('reason_code', '')
+    if reason_code not in HOST_CANCELLATION_REASONS:
+        flash(_("Please select a valid reason for cancelling this booking."), "warning")
+        return redirect(url_for('udash.mybookings'))
+
+    reason_detail = request.form.get('reason_detail', '').strip()
+    if reason_code == 'other' and not reason_detail:
+        flash(_("Please describe the reason for cancelling this booking."), "warning")
+        return redirect(url_for('udash.mybookings'))
+
+    is_reasonable_cause = HOST_CANCELLATION_REASONS[reason_code]
+
+    earning = HostEarning.query.filter_by(booking_id=booking.id).first()
+
+    # Same shared helper the guest-cancellation route and
+    # delete_account() both already use -- creates the Refund record,
+    # marks the payment Refundable. Does not commit; this route
+    # controls the transaction so the HostEarning change below lands
+    # in the same commit, not a separate one.
+    cancel_and_refund_if_paid(booking, reason='host_cancelled')
+    reason_label = f"{reason_code}: {reason_detail}" if reason_detail else reason_code
+    booking.status_reason = f"host_cancelled ({'waived' if is_reasonable_cause else 'penalized'}): {reason_label}"
+
+    if earning:
+        # HostEarning.booking_id is unique -- can't add a second row
+        # for a penalty, so this transforms the same row instead of
+        # creating a new one. Either way, the original positive
+        # earning is replaced entirely, since the host never actually
+        # receives it once the booking is refunded.
+        if is_reasonable_cause:
+            # Voided to zero, same as a normal refunded booking --
+            # excluded from get_host_balance() entirely, no penalty.
+            earning.host_earning_gbp = Decimal('0.00')
+            earning.host_earning_host = Decimal('0.00')
+            earning.status = 'Refunded'
+        else:
+            # Transformed into a negative penalty. 'Penalty' status
+            # keeps it clearly distinguishable from a normal earning,
+            # while still counting toward get_host_balance()'s sum
+            # (anything other than 'Refunded' counts), correctly
+            # reducing the host's balance.
+            penalty_gbp = (earning.gross_amount_gbp * HOST_CANCELLATION_PENALTY_RATE).quantize(TWO_DP)
+            penalty_host = (earning.gross_amount_host * HOST_CANCELLATION_PENALTY_RATE).quantize(TWO_DP)
+            earning.host_earning_gbp = -penalty_gbp
+            earning.host_earning_host = -penalty_host
+            earning.status = 'Penalty'
+
+    db.session.commit()
+
+    if is_reasonable_cause:
+        flash(_("Booking cancelled. The guest has been notified and will be refunded. No penalty applied."), "info")
+    else:
+        flash(_("Booking cancelled. The guest has been notified and will be refunded. A 15%% fee has been deducted from your earnings."), "info")
+    return redirect(url_for('udash.mybookings'))
+
+
 TWO_DP = Decimal('0.01')
  
 
