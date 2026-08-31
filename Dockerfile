@@ -27,7 +27,12 @@ COPY . .
 EXPOSE 8000
 
 # Runs the app via Gunicorn, never Flask's own dev server (`flask run`
-# is explicitly not meant for production use). --workers scales with
+# is explicitly not meant for production use). -k eventlet is required
+# here, not optional -- Gunicorn's default sync workers cannot hold a
+# WebSocket connection open at all, which silently broke the real-time
+# chat feature (Flask-SocketIO) entirely. --workers scales with
 # available CPU; 3 is a reasonable starting point for a small VPS,
-# adjust once you know the real load.
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "run:app"]
+# adjust once you know the real load -- though eventlet workers handle
+# many concurrent connections each via green threads, so fewer workers
+# are typically needed than with sync workers.
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-k", "eventlet", "--workers", "3", "run:app"]
