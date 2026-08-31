@@ -23,7 +23,7 @@ def karibu_contact(form):
     # message
     msg = Message(f"Contact Form: { form.subject.data } ", 
                   sender= ('Jambo Booking', 'ropero.app@gmail.com'), 
-                  recipients=['dmc.partners1@gmail.com'],
+                  recipients=['jambo@tbossci.com'],
                   reply_to=form.email.data)
     
     msg.html = f'''\

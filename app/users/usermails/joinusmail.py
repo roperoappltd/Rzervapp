@@ -25,8 +25,8 @@ def member_regismail(user):
         greeting = _('Hello %(name)s,', name=user.first_name)
 
         intro = _(
-            'We would like to thank you for your registration received today '
-            '%(date)s. We wish you a warm welcome to the "Jambo community" '
+            'We would like to thank you for your registration received today. ' #%(date)s
+            'We wish you a warm welcome to the "Jambo community", '
             'where you can reserve short stays safer, happier and cheaper. '
             'Also, you can confidently add a room to start generating passive '
             'income.',
