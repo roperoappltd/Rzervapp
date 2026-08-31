@@ -195,7 +195,11 @@ def booknow(room_id):
     # mylistings() already uses before letting a host list a room.
     # Framed positively: this is the moment to actually capture a
     # guest's real address/phone, not just a validation gate.
-    if not (current_user.address and current_user.phone and current_user.zip_code != 'Change me'):
+    # FIXED: phone was only checked for truthiness, but its default
+    # value is the literal string 'Change me' -- a truthy string that
+    # satisfied this check even when the guest never actually entered
+    # a real number. Same fix already applied to mylistings().
+    if not (current_user.address and current_user.phone != 'Change me' and current_user.zip_code != 'Change me'):
         flash(_('Please complete your profile (address and phone) before booking.'), 'warning')
         return redirect(url_for('udash.profile'))
 

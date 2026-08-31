@@ -1,14 +1,12 @@
-{% extends "userlayout.html" %} {% block head_css %} {{ super() }} {% endblock
+{% extends "userlayout.html" %} {% block flash_messages %}{% endblock flash_messages %} {% block head_css %} {{ super()
+}} {% endblock
 head_css %} {% block content %}
 <!----Breadcrumb------>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item pl-3">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('udash.udashboard')}}"
-        >{{ _('Dashboard') }}</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('udash.udashboard')}}">{{ _('Dashboard')
+        }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">{{ _('User Profile') }}</li>
   </ol>
@@ -23,10 +21,7 @@ head_css %} {% block content %}
             <div class="account-settings">
               <div class="user-profile">
                 <div class="user-avatar">
-                  <img
-                    src="{{ image_file }}"
-                    alt="user"
-                  />
+                  <img src="{{ image_file }}" alt="user" />
                 </div>
                 <h5 class="user-name">
                   {{ current_user.first_name }} {{ current_user.last_name }}
@@ -110,7 +105,7 @@ head_css %} {% block content %}
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="row pb-3">
                   <div class="col-md-6 pr-1">
                     <div class="form-group">
@@ -223,15 +218,15 @@ head_css %} {% block content %}
                       {% endif %}
                     </div>
                   </div>
-                </div>  
+                </div>
                 <div class="mb-3 pb-4">
                   <!-- <label>Upload picture</label> -->
                   {{ form.picture.label(for="formFileSm", class="pb-2") }}</br>
                   {{ form.picture(class="form-control form-control-sm", type="file") }}
                   {% if form.picture.errors %}
-                      {% for error in form.picture.errors %}
-                        <span class="text-danger">{{ error }}</span></br>
-                      {% endfor %}
+                  {% for error in form.picture.errors %}
+                  <span class="text-danger">{{ error }}</span></br>
+                  {% endfor %}
                   {% endif %}
                 </div>
                 <div class="form-group text-end pr-2">
@@ -247,15 +242,8 @@ head_css %} {% block content %}
   </div>
   <!-- Loyalty Points Counter ---------------------->
   <div class="points-badge">
-    <i
-      class="align-middle" data-feather="award"
-      style="font-size: 40px; color: rgb(7, 111, 7)"
-    ></i>
-    <div
-      id="points-counter"
-      class="points-value"
-      data-target="{{ current_user.rzerv_points }}"
-    >
+    <i class="align-middle" data-feather="award" style="font-size: 40px; color: rgb(7, 111, 7)"></i>
+    <div id="points-counter" class="points-value" data-target="{{ current_user.rzerv_points }}">
       0
     </div>
     <div class="points-text">{{ _('Points') }}</div>
