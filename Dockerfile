@@ -27,12 +27,18 @@ COPY . .
 EXPOSE 8000
 
 # Runs the app via Gunicorn, never Flask's own dev server (`flask run`
-# is explicitly not meant for production use). -k eventlet is required
+# is explicitly not meant for production use). -k gevent is required
 # here, not optional -- Gunicorn's default sync workers cannot hold a
 # WebSocket connection open at all, which silently broke the real-time
-# chat feature (Flask-SocketIO) entirely. --workers scales with
-# available CPU; 3 is a reasonable starting point for a small VPS,
-# adjust once you know the real load -- though eventlet workers handle
-# many concurrent connections each via green threads, so fewer workers
-# are typically needed than with sync workers.
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-k", "eventlet", "--workers", "3", "run:app"]
+# chat feature (Flask-SocketIO) entirely.
+#
+# FIXED: originally used -k eventlet, but Gunicorn 26.0.0 (the version
+# this app pins) removed the eventlet worker class entirely -- see
+# https://gunicorn.org/news/. gevent is Gunicorn's own recommended
+# replacement, and Flask-SocketIO officially supports it the same way.
+#
+# --workers scales with available CPU; 3 is a reasonable starting
+# point for a small VPS, adjust once you know the real load -- though
+# gevent workers handle many concurrent connections each via green
+# threads, so fewer workers are typically needed than with sync workers.
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-k", "gevent", "--workers", "3", "run:app"]
