@@ -169,21 +169,18 @@ head_css %} {% block content %}
                             </button>
                             <div class="dropdown-menu">
 
-                              href="{{ url_for('main.contact') }}"
-                              class="dropdown-item pt-0 mt-0"
-                              >{{ _('Need help') }}</a>
+                              <a href="{{ url_for('main.contact') }}" class="dropdown-item pt-0 mt-0">{{ _('Need help')
+                                }}</a>
 
                               <!------------Chat button -- available throughout the booking period-------------------->
                               {% if booh.conversation %}
                               {% set other = booh.conversation.other_user %}
                               {% if other %}
 
-                              class="chat-launch-btn dropdown-item"
-                              data-conversation="{{ booh.conversation.id }}"
-                              data-user="{{ other.username }}"
-                              >
-                              <i class="bi bi-chat-dots"></i>
-                              {{ _('Message') }} {{ other.username }}
+                              <a class="chat-launch-btn dropdown-item" data-conversation="{{ booh.conversation.id }}"
+                                data-user="{{ other.username }}">
+                                <i class="bi bi-chat-dots"></i>
+                                {{ _('Message') }} {{ other.username }}
                               </a>
                               {% endif %}
                               {% endif %}
