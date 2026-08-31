@@ -175,7 +175,7 @@ head_css %} {% block content %}
 
                               <!------------Chat button -- available throughout the booking period-------------------->
                               {% if booh.conversation %}
-                              {% set other = booh.conversation.other_user_for(current_user.id) %}
+                              {% set other = booh.conversation.other_user %}
                               {% if other %}
 
                               class="chat-launch-btn dropdown-item"
@@ -384,7 +384,7 @@ head_css %} {% block content %}
 
                               <!---------Message link -- available the whole way up to departure--------------->
                               {% if boo.conversation %} {% set other =
-                              boo.conversation.other_user_for(current_user.id)
+                              boo.conversation.other_user
                               %} {% if other %}
                               <a class="chat-launch-btn dropdown-item" data-conversation="{{ boo.conversation.id }}"
                                 data-user="{{ other.username }}">
