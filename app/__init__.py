@@ -2,6 +2,7 @@
 # Standard library
 # ============================================================
 import mimetypes
+import click
 from datetime import timedelta
 
 # ============================================================
@@ -194,6 +195,24 @@ def create_app(config_name='default'):
         from app.services.exchange_updater import update_exchange_rates
         
         success, message = update_exchange_rates()
+        print(message)
+
+    @app.cli.command("delete-test-booking")
+    @click.argument("booking_id", type=int)
+    def delete_test_booking_command(booking_id):
+        '''Deletes one test booking and everything that depends on it --
+        HostEarning, Refund, Payments, Conversation/Message if any --
+        reversing loyalty points precisely rather than zeroing them.
+        Requires typed confirmation before anything is deleted.
+
+        Deliberately single-booking only, by design -- the system can't
+        reliably tell a test booking from a real one on its own, so
+        that judgment stays explicitly with whoever runs this.
+
+        Test locally with: flask delete-test-booking <booking_id>'''
+        from app.services.test_data_cleanup import delete_test_booking
+
+        success, message = delete_test_booking(booking_id, confirm_fn=click.confirm)
         print(message)
 
     @app.cli.command("run-booking-maintenance")
