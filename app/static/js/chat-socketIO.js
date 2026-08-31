@@ -66,7 +66,11 @@ socket.on('chat_user', function (data) {
   }
 
   if (image) {
-    image.src = '/static/userpics/' + data.image;
+    // FIXED: was missing the /profile/ subdirectory -- user images
+    // live at static/userpics/profile/<file>, not static/userpics/
+    // directly (confirmed against how usprofile.html itself builds
+    // this same path server-side).
+    image.src = '/static/userpics/profile/' + data.image;
   }
 });
 
