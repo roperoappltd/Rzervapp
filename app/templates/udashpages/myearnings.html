@@ -156,8 +156,8 @@ head_css %} {% block content %}
     <div class="wallet-content">
       <small> {{ _('Approved Balance') }} </small>
       <strong>
-        <span id="hostBalance">
-          {{ available_balance_display }}
+        {{ available_balance_symbol }}<span id="hostBalance">
+          {{ available_balance_number }}
         </span>
       </strong>
     </div>
@@ -180,7 +180,7 @@ head_css %} {% block content %}
             <h5>{{ _('Funds Available') }}</h5>
 
             <h2 class="fw-bold text-success">
-              {{ available_balance_display }}
+              {{ available_balance_symbol }}{{ available_balance_number }}
             </h2>
           </div>
 
