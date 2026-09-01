@@ -29,7 +29,7 @@ from app.helpers.host_balance import get_host_balance
 from app.helpers.format_datime import format_message_time
 from app.helpers.email_verify import email_verified_required
 from app.helpers.room_stats import get_daily_view_counts
-from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates, format_room_price
+from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates, format_room_price, format_money
 from flask_babel import _
 
 udash = Blueprint('udash', __name__)
@@ -376,6 +376,14 @@ def earnings():
     # pattern as udashboard()'s total_earnings -- kept as a plain number
     # so the template's existing formatting/comparisons keep working.
     available_balance = convert_currency(float(available_balance), "GBP", current_user.preferred_currency)
+
+    # NEW: available_balance above stays a raw number for any existing
+    # numeric use in the template. This is the correctly-formatted
+    # display string instead -- uses the host's actual currency symbol
+    # (not a hardcoded £) and correct decimal handling (XOF/XAF/etc.
+    # show no decimals, matching format_money()'s own, already-
+    # established rule elsewhere in the app).
+    available_balance_display = format_money(available_balance, current_user.preferred_currency)
  
     withdrawal = db.session.query(Withdrawal).filter(
                         Withdrawal.user_id==current_user.id
@@ -383,16 +391,52 @@ def earnings():
                                    ).paginate(page=withd_page, 
                                               per_page=3, 
                                               error_out=False)
+
+    # FIXED: same bug as the earnings table above -- the template
+    # referenced Withdrawal.amount directly, which doesn't exist (real
+    # fields are amount_host/amount_gbp).
+    formatted_withdrawals = [
+        {
+            'requested_at': w.requested_at,
+            'amount': format_money(convert_currency(float(w.amount_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'status': w.status,
+            'processed_at': w.processed_at,
+        }
+        for w in withdrawal.items
+    ]
  
     host_earning = HostEarning.query.filter_by(
                                             user_id=current_user.id
                                             ).order_by(HostEarning.created_at.desc()
                                             ).paginate(page=earn_page, 
                                               per_page=4, error_out=False)
+
+    # FIXED: the template was referencing gross_amount, voucher_amount,
+    # platform_fee, and net_earning directly on each HostEarning row --
+    # none of those fields exist. Every real field needs a _host or
+    # _gbp suffix, and net_earning's actual equivalent is a completely
+    # different name (host_earning_gbp/host_earning_host). Jinja
+    # silently renders an undefined attribute as blank rather than
+    # erroring, so the table showed only the hardcoded £ with nothing
+    # after it. Pre-formatting here too, same currency-conversion
+    # approach as available_balance_display above, so the whole page
+    # is consistent.
+    formatted_earnings = [
+        {
+            'created_at': pay.created_at,
+            'gross_amount': format_money(convert_currency(float(pay.gross_amount_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'discount': format_money(convert_currency(float(pay.discount_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'fees': format_money(convert_currency(float(pay.platform_fee_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'net_earn': format_money(convert_currency(float(pay.host_earning_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'status': pay.status,
+        }
+        for pay in host_earning.items
+    ]
     
     return render_template('udashpages/myearnings.html',  title='My Earnings', 
                           host_earning=host_earning, form=form, withdrawal=withdrawal,
-                          available_balance=available_balance)
+                          formatted_earnings=formatted_earnings, formatted_withdrawals=formatted_withdrawals,
+                          available_balance=available_balance, available_balance_display=available_balance_display)
 
 @udash.route("/refunds") 
 @login_required
