@@ -4,11 +4,8 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item pl-3">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('udash.udashboard')}}"
-        >{{ _('Dashboard') }}</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('udash.udashboard')}}">{{ _('Dashboard')
+        }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ _('Earnings') }}
@@ -44,14 +41,14 @@ head_css %} {% block content %}
                       <th class="text-center">{{ _('Net Earn') }}</th>
                       <th class="text-center">{{ _('Status') }}</th>
                     </thead>
-                    {% for pay in host_earning.items %}
+                    {% for pay in formatted_earnings %}
                     <tbody>
                       <tr>
                         <td>{{ pay.created_at.strftime('%d %B %Y')}}</td>
-                        <td class="text-center">£{{ pay.gross_amount }}</td>
-                        <td class="text-center">£{{ pay.voucher_amount }}</td>
-                        <td class="text-center">£{{ pay.platform_fee }}</td>
-                        <td class="text-center">£{{ pay.net_earning }}</td>
+                        <td class="text-center">{{ pay.gross_amount }}</td>
+                        <td class="text-center">{{ pay.discount }}</td>
+                        <td class="text-center">{{ pay.fees }}</td>
+                        <td class="text-center">{{ pay.net_earn }}</td>
                         <td class="text-center">{{ pay.status }}</td>
                       </tr>
                     </tbody>
@@ -61,10 +58,8 @@ head_css %} {% block content %}
                   <div class="pagination">
                     {% if host_earning.has_prev %}
                     <a
-                      href="{{ url_for('udash.earnings', earn_page=host_earning.prev_num, withd_page=withdrawal.page) }}"
-                    >
-                      {{ _('Previous') }} <i class="bi bi-arrow-left-short"></i
-                    ></a>
+                      href="{{ url_for('udash.earnings', earn_page=host_earning.prev_num, withd_page=withdrawal.page) }}">
+                      {{ _('Previous') }} <i class="bi bi-arrow-left-short"></i></a>
                     {% endif %}
                     <span class="mx-2">
                       {{ _('Page') }} {{ host_earning.page }} of {{
@@ -72,8 +67,7 @@ head_css %} {% block content %}
                     </span>
                     {% if host_earning.has_next %}
                     <a
-                      href="{{ url_for('udash.earnings', earn_page=host_earning.next_num, withd_page=withdrawal.page) }}"
-                    >
+                      href="{{ url_for('udash.earnings', earn_page=host_earning.next_num, withd_page=withdrawal.page) }}">
                       {{ _('Next') }} <i class="bi bi-arrow-right-short"></i>
                     </a>
                     {% endif %}
@@ -92,10 +86,8 @@ head_css %} {% block content %}
             <div class="card">
               <div class="card-header">
                 <h5 class="about mb-0">{{ _('Withdrawal transaction') }} 🏧</h5>
-                <small
-                  >{{ _('Click the floating button to request a withdrawal')
-                  }}.</small
-                >
+                <small>{{ _('Click the floating button to request a withdrawal')
+                  }}.</small>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -109,13 +101,13 @@ head_css %} {% block content %}
                       <th class="">{{ _('Status') }}</th>
                       <th class="">{{ _('Processed Date') }}</th>
                     </thead>
-                    {% for with in withdrawal %}
+                    {% for with in formatted_withdrawals %}
                     <tbody>
                       <tr>
                         <td>
                           {{ with.requested_at.strftime('%d %b %Y, %H:%M') }}
                         </td>
-                        <td class="text-end">£{{ with.amount }}</td>
+                        <td class="text-end">{{ with.amount }}</td>
                         <td class="">{{ with.status }}</td>
                         <td class="">{{ with.processed_at }}</td>
                       </tr>
@@ -126,11 +118,9 @@ head_css %} {% block content %}
                   <div class="pagination">
                     {% if withdrawal.has_prev %}
                     <a
-                      href="{{ url_for('udash.earnings', earn_page=host_earning.page, withd_page=withdrawal.prev_num) }}"
-                    >
+                      href="{{ url_for('udash.earnings', earn_page=host_earning.page, withd_page=withdrawal.prev_num) }}">
                       {{ _('Previous') }}
-                      <i class="now-ui-icons arrows-1_minimal-left"></i
-                    ></a>
+                      <i class="now-ui-icons arrows-1_minimal-left"></i></a>
                     {% endif %}
                     <span class="mx-2">
                       {{ _('Page') }} {{ withdrawal.page }} of {{
@@ -138,8 +128,7 @@ head_css %} {% block content %}
                     </span>
                     {% if withdrawal.has_next %}
                     <a
-                      href="{{ url_for('udash.earnings', earn_page=host_earning.page, withd_page=withdrawal.next_num) }}"
-                    >
+                      href="{{ url_for('udash.earnings', earn_page=host_earning.page, withd_page=withdrawal.next_num) }}">
                       {{ _('Next') }}
                       <i class="now-ui-icons arrows-1_minimal-right"></i>
                     </a>
@@ -158,11 +147,7 @@ head_css %} {% block content %}
 
 <!-- Floating Host Balance Button -->
 <div class="host-wallet-floating">
-  <button
-    class="wallet-btn shadow-lg"
-    data-bs-toggle="modal"
-    data-bs-target="#withdrawModal"
-  >
+  <button class="wallet-btn shadow-lg" data-bs-toggle="modal" data-bs-target="#withdrawModal">
     <div class="wallet-icon">
       <h3>💶</h3>
       <!-- <i data-feather="credit-card"></i> -->
@@ -171,8 +156,8 @@ head_css %} {% block content %}
     <div class="wallet-content">
       <small> {{ _('Approved Balance') }} </small>
       <strong>
-        £<span id="hostBalance">
-          {{ "{:,.2f}".format(available_balance) }}
+        <span id="hostBalance">
+          {{ available_balance_display }}
         </span>
       </strong>
     </div>
@@ -195,7 +180,7 @@ head_css %} {% block content %}
             <h5>{{ _('Funds Available') }}</h5>
 
             <h2 class="fw-bold text-success">
-              £{{ "{:,.2f}".format(available_balance) }}
+              {{ available_balance_display }}
             </h2>
           </div>
 
@@ -214,11 +199,7 @@ head_css %} {% block content %}
         </div>
 
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             {{ _('Cancel') }}
           </button>
           <div>
