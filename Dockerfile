@@ -37,8 +37,14 @@ EXPOSE 8000
 # https://gunicorn.org/news/. gevent is Gunicorn's own recommended
 # replacement, and Flask-SocketIO officially supports it the same way.
 #
-# --workers scales with available CPU; 3 is a reasonable starting
-# point for a small VPS, adjust once you know the real load -- though
-# gevent workers handle many concurrent connections each via green
-# threads, so fewer workers are typically needed than with sync workers.
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-k", "gevent", "--workers", "3", "run:app"]
+# FIXED: --workers was 3. Flask-SocketIO's own deployment docs warn
+# that Gunicorn's load balancer doesn't support sticky sessions across
+# multiple workers -- without a shared message queue (Redis), a
+# client's session can land on a different worker than the one that
+# created it, which doesn't recognize the session at all ("Invalid
+# session" errors). Set to 1 for now: at this app's current traffic
+# level a single worker is genuinely sufficient, and this avoids
+# standing up Redis before it's actually needed. Revisit -- add Redis
+# as SocketIO's message_queue and raise this back up -- once real
+# concurrent load justifies it.
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "-k", "gevent", "--workers", "1", "run:app"]
