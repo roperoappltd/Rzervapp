@@ -29,7 +29,7 @@ from app.helpers.host_balance import get_host_balance
 from app.helpers.format_datime import format_message_time
 from app.helpers.email_verify import email_verified_required
 from app.helpers.room_stats import get_daily_view_counts
-from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates, format_room_price, format_money
+from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates, format_room_price, format_money, get_symbol, ZERO_DECIMAL_CURRENCIES
 from flask_babel import _
 
 udash = Blueprint('udash', __name__)
@@ -377,13 +377,23 @@ def earnings():
     # so the template's existing formatting/comparisons keep working.
     available_balance = convert_currency(float(available_balance), "GBP", current_user.preferred_currency)
 
-    # NEW: available_balance above stays a raw number for any existing
-    # numeric use in the template. This is the correctly-formatted
-    # display string instead -- uses the host's actual currency symbol
-    # (not a hardcoded £) and correct decimal handling (XOF/XAF/etc.
-    # show no decimals, matching format_money()'s own, already-
-    # established rule elsewhere in the app).
-    available_balance_display = format_money(available_balance, current_user.preferred_currency)
+    # FIXED: available_balance_display previously combined the symbol
+    # and number into one string (e.g. "£ 1,234.50") and put the whole
+    # thing inside the #hostBalance span. balance-counter.js reads that
+    # span's text and calls parseFloat() on it to animate the number
+    # counting up -- a leading currency symbol made parseFloat() return
+    # NaN immediately, since it can't find any numeric characters at
+    # the very start of the string. Keeping the symbol and the number
+    # entirely separate now: the symbol displays outside the span
+    # (dynamic, based on the host's real currency -- not the old
+    # hardcoded £), and the span itself holds only a plain, parseable
+    # number, respecting zero-decimal currencies like XOF for the
+    # initial server-rendered value.
+    available_balance_symbol = get_symbol(current_user.preferred_currency)
+    if current_user.preferred_currency in ZERO_DECIMAL_CURRENCIES:
+        available_balance_number = f"{available_balance:,.0f}"
+    else:
+        available_balance_number = f"{available_balance:,.2f}"
  
     withdrawal = db.session.query(Withdrawal).filter(
                         Withdrawal.user_id==current_user.id
@@ -419,8 +429,8 @@ def earnings():
     # silently renders an undefined attribute as blank rather than
     # erroring, so the table showed only the hardcoded £ with nothing
     # after it. Pre-formatting here too, same currency-conversion
-    # approach as available_balance_display above, so the whole page
-    # is consistent.
+    # approach as available_balance's symbol/number split above, so the
+    # whole page is consistent.
     formatted_earnings = [
         {
             'created_at': pay.created_at,
@@ -436,7 +446,8 @@ def earnings():
     return render_template('udashpages/myearnings.html',  title='My Earnings', 
                           host_earning=host_earning, form=form, withdrawal=withdrawal,
                           formatted_earnings=formatted_earnings, formatted_withdrawals=formatted_withdrawals,
-                          available_balance=available_balance, available_balance_display=available_balance_display)
+                          available_balance=available_balance, available_balance_symbol=available_balance_symbol,
+                          available_balance_number=available_balance_number)
 
 @udash.route("/refunds") 
 @login_required
