@@ -50,6 +50,11 @@ socket.on('new_notification', function (data) {
   console.log('New notification:', data);
 
   updateChatBadge(data.count);
+
+  // FIXED: this only ever updated the badge count, never the dropdown's
+  // actual message list -- that stayed stale until manually closed and
+  // reopened. Refreshing it here too keeps it live, matching the badge.
+  loadUnreadMessages();
 });
 
 socket.on('notification_clear', function () {
