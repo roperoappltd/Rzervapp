@@ -36,6 +36,7 @@ def cancel_and_refund_if_paid(booking, reason='guest_cancelled'):
         amount_refund_gbp=payment.accounting_amount,
         refund_currency=payment.payment_currency,
         exchange_rate=payment.pay_exchange_rate,
+        reason=reason,
         status='Pending',
     )
     db.session.add(refund)

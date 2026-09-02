@@ -4,11 +4,8 @@ head_css %} {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb pt-3">
     <li class="breadcrumb-item pl-3">
-      <a
-        style="padding-left: 10px; text-decoration: none"
-        href="{{url_for('udash.udashboard')}}"
-        >{{ _('Dashboard') }}</a
-      >
+      <a style="padding-left: 10px; text-decoration: none" href="{{url_for('udash.udashboard')}}">{{ _('Dashboard')
+        }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ _('Refunds') }}
@@ -41,14 +38,25 @@ head_css %} {% block content %}
                       <th class="text-center">{{ _('Status') }}</th>
                       <th class="text-center">{{ _('Refunded at') }}</th>
                     </thead>
-                    {% for refund in user_refund.items %}
+                    {% for refund in formatted_refunds %}
                     <tbody>
                       <tr>
                         <td>{{ refund.created_at.strftime('%d %B %Y')}}</td>
-                        <td class="text-center">£{{ refund.amount}}</td>
+                        <td class="text-center">
+                          {{ refund.amount }}
+                          {% if refund.approx_amount %}
+                          <div class="text-muted small">{{ _("approx.") }} {{ refund.approx_amount }}</div>
+                          {% endif %}
+                        </td>
                         <td class="text-center">{{ refund.reason }}</td>
-                        <td class="text-center">£{{ refund.status }}</td>
-                        <td class="text-center">£{{ refund.refunded_at }}</td>
+                        <td class="text-center">{{ refund.status }}</td>
+                        <td class="text-center">
+                          {% if refund.refunded_at %}
+                          {{ refund.refunded_at.strftime('%d %B %Y') }}
+                          {% else %}
+                          {{ _('Not yet processed') }}
+                          {% endif %}
+                        </td>
                       </tr>
                     </tbody>
                     {% endfor %}
@@ -56,21 +64,16 @@ head_css %} {% block content %}
                   <!----------------Pagination-->
                   <div class="pagination">
                     {% if user_refund.has_prev %}
-                    <a
-                      href="{{ url_for('bedrooms.refund', page=user_refund.prev_num) }}"
-                    >
+                    <a href="{{ url_for('udash.refunds', page=user_refund.prev_num) }}">
                       {{ _('Previous') }}
-                      <i class="now-ui-icons arrows-1_minimal-left"></i
-                    ></a>
+                      <i class="now-ui-icons arrows-1_minimal-left"></i></a>
                     {% endif %}
                     <span class="mx-2">
                       {{ _('Page') }} {{ user_refund.page }} of {{
                       user_refund.pages }}
                     </span>
                     {% if user_refund.has_next %}
-                    <a
-                      href="{{ url_for('bedrooms.refund', page=user_refund.next_num) }}"
-                    >
+                    <a href="{{ url_for('udash.refunds', page=user_refund.next_num) }}">
                       {{ _('Next') }}
                       <i class="now-ui-icons arrows-1_minimal-right"></i>
                     </a>

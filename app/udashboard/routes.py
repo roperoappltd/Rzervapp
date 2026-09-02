@@ -29,7 +29,7 @@ from app.helpers.host_balance import get_host_balance
 from app.helpers.format_datime import format_message_time
 from app.helpers.email_verify import email_verified_required
 from app.helpers.room_stats import get_daily_view_counts
-from app.services.currency import convert_currency, COUNTRY_CURRENCY, get_exchange_rates, format_room_price, format_money, get_symbol, ZERO_DECIMAL_CURRENCIES
+from app.services.currency import convert_currency, convert_and_format, COUNTRY_CURRENCY, get_exchange_rates, format_room_price, format_money, get_symbol, ZERO_DECIMAL_CURRENCIES
 from flask_babel import _
 
 udash = Blueprint('udash', __name__)
@@ -489,9 +489,39 @@ def refunds():
                                         ).paginate(page=page, 
                                             per_page=3, 
                                             error_out=False)
+
+    # FIXED: the template referenced refund.amount, which doesn't
+    # exist at all (real field is amount_refund_guest) -- showed as a
+    # bare currency symbol with nothing after it. It also hardcoded £
+    # onto refund.status and refund.refunded_at, neither of which is
+    # a money value at all.
+    #
+    # approx_amount: the real, actual refund stays in its own real
+    # currency (XOF right now, since that's the only currency Paystack
+    # actually processes here) -- this is never changed or implied to
+    # be a second, separate amount. Same "approx." reference-line
+    # pattern already used on paysuccess.html: purely informational for
+    # a guest who doesn't think in XOF, using today's live rate since
+    # no historical guest-currency rate was ever captured at booking
+    # time. Deliberately NOT presented as a guarantee -- Jambo's actual
+    # payout is still arranged manually against the real XOF figure.
+    formatted_refunds = []
+    for r in user_refund.items:
+        approx_amount = None
+        if current_user.preferred_currency and current_user.preferred_currency != r.refund_currency:
+            approx_amount = convert_and_format(float(r.amount_refund_guest), r.refund_currency, current_user.preferred_currency)
+
+        formatted_refunds.append({
+            'created_at': r.created_at,
+            'amount': format_money(r.amount_refund_guest, r.refund_currency),
+            'approx_amount': approx_amount,
+            'reason': r.reason,
+            'status': r.status,
+            'refunded_at': r.refunded_at,
+        })
     
     return render_template('udashpages/myrefund.html',  title='My Refund', 
-                          user_refund=user_refund )
+                          user_refund=user_refund, formatted_refunds=formatted_refunds)
 
 @udash.route("/myreviews") 
 @login_required
