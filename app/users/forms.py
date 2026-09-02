@@ -28,6 +28,9 @@ class RegistrationForm(FlaskForm):
     #gender = SelectField("Gender", choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
     username = StringField('Username', validators=[DataRequired(), Length(min=5, max=20)]) 
     dob = DateField('Date of birth', validators=[DataRequired(), User.validate_dob_minimum_age])
+    country = SelectField('Country', validators=[DataRequired()],
+                          choices=[('', 'Select your country')] + [(country.alpha_2, country.name) for country in pycountry.countries])
+    gender = SelectField('Gender', choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
     # Connection info
     email = StringField('Email', validators=[DataRequired(), Length(max=100), Email(), Length(max=100)]) 
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8, max=128)])  # FIXED: was max=20, an OWASP-flagged anti-pattern that blocks strong/password-manager-generated passwords

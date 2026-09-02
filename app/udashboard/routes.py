@@ -371,11 +371,43 @@ def earnings():
     form = WithdrawalForm()
  
     available_balance = get_host_balance(current_user.id)
-    # AMENDED: get_host_balance() now returns GBP (see host_balance.py).
-    # Converting to the host's own currency for display here, same
-    # pattern as udashboard()'s total_earnings -- kept as a plain number
-    # so the template's existing formatting/comparisons keep working.
-    available_balance = convert_currency(float(available_balance), "GBP", current_user.preferred_currency)
+
+    # FIXED: was converting to current_user.preferred_currency -- an
+    # account setting that defaults to GBP and, in practice, almost
+    # never gets changed (only one manual route ever writes to it).
+    # A host physically in Cote d'Ivoire, who never touched that
+    # setting, would see their real, hard-earned balance in GBP -- a
+    # currency they can't actually withdraw in at all, since Paystack
+    # only ever pays this app's hosts out in XOF today, and even as
+    # this platform expands to other African countries, a host's own
+    # payout currency should always reflect where THEY actually are,
+    # not a generic display preference. Using the host's own, actual
+    # payout currency instead -- pulled from their own HostEarning
+    # records, which is genuinely correct regardless of what their
+    # account preference happens to be set to. Falls back to their own
+    # listed room's currency if they have no earnings yet at all --
+    # not a hardcoded assumption about any single country, since this
+    # platform is built to extend across many.
+    latest_earning = HostEarning.query.filter_by(user_id=current_user.id
+                                        ).order_by(HostEarning.created_at.desc()
+                                        ).first()
+    if latest_earning:
+        host_payout_currency = latest_earning.host_currency
+    else:
+        hosts_room = Rooms.query.filter_by(user_id=current_user.id).first()
+        if hosts_room:
+            host_payout_currency = hosts_room.room_currency
+        elif current_user.country and current_user.country != 'Change me' and current_user.country in COUNTRY_CURRENCY:
+            # Covers a brand-new host with neither earnings nor a
+            # listed room yet -- their own profile country (stored as
+            # a 2-letter code, matching COUNTRY_CURRENCY's keys) is
+            # still a real, meaningful signal, rather than jumping
+            # straight to a hardcoded assumption about any one country.
+            host_payout_currency = COUNTRY_CURRENCY[current_user.country]
+        else:
+            host_payout_currency = "XOF"
+
+    available_balance = convert_currency(float(available_balance), "GBP", host_payout_currency)
 
     # FIXED: a combined "symbol + number" string here (e.g. "£ 1,234.50")
     # inside the #hostBalance span broke balance-counter.js, which reads
@@ -384,11 +416,11 @@ def earnings():
     # parseFloat() return NaN immediately, since it finds no numeric
     # characters at the very start of the string. Keeping the symbol
     # and number entirely separate instead: the symbol displays outside
-    # the span (dynamic, based on the host's real currency -- not a
-    # hardcoded £), the span itself holds only a plain, parseable
-    # number, respecting zero-decimal currencies like XOF.
-    available_balance_symbol = get_symbol(current_user.preferred_currency)
-    if current_user.preferred_currency in ZERO_DECIMAL_CURRENCIES:
+    # the span (dynamic, based on the host's real payout currency),
+    # the span itself holds only a plain, parseable number, respecting
+    # zero-decimal currencies like XOF.
+    available_balance_symbol = get_symbol(host_payout_currency)
+    if host_payout_currency in ZERO_DECIMAL_CURRENCIES:
         available_balance_number = f"{available_balance:,.0f}"
     else:
         available_balance_number = f"{available_balance:,.2f}"
@@ -406,7 +438,7 @@ def earnings():
     formatted_withdrawals = [
         {
             'requested_at': w.requested_at,
-            'amount': format_money(convert_currency(float(w.amount_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'amount': format_money(convert_currency(float(w.amount_gbp), "GBP", w.host_currency), w.host_currency),
             'status': w.status,
             'processed_at': w.processed_at,
         }
@@ -432,10 +464,10 @@ def earnings():
     formatted_earnings = [
         {
             'created_at': pay.created_at,
-            'gross_amount': format_money(convert_currency(float(pay.gross_amount_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
-            'discount': format_money(convert_currency(float(pay.discount_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
-            'fees': format_money(convert_currency(float(pay.platform_fee_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
-            'net_earn': format_money(convert_currency(float(pay.host_earning_gbp), "GBP", current_user.preferred_currency), current_user.preferred_currency),
+            'gross_amount': format_money(convert_currency(float(pay.gross_amount_gbp), "GBP", pay.host_currency), pay.host_currency),
+            'discount': format_money(convert_currency(float(pay.discount_gbp), "GBP", pay.host_currency), pay.host_currency),
+            'fees': format_money(convert_currency(float(pay.platform_fee_gbp), "GBP", pay.host_currency), pay.host_currency),
+            'net_earn': format_money(convert_currency(float(pay.host_earning_gbp), "GBP", pay.host_currency), pay.host_currency),
             'status': pay.status,
         }
         for pay in host_earning.items

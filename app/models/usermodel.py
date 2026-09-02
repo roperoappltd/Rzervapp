@@ -24,14 +24,14 @@ class User(db.Model, UserMixin):
     # Personal detail
     first_name = db.Column(db.String(40), nullable=False)
     last_name = db.Column(db.String(40), nullable=False)
-    gender = db.Column(db.String(30), nullable=True, default='Change me')  # FIXED: was db.String with no length -- SQLite tolerates this, MySQL requires an explicit VARCHAR length and fails outright without one
+    gender = db.Column(db.String(30), nullable=False)  # FIXED: was db.String with no length -- SQLite tolerates this, MySQL requires an explicit VARCHAR length and fails outright without one
     dob = db.Column(db.Date, nullable=False)  # 18+ enforced via validate_dob_minimum_age below, not a DB constraint -- MySQL disallows non-deterministic functions like CURRENT_DATE in CHECK constraints
  
     # Location
     address = db.Column(db.String(100), nullable=True, default='Change me')
     city = db.Column(db.String(40), nullable=True, default='Change me')
     zip_code = db.Column(db.String(10), nullable=True, default='Change me')
-    country = db.Column(db.String(40), nullable=True, default='Change me')
+    country = db.Column(db.String(40), nullable=False)
  
     # Contact info
     company_name = db.Column(db.String(30), nullable=True, default='Change me')

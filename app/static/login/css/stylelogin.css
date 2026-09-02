@@ -38,7 +38,11 @@ body {
   left: 0;
   right: 0;
   height: 6px;
-  background: linear-gradient(90deg, #0066cc, #4a90e2);
+  background: linear-gradient(
+    90deg,
+    var(--auth-topline-start),
+    var(--auth-topline-end)
+  );
 }
 
 .login-header {
@@ -52,86 +56,81 @@ body {
   justify-content: center;
 }
 
+.logo img {
+  height: 44px;
+}
+
 .login-header h1 {
-  color: #1a1a1a;
+  font-family: 'Josefin Sans', sans-serif;
+  color: #0d1f1a;
   font-size: 1.875rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 8px;
-  letter-spacing: -0.025em;
 }
 
 .login-header p {
-  color: #6b7280;
+  font-family: 'Poppins', sans-serif;
+  color: #40524d;
   font-size: 15px;
   font-weight: 400;
 }
 
-/* Form Styles with Floating Labels */
+/* Form Styles -- matches register.html's field treatment: static
+   label above the input, targeting .form-control/.form-select
+   directly (the real classes these pages' forms actually render). */
 .form-group {
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   position: relative;
 }
 
-.form-group input {
-  width: 100%;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 18px 16px 6px 16px;
-  color: #1a1a1a;
-  font-size: 16px;
-  font-weight: 400;
-  outline: none;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-.form-group input:focus {
-  background: #ffffff;
-  border-color: #0066cc;
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-}
-
-.form-group input::placeholder {
-  color: transparent;
-}
-
 .form-group label {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af;
-  font-size: 16px;
-  font-weight: 400;
-  pointer-events: none;
-  transition: all 0.2s ease;
-  background: transparent;
-}
-
-.form-group input:focus + label,
-.form-group input:not(:placeholder-shown) + label {
-  top: 8px;
-  font-size: 12px;
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
   font-weight: 500;
-  color: #0066cc;
-  transform: translateY(0);
+  color: #40524d;
+  margin-bottom: 7px;
 }
 
-.form-group input:not(:focus):not(:placeholder-shown) + label {
-  color: #6b7280;
+.form-group .form-control,
+.form-group .form-select {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: #0d1f1a;
+  background: #ffffff;
+  border: 1.5px solid #d8e4e1;
+  border-radius: 10px;
+  padding: 12px 16px;
+  height: auto;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-/* Password Field */
-.form-group:has(.password-toggle) input {
+.form-group .form-control:focus,
+.form-group .form-select:focus {
+  background: #ffffff;
+  border-color: var(--auth-accent);
+  box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.12);
+}
+
+.form-group .form-control.is-invalid,
+.form-group .form-select.is-invalid {
+  border-color: #c0392b;
+}
+
+/* Password Field -- positioned for the static-label input above, not
+   the old floating-label's taller field. */
+.form-group:has(.password-toggle) .form-control {
   padding-right: 50px;
 }
 
 .password-toggle {
   position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 14px;
+  top: 41px;
   background: none;
   border: none;
   cursor: pointer;
@@ -142,7 +141,7 @@ body {
 }
 
 .password-toggle:hover {
-  color: #0066cc;
+  color: var(--auth-accent);
 }
 
 /* Form Options */
@@ -183,13 +182,13 @@ body {
 }
 
 .checkbox-wrapper input[type='checkbox']:checked + .checkmark {
-  background: #0066cc;
-  border-color: #0066cc;
+  background: var(--auth-accent);
+  border-color: var(--auth-accent);
   color: white;
 }
 
 .forgot-link {
-  color: #0066cc;
+  color: var(--auth-accent);
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
@@ -197,24 +196,24 @@ body {
 }
 
 .forgot-link:hover {
-  color: #004499;
+  color: var(--auth-accent-hover);
 }
 
-/* Login Button */
+/* Login Button -- matches register.html's .jambo-submit-btn treatment */
 .login-btn {
   width: 100%;
-  background: #0066cc;
+  background: var(--auth-accent);
   color: #ffffff;
   border: none;
   border-radius: 12px;
-  padding: 16px 24px;
+  padding: 15px;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
   font-weight: 600;
   position: relative;
   margin-bottom: 28px;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease;
   overflow: hidden;
   min-height: 52px;
   display: flex;
@@ -223,19 +222,16 @@ body {
 }
 
 .login-btn:hover {
-  background: #0052a3;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.3);
+  background: var(--auth-accent-hover);
 }
 
 .login-btn:active {
-  transform: translateY(0);
+  transform: none;
 }
 
 .login-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
-  transform: none;
   box-shadow: none;
 }
 
@@ -321,7 +317,7 @@ body {
 }
 
 .social-btn:hover {
-  border-color: #0066cc;
+  border-color: var(--auth-accent);
   background: #f8fafc;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -342,14 +338,14 @@ body {
 }
 
 .signup-link a {
-  color: #0066cc;
+  color: var(--auth-accent);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .signup-link a:hover {
-  color: #004499;
+  color: var(--auth-accent-hover);
   text-decoration: underline;
 }
 

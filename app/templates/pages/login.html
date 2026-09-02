@@ -12,11 +12,7 @@
   <div class="child login-card mb-5 mt-4">
     <div class="login-header">
       <div class="logo">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <rect width="40" height="40" rx="12" fill="#0066CC" />
-          <path d="M12 16l8-4 8 4v12l-8 4-8-4V16z" stroke="white" stroke-width="2" fill="none" />
-          <circle cx="20" cy="20" r="3" fill="white" />
-        </svg>
+        <img src="{{ url_for('static', filename='userpics/pics/jamnew01.png') }}" alt="Jambo" />
       </div>
       <h1>{{ _('Welcome to Jambo') }}</h1>
       <p>
@@ -28,17 +24,7 @@
     <form method="post">
       {{ form.hidden_tag() }} {{ form.csrf_token }}
       <div class="form-group">
-        <!-- <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          autocomplete="email"
-          placeholder="Email address"
-        />
-        <label for="email">Email address</label>
-        <span class="error-message" id="emailError"></span> -->
-        {{ form.email.label(class="form-control-label pb-4 fs-6" ) }} {% if
+        {{ form.email.label(class="form-control-label pb-1 fs-6" ) }} {% if
         form.email.errors %} {{ form.email(class="form-control form-control-lg
         is-invalid") }}
         <div class="invalid-feedback">
@@ -48,20 +34,10 @@
         </div>
         {% else %} {{ form.email(class="form-control form-control-lg") }} {%
         endif %}
-        <!-- <span class="error-message" id="emailError"></span> -->
       </div>
 
       <div class="form-group">
-        <!-- <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          autocomplete="current-password"
-          placeholder="Password"
-        />
-        <label for="password">Password</label> -->
-        {{ form.password.label(class="form-control-label pb-4 fs-6") }} {% if
+        {{ form.password.label(class="form-control-label pb-1 fs-6") }} {% if
         form.password.errors %} {{ form.password(class="form-control
         form-control-lg is-invalid") }}
         <div class="invalid-feedback">
@@ -92,23 +68,13 @@
             </svg>
           </span>
           {{ form.remember(class="form-check-input")}} {{
-          form.remember.label(class="form-check-label")}}
+          form.remember.label(class="form-check-label text-primary")}}
         </label>
-        <a href="{{ url_for('users.reset_request')}}" class="forgot-link">{{ _('Forgot password?') }}</a>
+        <a href="{{ url_for('users.reset_request')}}" class="forgot-link text-danger">{{ _('Forgot password?') }}</a>
         <a href="{{ url_for('users.resend_verification')}}" class="forgot-link">{{ _("Didn't verify your email?") }}</a>
       </div>
 
-      <button type="submit" class="login-btn" style="
-          background-image: linear-gradient(
-            to right,
-            #003366,
-            #004080,
-            #0059b3,
-            #0073e6
-          );
-        ">
-        <!-- <span class="btn-text">Sign In</span> -->
-
+      <button type="submit" class="login-btn">
         <div class="btn-loader">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -157,7 +123,7 @@
     <div class="signup-link">
       <p>
         {{ _('New to') }} Jambo?
-        <a href="{{ url_for('users.signup')}}">{{ _('Create an account') }}</a>
+        <a class="text-info" href="{{ url_for('users.signup')}}">{{ _('Create an account') }}</a>
       </p>
     </div>
 

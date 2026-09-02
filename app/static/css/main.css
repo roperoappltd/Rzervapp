@@ -27,6 +27,16 @@
   --accent-color: #2f5d50; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+
+  /* Thin gradient line at the top of the login/register/password-reset
+     cards, and the shared button/input/logo treatment across all of
+     them -- defined here once, referenced from stylelogin.css and
+     register.html's own styles. Change these values here and every
+     auth page updates together. */
+  --auth-topline-start: #2f5d50;
+  --auth-topline-end: #4a8a76;
+  --auth-accent: #2f5d50;
+  --auth-accent-hover: #274d42;
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
