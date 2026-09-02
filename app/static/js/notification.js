@@ -69,7 +69,14 @@ async function loadUnreadMessages() {
   try {
     const response = await fetch('/chat/unread-messages');
 
-    const messages = await response.json();
+    const data = await response.json();
+
+    // FIXED: the backend now returns { total_count, messages } instead
+    // of a bare, capped-at-2 array. Using total_count for the header
+    // text -- the array's own length could never exceed 2, so the
+    // header was silently capped at "2 New Messages" even when more
+    // were actually unread.
+    const messages = data.messages;
 
     const list = document.getElementById('chatNotificationList');
 
@@ -84,7 +91,7 @@ async function loadUnreadMessages() {
     list.innerHTML = '';
 
     if (header) {
-      header.innerText = `${messages.length} New Messages`;
+      header.innerText = `${data.total_count} New Messages`;
     }
 
     if (messages.length === 0) {

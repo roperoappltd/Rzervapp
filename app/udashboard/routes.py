@@ -1000,6 +1000,17 @@ def unread_count():
 @udash.route("/chat/unread-messages")
 @login_required
 def unread_messages():
+    # FIXED: this only ever returned a bare array capped at 2 messages
+    # (the dropdown preview), but the frontend was using that array's
+    # own length as the "N New Messages" header count -- so the header
+    # could never show more than 2, even when the real badge count
+    # (unread_count() above, no limit) was higher. Returning the real
+    # total separately now, so the preview can stay capped at 2 while
+    # the header correctly reflects the actual total.
+    total_count = Message.query.filter(
+            Message.receiver_id == current_user.id,
+            Message.is_read == False).count()
+
     messages = Message.query.filter(
                 Message.receiver_id == current_user.id,
                 Message.is_read == False
@@ -1019,4 +1030,4 @@ def unread_messages():
             "time": format_message_time(msg.created_at)
         })
 
-    return jsonify(unread)
+    return jsonify({"total_count": total_count, "messages": unread})
