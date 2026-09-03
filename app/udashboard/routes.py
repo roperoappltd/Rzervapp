@@ -511,11 +511,22 @@ def refunds():
         if current_user.preferred_currency and current_user.preferred_currency != r.refund_currency:
             approx_amount = convert_and_format(float(r.amount_refund_guest), r.refund_currency, current_user.preferred_currency)
 
+        # FIXED: this was previously showing the raw reason code
+        # ('host_cancelled', 'guest_cancelled', 'account_deleted')
+        # directly to the guest. The host's specific, private reason
+        # for cancelling (e.g. 'changed_mind') is never shown here --
+        # the guest only needs to know WHO cancelled, not why.
+        reason_label = {
+            'guest_cancelled': _('Cancelled by you'),
+            'host_cancelled': _('Cancelled by host'),
+            'account_deleted': _('Account closed'),
+        }.get(r.reason, _('Cancelled'))
+
         formatted_refunds.append({
             'created_at': r.created_at,
             'amount': format_money(r.amount_refund_guest, r.refund_currency),
             'approx_amount': approx_amount,
-            'reason': r.reason,
+            'reason': reason_label,
             'status': r.status,
             'refunded_at': r.refunded_at,
         })
