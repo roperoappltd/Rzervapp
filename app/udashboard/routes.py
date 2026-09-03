@@ -1070,5 +1070,5 @@ def unread_messages():
             "body": msg.body,
             "time": format_message_time(msg.created_at)
         })
-
+        print(msg)
     return jsonify({"total_count": total_count, "messages": unread})

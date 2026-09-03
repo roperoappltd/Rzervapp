@@ -24,6 +24,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let selectedEnd = null;
 
+  // Shared display formatter: "07-Sep-2026". Only ever used for what
+  // the host actually SEES -- never touches selectedStart/selectedEnd
+  // themselves, which stay as FullCalendar's own raw values and get
+  // sent to the backend unchanged. That raw, exclusive-end convention
+  // must be preserved exactly as-is, since app/helpers/is_avail.py's
+  // own overlap check (RoomBlock.end_date > arrival) depends on it --
+  // changing what gets STORED would silently let a guest book the
+  // final day of a host's intended block.
+  const MONTH_ABBR = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  function formatDateDMY(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = MONTH_ABBR[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  // Parses a plain "YYYY-MM-DD" string using numeric constructor args
+  // (always local time) rather than new Date(string), which parses as
+  // UTC midnight and can silently roll back a day once displayed,
+  // depending on the browser's own local timezone.
+  function parseDateOnly(isoDateStr) {
+    const [year, month, day] = isoDateStr.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
   const blockModal = new bootstrap.Modal(document.getElementById('blockModal'));
 
   const createBlockModal = new bootstrap.Modal(
@@ -39,11 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     height: 'auto',
 
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: '',
-    },
+    headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
 
     events: calendarUrl,
 
@@ -70,8 +105,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
       selectedEnd = info.endStr;
 
+      // Display-only: FullCalendar's own endStr is exclusive (the day
+      // AFTER the last cell the host actually dragged over), so
+      // selecting 7th-to-9th reports endStr as the 10th. Subtracting
+      // a day here purely for what's shown to the host -- the real
+      // selectedEnd sent to the backend on save stays exactly as
+      // FullCalendar reported it, unchanged.
+      const displayEnd = parseDateOnly(info.endStr);
+      displayEnd.setDate(displayEnd.getDate() - 1);
+
       document.getElementById('selectedDates').textContent =
-        `From ${info.startStr} To ${info.endStr}`;
+        `From ${formatDateDMY(parseDateOnly(info.startStr))} To ${formatDateDMY(displayEnd)}`;
 
       createBlockModal.show();
     },
@@ -92,16 +136,16 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('blockReason').textContent =
         info.event.extendedProps.reason;
 
-      document.getElementById('blockStart').textContent =
-        info.event.start.toLocaleDateString();
+      document.getElementById('blockStart').textContent = formatDateDMY(
+        info.event.start,
+      );
 
       if (info.event.end) {
         let end = new Date(info.event.end);
 
         end.setDate(end.getDate() - 1);
 
-        document.getElementById('blockEnd').textContent =
-          end.toLocaleDateString();
+        document.getElementById('blockEnd').textContent = formatDateDMY(end);
       }
 
       blockModal.show();
@@ -126,9 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch(`/api/room/${roomId}/block/${selectedBlockId}`, {
         method: 'DELETE',
 
-        headers: {
-          'X-CSRFToken': csrfToken,
-        },
+        headers: { 'X-CSRFToken': csrfToken },
       })
         .then((response) => {
           if (!response.ok) {
