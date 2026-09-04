@@ -2,7 +2,7 @@ from datetime import datetime, date
 from app import db, login_manager
 from flask_login import UserMixin, current_user
 from flask import current_app, render_template
-from itsdangerous import URLSafeTimedSerializer as Serializer
+from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired
 from wtforms.validators import ValidationError
 #from .bookmodel import Bookings
 
@@ -141,15 +141,25 @@ class User(db.Model, UserMixin):
  
     @staticmethod
     def verify_verification_token(token, max_age=86400):
+        '''Returns (user, status) where status is 'ok', 'expired', or
+        'invalid'. Distinguishing these matters: an expired link should
+        offer a resend, a genuinely malformed/tampered one shouldn't
+        imply the account or link ever worked at all.'''
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token, max_age=max_age)
-            if data.get('purpose') != 'verify_email':  # rejects a reset-password token replayed here
-                return None
-            user_id = data['user_id']
-        except:
-            return None
-        return User.query.get(user_id)
+        except SignatureExpired:
+            return None, 'expired'
+        except Exception:
+            return None, 'invalid'
+
+        if data.get('purpose') != 'verify_email':  # rejects a reset-password token replayed here
+            return None, 'invalid'
+
+        user = User.query.get(data['user_id'])
+        if user is None:
+            return None, 'invalid'
+        return user, 'ok'
  
     # ------------------------------------------------------------
     # Form validators

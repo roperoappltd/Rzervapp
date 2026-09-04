@@ -189,11 +189,10 @@ def reset_token(token):
 
 @users.route("/verify-email/<token>")
 def verify_email(token):
-    user = User.verify_verification_token(token)
+    user, status = User.verify_verification_token(token)
 
     if user is None:
-        flash(_('That verification link is invalid or has expired.'), 'danger')
-        return redirect(url_for('main.home'))
+        return render_template('pages/verify_link_issue.html', title='Verification Link', status=status)
 
     if user.email_verified:
         flash(_('Your email is already verified.'), 'info')

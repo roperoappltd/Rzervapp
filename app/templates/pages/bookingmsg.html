@@ -259,12 +259,12 @@
           <span class="label">{{ _('Your bill') }}</span>
           <span class="value">{{ booking.payment.total_paid_guest }} {{ booking.payment.payment_currency }}</span>
         </div>
-        {% if current_user.is_authenticated and current_user.preferred_currency and current_user.preferred_currency !=
+        {% if booking.user and booking.user.preferred_currency and booking.user.preferred_currency !=
         booking.payment.payment_currency %}
         <div class="approx-note">
           {{ _("Approx. converted in your currency:") }}
           {{ convert_and_format(booking.payment.total_paid_guest, booking.payment.payment_currency,
-          current_user.preferred_currency) }}
+          booking.user.preferred_currency) }}
         </div>
         {% endif %}
       </div>

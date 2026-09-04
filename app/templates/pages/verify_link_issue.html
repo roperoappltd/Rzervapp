@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ _('Verification Link') }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f1f6f5;
+            font-family: 'Poppins', sans-serif;
+            color: #40524d;
+        }
+
+        .wrap {
+            min-height: 100vh;
+            padding: 56px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 18px;
+            padding: 48px 44px 44px;
+            box-shadow: 0 20px 50px -20px rgba(13, 31, 26, 0.18);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #2f5d50, #4a8a76);
+        }
+
+        .card img.logo {
+            height: 40px;
+            margin-bottom: 28px;
+        }
+
+        .card h1 {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0d1f1a;
+            margin: 0 0 16px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2f5d50;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 14px 32px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.15s ease;
+        }
+
+        .btn:hover {
+            background: #274d42;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 36px 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+        <div class="card">
+            <img class="logo" src="{{ url_for('static', filename='userpics/pics/logojam.png') }}" alt="Jambo" />
+            {% if status == 'expired' %}
+            <h1>{{ _('This link has expired') }}</h1>
+            <p>
+                {% trans %}Verification links are only valid for 24 hours. No problem
+                -- request a fresh one below and it'll be with you in a moment.{% endtrans %}
+            </p>
+            {% else %}
+            <h1>{{ _("This link isn't valid") }}</h1>
+            <p>
+                {% trans %}We couldn't verify this link. It may have already been
+                used, or the address may be incomplete. You can request a new one
+                below.{% endtrans %}
+            </p>
+            {% endif %}
+            <a class="btn" href="{{ url_for('users.resend_verification') }}">{{ _('Send a new verification link') }}</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
