@@ -203,8 +203,7 @@ def verify_email(token):
     user.email_verified_at = datetime.utcnow()
     db.session.commit()
 
-    flash(_('Your email has been verified! You can now log in.'), 'success')
-    return redirect(url_for('users.login'))
+    return render_template('pages/joinusmsg.html', title='Welcome', user=user)
 
 @users.route("/resend-verification", methods=['GET', 'POST'])
 def resend_verification():

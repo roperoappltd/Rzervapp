@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ _('Welcome to Jambo') }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f1f6f5;
+            font-family: 'Poppins', sans-serif;
+            color: #40524d;
+        }
+
+        .welcome-wrap {
+            min-height: 100vh;
+            padding: 56px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 18px;
+            padding: 48px 44px 44px;
+            box-shadow: 0 20px 50px -20px rgba(13, 31, 26, 0.18);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #2f5d50, #4a8a76);
+        }
+
+        .welcome-card img.logo {
+            height: 40px;
+            margin-bottom: 28px;
+        }
+
+        .welcome-card h1 {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #0d1f1a;
+            margin: 0 0 18px;
+        }
+
+        .welcome-card p {
+            font-size: 0.97rem;
+            line-height: 1.65;
+            margin: 0 0 32px;
+        }
+
+        .welcome-btn {
+            display: inline-block;
+            background: #2f5d50;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            padding: 14px 36px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.15s ease;
+        }
+
+        .welcome-btn:hover {
+            background: #274d42;
+        }
+
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 36px 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="welcome-wrap">
+        <div class="welcome-card">
+            <img class="logo" src="{{ url_for('static', filename='userpics/pics/logojam.png') }}" alt="Jambo" />
+            <h1>{{ _('Hello') }} {{ user.first_name }}, {{ _('your account is verified') }}</h1>
+            <p>
+                {% trans %}Once again Welcome to the Jambo community, where you can book short
+                stays that are safer, happier, and more affordable. Whenever you're
+                ready, you can also list a room of your own and start earning.{% endtrans %}
+            </p>
+            <a class="welcome-btn" href="{{ url_for('users.login') }}">{{ _('Log in to Jambo') }}</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
