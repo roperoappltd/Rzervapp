@@ -23,13 +23,13 @@ class AddRoomForm(FlaskForm):
     borough = StringField('', validators=[DataRequired(), Length(max=50)])
     room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
-    short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=50)]) 
+    short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100)]) 
     room_size = SelectField('',choices=[('', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
                                ('30–45', '30–45'), ('40–60+', '40–60+')], validators=[DataRequired()]) 
     max_occupancy = SelectField('', choices=[('', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
                                               ('5', '5')], validators=[DataRequired()])
     price = FloatField('', validators=[DataRequired()])
-    description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=350)])
+    description = TextAreaField('', validators=[DataRequired(), Length(min=100, max=800)])
     status =  SelectField('', choices=[('', ' '), ('Available', 'Available'),('Maintenance', 'Maintenance'),], 
                                 validators=[DataRequired()])
     rule1 =  StringField('', validators=[Optional(), Length(min=5, max=60)])

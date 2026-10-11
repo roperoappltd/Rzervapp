@@ -16,8 +16,12 @@
   <meta name="keywords"
     content="Booking app, bootstrap, dashboard, booking, css, sass, html, theme, front-end, ui kit, web" />
   <!-- Favicons -->
-  <link href="{{url_for('static', filename='img/fav/favicon.ico')}}" rel="icon" />
-  <link href="{{url_for('static', filename='img/fav/apple-touch-icon.png ')}}" rel="apple-touch-icon" />
+  <!-- <link href="{{url_for('static', filename='img/fav/favicon.ico')}}" rel="icon" /> -->
+  <link rel="icon" type="image/png" sizes="32x32"
+    href="{{ url_for('static', filename='img/pwa/11-10-26-jambo-favicon-32.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/pwa/11-10-26-jambo-apple-touch-icon.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='img/pwa/11-10-26-jambo-manifest.webmanifest') }}">
+  <meta name="theme-color" content="#2f5d50">
 
   <!---Map Leaflet CSS-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />

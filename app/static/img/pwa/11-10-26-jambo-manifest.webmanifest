@@ -1,0 +1,16 @@
+{
+  "name": "Jambo",
+  "short_name": "Jambo",
+  "description": "Book rooms across Africa",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#2f5d50",
+  "theme_color": "#2f5d50",
+  "icons": [
+    { "src": "/static/img/pwa/11-10-26-jambo-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/static/img/pwa/11-10-26-jambo-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/static/img/pwa/11-10-26-jambo-icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/static/img/pwa/11-10-26-jambo-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
