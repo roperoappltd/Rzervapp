@@ -1,4 +1,15 @@
-{% extends "base.html" %} {% block head_css %} {{ super() }}
+{% extends "base.html" %}
+{% block page_title %}{{ _('Jambo | Rooms and short stays in Abidjan and across Africa') }}{% endblock %}
+{% block seo_jsonld %}
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Jambo",
+  "url": site_url,
+  "logo": abs_url(url_for('static', filename='img/pwa/11-10-26-jambo-icon-512.png'))
+}|tojson }}</script>
+{% endblock %}
+{% block head_css %} {{ super() }}
 <style>
   .maintenance-badge {
     position: fixed;

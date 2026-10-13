@@ -1,22 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ current_language or 'en' }}">
 
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  {% if title %}
-  <title>{{ _("Jambo") }} - {{ _(title) }}</title>
-  {% else %}
-  <title>{{ _("Jambo") }}</title>
-  {% endif %}
+  <title>{% block page_title %}
+    {% if title %}{{ _("Jambo") }} - {{ _(title) }}
+    {% else %}{{ _("Jambo") }}
+    {% endif %}{% endblock %}
+  </title>
 
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <meta name="keywords"
-    content="Booking app, bootstrap, dashboard, booking, css, sass, html, theme, front-end, ui kit, web" />
+  <meta name="description"
+    content="{% block meta_description %}{{ _('Book rooms, residences and short stays across Africa. Starting in Abidjan, Côte d\'Ivoire. Pay securely in CFA francs.') }}{% endblock %}" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+  {% block meta_robots %}{% endblock %}
+  <meta property="og:site_name" content="Jambo" />
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}" />
+  <meta property="og:url" content="{{ canonical_url }}" />
+  <meta property="og:title" content="{{ self.page_title() }}" />
+  <meta property="og:description" content="{{ self.meta_description() }}" />
+  <meta property="og:image"
+    content="{% block og_image %}{{ abs_url(url_for('static', filename='img/pwa/11-10-26-jambo-icon-512.png')) }}{% endblock %}" />
+  <meta name="twitter:card" content="summary" />
+  {% if google_site_verification %}
+  <meta name="google-site-verification" content="{{ google_site_verification }}" />{% endif %}
+  {% if bing_site_verification %}
+  <meta name="msvalidate.01" content="{{ bing_site_verification }}" />{% endif %}
+  {% block seo_jsonld %}{% endblock %}
   <!-- Favicons -->
-  <!-- <link href="{{url_for('static', filename='img/fav/favicon.ico')}}" rel="icon" /> -->
   <link rel="icon" type="image/png" sizes="32x32"
     href="{{ url_for('static', filename='img/pwa/11-10-26-jambo-favicon-32.png') }}">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/pwa/11-10-26-jambo-apple-touch-icon.png') }}">

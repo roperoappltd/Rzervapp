@@ -3488,7 +3488,7 @@ msgstr "Propulsé par"
 #~ msgstr ""
 
 #~ msgid "Luxury Hotel Experience"
-#~ msgstr ""
+#~ msgstr "Expérience hôtelière de luxe"
 
 #~ msgid "Maximum 6 images allowed."
 #~ msgstr "Maximum 6 images autorisées."
@@ -3506,7 +3506,7 @@ msgstr "Propulsé par"
 #~ msgstr "avis"
 
 #~ msgid "sq ft"
-#~ msgstr "pi²"
+#~ msgstr "m²"
 
 #~ msgid "Availability"
 #~ msgstr "Disponibilité"
@@ -3710,10 +3710,10 @@ msgstr "Propulsé par"
 #~ msgstr "Jours"
 
 #~ msgid "Service Fee"
-#~ msgstr ""
+#~ msgstr "Frais de service"
 
 #~ msgid "Select a payment method"
-#~ msgstr "MODE DE PAIEMENT"
+#~ msgstr "Mode de paiement"
 
 #~ msgid "Deal dicount"
 #~ msgstr "Remise"
@@ -3763,3 +3763,12 @@ msgstr "Propulsé par"
 #~ "Leave a slot empty to keep its current image\n"
 #~ "                    unchanged."
 #~ msgstr ""
+
+msgid "Book rooms, residences and short stays across Africa. Starting in Abidjan, Côte d'Ivoire. Pay securely in CFA francs."
+msgstr "Réservez chambres, résidences et séjours courts partout en Afrique. Depuis Abidjan, Côte d'Ivoire. Paiement sécurisé en francs CFA."
+
+msgid "Jambo | Rooms and short stays in Abidjan and across Africa"
+msgstr "Jambo | Chambres et séjours courts à Abidjan et en Afrique"
+
+msgid "%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo."
+msgstr "%(room)s à %(place)s : %(desc)s. À partir de %(price)s par nuit. Réservez sur Jambo."

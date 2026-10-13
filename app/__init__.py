@@ -120,6 +120,7 @@ def create_app(config_name='default'):
         # rather than assuming a transitive import covers it.
         from app.users.routes import users
         from app.main.routes import main
+        from app.main.seo import seo
         from app.rooms.routes import bedrooms
         from app.udashboard.routes import udash
         from app.errors.handlers import errors
@@ -139,6 +140,7 @@ def create_app(config_name='default'):
         # ---------------- Register blueprints ----------------
         app.register_blueprint(users)
         app.register_blueprint(main)
+        app.register_blueprint(seo)
         app.register_blueprint(bedrooms)
         app.register_blueprint(udash)
         app.register_blueprint(errors)

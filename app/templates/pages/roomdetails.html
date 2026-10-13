@@ -1,6 +1,42 @@
 {% extends "base.html" %} {% from "macros/stars.html" import render_stars %} {% from "macros/content_language.html"
-import content_language_badge %} {%
-block head_css %} {{ super() }}
+import content_language_badge %}
+
+{% block page_title %}{{ roominfo.room_name }} - {{ roominfo.room_category }}, {{ roominfo.borough }}, {{
+roominfo.room_location }} | Jambo{% endblock %}
+{% block meta_description %}{{ _('%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo.',
+room=roominfo.room_name, place=roominfo.borough ~ ', ' ~ roominfo.room_location, desc=roominfo.short_desc|trim('. '),
+price=roominfo.room_currency ~ ' ' ~ ('%g'|format(roominfo.price|float))) }}{% endblock %}
+{% block meta_robots %}{% if roominfo.status != 'Available' %}
+<meta name="robots" content="noindex, nofollow" />{% endif %}{% endblock %}
+{% block og_image %}{{ abs_url(get_room_image_url(roominfo.image1)) }}{% endblock %}
+{% block seo_jsonld %}
+{% set ld = {
+"@context": "https://schema.org",
+"@type": "LodgingBusiness",
+"name": roominfo.room_name,
+"description": roominfo.short_desc,
+"url": canonical_url,
+"image": abs_url(get_room_image_url(roominfo.image1)),
+"priceRange": roominfo.room_currency ~ " " ~ ("%g"|format(roominfo.price|float)),
+"address": {
+"@type": "PostalAddress",
+"addressLocality": roominfo.room_location,
+"addressRegion": roominfo.borough,
+"addressCountry": roominfo.room_country
+}
+} %}
+{% if roominfo.latitude is not none and roominfo.longitude is not none %}
+{% set _u = ld.update({"geo": {"@type": "GeoCoordinates", "latitude": roominfo.latitude, "longitude":
+roominfo.longitude}}) %}
+{% endif %}
+{% if totalrev %}
+{% set _u = ld.update({"aggregateRating": {"@type": "AggregateRating", "ratingValue": revscore, "reviewCount":
+totalrev}}) %}
+{% endif %}
+<script type="application/ld+json">{{ ld|tojson }}</script>
+{% endblock %}
+
+{% block head_css %} {{ super() }}
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
 <style>
   #calendar {
