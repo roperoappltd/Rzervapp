@@ -367,6 +367,32 @@ head_css %} {% block content %}
       flex: 0 0 auto;
     }
   }
+
+  /* Featured rooms carousel (phones): one card per slide, dots below the card. */
+  .featured-rooms-mobile-carousel .featured-slide {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 6px 10px 12px; /* room for the card shadow, which .carousel-inner would clip */
+  }
+
+  .featured-rooms-mobile-carousel .carousel-indicators {
+    position: static;
+    margin: 0.75rem 0 0;
+  }
+
+  .featured-rooms-mobile-carousel .carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    opacity: 1;
+    margin: 0 6px;
+    border: none;
+  }
+
+  .featured-rooms-mobile-carousel .carousel-indicators .active {
+    background-color: var(--accent-color, #2f5d50);
+  }
 </style>
 
 <!-------------------------------------------------------------------------------------->
@@ -497,40 +523,71 @@ head_css %} {% block content %}
       </div>
     </div>
 
-    <div class="row mt-6 gy-4 justify-content-center">
-      {# One block for every featured room; centred so fewer than 4 rooms never leaves the row lopsided. #}
-      {% set icon_sets = [
-        ['bi-wifi', 'bi-tv', 'bi-telephone'],
-        ['bi-wifi', 'bi-cup-hot', 'bi-snow'],
-        ['bi-water', 'bi-door-open', 'bi-award'],
-        ['bi-star', 'bi-house', 'bi-gem']
-      ] %}
+    {# One card definition, used by the desktop grid and the mobile carousel below. #}
+    {% macro feature_card(feature, idx) %}
+    {% set icon_sets = [
+      ['bi-wifi', 'bi-tv', 'bi-telephone'],
+      ['bi-wifi', 'bi-cup-hot', 'bi-snow'],
+      ['bi-water', 'bi-door-open', 'bi-award'],
+      ['bi-star', 'bi-house', 'bi-gem']
+    ] %}
+    <div class="minimal-room-card">
+      <div class="room-image">
+        <img src="{{ get_room_image_url(feature.image1) }}" alt="{{ feature.room_name }}" class="img-fluid" />
+        <div class="hover-overlay">
+          <a href="{{ url_for('bedrooms.roomdetail', room_id=feature.id) }}" class="view-room">
+            <i class="bi bi-eye"></i>
+          </a>
+        </div>
+      </div>
+      <div class="room-summary">
+        <h5>{{ feature.room_category }}</h5>
+        <div class="price-tag">
+          {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
+        </div>
+        <div class="basic-amenities">
+          {% for icon in icon_sets[idx % 4] %}
+          <i class="bi {{ icon }}"></i>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endmacro %}
+
+    <!-- Tablet/desktop: grid, centred so fewer than 4 rooms never looks lopsided -->
+    <div class="row mt-6 gy-4 justify-content-center d-none d-md-flex">
       {% for feature in featured_rooms %}
       <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="{{ 350 + loop.index * 50 }}">
-        <div class="minimal-room-card">
-          <div class="room-image">
-            <img src="{{ get_room_image_url(feature.image1) }}" alt="{{ feature.room_name }}" class="img-fluid" />
-            <div class="hover-overlay">
-              <a href="{{ url_for('bedrooms.roomdetail', room_id=feature.id) }}" class="view-room">
-                <i class="bi bi-eye"></i>
-              </a>
-            </div>
-          </div>
-          <div class="room-summary">
-            <h5>{{ feature.room_category }}</h5>
-            <div class="price-tag">
-              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
-            </div>
-            <div class="basic-amenities">
-              {% for icon in icon_sets[loop.index0 % 4] %}
-              <i class="bi {{ icon }}"></i>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
+        {{ feature_card(feature, loop.index0) }}
       </div>
       {% endfor %}
     </div>
+
+    <!-- Phone: one card at a time, auto-advancing every 4 s, swipe and dots built in.
+         Autoplay is only switched on when there is more than one room. -->
+    {% if featured_rooms %}
+    <div id="featuredRoomsCarousel" class="carousel slide featured-rooms-mobile-carousel d-md-none mt-5"
+      {% if featured_rooms|length > 1 %}data-bs-ride="carousel" data-bs-interval="4000"{% endif %}>
+      <div class="carousel-inner">
+        {% for feature in featured_rooms %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+          <div class="featured-slide">
+            {{ feature_card(feature, loop.index0) }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% if featured_rooms|length > 1 %}
+      <div class="carousel-indicators">
+        {% for feature in featured_rooms %}
+        <button type="button" data-bs-target="#featuredRoomsCarousel" data-bs-slide-to="{{ loop.index0 }}"
+          {% if loop.first %}class="active" aria-current="true" {% endif %}
+          aria-label="{{ _('Slide') }} {{ loop.index }}"></button>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
 
     <div class="text-center" data-aos="fade-up" data-aos-delay="600">
       <a href="{{ url_for('bedrooms.room') }}" class="explore-all-link">
