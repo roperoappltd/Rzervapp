@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-24 08:52+0100\n"
+"POT-Creation-Date: 2026-10-23 12:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+
+#: app/errors/handlers.py:57
+#, python-format
+msgid "%(field)s is too long. Please shorten it and try again."
+msgstr ""
+
+#: app/errors/handlers.py:59
+msgid "One of the values entered is too long. Please shorten it and try again."
+msgstr ""
 
 #: app/helpers/booking.py:58
 msgid "Sorry, this room is not available for selected dates."
@@ -30,8 +39,10 @@ msgstr ""
 msgid "Could not generate a unique booking reference. Please try again."
 msgstr ""
 
-#: app/helpers/email_verify.py:13
-msgid "Please verify your email before booking or listing a room."
+#: app/helpers/email_verify.py:18
+msgid ""
+"Unverified email. Please use the link provided in your email to verify. "
+"Alternatively, enter your email to obtain a new verification link."
 msgstr ""
 
 #: app/main/routes.py:115
@@ -110,325 +121,356 @@ msgstr ""
 msgid "Host, Nairobi"
 msgstr ""
 
-#: app/main/routes.py:300
+#: app/main/routes.py:312
 msgid "Your message has been sent successfully."
 msgstr ""
 
-#: app/rooms/routes.py:151
+#: app/rooms/routes.py:153
 msgid "Invalid arrival or departure date."
 msgstr ""
 
-#: app/rooms/routes.py:156
+#: app/rooms/routes.py:158
 msgid "Departure date must be after arrival date."
 msgstr ""
 
-#: app/rooms/routes.py:162
+#: app/rooms/routes.py:164
 msgid "No rooms available for the selected dates."
 msgstr ""
 
-#: app/rooms/routes.py:173
+#: app/rooms/routes.py:175
 msgid "No rooms found. Please refine your search."
 msgstr ""
 
-#: app/rooms/routes.py:197
+#: app/rooms/routes.py:203
 msgid "Please complete your profile (address and phone) before booking."
 msgstr ""
 
-#: app/rooms/routes.py:214
+#: app/rooms/routes.py:220
 msgid "Resuming your existing booking for this room."
 msgstr ""
 
-#: app/rooms/routes.py:239
+#: app/rooms/routes.py:245
 msgid "Booking submitted successfully. Proceed to checkout!"
 msgstr ""
 
-#: app/rooms/routes.py:327
+#: app/rooms/routes.py:333
 msgid "Booking already cancelled."
 msgstr ""
 
-#: app/rooms/routes.py:333
+#: app/rooms/routes.py:339
 msgid ""
 "This booking can no longer be cancelled online. Please contact us for "
 "assistance."
 msgstr ""
 
-#: app/rooms/routes.py:340
+#: app/rooms/routes.py:346
 msgid "No payment record found for this booking. Please contact us."
 msgstr ""
 
-#: app/rooms/routes.py:350
+#: app/rooms/routes.py:356
 #, python-format
 msgid "Link to view cancellation summary sent to %(email)s."
 msgstr ""
 
-#: app/rooms/routes.py:369
+#: app/rooms/routes.py:398
+msgid "Only a confirmed booking can be cancelled this way."
+msgstr ""
+
+#: app/rooms/routes.py:403
+msgid "Please select a valid reason for cancelling this booking."
+msgstr ""
+
+#: app/rooms/routes.py:408
+msgid "Please describe the reason for cancelling this booking."
+msgstr ""
+
+#: app/rooms/routes.py:451
+msgid ""
+"Booking cancelled. The guest has been notified and will be refunded. No "
+"penalty applied."
+msgstr ""
+
+#: app/rooms/routes.py:453
+#, python-format
+msgid ""
+"Booking cancelled. The guest has been notified and will be refunded. A "
+"15%% fee has been deducted from your earnings."
+msgstr ""
+
+#: app/rooms/routes.py:471
 msgid "Server error or booking already created."
 msgstr ""
 
-#: app/rooms/routes.py:376
+#: app/rooms/routes.py:478
 msgid "Invalid booking dates."
 msgstr ""
 
-#: app/rooms/routes.py:390 app/rooms/routes.py:395
+#: app/rooms/routes.py:492 app/rooms/routes.py:497
 #, python-format
 msgid "Checkout currently unavailable: missing exchange rate for %(currency)s."
 msgstr ""
 
-#: app/rooms/routes.py:493
+#: app/rooms/routes.py:595
 msgid "Checkout currently unavailable: missing exchange rate for XOF."
 msgstr ""
 
-#: app/rooms/routes.py:544
+#: app/rooms/routes.py:646
 msgid "We couldn't reach the payment provider. Please try again in a moment."
 msgstr ""
 
-#: app/rooms/routes.py:548
+#: app/rooms/routes.py:650
 msgid "Payment could not be started. Please try again."
 msgstr ""
 
-#: app/rooms/routes.py:572
+#: app/rooms/routes.py:674
 msgid "Missing payment reference."
 msgstr ""
 
-#: app/rooms/routes.py:581
+#: app/rooms/routes.py:683
 #, python-format
 msgid ""
 "We couldn't confirm your payment. If you were charged, please contact "
 "support with reference %(reference)s."
 msgstr ""
 
-#: app/rooms/routes.py:587
+#: app/rooms/routes.py:689
 msgid "Payment was not completed."
 msgstr ""
 
-#: app/rooms/routes.py:593
+#: app/rooms/routes.py:695
 msgid "Payment reference could not be matched to a booking."
 msgstr ""
 
-#: app/rooms/routes.py:607
+#: app/rooms/routes.py:709
 msgid "This booking has already been processed."
 msgstr ""
 
-#: app/rooms/routes.py:619
+#: app/rooms/routes.py:721
 #, python-format
 msgid ""
 "Payment currency mismatch. Please contact support with reference "
 "%(reference)s."
 msgstr ""
 
-#: app/rooms/routes.py:784
+#: app/rooms/routes.py:939
 msgid "Server error, summary not sent, contact us now"
 msgstr ""
 
-#: app/rooms/routes.py:915
+#: app/rooms/routes.py:1070
 msgid "Please, login or register to review this room!"
 msgstr ""
 
-#: app/rooms/routes.py:932
+#: app/rooms/routes.py:1087
 msgid ""
 "You can only review a room after a completed stay, and each stay can only"
 " be reviewed once."
 msgstr ""
 
-#: app/rooms/routes.py:941
+#: app/rooms/routes.py:1096
 msgid "Your review has been submitted successfully!"
 msgstr ""
 
-#: app/rooms/routes.py:974
+#: app/rooms/routes.py:1129
 msgid "Your room extra has been added successfully."
 msgstr ""
 
-#: app/rooms/routes.py:1027
+#: app/rooms/routes.py:1182
 msgid "Room details has been successfully updated!"
 msgstr ""
 
-#: app/rooms/routes.py:1091
+#: app/rooms/routes.py:1246
 msgid ""
 "Image 1 and Image 2 are required -- please provide a photo for both "
 "before saving."
 msgstr ""
 
-#: app/rooms/routes.py:1104
+#: app/rooms/routes.py:1259
 msgid "Room images successfully updated!"
 msgstr ""
 
-#: app/rooms/routes.py:1106
+#: app/rooms/routes.py:1261
 msgid "No new images were selected."
 msgstr ""
 
-#: app/rooms/routes.py:1141
+#: app/rooms/routes.py:1296
 msgid ""
 "This room has an upcoming guest booking and can't be removed. Please "
 "resolve it first."
 msgstr ""
 
-#: app/rooms/routes.py:1156
+#: app/rooms/routes.py:1311
 msgid "Your listing has been removed from search."
 msgstr ""
 
-#: app/templates/base.html:10 app/templates/base.html:12
+#: app/templates/base.html:11 app/templates/base.html:12
 #: app/templates/userlayout.html:24 app/templates/userlayout.html:26
 msgid "Jambo"
 msgstr ""
 
+#: app/templates/base.html:18
+msgid ""
+"Book rooms, residences and short stays across Africa. Starting in "
+"Abidjan, Côte d'Ivoire. Pay securely in CFA francs."
+msgstr ""
+
 #: app/templates/adminpanel/admindash.html:10
-#: app/templates/adminpanel/base.html:100 app/templates/base.html:91
-#: app/templates/base.html:285 app/templates/base.html:404
+#: app/templates/adminpanel/base.html:100 app/templates/base.html:118
+#: app/templates/base.html:312 app/templates/base.html:431
 #: app/templates/pages/aboutus.html:10 app/templates/pages/behost.html:10
 #: app/templates/pages/booking.html:10 app/templates/pages/getintouch.html:10
+#: app/templates/pages/payment_policy.html:60
 #: app/templates/pages/paysuccess.html:10
-#: app/templates/pages/roomdetails.html:56 app/templates/pages/rooms.html:9
+#: app/templates/pages/roomdetails.html:116 app/templates/pages/rooms.html:9
 #: app/templates/pages/roomsearched.html:11
-#: app/templates/udashpages/dashboard.html:7 app/templates/userlayout.html:104
+#: app/templates/pages/terms_of_use.html:60
+#: app/templates/udashpages/dashboard.html:7 app/templates/userlayout.html:109
 msgid "Home"
 msgstr ""
 
 #: app/templates/adminpanel/admindash.html:54
-#: app/templates/adminpanel/base.html:66 app/templates/base.html:94
-#: app/templates/base.html:286 app/templates/base.html:406
+#: app/templates/adminpanel/base.html:66 app/templates/base.html:121
+#: app/templates/base.html:313 app/templates/base.html:433
 #: app/templates/pages/rooms.html:6 app/templates/pages/rooms.html:10
 msgid "Rooms"
 msgstr ""
 
-#: app/templates/base.html:97 app/templates/base.html:287
-#: app/templates/base.html:417 app/templates/pages/behost.html:7
+#: app/templates/base.html:124 app/templates/base.html:314
+#: app/templates/base.html:444 app/templates/pages/behost.html:7
 #: app/templates/pages/behost.html:11
 msgid "Become host"
 msgstr ""
 
-#: app/templates/base.html:112
+#: app/templates/base.html:139
 msgid "Destination"
 msgstr ""
 
-#: app/templates/base.html:163
+#: app/templates/base.html:190
 msgid "Select Currency"
 msgstr ""
 
 #: app/templates/adminpanel/admindash.html:22
 #: app/templates/adminpanel/base.html:53 app/templates/adminpanel/blank.html:10
-#: app/templates/base.html:239 app/templates/base.html:337
+#: app/templates/base.html:266 app/templates/base.html:364
 #: app/templates/udashpages/dashboard.html:18
-#: app/templates/udashpages/mybookings.html:10
-#: app/templates/udashpages/myearnings.html:10
+#: app/templates/udashpages/mybookings.html:54
+#: app/templates/udashpages/myearnings.html:7
 #: app/templates/udashpages/mylistings.html:7
-#: app/templates/udashpages/myrefund.html:10
+#: app/templates/udashpages/myrefund.html:7
 #: app/templates/udashpages/reviews.html:10
-#: app/templates/udashpages/usprofile.html:10 app/templates/userlayout.html:57
-#: app/templates/userlayout.html:238
+#: app/templates/udashpages/usprofile.html:8 app/templates/userlayout.html:62
+#: app/templates/userlayout.html:243
 msgid "Dashboard"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:165 app/templates/base.html:247
-#: app/templates/base.html:338 app/templates/userlayout.html:233
+#: app/templates/adminpanel/base.html:165 app/templates/base.html:274
+#: app/templates/base.html:365 app/templates/userlayout.html:238
 msgid "Profile"
 msgstr ""
 
-#: app/templates/base.html:256 app/templates/base.html:340
-#: app/templates/userlayout.html:254
+#: app/templates/base.html:283 app/templates/base.html:367
+#: app/templates/userlayout.html:259
 msgid "Admin Panel"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:180 app/templates/base.html:265
-#: app/templates/base.html:342 app/templates/userlayout.html:260
+#: app/templates/adminpanel/base.html:180 app/templates/base.html:292
+#: app/templates/base.html:369 app/templates/userlayout.html:265
 msgid "Log out"
 msgstr ""
 
-#: app/templates/base.html:271 app/templates/base.html:344
-#: app/templates/base.html:414 app/templates/pages/signup.html:11
-#: app/templates/pages/signup.html:22
+#: app/templates/base.html:298 app/templates/base.html:371
+#: app/templates/base.html:441 app/templates/pages/resend_verification.html:47
+#: app/templates/pages/signup.html:11 app/templates/pages/signup.html:22
 msgid "Log in"
 msgstr ""
 
-#: app/templates/base.html:276 app/templates/base.html:345
-#: app/templates/base.html:415 app/templates/pages/homes.html:228
+#: app/templates/base.html:303 app/templates/base.html:372
+#: app/templates/base.html:442 app/templates/pages/homes.html:263
 msgid "Register"
 msgstr ""
 
-#: app/templates/base.html:312
+#: app/templates/base.html:339
 msgid "Currency"
 msgstr ""
 
-#: app/templates/base.html:316 app/templates/userlayout.html:186
+#: app/templates/base.html:343 app/templates/userlayout.html:191
 msgid "Africa"
 msgstr ""
 
-#: app/templates/base.html:333
+#: app/templates/base.html:360
 msgid "Account"
 msgstr ""
 
-#: app/templates/base.html:402
+#: app/templates/base.html:429
 msgid "Quick Links"
 msgstr ""
 
-#: app/templates/base.html:405 app/templates/pages/aboutus.html:7
+#: app/templates/base.html:432 app/templates/pages/aboutus.html:7
 #: app/templates/pages/aboutus.html:11
-#: app/templates/udashpages/usprofile.html:37
+#: app/templates/udashpages/usprofile.html:32
 msgid "About"
 msgstr ""
 
-#: app/templates/base.html:407 app/templates/pages/booking.html:7
+#: app/templates/base.html:434 app/templates/pages/booking.html:7
 #: app/templates/pages/booking.html:11
 msgid "Booking"
 msgstr ""
 
-#: app/templates/base.html:412
+#: app/templates/base.html:439
 msgid "Connect with us"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:203 app/templates/base.html:416
-#: app/templates/pages/bookcancelmsg.html:2691
-#: app/templates/pages/bookingmsg.html:2681 app/templates/pages/homes.html:178
-#: app/templates/pages/homes.html:836 app/templates/userlayout.html:366
+#: app/templates/adminpanel/base.html:203 app/templates/base.html:443
+#: app/templates/pages/homes.html:213 app/templates/pages/homes.html:871
+#: app/templates/userlayout.html:389
 msgid "Contact us"
 msgstr ""
 
-#: app/templates/base.html:423
+#: app/templates/base.html:450
 msgid "Useful links"
 msgstr ""
 
-#: app/templates/base.html:425
+#: app/templates/base.html:452
 msgid "Africa tourism"
 msgstr ""
 
-#: app/templates/base.html:426
+#: app/templates/base.html:453
 msgid "Health & Wellbeing"
 msgstr ""
 
-#: app/templates/base.html:427
+#: app/templates/base.html:454
 msgid "Visa information"
 msgstr ""
 
-#: app/templates/base.html:428
+#: app/templates/base.html:455
 msgid "Currency Exchange"
 msgstr ""
 
-#: app/templates/base.html:434
+#: app/templates/base.html:461
 msgid "Legal"
 msgstr ""
 
-#: app/templates/base.html:436
+#: app/templates/base.html:463
 msgid "Terms of service"
 msgstr ""
 
-#: app/templates/base.html:437 app/templates/pages/bookcancelmsg.html:2680
-#: app/templates/pages/bookingmsg.html:2670
+#: app/templates/base.html:464
 msgid "Privacy policy"
 msgstr ""
 
-#: app/templates/base.html:438
-msgid "Refund policy"
+#: app/templates/base.html:465
+msgid "Payment policy"
 msgstr ""
 
-#: app/templates/base.html:439
+#: app/templates/base.html:466
 msgid "Booking policy"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:194 app/templates/base.html:452
-#: app/templates/userlayout.html:357
+#: app/templates/adminpanel/base.html:194 app/templates/base.html:479
+#: app/templates/userlayout.html:380
 msgid "All rights reserved"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:13 app/templates/userlayout.html:64
+#: app/templates/udashpages/usprofile.html:11 app/templates/userlayout.html:69
 msgid "User Profile"
 msgstr ""
 
@@ -438,7 +480,7 @@ msgstr ""
 #: app/templates/udashpages/dashboard.html:30
 #: app/templates/udashpages/mylistings.html:11
 #: app/templates/udashpages/room_stats.html:25
-#: app/templates/udashpages/roomupdate.html:10 app/templates/userlayout.html:70
+#: app/templates/udashpages/roomupdate.html:10 app/templates/userlayout.html:75
 msgid "Listings"
 msgstr ""
 
@@ -448,53 +490,53 @@ msgstr ""
 #: app/templates/adminpanel/base.html:72
 #: app/templates/udashpages/dashboard.html:57
 #: app/templates/udashpages/dashboard.html:181
-#: app/templates/udashpages/mybookings.html:14 app/templates/userlayout.html:76
+#: app/templates/udashpages/mybookings.html:58 app/templates/userlayout.html:81
 msgid "Bookings"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:174 app/templates/userlayout.html:82
-#: app/templates/userlayout.html:245
+#: app/templates/adminpanel/base.html:174 app/templates/userlayout.html:87
+#: app/templates/userlayout.html:250
 msgid "Piggybank"
 msgstr ""
 
 #: app/templates/adminpanel/base.html:84
-#: app/templates/udashpages/myrefund.html:14 app/templates/userlayout.html:88
+#: app/templates/udashpages/myrefund.html:11 app/templates/userlayout.html:93
 msgid "Refunds"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:95 app/templates/userlayout.html:99
+#: app/templates/adminpanel/base.html:95 app/templates/userlayout.html:104
 msgid "Go to"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:137 app/templates/userlayout.html:207
+#: app/templates/adminpanel/base.html:137 app/templates/userlayout.html:212
 msgid "No New Messages"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:144 app/templates/userlayout.html:214
+#: app/templates/adminpanel/base.html:144 app/templates/userlayout.html:219
 msgid "view bookings"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:159 app/templates/userlayout.html:228
+#: app/templates/adminpanel/base.html:159 app/templates/userlayout.html:233
 msgid "Hi"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:178 app/templates/userlayout.html:249
+#: app/templates/adminpanel/base.html:178 app/templates/userlayout.html:254
 msgid "Help Center"
 msgstr ""
 
-#: app/templates/userlayout.html:325
+#: app/templates/userlayout.html:348
 msgid "Online"
 msgstr ""
 
-#: app/templates/userlayout.html:342
+#: app/templates/userlayout.html:365
 msgid "Type a message..."
 msgstr ""
 
-#: app/templates/adminpanel/base.html:206 app/templates/userlayout.html:369
+#: app/templates/adminpanel/base.html:206 app/templates/userlayout.html:392
 msgid "Privacy"
 msgstr ""
 
-#: app/templates/adminpanel/base.html:209 app/templates/userlayout.html:372
+#: app/templates/adminpanel/base.html:209 app/templates/userlayout.html:395
 msgid "Terms"
 msgstr ""
 
@@ -553,9 +595,10 @@ msgid "Revenue generated to date"
 msgstr ""
 
 #: app/templates/adminpanel/admindash.html:189
+#: app/templates/pages/homes.html:231
 #: app/templates/udashpages/dashboard.html:180
-#: app/templates/udashpages/mybookings.html:39
-#: app/templates/udashpages/mybookings.html:190
+#: app/templates/udashpages/mybookings.html:131
+#: app/templates/udashpages/mybookings.html:329
 #: app/templates/udashpages/reviews.html:37
 msgid "Room"
 msgstr ""
@@ -587,6 +630,7 @@ msgid "Calendar"
 msgstr ""
 
 #: app/templates/adminpanel/base.html:78
+#: app/templates/pages/terms_of_use.html:172
 msgid "Payments"
 msgstr ""
 
@@ -615,39 +659,39 @@ msgstr ""
 msgid "Room has no review yet!"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:31
+#: app/templates/pages/aboutus.html:25
 msgid "Hotel Exterior"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:38
+#: app/templates/pages/aboutus.html:31
 msgid "5-Star Excellence"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:39
+#: app/templates/pages/aboutus.html:32
 msgid "warm-heartedness"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:45
+#: app/templates/pages/aboutus.html:36
 msgid "Luxury Suite"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:59
+#: app/templates/pages/aboutus.html:49
 msgid ""
-"Over the years, Jambo has steadily been building a\n"
+"Over the past year, Jambo has steadily been building a\n"
 "            trustworthy and hospitable community step by step."
 msgstr ""
 
-#: app/templates/pages/aboutus.html:64
+#: app/templates/pages/aboutus.html:54
 msgid ""
-"Jambo was founded in 2020 when the concept of regrouping\n"
+"Jambo was founded in 2025 when the concept of regrouping\n"
 "            individuals with available space and willing to share their "
 "homes\n"
-"            was introduced. Next, we broadened our services to encompass "
-"guest\n"
-"            houses and small to medium-sized hotels."
+"            was introduced. Next, we thought that broadening our services"
+" to encompass guest\n"
+"            houses and small to medium-sized hotels will be ideal."
 msgstr ""
 
-#: app/templates/pages/aboutus.html:71
+#: app/templates/pages/aboutus.html:61
 msgid ""
 "The primary objective was to blend traditional African\n"
 "            conviviality into guests' experiences, aiming to forge a "
@@ -659,79 +703,85 @@ msgid ""
 "            money, and cutting down time on the booking process."
 msgstr ""
 
-#: app/templates/pages/aboutus.html:86
-msgid "Community building"
+#: app/templates/pages/aboutus.html:72
+msgid "The idea was born"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:88
-msgid "Started as a platform where home could generate passive incomes."
+#: app/templates/pages/aboutus.html:74
+msgid "Started working on the idea."
+msgstr ""
+
+#: app/templates/pages/aboutus.html:81
+msgid "Platform building"
+msgstr ""
+
+#: app/templates/pages/aboutus.html:83
+msgid "We began digitally transforming all our ideas into reality."
+msgstr ""
+
+#: app/templates/pages/aboutus.html:90
+msgid "Platform milestone"
+msgstr ""
+
+#: app/templates/pages/aboutus.html:92
+msgid "The digital platform is 95 percent completed."
 msgstr ""
 
 #: app/templates/pages/aboutus.html:99
-msgid "Extended the community"
+msgid "Community Building"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:100
-msgid "Guest houses and hotel join the Jambo family"
+#: app/templates/pages/aboutus.html:101
+msgid "We began diligently building a trustworthy community."
 msgstr ""
 
-#: app/templates/pages/aboutus.html:110
-msgid "Big Innovation"
-msgstr ""
-
-#: app/templates/pages/aboutus.html:111
-msgid "Local touch for an unique experience"
-msgstr ""
-
-#: app/templates/pages/aboutus.html:140
+#: app/templates/pages/aboutus.html:127
 msgid "Memorable moments"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:142
+#: app/templates/pages/aboutus.html:129
 msgid ""
 "Here we share some of the Jambo family memorable &\n"
-"            fantastic moments. Happiness never far with Jambo!"
+"            fantastic moments during the community building phase.!"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:165
+#: app/templates/pages/aboutus.html:149
 msgid "Maisonette at Abidjan"
 msgstr ""
 
+#: app/templates/pages/aboutus.html:151
+msgid "We visited the Diaby's family for for a vetting mission."
+msgstr ""
+
 #: app/templates/pages/aboutus.html:167
-msgid ""
-"The Diaby's familly occupying their Jambo booked property\n"
-"              for 2 weeks."
+msgid "Flat at Accra"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:188
-msgid "Flat at Pretoria"
-msgstr ""
-
-#: app/templates/pages/aboutus.html:190
+#: app/templates/pages/aboutus.html:169
 msgid "A host in South Africa welcoming his Guests for 4 days stay."
 msgstr ""
 
-#: app/templates/pages/aboutus.html:210
-msgid "Bungalow in Cotonou"
+#: app/templates/pages/aboutus.html:186
+msgid "Bungalow in Assinie"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:212
+#: app/templates/pages/aboutus.html:188
 msgid "Couple enjoying sunrise in their Jambo booked bungalow in Cotonou"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:231
+#: app/templates/pages/aboutus.html:203
 msgid "Number of hosts"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:243
+#: app/templates/pages/aboutus.html:210
 msgid "Satisfaction Rate"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:254
+#: app/templates/pages/aboutus.html:217
 msgid "Number of Booking"
 msgstr ""
 
-#: app/templates/pages/aboutus.html:265 app/templates/pages/homes.html:171
+#: app/templates/pages/aboutus.html:224
 msgid "Years of Excellence"
 msgstr ""
 
@@ -820,202 +870,85 @@ msgstr ""
 msgid "Sign up now!"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:440
-#: app/templates/pages/bookingmsg.html:439
-msgid "Booking number"
+#: app/templates/pages/bookcancelmsg.html:7
+msgid "Booking Cancellation"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:504
-#: app/templates/pages/bookingmsg.html:503
-#: app/templates/udashpages/myearnings.html:40
-#: app/templates/udashpages/myrefund.html:38
-#: app/templates/udashpages/reviews.html:35
-msgid "Date"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:601
-#: app/templates/pages/bookingmsg.html:600
+#: app/templates/pages/bookcancelmsg.html:211
+#: app/templates/pages/bookingmsg.html:215
+#: app/templates/pages/joinusmsg.html:104
 msgid "Hello"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:650
+#: app/templates/pages/bookcancelmsg.html:213
 msgid ""
-"We&#39;re contacting to confitm that your booking\n"
-"                                                  has been successfully "
-"cancelled. You will receive a complete\n"
-"                                                  refund. Please allow 10"
-" working to receive your payment.\n"
-"                                                  "
+"We're confirming that your booking has been successfully cancelled.\n"
+"          You will receive a full refund -- please allow up to 10 working"
+" days\n"
+"          for the payment to reach you."
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:702
-msgid ""
-"We hope to see you soon on the Jambo platform for another\n"
-"                                                  booking"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:753
-msgid "Stay Blessed"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:759
-#: app/templates/pages/bookingmsg.html:757
-msgid "Jambo Team"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:835
-msgid "Room Pool"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1038
-#: app/templates/pages/bookingmsg.html:1037
+#: app/templates/pages/bookcancelmsg.html:224
+#: app/templates/pages/bookingmsg.html:233
 msgid "Located at"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1113
-#: app/templates/pages/bookingmsg.html:1112
-msgid "Booked from"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1120
-#: app/templates/pages/bookingmsg.html:1115
-#: app/templates/udashpages/mybookings.html:189
-msgid "To"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1128
-#: app/templates/pages/bookingmsg.html:1119
+#: app/templates/pages/bookcancelmsg.html:233
+#: app/templates/pages/bookingmsg.html:242
 #: app/templates/pages/listupdate.html:88
 msgid "Price per night"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1133
-#: app/templates/pages/bookingmsg.html:1124
-msgid "Number of days"
+#: app/templates/pages/bookcancelmsg.html:237
+#: app/templates/pages/bookingmsg.html:246
+msgid "Number of nights"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1136
-#: app/templates/pages/bookingmsg.html:1133
-#: app/templates/udashpages/myearnings.html:42
+#: app/templates/pages/bookcancelmsg.html:241
+#: app/templates/pages/bookingmsg.html:250
+#: app/templates/udashpages/myearnings.html:39
 #: app/templates/udashpages/roomupdate.html:171
 msgid "Discount"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1142
-msgid "Amount Refundable"
+#: app/templates/pages/bookcancelmsg.html:245
+#: app/templates/pages/bookingmsg.html:254
+msgid "Payment method"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1154
-#: app/templates/pages/bookingmsg.html:1150
-#: app/templates/pages/paysuccess.html:89
-msgid "approx."
+#: app/templates/pages/bookcancelmsg.html:251
+msgid "Amount refundable"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1161
+#: app/templates/pages/bookcancelmsg.html:257
+#: app/templates/pages/bookingmsg.html:265
+msgid "Approx. converted in your currency:"
+msgstr ""
+
+#: app/templates/pages/bookcancelmsg.html:264
 msgid ""
-"Your refund is being\n"
-""
-"                                                                                    "
-"processed. You will receive a\n"
-""
-"                                                                                    "
-"separate confirmation once the\n"
-""
-"                                                                                    "
-"amount is finalized."
+"Your refund is being processed. You will receive a separate confirmation "
+"once the\n"
+"            amount is finalized."
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1315
-#: app/templates/pages/bookingmsg.html:1305
-msgid "Host info"
+#: app/templates/pages/bookcancelmsg.html:270
+#: app/templates/pages/bookingmsg.html:272
+msgid "Host details"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1387
-#: app/templates/pages/bookingmsg.html:1377
-#: app/templates/udashpages/mybookings.html:193
-msgid "Host"
+#: app/templates/pages/bookcancelmsg.html:278
+#: app/templates/pages/bookingmsg.html:280
+msgid "Guest details"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1452
-#: app/templates/pages/bookcancelmsg.html:2012
-#: app/templates/pages/bookingmsg.html:1442
-#: app/templates/pages/bookingmsg.html:2002
-#: app/templates/pages/getintouch.html:103
-msgid "Email"
+#: app/templates/pages/bookcancelmsg.html:285
+#: app/templates/pages/bookingmsg.html:287
+msgid "Booking reference"
 msgstr ""
 
-#: app/templates/pages/bookcancelmsg.html:1514
-#: app/templates/pages/bookcancelmsg.html:2074
-#: app/templates/pages/bookingmsg.html:1504
-#: app/templates/pages/bookingmsg.html:2064
-msgid "Phone"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1576
-#: app/templates/pages/bookingmsg.html:1566
-#: app/templates/udashpages/usprofile.html:181
-msgid "Country"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1682
-#: app/templates/pages/bookingmsg.html:1672
-msgid ""
-"Host important\n"
-""
-"                                                                                                    "
-"note"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1755
-msgid ""
-"Take care &\n"
-""
-"                                                                                                    "
-"hope to see you\n"
-""
-"                                                                                                    "
-"another time"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1876
-#: app/templates/pages/bookingmsg.html:1866
-msgid "Guest info"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:1949
-#: app/templates/pages/bookingmsg.html:1939
-msgid ""
-"Primary\n"
-""
-"                                                                                                    "
-"guest"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:2136
-#: app/templates/pages/bookingmsg.html:2126
-msgid ""
-"Booking\n"
-""
-"                                                                                                    "
-"status"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:2241
-msgid ""
-"REFUND\n"
-""
-"                                                                                                    "
-"METHOD"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:2412
-#: app/templates/pages/bookingmsg.html:2402
-msgid "For more update, follow us on our social media"
-msgstr ""
-
-#: app/templates/pages/bookcancelmsg.html:2670
-#: app/templates/pages/bookingmsg.html:2660
-msgid "Unsubscribe"
+#: app/templates/pages/bookcancelmsg.html:286
+msgid "Cancelled on"
 msgstr ""
 
 #: app/templates/pages/booking.html:23
@@ -1101,7 +1034,7 @@ msgid "Flexible Cancellation"
 msgstr ""
 
 #: app/templates/pages/booking.html:213
-msgid "48h Free cancellation"
+msgid "Free cancellation up to 48h before arrival"
 msgstr ""
 
 #: app/templates/pages/booking.html:236
@@ -1126,57 +1059,32 @@ msgstr ""
 msgid "Read our Terms & Conditions"
 msgstr ""
 
-#: app/templates/pages/bookingmsg.html:649
+#: app/templates/pages/bookingmsg.html:7
+msgid "Booking Summary"
+msgstr ""
+
+#: app/templates/pages/bookingmsg.html:217
 msgid ""
-"We&#39;re please to confitm that your bookinghas been\n"
-"                                                  successfully completed."
-" Please , make sure to contact your host\n"
-"                                                  before "
-"travelling.&nbsp; Be aware, you have 24h for free cancellation.\n"
-"                                                  This can be done "
-"through your user dashbord."
+"We're pleased to confirm that your booking has been successfully\n"
+"          completed. Please make sure to contact your host before "
+"travelling.\n"
+"          You have free cancellation up to 48 hours before arrival, "
+"available\n"
+"          any time through your dashboard."
 msgstr ""
 
-#: app/templates/pages/bookingmsg.html:701
+#: app/templates/pages/bookingmsg.html:223
 msgid ""
-"We wish you a pleasant stay and share your\n"
-"                                                  experience with the "
-"Jambo community."
+"We wish you a pleasant stay, and hope you'll share your\n"
+"          experience with the Jambo community."
 msgstr ""
 
-#: app/templates/pages/bookingmsg.html:751
-msgid "Best Regards"
-msgstr ""
-
-#: app/templates/pages/bookingmsg.html:834
-msgid "Manage booking"
-msgstr ""
-
-#: app/templates/pages/bookingmsg.html:1127
-msgid "Subtotal"
-msgstr ""
-
-#: app/templates/pages/bookingmsg.html:1138
+#: app/templates/pages/bookingmsg.html:259
 msgid "Your bill"
 msgstr ""
 
-#: app/templates/pages/bookingmsg.html:1745
-msgid ""
-"Please contact\n"
-""
-"                                                                                                    "
-"me before\n"
-""
-"                                                                                                    "
-"travelling"
-msgstr ""
-
-#: app/templates/pages/bookingmsg.html:2231
-msgid ""
-"PAYMENT\n"
-""
-"                                                                                                    "
-"METHOD"
+#: app/templates/pages/bookingmsg.html:288
+msgid "Booked on"
 msgstr ""
 
 #: app/templates/pages/delete_account.html:5
@@ -1214,42 +1122,55 @@ msgid ""
 msgstr ""
 
 #: app/templates/pages/getintouch.html:7 app/templates/pages/getintouch.html:11
+#: app/templates/pages/terms_of_use.html:190
 msgid "Contact"
 msgstr ""
 
-#: app/templates/pages/getintouch.html:51 app/templates/pages/rooms.html:26
+#: app/templates/pages/getintouch.html:46 app/templates/pages/rooms.html:26
 #: app/templates/pages/roomsearched.html:28
-#: app/templates/udashpages/mybookings.html:40
-#: app/templates/udashpages/mybookings.html:191
+#: app/templates/udashpages/mybookings.html:132
+#: app/templates/udashpages/mybookings.html:330
 #: app/templates/udashpages/mylistings.html:305
 msgid "Location"
 msgstr ""
 
-#: app/templates/pages/getintouch.html:64
-msgid "Phone & Email"
+#: app/templates/pages/getintouch.html:59
+msgid "WhatsApp & Email"
 msgstr ""
 
-#: app/templates/pages/getintouch.html:80
+#: app/templates/pages/getintouch.html:71
 msgid "How can we help?"
 msgstr ""
 
-#: app/templates/pages/getintouch.html:87
+#: app/templates/pages/getintouch.html:78
 msgid "Name"
 msgstr ""
 
-#: app/templates/pages/getintouch.html:119
+#: app/templates/pages/getintouch.html:94
+msgid "Email"
+msgstr ""
+
+#: app/templates/pages/getintouch.html:110
 msgid "Subject"
 msgstr ""
 
-#: app/templates/pages/getintouch.html:135
+#: app/templates/pages/getintouch.html:126
 msgid "Add your Message"
 msgstr ""
 
-#: app/templates/pages/homes.html:16
+#: app/templates/pages/homes.html:2
+msgid "Jambo | Rooms and short stays in Abidjan and across Africa"
+msgstr ""
+
+#: app/templates/pages/homes.html:37
+msgid "Under Maintenance"
+msgstr ""
+
+#: app/templates/pages/homes.html:51
 msgid "A safer, friendly & affordable stay."
 msgstr ""
 
-#: app/templates/pages/homes.html:18
+#: app/templates/pages/homes.html:53
 msgid ""
 "Experience unparalleled simple comfort and a safer home-like\n"
 "            feeling at an affordable cost. Our carefully hand picked and "
@@ -1258,71 +1179,71 @@ msgid ""
 "memory"
 msgstr ""
 
-#: app/templates/pages/homes.html:26
+#: app/templates/pages/homes.html:61
 msgid "Flexible"
 msgstr ""
 
-#: app/templates/pages/homes.html:30
+#: app/templates/pages/homes.html:65
 msgid "Vetted Hosts"
 msgstr ""
 
-#: app/templates/pages/homes.html:34
+#: app/templates/pages/homes.html:69
 msgid "You're Protected"
 msgstr ""
 
-#: app/templates/pages/homes.html:38
+#: app/templates/pages/homes.html:73
 msgid "Join us now"
 msgstr ""
 
-#: app/templates/pages/homes.html:39 app/templates/pages/homes.html:837
+#: app/templates/pages/homes.html:74 app/templates/pages/homes.html:872
 msgid "View Rooms"
 msgstr ""
 
-#: app/templates/pages/homes.html:59
+#: app/templates/pages/homes.html:94
 msgid "Very useful platform"
 msgstr ""
 
-#: app/templates/pages/homes.html:61
+#: app/templates/pages/homes.html:96
 msgid ""
 "Definitely saved my time and money. Flawless booking\n"
 "                process with vetted and trustworthy hosts."
 msgstr ""
 
-#: app/templates/pages/homes.html:81
+#: app/templates/pages/homes.html:116
 msgid "Host Partners"
 msgstr ""
 
-#: app/templates/pages/homes.html:88
+#: app/templates/pages/homes.html:123
 msgid "Stars Service"
 msgstr ""
 
-#: app/templates/pages/homes.html:95
+#: app/templates/pages/homes.html:130
 msgid "Service & support"
 msgstr ""
 
-#: app/templates/pages/homes.html:102 app/templates/pages/homes.html:167
+#: app/templates/pages/homes.html:137 app/templates/pages/homes.html:202
 msgid "Guest Satisfaction"
 msgstr ""
 
-#: app/templates/pages/homes.html:115
+#: app/templates/pages/homes.html:150
 msgid "Rooms Locations"
 msgstr ""
 
-#: app/templates/pages/homes.html:118
+#: app/templates/pages/homes.html:153
 msgid "Zoom the map to get a clear of the cities."
 msgstr ""
 
-#: app/templates/pages/homes.html:144
+#: app/templates/pages/homes.html:179
 msgid "Welcome to Jambo."
 msgstr ""
 
-#: app/templates/pages/homes.html:146
+#: app/templates/pages/homes.html:181
 msgid ""
 "Here, conviviality and comfort fused with affordability and\n"
 "            flexibility to provide peace of mind."
 msgstr ""
 
-#: app/templates/pages/homes.html:150
+#: app/templates/pages/homes.html:185
 msgid ""
 "Jambo is a startup online African marketplace that connects\n"
 "            travelers with hosts offering accommodations. Our platform "
@@ -1331,7 +1252,7 @@ msgid ""
 "homes."
 msgstr ""
 
-#: app/templates/pages/homes.html:155
+#: app/templates/pages/homes.html:190
 msgid ""
 "Even though the platform seek to first vet each host and\n"
 "            guest, however both users can also review each other to helps"
@@ -1339,135 +1260,139 @@ msgid ""
 "            trust and create a safer community."
 msgstr ""
 
-#: app/templates/pages/homes.html:163
+#: app/templates/pages/homes.html:198
 msgid "Rooms available"
 msgstr ""
 
-#: app/templates/pages/homes.html:177
-msgid "About us"
-msgstr ""
-
-#: app/templates/pages/homes.html:197
-msgid "Years"
-msgstr ""
-
-#: app/templates/pages/homes.html:197
-msgid "Experience"
+#: app/templates/pages/homes.html:206
+msgid "Service & Support"
 msgstr ""
 
 #: app/templates/pages/homes.html:212
+msgid "About us"
+msgstr ""
+
+#: app/templates/pages/homes.html:232
+msgid "Clean"
+msgstr ""
+
+#: app/templates/pages/homes.html:232
+msgid "Spacious"
+msgstr ""
+
+#: app/templates/pages/homes.html:247
 msgid "How to become a host?"
 msgstr ""
 
-#: app/templates/pages/homes.html:214
+#: app/templates/pages/homes.html:249
 msgid ""
 "Become a host in 3 easy and rewarding steps. We will be with you\n"
 "        from the start throughout the grow of your business."
 msgstr ""
 
-#: app/templates/pages/homes.html:228
+#: app/templates/pages/homes.html:263
 msgid "Be a Member"
 msgstr ""
 
-#: app/templates/pages/homes.html:229
+#: app/templates/pages/homes.html:264
 msgid "Pass vetting"
 msgstr ""
 
-#: app/templates/pages/homes.html:229
+#: app/templates/pages/homes.html:264
 msgid "Team visit"
 msgstr ""
 
-#: app/templates/pages/homes.html:230
+#: app/templates/pages/homes.html:265
 msgid "Go Live"
 msgstr ""
 
-#: app/templates/pages/homes.html:230
+#: app/templates/pages/homes.html:265
 msgid "Make Cash"
 msgstr ""
 
-#: app/templates/pages/homes.html:251 app/templates/pages/homes.html:672
+#: app/templates/pages/homes.html:286 app/templates/pages/homes.html:707
 msgid "Slide"
 msgstr ""
 
-#: app/templates/pages/homes.html:272
+#: app/templates/pages/homes.html:307
 msgid "Learn more"
 msgstr ""
 
-#: app/templates/pages/homes.html:310 app/templates/pages/homes.html:311
+#: app/templates/pages/homes.html:345 app/templates/pages/homes.html:346
 msgid "Spotlight"
 msgstr ""
 
-#: app/templates/pages/homes.html:313
+#: app/templates/pages/homes.html:348
 msgid ""
 "We present to you our most popular room listing this week chosen by\n"
 "      the Jambo community."
 msgstr ""
 
-#: app/templates/pages/homes.html:327
+#: app/templates/pages/homes.html:362
 msgid "SpotLight"
 msgstr ""
 
-#: app/templates/pages/homes.html:333 app/templates/pages/paysuccess.html:63
-#: app/templates/pages/roomdetails.html:298
+#: app/templates/pages/homes.html:368 app/templates/pages/paysuccess.html:63
+#: app/templates/pages/roomdetails.html:360
 msgid "Guests"
 msgstr ""
 
-#: app/templates/pages/homes.html:357
+#: app/templates/pages/homes.html:392
 msgid "Excellence"
 msgstr ""
 
-#: app/templates/pages/homes.html:364
+#: app/templates/pages/homes.html:399
 msgid "Premium WiFi"
 msgstr ""
 
-#: app/templates/pages/homes.html:368 app/templates/pages/roomdetails.html:223
+#: app/templates/pages/homes.html:403 app/templates/pages/roomdetails.html:285
 msgid "Smart TV"
 msgstr ""
 
-#: app/templates/pages/homes.html:372 app/templates/pages/roomdetails.html:323
+#: app/templates/pages/homes.html:407 app/templates/pages/roomdetails.html:385
 msgid "Support"
 msgstr ""
 
-#: app/templates/pages/homes.html:376
+#: app/templates/pages/homes.html:411
 msgid "Climate Control"
 msgstr ""
 
-#: app/templates/pages/homes.html:382 app/templates/pages/homes.html:742
-#: app/templates/pages/roomdetails.html:110
-#: app/templates/pages/roomdetails.html:452
+#: app/templates/pages/homes.html:417 app/templates/pages/homes.html:777
+#: app/templates/pages/roomdetails.html:170
+#: app/templates/pages/roomdetails.html:514
 msgid "per night"
 msgstr ""
 
-#: app/templates/pages/homes.html:384
+#: app/templates/pages/homes.html:419
 msgid "Reserve now"
 msgstr ""
 
-#: app/templates/pages/homes.html:395
+#: app/templates/pages/homes.html:430
 msgid "No rooms available yet -- check back soon!"
 msgstr ""
 
-#: app/templates/pages/homes.html:433 app/templates/pages/homes.html:464
-#: app/templates/pages/homes.html:492 app/templates/pages/homes.html:521
-#: app/templates/pages/homes.html:547 app/templates/pages/homes.html:573
-#: app/templates/pages/homes.html:599 app/templates/pages/rooms.html:147
+#: app/templates/pages/homes.html:468 app/templates/pages/homes.html:499
+#: app/templates/pages/homes.html:527 app/templates/pages/homes.html:556
+#: app/templates/pages/homes.html:582 app/templates/pages/homes.html:608
+#: app/templates/pages/homes.html:634 app/templates/pages/rooms.html:147
 #: app/templates/pages/roomsearched.html:153
 msgid "night"
 msgstr ""
 
-#: app/templates/pages/homes.html:435 app/templates/pages/homes.html:466
-#: app/templates/pages/homes.html:494
+#: app/templates/pages/homes.html:470 app/templates/pages/homes.html:501
+#: app/templates/pages/homes.html:529
 msgid "View"
 msgstr ""
 
-#: app/templates/pages/homes.html:617
+#: app/templates/pages/homes.html:652
 msgid "Explore All Rooms"
 msgstr ""
 
-#: app/templates/pages/homes.html:629 app/templates/pages/homes.html:630
+#: app/templates/pages/homes.html:664 app/templates/pages/homes.html:665
 msgid "Testimonials"
 msgstr ""
 
-#: app/templates/pages/homes.html:632
+#: app/templates/pages/homes.html:667
 msgid ""
 "At Jambo, our customers stand at the heart of our achievements. Thus, our"
 " main goal is not just simply to\n"
@@ -1475,33 +1400,33 @@ msgid ""
 "have to say about us."
 msgstr ""
 
-#: app/templates/pages/homes.html:712 app/templates/pages/homes.html:713
+#: app/templates/pages/homes.html:747 app/templates/pages/homes.html:748
 msgid "Offers"
 msgstr ""
 
-#: app/templates/pages/homes.html:715
+#: app/templates/pages/homes.html:750
 msgid ""
 "Take advantage now of our deal package to save money and get the\n"
 "      best experience"
 msgstr ""
 
-#: app/templates/pages/homes.html:717
+#: app/templates/pages/homes.html:752
 msgid "With Jambo get a safe, friendly and affordable stay"
 msgstr ""
 
-#: app/templates/pages/homes.html:728
+#: app/templates/pages/homes.html:763
 msgid "OFF"
 msgstr ""
 
-#: app/templates/pages/homes.html:750
+#: app/templates/pages/homes.html:785
 msgid "Reserve Now"
 msgstr ""
 
-#: app/templates/pages/homes.html:807
+#: app/templates/pages/homes.html:842
 msgid "Experience heaven on earth."
 msgstr ""
 
-#: app/templates/pages/homes.html:809
+#: app/templates/pages/homes.html:844
 msgid ""
 "Assinie, a delightful seaside retreat situated on a\n"
 "            breathtaking strand of sand that serves as a natural boundary"
@@ -1517,24 +1442,48 @@ msgid ""
 "            community."
 msgstr ""
 
-#: app/templates/pages/homes.html:820
+#: app/templates/pages/homes.html:855
 msgid "free guided tourist visit"
 msgstr ""
 
-#: app/templates/pages/homes.html:824
+#: app/templates/pages/homes.html:859
 msgid "24/7 concierge and room service"
 msgstr ""
 
-#: app/templates/pages/homes.html:828
+#: app/templates/pages/homes.html:863
 msgid "Delicious local and international cuisine"
 msgstr ""
 
-#: app/templates/pages/homes.html:832
+#: app/templates/pages/homes.html:867
 msgid "Prime location with stunning city views"
 msgstr ""
 
-#: app/templates/pages/homes.html:849
-msgid "Visit from"
+#: app/templates/pages/homes.html:884 app/templates/pages/rooms.html:144
+#: app/templates/pages/roomsearched.html:148
+#: app/templates/udashpages/mybookings.html:135
+#: app/templates/udashpages/mybookings.html:327
+msgid "From"
+msgstr ""
+
+#: app/templates/pages/joinusmsg.html:7 app/templates/pages/login.html:17
+msgid "Welcome to Jambo"
+msgstr ""
+
+#: app/templates/pages/joinusmsg.html:104
+msgid "your account is verified"
+msgstr ""
+
+#: app/templates/pages/joinusmsg.html:106
+msgid ""
+"Once again Welcome to the Jambo community, where you can book short\n"
+"                stays that are safer, happier, and more affordable. "
+"Whenever you're\n"
+"                ready, you can also list a room of your own and start "
+"earning."
+msgstr ""
+
+#: app/templates/pages/joinusmsg.html:110
+msgid "Log in to Jambo"
 msgstr ""
 
 #: app/templates/pages/listupdate.html:8 app/templates/pages/roomextra.html:8
@@ -1572,12 +1521,12 @@ msgid "Max occupancy"
 msgstr ""
 
 #: app/templates/pages/listupdate.html:101
-#: app/templates/udashpages/mybookings.html:45
-#: app/templates/udashpages/myearnings.html:45
-#: app/templates/udashpages/myearnings.html:109
+#: app/templates/udashpages/mybookings.html:137
+#: app/templates/udashpages/myearnings.html:42
+#: app/templates/udashpages/myearnings.html:101
 #: app/templates/udashpages/mylistings.html:140
 #: app/templates/udashpages/mylistings.html:307
-#: app/templates/udashpages/myrefund.html:41
+#: app/templates/udashpages/myrefund.html:38
 msgid "Status"
 msgstr ""
 
@@ -1602,36 +1551,36 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: app/templates/pages/login.html:28
-msgid "Welcome to Jambo"
-msgstr ""
-
-#: app/templates/pages/login.html:30
+#: app/templates/pages/login.html:19
 msgid "Explore <b class=\"text-success\">great & amazing</b> Stuffs!"
 msgstr ""
 
-#: app/templates/pages/login.html:85
+#: app/templates/pages/login.html:51
 msgid "Toggle password visibility"
 msgstr ""
 
-#: app/templates/pages/login.html:121
+#: app/templates/pages/login.html:73
 msgid "Forgot password?"
 msgstr ""
 
-#: app/templates/pages/login.html:210
+#: app/templates/pages/login.html:74
+msgid "Didn't verify your email?"
+msgstr ""
+
+#: app/templates/pages/login.html:125
 msgid "New to"
 msgstr ""
 
-#: app/templates/pages/login.html:211 app/templates/pages/reset_request.html:62
-#: app/templates/pages/reset_token.html:118
+#: app/templates/pages/login.html:126 app/templates/pages/reset_request.html:50
+#: app/templates/pages/reset_token.html:70
 msgid "Create an account"
 msgstr ""
 
-#: app/templates/pages/login.html:228
+#: app/templates/pages/login.html:137
 msgid "Hooray, you're back!"
 msgstr ""
 
-#: app/templates/pages/login.html:229
+#: app/templates/pages/login.html:138
 msgid "Taking you to your Rezerva dashboard..."
 msgstr ""
 
@@ -1641,6 +1590,191 @@ msgstr ""
 
 #: app/templates/pages/payment.html:173
 msgid "You'll be securely redirected to Paystack to complete your payment."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:57
+#: app/templates/pages/payment_policy.html:61
+msgid "Payment Policy"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:76
+#: app/templates/pages/terms_of_use.html:76
+msgid "operating the Jambo platform"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:77
+#: app/templates/pages/terms_of_use.html:77
+msgid "Effective date"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:77
+#: app/templates/pages/terms_of_use.html:77
+msgid "August"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:82
+msgid "Scope"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:84
+msgid ""
+"This policy explains how payments are processed on Jambo, how host "
+"payouts work, and the terms under which a guest or host may cancel a "
+"confirmed booking. It applies to every booking made through the Jambo "
+"platform."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:87
+msgid "How Payment Works"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:89
+msgid ""
+"When a guest books a room, payment is collected in full by Jambo through "
+"our payment processor, Paystack. Jambo does not directly handle or store "
+"card details -- this is managed entirely by Paystack, a licensed payment "
+"service provider."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:92
+msgid ""
+"All bookings are processed and settled in West African CFA Francs (XOF), "
+"regardless of the currency a guest may have been viewing prices in while "
+"browsing the site."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:95
+msgid "Platform Commission"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:97
+#, python-format
+msgid ""
+"Jambo retains a 15%% commission on the total booking value. This fee "
+"covers platform operation, payment processing, customer support, and the "
+"trust and safety measures built into the booking process."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:100
+msgid "Host Payouts"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:102
+#, python-format
+msgid ""
+"The remaining 85%% of the booking value is transferred to the host's "
+"agreed payment method within 5 working days of Jambo receiving the "
+"guest's payment."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:105
+msgid ""
+"Hosts are responsible for providing accurate, up-to-date payout details. "
+"Jambo is not responsible for delays caused by incorrect or outdated "
+"payment information provided by the host."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:108
+msgid "Guest Cancellations & Refunds"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:110
+msgid "Free Cancellation Window"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:112
+msgid ""
+"A guest may cancel a confirmed booking and receive a full refund, free of"
+" charge, provided the cancellation is made at least 48 hours before the "
+"scheduled arrival date."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:115
+msgid "Cancellations After the Free Window"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:117
+msgid ""
+"If a guest wishes to cancel less than 48 hours before arrival, the "
+"booking is no longer eligible for automatic, free cancellation. To "
+"request a refund at this stage, the guest must:"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:120
+msgid ""
+"Email ropero.app@gmail.com with the booking reference and reason for the "
+"request."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:121
+#, python-format
+msgid ""
+"A 20%% service charge will be deducted from the refund amount, to cover "
+"processing and administrative costs already incurred."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:122
+msgid ""
+"The remaining balance will be refunded to the guest's original payment "
+"method."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:125
+msgid "Refund Currency"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:127
+msgid ""
+"Refunds are issued in the same currency the original payment was "
+"processed in (XOF), regardless of the guest's browsing currency "
+"preference."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:130
+msgid "Refund Processing Time"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:132
+msgid "Approved refunds are processed within 10 working days."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:135
+msgid "Host Cancellations"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:137
+#, python-format
+msgid ""
+"If a host cancels a confirmed booking before the guest's arrival without "
+"reasonable cause, the host will be charged a fee equal to 15%% of the "
+"total booking amount, deducted from their earnings."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:140
+msgid ""
+"The guest will receive a full refund for a booking cancelled by the host "
+"under this section."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:143
+msgid "Disputes"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:145
+msgid ""
+"Any disputes regarding a charge, refund, or payout should be directed to "
+"ropero.app@gmail.com in the first instance."
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:148
+msgid "Changes to This Policy"
+msgstr ""
+
+#: app/templates/pages/payment_policy.html:150
+msgid ""
+"Jambo may update this policy from time to time. Continued use of the "
+"platform after changes are published constitutes acceptance of the "
+"revised terms."
 msgstr ""
 
 #: app/templates/pages/paysuccess.html:7 app/templates/pages/paysuccess.html:11
@@ -1663,14 +1797,14 @@ msgid "Confirmation Number"
 msgstr ""
 
 #: app/templates/pages/paysuccess.html:55
-#: app/templates/pages/roomdetails.html:313
-#: app/templates/pages/roomdetails.html:315
+#: app/templates/pages/roomdetails.html:375
+#: app/templates/pages/roomdetails.html:377
 msgid "Check-in"
 msgstr ""
 
 #: app/templates/pages/paysuccess.html:59
-#: app/templates/pages/roomdetails.html:313
-#: app/templates/pages/roomdetails.html:315
+#: app/templates/pages/roomdetails.html:375
+#: app/templates/pages/roomdetails.html:377
 msgid "Check-out"
 msgstr ""
 
@@ -1682,6 +1816,11 @@ msgstr ""
 msgid "Total paid"
 msgstr ""
 
+#: app/templates/pages/paysuccess.html:89
+#: app/templates/udashpages/myrefund.html:48
+msgid "approx."
+msgstr ""
+
 #: app/templates/pages/paysuccess.html:99
 msgid "View My Bookings"
 msgstr ""
@@ -1690,330 +1829,353 @@ msgstr ""
 msgid "Back to Home"
 msgstr ""
 
-#: app/templates/pages/register.html:21
+#: app/templates/pages/register.html:208
 msgid "Greetings from Jambo"
 msgstr ""
 
-#: app/templates/pages/register.html:23
+#: app/templates/pages/register.html:210
 msgid "Join a"
 msgstr ""
 
-#: app/templates/pages/register.html:24
+#: app/templates/pages/register.html:210
 msgid "great & wonderful"
 msgstr ""
 
-#: app/templates/pages/register.html:25
+#: app/templates/pages/register.html:210
 msgid "community"
 msgstr ""
 
-#: app/templates/pages/register.html:160
+#: app/templates/pages/register.html:332
 msgid "Do you agree to the"
 msgstr ""
 
-#: app/templates/pages/register.html:161
+#: app/templates/pages/register.html:333
 msgid "Terms of use"
 msgstr ""
 
-#: app/templates/pages/register.html:271
+#: app/templates/pages/register.html:380
 msgid "Already have an account"
 msgstr ""
 
-#: app/templates/pages/register.html:272
+#: app/templates/pages/register.html:381
 msgid "Sign in"
 msgstr ""
 
-#: app/templates/pages/reset_request.html:14
-#: app/templates/pages/reset_token.html:22
+#: app/templates/pages/resend_verification.html:10
+msgid "Verify"
+msgstr ""
+
+#: app/templates/pages/resend_verification.html:10
+msgid "your email"
+msgstr ""
+
+#: app/templates/pages/resend_verification.html:11
+msgid ""
+"Enter the email you signed up with and we'll send you a fresh "
+"verification link"
+msgstr ""
+
+#: app/templates/pages/resend_verification.html:46
+msgid "Already verified"
+msgstr ""
+
+#: app/templates/pages/reset_request.html:10
+#: app/templates/pages/reset_token.html:11
 msgid "Password"
 msgstr ""
 
-#: app/templates/pages/reset_request.html:14
+#: app/templates/pages/reset_request.html:10
 msgid "Reset"
 msgstr ""
 
-#: app/templates/pages/reset_request.html:15
+#: app/templates/pages/reset_request.html:11
 msgid "Let's set you up, please enter your signup email"
 msgstr ""
 
-#: app/templates/pages/reset_request.html:61
+#: app/templates/pages/reset_request.html:49
 msgid "New to Jambo"
 msgstr ""
 
-#: app/templates/pages/reset_token.html:22
+#: app/templates/pages/reset_token.html:11
 msgid "Your new"
 msgstr ""
 
-#: app/templates/pages/reset_token.html:24
+#: app/templates/pages/reset_token.html:13
 msgid "Nearly done, please enter your brand new password"
 msgstr ""
 
-#: app/templates/pages/reset_token.html:117
+#: app/templates/pages/reset_token.html:69
 msgid "New to Rezerva"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:53
-#: app/templates/pages/roomdetails.html:57
+#: app/templates/pages/roomdetails.html:6
+#, python-format
+msgid "%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo."
+msgstr ""
+
+#: app/templates/pages/roomdetails.html:113
+#: app/templates/pages/roomdetails.html:117
 msgid "Room Details"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:75
+#: app/templates/pages/roomdetails.html:135
 msgid "Located in"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:85
+#: app/templates/pages/roomdetails.html:145
 msgid "reviews"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:96 app/templates/pages/rooms.html:137
+#: app/templates/pages/roomdetails.html:156 app/templates/pages/rooms.html:137
 #: app/templates/pages/roomsearched.html:140
 msgid "Up to"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:96 app/templates/pages/rooms.html:138
+#: app/templates/pages/roomdetails.html:156 app/templates/pages/rooms.html:138
 #: app/templates/pages/roomsearched.html:141
 msgid "guests"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:101
+#: app/templates/pages/roomdetails.html:161
 msgid "sq ft"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:115
+#: app/templates/pages/roomdetails.html:176
 msgid "Availability"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:119
+#: app/templates/pages/roomdetails.html:179
 msgid "Book Now"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:127
+#: app/templates/pages/roomdetails.html:189
 msgid "Room Gallery"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:166
+#: app/templates/pages/roomdetails.html:228
 msgid "Room Overview"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:193
+#: app/templates/pages/roomdetails.html:255
 msgid "Room Amenities & Services"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:197
+#: app/templates/pages/roomdetails.html:259
 msgid "Sleeping"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:200
+#: app/templates/pages/roomdetails.html:262
 msgid "Bed size"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:203
+#: app/templates/pages/roomdetails.html:265
 msgid "Clean towels"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:205
+#: app/templates/pages/roomdetails.html:267
 msgid "Kitchen available"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:208
+#: app/templates/pages/roomdetails.html:270
 #: app/templates/pages/roomextra.html:47
 #: app/templates/udashpages/amenities.html:57
 msgid "Hot water"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:210
+#: app/templates/pages/roomdetails.html:272
 msgid "Clean Bedsheet"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:216
+#: app/templates/pages/roomdetails.html:278
 msgid "Technology"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:219
+#: app/templates/pages/roomdetails.html:281
 #: app/templates/pages/roomextra.html:74
 #: app/templates/udashpages/amenities.html:86
 msgid "Internet"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:227
+#: app/templates/pages/roomdetails.html:289
 msgid "Electric Sockets"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:229
+#: app/templates/pages/roomdetails.html:291
 #: app/templates/udashpages/amenities.html:258
 msgid "Washing Machine"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:231
+#: app/templates/pages/roomdetails.html:293
 #: app/templates/pages/roomextra.html:184
 #: app/templates/udashpages/amenities.html:199
 msgid "Car rental"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:238
+#: app/templates/pages/roomdetails.html:300
 msgid "Comfort"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:241
+#: app/templates/pages/roomdetails.html:303
 msgid "Climate control"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:244
+#: app/templates/pages/roomdetails.html:306
 #: app/templates/udashpages/amenities.html:242
 msgid "Work Space"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:248
+#: app/templates/pages/roomdetails.html:310
 #: app/templates/udashpages/amenities.html:229
 msgid "Swimming Pool"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:250
+#: app/templates/pages/roomdetails.html:312
 #: app/templates/pages/roomextra.html:143
 #: app/templates/udashpages/amenities.html:157
 msgid "Spa"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:252
+#: app/templates/pages/roomdetails.html:314
 #: app/templates/pages/roomextra.html:171
 #: app/templates/udashpages/amenities.html:185
 msgid "Concierge"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:259
+#: app/templates/pages/roomdetails.html:321
 msgid "Service"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:261
+#: app/templates/pages/roomdetails.html:323
 msgid "Sport room"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:263
+#: app/templates/pages/roomdetails.html:325
 msgid "Car Parking"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:267
+#: app/templates/pages/roomdetails.html:329
 #: app/templates/pages/roomextra.html:130
 #: app/templates/udashpages/amenities.html:144
 msgid "Bar"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:270
+#: app/templates/pages/roomdetails.html:332
 #: app/templates/pages/roomextra.html:158
 #: app/templates/udashpages/amenities.html:172
 msgid "Shop"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:272
+#: app/templates/pages/roomdetails.html:334
 msgid "Resto"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:286
+#: app/templates/pages/roomdetails.html:348
 msgid "Policies"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:292
+#: app/templates/pages/roomdetails.html:354
 msgid "Trust"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:304
+#: app/templates/pages/roomdetails.html:366
 msgid "Ground rules"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:319
+#: app/templates/pages/roomdetails.html:381
 msgid "Cancellation"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:320
+#: app/templates/pages/roomdetails.html:382
 msgid "Free cancellation up to 48 hours before arrival"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:324
+#: app/templates/pages/roomdetails.html:386
 msgid "Available 24/7 just contact us."
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:333
+#: app/templates/pages/roomdetails.html:395
 msgid "Establishing trust between us"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:335
+#: app/templates/pages/roomdetails.html:397
 msgid "Identities checking is crucial"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:336
+#: app/templates/pages/roomdetails.html:398
 msgid "Step-based identity check process"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:337
+#: app/templates/pages/roomdetails.html:399
 msgid "Ensure that everybody are confident"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:339
+#: app/templates/pages/roomdetails.html:401
 msgid "Host, co-host & guest's identity is checked."
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:344
+#: app/templates/pages/roomdetails.html:406
 msgid "Why we verify identity"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:346
+#: app/templates/pages/roomdetails.html:408
 msgid "Promote trust between guests & hosts"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:347
+#: app/templates/pages/roomdetails.html:409
 msgid "Reduce fraudulent behaviour"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:348
+#: app/templates/pages/roomdetails.html:410
 msgid "Carry out lawfully background checks"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:349
+#: app/templates/pages/roomdetails.html:411
 msgid "Investigate safety and security issues"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:359
+#: app/templates/pages/roomdetails.html:421
 msgid "Before you book"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:360
+#: app/templates/pages/roomdetails.html:422
 msgid "Any questions about a listing, plz contact us."
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:363
+#: app/templates/pages/roomdetails.html:425
 msgid "When reservation is confirmed"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:364
+#: app/templates/pages/roomdetails.html:426
 msgid "Message your host immediately"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:367
+#: app/templates/pages/roomdetails.html:429
 msgid "After your trip"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:368
+#: app/templates/pages/roomdetails.html:430
 msgid "Review trip to help the community"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:377
+#: app/templates/pages/roomdetails.html:439
 msgid "Rule 1"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:381
+#: app/templates/pages/roomdetails.html:443
 #: app/templates/udashpages/mylistings.html:225
 msgid "Rule 2"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:385
+#: app/templates/pages/roomdetails.html:447
 #: app/templates/udashpages/mylistings.html:241
 msgid "Rule 3"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:442
+#: app/templates/pages/roomdetails.html:504
 msgid "Ready to book your stay?"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:444
+#: app/templates/pages/roomdetails.html:506
 msgid ""
 "Enjoy comfortable, peaceful, and affordable accommodations\n"
 "              for your short gateway and holidays. Book now with "
@@ -2021,73 +2183,73 @@ msgid ""
 "              create memories that will last forever."
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:454
+#: app/templates/pages/roomdetails.html:516
 msgid ""
 "Book\n"
 "              now !"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:473
+#: app/templates/pages/roomdetails.html:535
 msgid "Review to read"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:474
+#: app/templates/pages/roomdetails.html:536
 msgid "Reviews to read"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:481
+#: app/templates/pages/roomdetails.html:543
 msgid "Review for this room."
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:483
+#: app/templates/pages/roomdetails.html:545
 msgid "Latest user Review"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:486
+#: app/templates/pages/roomdetails.html:548
 msgid "Reviews for this room."
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:488
+#: app/templates/pages/roomdetails.html:550
 msgid "Latest users Reviews"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:504
+#: app/templates/pages/roomdetails.html:566
 msgid "Stayed"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:506
+#: app/templates/pages/roomdetails.html:568
 msgid "Verified Stay"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:528
+#: app/templates/pages/roomdetails.html:590
 msgid "Helpful"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:550
+#: app/templates/pages/roomdetails.html:612
 msgid "Review this Room"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:557
+#: app/templates/pages/roomdetails.html:619
 msgid "Select a score"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:573
+#: app/templates/pages/roomdetails.html:635
 msgid "Enter your review message"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:603
+#: app/templates/pages/roomdetails.html:665
 msgid "Room Availability"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:611
+#: app/templates/pages/roomdetails.html:673
 msgid "Booked"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:612
+#: app/templates/pages/roomdetails.html:674
 msgid "Blocked"
 msgstr ""
 
-#: app/templates/pages/roomdetails.html:613
+#: app/templates/pages/roomdetails.html:675
 msgid "Available"
 msgstr ""
 
@@ -2158,12 +2320,6 @@ msgstr ""
 msgid "Free WiFi"
 msgstr ""
 
-#: app/templates/pages/rooms.html:144 app/templates/pages/roomsearched.html:148
-#: app/templates/udashpages/mybookings.html:43
-#: app/templates/udashpages/mybookings.html:188
-msgid "From"
-msgstr ""
-
 #: app/templates/pages/rooms.html:149
 msgid ""
 "View\n"
@@ -2208,6 +2364,274 @@ msgstr ""
 
 #: app/templates/pages/signup.html:40
 msgid "Sign up now"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:57
+#: app/templates/pages/terms_of_use.html:61
+msgid "Terms of Use"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:82
+msgid "Acceptance of These Terms"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:84
+msgid ""
+"By creating an account or using the Jambo platform in any way, you agree "
+"to be bound by these Terms of\n"
+"        Use. If you do not agree, please do not use the platform."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:88
+msgid "Eligibility"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:90
+msgid ""
+"You must be at least 18 years old to register for or use a Jambo account."
+" By registering, you confirm that\n"
+"        you meet this requirement."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:94
+msgid "Your Account"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:96
+msgid ""
+"You are responsible for keeping your account credentials secure and for "
+"all activity that occurs under\n"
+"        your account. You agree to provide accurate, current information "
+"when registering, and to keep it up to date."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:101
+msgid ""
+"Each person may hold only one Jambo account. Creating multiple accounts "
+"to circumvent platform rules,\n"
+"        restrictions, or penalties is prohibited."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:105
+msgid "Host Responsibilities"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:107
+msgid "If you list a room on Jambo, you confirm that:"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:110
+msgid "You have the legal right to offer the property for short-term rental."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:111
+msgid ""
+"The listing accurately describes the property, its condition, and its "
+"amenities."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:112
+msgid ""
+"The property is safe, habitable, and complies with any applicable local "
+"laws and regulations."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:114
+msgid ""
+"You will honor confirmed bookings, except as permitted under the Payment "
+"Policy."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:117
+msgid "Guest Responsibilities"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:119
+msgid "If you book a room on Jambo, you agree to:"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:122
+msgid "Provide accurate information when making a booking."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:123
+msgid ""
+"Respect the property and follow the host's reasonable house rules during "
+"your stay."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:124
+msgid "Pay for your booking in full through the Jambo platform."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:127
+msgid "Prohibited Conduct"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:129
+msgid "The following are strictly prohibited on Jambo:"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:132
+msgid ""
+"Listing a property you do not have the legal right to rent out, or that "
+"is used for any illegal\n"
+"          purpose."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:134
+msgid ""
+"Discrimination against any user on the basis of race, gender, religion, "
+"nationality, disability,\n"
+"          sexual orientation, or any other protected characteristic."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:136
+msgid ""
+"Fraud or misrepresentation, including fake listings, fake reviews, or "
+"false information provided to\n"
+"          another user or to Jambo."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:138
+msgid ""
+"Harassment, threats, or abusive behavior directed at any other user, "
+"including through Jambo's\n"
+"          messaging system."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:140
+msgid ""
+"Attempting to arrange payment outside the Jambo platform for a booking "
+"made through Jambo."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:141
+msgid "Creating multiple accounts to evade a suspension, restriction, or penalty."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:142
+msgid ""
+"Uploading content -- photos, descriptions, or messages -- that is "
+"illegal, offensive, or infringes on\n"
+"          the rights of others."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:146
+msgid "Content You Provide"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:148
+msgid ""
+"When you upload photos, descriptions, or other content to a listing, you "
+"grant Jambo a license to display\n"
+"        that content on the platform for the purpose of operating the "
+"service. You remain responsible for ensuring you\n"
+"        have the right to share it."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:153
+#: app/templates/udashpages/reviews.html:14
+msgid "Reviews"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:155
+msgid ""
+"Reviews must reflect your genuine experience as a guest or host. Jambo "
+"may remove a review that violates\n"
+"        this policy or the prohibited conduct rules above."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:159
+msgid "Suspension and Termination"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:161
+msgid ""
+"Jambo reserves the right to suspend or terminate an account that violates"
+" these Terms of Use, including\n"
+"        the prohibited conduct listed in Section 6."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:165
+msgid "Jambo's Role and Limitation of Liability"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:167
+msgid ""
+"Jambo is a marketplace that connects hosts and guests. Jambo does not "
+"own, manage, or inspect the\n"
+"        properties listed on the platform, and is not responsible for the"
+" actual condition, safety, or legality of a\n"
+"        listed property. Jambo's role in payment processing is described "
+"separately in the Payment Policy."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:174
+msgid ""
+"All payments, host payouts, and cancellation terms are governed by "
+"Jambo's Payment Policy, available\n"
+"        separately on the platform."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:178
+msgid "Governing Law"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:180
+msgid ""
+"These Terms of Use are governed by the laws of Côte d'Ivoire. Any dispute"
+" arising from your use of Jambo\n"
+"        will be subject to the exclusive jurisdiction of the courts of "
+"Côte d'Ivoire."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:184
+msgid "Changes to These Terms"
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:186
+msgid ""
+"Jambo may update these Terms of Use from time to time. Continued use of "
+"the platform after changes are\n"
+"        published constitutes acceptance of the revised terms."
+msgstr ""
+
+#: app/templates/pages/terms_of_use.html:192
+msgid ""
+"Questions about these Terms of Use can be directed to "
+"ropero.app@gmail.com."
+msgstr ""
+
+#: app/templates/pages/verify_link_issue.html:7
+msgid "Verification Link"
+msgstr ""
+
+#: app/templates/pages/verify_link_issue.html:105
+msgid "This link has expired"
+msgstr ""
+
+#: app/templates/pages/verify_link_issue.html:107
+msgid ""
+"Verification links are only valid for 24 hours. No problem\n"
+"                -- request a fresh one below and it'll be with you in a "
+"moment."
+msgstr ""
+
+#: app/templates/pages/verify_link_issue.html:111
+msgid "This link isn't valid"
+msgstr ""
+
+#: app/templates/pages/verify_link_issue.html:113
+msgid ""
+"We couldn't verify this link. It may have already been\n"
+"                used, or the address may be incomplete. You can request a"
+" new one\n"
+"                below."
+msgstr ""
+
+#: app/templates/pages/verify_link_issue.html:118
+msgid "Send a new verification link"
 msgstr ""
 
 #: app/templates/udashpages/amenities.html:20
@@ -2257,7 +2681,7 @@ msgstr ""
 
 #: app/templates/udashpages/calendar.html:79
 #: app/templates/udashpages/calendar.html:131
-#: app/templates/udashpages/myrefund.html:40
+#: app/templates/udashpages/myrefund.html:37
 msgid "Reason"
 msgstr ""
 
@@ -2278,7 +2702,7 @@ msgid "Notes (optional)"
 msgstr ""
 
 #: app/templates/udashpages/calendar.html:94
-#: app/templates/udashpages/myearnings.html:222
+#: app/templates/udashpages/myearnings.html:203
 msgid "Cancel"
 msgstr ""
 
@@ -2316,12 +2740,12 @@ msgid "Total host"
 msgstr ""
 
 #: app/templates/udashpages/dashboard.html:74
-msgid "room bookings"
+msgid "rooms"
 msgstr ""
 
 #: app/templates/udashpages/dashboard.html:84
-#: app/templates/udashpages/myearnings.html:14
-#: app/templates/udashpages/myearnings.html:23
+#: app/templates/udashpages/myearnings.html:11
+#: app/templates/udashpages/myearnings.html:20
 msgid "Earnings"
 msgstr ""
 
@@ -2338,172 +2762,310 @@ msgstr ""
 msgid "Withdraw update"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:23
+#: app/templates/udashpages/mybookings.html:67
 msgid "My Bookings"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:29
+#: app/templates/udashpages/mybookings.html:73
 msgid "Bookings as host"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:34
+#: app/templates/udashpages/mybookings.html:88
+msgid "Add a phone number to your profile to enable booking notifications."
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:91
+msgid "Add Phone Number"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:94
+msgid "Booking Notifications"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:102
+msgid "Off"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:107
+msgid "SMS"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:113
+msgid "WhatsApp"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:118
+msgid "SMS: £0.05 per message"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:118
+msgid "WhatsApp: £0.02 per message"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:119
+msgid "deducted automatically from your earnings when sent."
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:126
 msgid "Total Host bookings"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:41
-#: app/templates/udashpages/mybookings.html:192
+#: app/templates/udashpages/mybookings.html:133
+#: app/templates/udashpages/mybookings.html:331
 #: app/templates/udashpages/mylistings.html:308
 msgid "Price"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:42
+#: app/templates/udashpages/mybookings.html:134
 msgid "Guest"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:44
+#: app/templates/udashpages/mybookings.html:136
 msgid "Days"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:80
-#: app/templates/udashpages/mybookings.html:194
-#: app/templates/udashpages/mybookings.html:234
+#: app/templates/udashpages/mybookings.html:168
+#: app/templates/udashpages/mybookings.html:333
+#: app/templates/udashpages/mybookings.html:366
 #: app/templates/udashpages/mylistings.html:309
 #: app/templates/udashpages/mylistings.html:335
 msgid "Action"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:86
-#: app/templates/udashpages/mybookings.html:259
+#: app/templates/udashpages/mybookings.html:172
+#: app/templates/udashpages/mybookings.html:378
 msgid "Need help"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:98
-#: app/templates/udashpages/mybookings.html:273
+#: app/templates/udashpages/mybookings.html:183
+#: app/templates/udashpages/mybookings.html:389
 msgid "Message"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:121
+#: app/templates/udashpages/mybookings.html:192
+#: app/templates/udashpages/mybookings.html:205
+msgid "Cancel Booking"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:210
+#, python-format
+msgid ""
+"The guest will be refunded in full. Whether a 15%% fee applies depends on"
+"\n"
+"                                      the reason selected below."
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:214
+msgid "Reason for cancelling"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:217
+msgid "Select a reason"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:218
+msgid "No fee -- reasonable cause"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:219
+msgid "Property damage or safety issue"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:221
+msgid "Natural disaster / force majeure"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:223
+msgid ""
+"Death or serious illness (host or immediate\n"
+"                                          family)"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:225
+msgid "Legal issue affecting the property"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:227
+msgid ""
+"Guest violated a house rule before\n"
+"                                          arrival"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:230
+#, python-format
+msgid "15%% fee applies"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:231
+msgid "Found a better-paying booking"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:232
+msgid "Changed my mind about hosting"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:233
+msgid ""
+"Accidental double-booking / calendar\n"
+"                                          error"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:235
+msgid "Want to use the property myself"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:236
+msgid "Other"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:241
+msgid "Please describe the reason"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:247
+msgid "Back"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:248
+msgid "Confirm Cancellation"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:267
 msgid "Rate Guest"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:132
+#: app/templates/udashpages/mybookings.html:274
 msgid "View reviews"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:152
-#: app/templates/udashpages/mybookings.html:317
-#: app/templates/udashpages/myearnings.html:66
-#: app/templates/udashpages/myearnings.html:131
+#: app/templates/udashpages/mybookings.html:293
+#: app/templates/udashpages/mybookings.html:422
+#: app/templates/udashpages/myearnings.html:62
+#: app/templates/udashpages/myearnings.html:122
 #: app/templates/udashpages/mylistings.html:376
-#: app/templates/udashpages/myrefund.html:62
+#: app/templates/udashpages/myrefund.html:68
 msgid "Previous"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:157
-#: app/templates/udashpages/myearnings.html:70
-#: app/templates/udashpages/myearnings.html:136
+#: app/templates/udashpages/mybookings.html:297
+#: app/templates/udashpages/myearnings.html:65
+#: app/templates/udashpages/myearnings.html:126
 #: app/templates/udashpages/mylistings.html:379
-#: app/templates/udashpages/myrefund.html:67
+#: app/templates/udashpages/myrefund.html:72
 msgid "Page"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:164
-#: app/templates/udashpages/mybookings.html:327
-#: app/templates/udashpages/myearnings.html:77
-#: app/templates/udashpages/myearnings.html:143
+#: app/templates/udashpages/mybookings.html:303
+#: app/templates/udashpages/mybookings.html:429
+#: app/templates/udashpages/myearnings.html:71
+#: app/templates/udashpages/myearnings.html:132
 #: app/templates/udashpages/mylistings.html:384
-#: app/templates/udashpages/myrefund.html:74
+#: app/templates/udashpages/myrefund.html:77
 msgid "Next"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:179
+#: app/templates/udashpages/mybookings.html:318
 msgid "Bookings as Guest"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:184
+#: app/templates/udashpages/mybookings.html:323
 msgid "Total Guest bookings"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:252
+#: app/templates/udashpages/mybookings.html:328
+msgid "To"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:332
+msgid "Host"
+msgstr ""
+
+#: app/templates/udashpages/mybookings.html:374
 msgid "Cancel booking"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:299
+#: app/templates/udashpages/mybookings.html:406
 msgid "Rate stay"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:347
+#: app/templates/udashpages/mybookings.html:449
 msgid "Rate your guest"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:381
+#: app/templates/udashpages/mybookings.html:468
 msgid "Share what it was like hosting this guest (min. 20 characters)..."
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:390
+#: app/templates/udashpages/mybookings.html:476
 msgid "Submit review"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:405
+#: app/templates/udashpages/mybookings.html:491
 msgid "Guest reviews"
 msgstr ""
 
-#: app/templates/udashpages/mybookings.html:416
+#: app/templates/udashpages/mybookings.html:497
 msgid "Loading..."
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:30
+#: app/templates/udashpages/myearnings.html:27
 msgid "Earnings per transaction"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:36
-#: app/templates/udashpages/myearnings.html:103
-#: app/templates/udashpages/myrefund.html:34
+#: app/templates/udashpages/myearnings.html:33
+#: app/templates/udashpages/myearnings.html:95
+#: app/templates/udashpages/myrefund.html:31
 msgid "Total Transactions"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:41
+#: app/templates/udashpages/myearnings.html:37
+#: app/templates/udashpages/myrefund.html:35
+#: app/templates/udashpages/reviews.html:35
+msgid "Date"
+msgstr ""
+
+#: app/templates/udashpages/myearnings.html:38
 msgid "Gross Amount"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:43
+#: app/templates/udashpages/myearnings.html:40
 msgid "Fees"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:44
+#: app/templates/udashpages/myearnings.html:41
 msgid "Net Earn"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:94
+#: app/templates/udashpages/myearnings.html:88
 msgid "Withdrawal transaction"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:96
+#: app/templates/udashpages/myearnings.html:89
 msgid "Click the floating button to request a withdrawal"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:107
+#: app/templates/udashpages/myearnings.html:99
 msgid "Request Date"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:108
-#: app/templates/udashpages/myrefund.html:39
+#: app/templates/udashpages/myearnings.html:100
+#: app/templates/udashpages/myrefund.html:36
 msgid "Amount"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:110
+#: app/templates/udashpages/myearnings.html:102
 msgid "Processed Date"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:172
+#: app/templates/udashpages/myearnings.html:157
 msgid "Approved Balance"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:186
+#: app/templates/udashpages/myearnings.html:171
 msgid "Request Withdrawal"
 msgstr ""
 
-#: app/templates/udashpages/myearnings.html:195
+#: app/templates/udashpages/myearnings.html:180
 msgid "Funds Available"
 msgstr ""
 
@@ -2590,16 +3152,20 @@ msgstr ""
 msgid "Delete listing"
 msgstr ""
 
-#: app/templates/udashpages/myrefund.html:23
+#: app/templates/udashpages/myrefund.html:20
 msgid "My Refunds"
 msgstr ""
 
-#: app/templates/udashpages/myrefund.html:29
+#: app/templates/udashpages/myrefund.html:26
 msgid "Refund tracking"
 msgstr ""
 
-#: app/templates/udashpages/myrefund.html:42
+#: app/templates/udashpages/myrefund.html:39
 msgid "Refunded at"
+msgstr ""
+
+#: app/templates/udashpages/myrefund.html:57
+msgid "Not yet processed"
 msgstr ""
 
 #: app/templates/udashpages/picsupdate.html:10
@@ -2620,10 +3186,6 @@ msgid ""
 "Image 1 and Image 2 are required for every listing.\n"
 "                    Leave any other slot empty to keep its current image\n"
 "                    unchanged."
-msgstr ""
-
-#: app/templates/udashpages/reviews.html:14
-msgid "Reviews"
 msgstr ""
 
 #: app/templates/udashpages/reviews.html:23
@@ -2710,92 +3272,134 @@ msgstr ""
 msgid "Room status"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:43
+#: app/templates/udashpages/usprofile.html:38
 msgid "Mbsp Status"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:62
+#: app/templates/udashpages/usprofile.html:57
 msgid "Edit Profile"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:69
+#: app/templates/udashpages/usprofile.html:64
 msgid "Company"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:84
+#: app/templates/udashpages/usprofile.html:79
 msgid "Username"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:99
+#: app/templates/udashpages/usprofile.html:94
 msgid "Email address"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:117
+#: app/templates/udashpages/usprofile.html:112
 msgid "Gender"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:132
+#: app/templates/udashpages/usprofile.html:127
 msgid "Phone Number"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:149
+#: app/templates/udashpages/usprofile.html:144
 msgid "Address"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:166
+#: app/templates/udashpages/usprofile.html:161
 msgid "City"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:196
+#: app/templates/udashpages/usprofile.html:176
+msgid "Country"
+msgstr ""
+
+#: app/templates/udashpages/usprofile.html:191
 msgid "Postal Code"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:213
+#: app/templates/udashpages/usprofile.html:208
 msgid "About Me"
 msgstr ""
 
-#: app/templates/udashpages/usprofile.html:261
+#: app/templates/udashpages/usprofile.html:249
 msgid "Points"
 msgstr ""
 
-#: app/udashboard/routes.py:203
+#: app/udashboard/routes.py:204
 #, python-format
 msgid "Withdrawal currently unavailable: missing exchange rate for %(currency)s."
 msgstr ""
 
-#: app/udashboard/routes.py:213
+#: app/udashboard/routes.py:214
 msgid "Insufficient balance"
 msgstr ""
 
-#: app/udashboard/routes.py:229
+#: app/udashboard/routes.py:230
 msgid "Withdrawal request submitted"
 msgstr ""
 
-#: app/udashboard/routes.py:310
+#: app/udashboard/routes.py:313
 msgid "Your profile has been successfully updated"
 msgstr ""
 
-#: app/udashboard/routes.py:431
+#: app/udashboard/routes.py:520
+msgid "Cancelled by you"
+msgstr ""
+
+#: app/udashboard/routes.py:521
+msgid "Cancelled by host"
+msgstr ""
+
+#: app/udashboard/routes.py:522
+msgid "Account closed"
+msgstr ""
+
+#: app/udashboard/routes.py:523
+msgid "Cancelled"
+msgstr ""
+
+#: app/udashboard/routes.py:560
 msgid "You can only rate a guest after their stay has completed."
 msgstr ""
 
-#: app/udashboard/routes.py:439
+#: app/udashboard/routes.py:568
 msgid "You've already rated this guest for this stay."
 msgstr ""
 
-#: app/udashboard/routes.py:456
+#: app/udashboard/routes.py:585
 msgid "Thanks -- your review of the guest has been submitted."
 msgstr ""
 
-#: app/udashboard/routes.py:458
+#: app/udashboard/routes.py:587
 msgid "Rating and a review of at least 20 characters are required."
 msgstr ""
 
-#: app/udashboard/routes.py:531
+#: app/udashboard/routes.py:600
+msgid "Invalid selection."
+msgstr ""
+
+#: app/udashboard/routes.py:604
+msgid ""
+"Please add a phone number to your profile before enabling booking "
+"notifications."
+msgstr ""
+
+#: app/udashboard/routes.py:611
+msgid "Booking notifications turned off."
+msgstr ""
+
+#: app/udashboard/routes.py:613
+msgid "SMS booking notifications enabled."
+msgstr ""
+
+#: app/udashboard/routes.py:615
+msgid "WhatsApp booking notifications enabled."
+msgstr ""
+
+#: app/udashboard/routes.py:688
 msgid "Great! your room listing is now live."
 msgstr ""
 
-#: app/udashboard/routes.py:537
+#: app/udashboard/routes.py:694
 msgid ""
 "You need to fully complete your profile before you can make a room "
 "listing!"
@@ -2805,51 +3409,49 @@ msgstr ""
 msgid "Login unsuccessful, Please check email and password!"
 msgstr ""
 
-#: app/users/routes.py:120 app/users/routes.py:184
+#: app/users/routes.py:121 app/users/routes.py:185
 msgid "Account created! Please check your email to verify your account."
 msgstr ""
 
-#: app/users/routes.py:131
+#: app/users/routes.py:132
 msgid "You are now logged out of the system"
 msgstr ""
 
-#: app/users/routes.py:162
+#: app/users/routes.py:163
 msgid "That is an invalid or expired token"
 msgstr ""
 
-#: app/users/routes.py:170
+#: app/users/routes.py:171
 msgid "Your Password has been Updated!. You can now Log in."
-msgstr ""
-
-#: app/users/routes.py:194
-msgid "That verification link is invalid or has expired."
 msgstr ""
 
 #: app/users/routes.py:198
 msgid "Your email is already verified."
 msgstr ""
 
-#: app/users/routes.py:205
-msgid "Your email has been verified! You can now log in."
+#: app/users/routes.py:223
+msgid ""
+"If an account with that email exists and needs verifying, a fresh link is"
+" on its way."
 msgstr ""
 
-#: app/users/routes.py:232
+#: app/users/routes.py:252
 msgid ""
 "You have upcoming guests booked into your rooms. Please resolve these "
 "bookings before deleting your account."
 msgstr ""
 
-#: app/users/routes.py:249
+#: app/users/routes.py:269
 msgid ""
 "You have an upcoming trip that can no longer be freely cancelled. Please "
 "contact us before deleting your account."
 msgstr ""
 
-#: app/users/routes.py:254
+#: app/users/routes.py:274
 msgid "Incorrect password. Account not deleted."
 msgstr ""
 
-#: app/users/routes.py:278
+#: app/users/routes.py:298
 msgid "Your account has been deleted."
 msgstr ""
 
@@ -2863,38 +3465,35 @@ msgid "Hello %(name)s,"
 msgstr ""
 
 #: app/users/usermails/joinusmail.py:28
-#, python-format
 msgid ""
-"We would like to thank you for your registration received today %(date)s."
-" We wish you a warm welcome to the \"Jambo community\" where you can "
-"reserve short stays safer, happier and cheaper. Also, you can confidently"
-" add a room to start generating passive income."
+"We would like to thank you for your registration received today. We wish "
+"you a warm welcome to the \"Jambo community\". "
 msgstr ""
 
-#: app/users/usermails/joinusmail.py:36
+#: app/users/usermails/joinusmail.py:33
 msgid ""
 "Click on the button below to verify and activate your account and start "
 "your Jambo adventure."
 msgstr ""
 
-#: app/users/usermails/joinusmail.py:37
+#: app/users/usermails/joinusmail.py:34
 msgid "Verify & Activate your account"
 msgstr ""
 
-#: app/users/usermails/joinusmail.py:38
+#: app/users/usermails/joinusmail.py:35
 msgid "Kind regards"
 msgstr ""
 
-#: app/users/usermails/joinusmail.py:39
+#: app/users/usermails/joinusmail.py:36
 msgid "Customer Service."
 msgstr ""
 
-#: app/users/usermails/joinusmail.py:40
+#: app/users/usermails/joinusmail.py:37
 #, python-format
 msgid "Copyright © %(year)s Jambo. All Rights Reserved."
 msgstr ""
 
-#: app/users/usermails/joinusmail.py:41
+#: app/users/usermails/joinusmail.py:38
 msgid "Powered by"
 msgstr ""
 

@@ -1,27 +1,35 @@
-# French translations for PROJECT.
-# Copyright (C) 2026 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-24 08:52+0100\n"
-"PO-Revision-Date: 2026-06-28 12:36+0100\n"
+"POT-Creation-Date: 2026-10-23 12:41+0100\n"
+"PO-Revision-Date: 2026-10-23 10:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.18.0\n"
+
+#: app/errors/handlers.py:57
+#, python-format
+msgid "%(field)s is too long. Please shorten it and try again."
+msgstr ""
+"La valeur de « %(field)s » est trop longue. Veuillez la raccourcir et "
+"réessayer."
+
+#: app/errors/handlers.py:59
+msgid "One of the values entered is too long. Please shorten it and try again."
+msgstr ""
+"L'une des valeurs saisies est trop longue. Veuillez la raccourcir et "
+"réessayer."
 
 #: app/helpers/booking.py:58
 msgid "Sorry, this room is not available for selected dates."
-msgstr ""
-"Désolé, cette chambre n'est pas disponible pour les dates sélectionnées."
+msgstr "Désolé, cette chambre n'est pas disponible pour les dates sélectionnées."
 
 #: app/helpers/booking.py:83 app/helpers/booking.py:87
 #, python-format
@@ -36,11 +44,14 @@ msgstr ""
 "Impossible de générer une référence de réservation unique. Veuillez "
 "réessayer."
 
-#: app/helpers/email_verify.py:13
-msgid "Please verify your email before booking or listing a room."
+#: app/helpers/email_verify.py:18
+msgid ""
+"Unverified email. Please use the link provided in your email to verify. "
+"Alternatively, enter your email to obtain a new verification link."
 msgstr ""
-"Veuillez vérifier votre adresse e-mail avant de réserver ou passez une "
-"annonce."
+"Adresse e-mail non vérifiée. Veuillez utiliser le lien reçu par e-mail "
+"pour la vérifier. Vous pouvez aussi saisir votre adresse e-mail pour "
+"obtenir un nouveau lien de vérification."
 
 #: app/main/routes.py:115
 msgid "Weekend Getaway Deal"
@@ -68,18 +79,18 @@ msgstr "Disponible toute l'année"
 
 #: app/main/routes.py:177
 msgid ""
-"I booked a room in Abidjan while I was still in London, and seeing the price"
-" instantly in my own currency made the whole process feel effortless. No "
-"guesswork, no surprises at checkout — just a clear, honest price from start "
-"to finish. Jambo made booking across borders feel as simple as booking a "
-"hotel at home."
+"I booked a room in Abidjan while I was still in London, and seeing the "
+"price instantly in my own currency made the whole process feel "
+"effortless. No guesswork, no surprises at checkout — just a clear, honest"
+" price from start to finish. Jambo made booking across borders feel as "
+"simple as booking a hotel at home."
 msgstr ""
-"J'ai réservé une chambre à Abidjan alors que j'étais encore à Londres, et "
-"voir le prix instantanément dans ma propre devise a rendu tout le processus "
-"simple et fluide. Aucune incertitude, aucune surprise au moment de payer — "
-"juste un prix clair et honnête du début à la fin. Jambo a rendu la "
-"réservation à l'international aussi simple que de réserver un hôtel chez "
-"soi."
+"J'ai réservé une chambre à Abidjan alors que j'étais encore à Londres, et"
+" voir le prix instantanément dans ma propre devise a rendu tout le "
+"processus simple et fluide. Aucune incertitude, aucune surprise au moment"
+" de payer — juste un prix clair et honnête du début à la fin. Jambo a "
+"rendu la réservation à l'international aussi simple que de réserver un "
+"hôtel chez soi."
 
 #: app/main/routes.py:180
 msgid "Frequent Traveler"
@@ -87,16 +98,17 @@ msgstr "Voyageur fréquent"
 
 #: app/main/routes.py:183
 msgid ""
-"Listing my first room on Jambo took less than ten minutes, and within a week"
-" I had my first booking. Being able to set my own discount and track my "
-"earnings right from my dashboard gives me real control over my own listing. "
-"It's turned a spare room into a genuine, reliable source of income."
+"Listing my first room on Jambo took less than ten minutes, and within a "
+"week I had my first booking. Being able to set my own discount and track "
+"my earnings right from my dashboard gives me real control over my own "
+"listing. It's turned a spare room into a genuine, reliable source of "
+"income."
 msgstr ""
-"Publier ma première annonce sur Jambo m'a pris moins de dix minutes, et en "
-"une semaine j'avais ma première réservation. Pouvoir fixer ma propre remise "
-"et suivre mes revenus directement depuis mon tableau de bord me donne un "
-"vrai contrôle sur mon annonce. Cela a transformé une chambre inutilisée en "
-"une source de revenus fiable."
+"Publier ma première annonce sur Jambo m'a pris moins de dix minutes, et "
+"en une semaine j'avais ma première réservation. Pouvoir fixer ma propre "
+"remise et suivre mes revenus directement depuis mon tableau de bord me "
+"donne un vrai contrôle sur mon annonce. Cela a transformé une chambre "
+"inutilisée en une source de revenus fiable."
 
 #: app/main/routes.py:186
 msgid "Host, Cocody"
@@ -104,17 +116,17 @@ msgstr "Hôte, Cocody"
 
 #: app/main/routes.py:189
 msgid ""
-"My family is originally from Dakar, and I go back every year to visit. Being"
-" able to browse listings and book everything in French, with prices shown in"
-" euros before I even convert anything in my head, makes the whole process so"
-" much less stressful. Jambo genuinely feels like it was built with people "
-"like me in mind."
+"My family is originally from Dakar, and I go back every year to visit. "
+"Being able to browse listings and book everything in French, with prices "
+"shown in euros before I even convert anything in my head, makes the whole"
+" process so much less stressful. Jambo genuinely feels like it was built "
+"with people like me in mind."
 msgstr ""
-"Ma famille est originaire de Dakar, et j'y retourne chaque année. Pouvoir "
-"parcourir les annonces et tout réserver en français, avec les prix affichés "
-"en euros sans avoir besoin de convertir quoi que ce soit mentalement, rend "
-"tout le processus beaucoup moins stressant. Jambo semble vraiment avoir été "
-"conçu en pensant à des personnes comme moi."
+"Ma famille est originaire de Dakar, et j'y retourne chaque année. Pouvoir"
+" parcourir les annonces et tout réserver en français, avec les prix "
+"affichés en euros sans avoir besoin de convertir quoi que ce soit "
+"mentalement, rend tout le processus beaucoup moins stressant. Jambo "
+"semble vraiment avoir été conçu en pensant à des personnes comme moi."
 
 #: app/main/routes.py:192
 msgid "Guest, Paris"
@@ -122,62 +134,61 @@ msgstr "Cliente, Paris"
 
 #: app/main/routes.py:195
 msgid ""
-"I was nervous about hosting for the first time, but the review system gave "
-"me confidence — guests could see I was trustworthy before they even messaged"
-" me, and I could see the same about them. Payments land in my account "
-"already converted, no confusion about exchange rates. Its been a genuinely "
-"reliable way to earn extra income from a room I was not using."
+"I was nervous about hosting for the first time, but the review system "
+"gave me confidence — guests could see I was trustworthy before they even "
+"messaged me, and I could see the same about them. Payments land in my "
+"account already converted, no confusion about exchange rates. Its been a "
+"genuinely reliable way to earn extra income from a room I was not using."
 msgstr ""
-"J'étais nerveuse à l'idée d'accueillir des invités pour la première fois, "
-"mais le système d'avis m'a donné confiance — les invités pouvaient voir que "
-"j'étais fiable avant même de me contacter, et je pouvais voir la même chose "
-"à leur sujet. Les paiements arrivent sur mon compte déjà convertis, sans "
-"confusion sur les taux de change. Cela s'est révélé être un moyen vraiment "
-"fiable de gagner un revenu supplémentaire grâce à une chambre que je "
-"n'utilisais pas."
+"J'étais nerveuse à l'idée d'accueillir des invités pour la première fois,"
+" mais le système d'avis m'a donné confiance — les invités pouvaient voir "
+"que j'étais fiable avant même de me contacter, et je pouvais voir la même"
+" chose à leur sujet. Les paiements arrivent sur mon compte déjà "
+"convertis, sans confusion sur les taux de change. Cela s'est révélé être "
+"un moyen vraiment fiable de gagner un revenu supplémentaire grâce à une "
+"chambre que je n'utilisais pas."
 
 #: app/main/routes.py:198
 msgid "Host, Nairobi"
 msgstr "Hôtesse, Nairobi"
 
-#: app/main/routes.py:300
+#: app/main/routes.py:312
 msgid "Your message has been sent successfully."
 msgstr "Votre message a été envoyé avec succès."
 
-#: app/rooms/routes.py:151
+#: app/rooms/routes.py:153
 msgid "Invalid arrival or departure date."
 msgstr "Date d'arrivée ou de départ invalide."
 
-#: app/rooms/routes.py:156
+#: app/rooms/routes.py:158
 msgid "Departure date must be after arrival date."
 msgstr "La date de départ doit être postérieure à la date d'arrivée."
 
-#: app/rooms/routes.py:162
+#: app/rooms/routes.py:164
 msgid "No rooms available for the selected dates."
 msgstr "Aucune chambre disponible pour les dates sélectionnées."
 
-#: app/rooms/routes.py:173
+#: app/rooms/routes.py:175
 msgid "No rooms found. Please refine your search."
 msgstr "Aucune chambre trouvée. Veuillez affiner votre recherche."
 
-#: app/rooms/routes.py:197
+#: app/rooms/routes.py:203
 msgid "Please complete your profile (address and phone) before booking."
-msgstr ""
-"Veuillez compléter votre profil (adresse et téléphone) avant de réserver."
+msgstr "Veuillez compléter votre profil (adresse et téléphone) avant de réserver."
 
-#: app/rooms/routes.py:214
+#: app/rooms/routes.py:220
 msgid "Resuming your existing booking for this room."
 msgstr "Reprise de votre réservation existante pour cette chambre."
 
-#: app/rooms/routes.py:239
+#: app/rooms/routes.py:245
 msgid "Booking submitted successfully. Proceed to checkout!"
 msgstr "Réservation soumise avec succès. Procédez au paiement !"
 
-#: app/rooms/routes.py:327
+#: app/rooms/routes.py:333
 msgid "Booking already cancelled."
 msgstr "Réservation déjà annulée."
 
-#: app/rooms/routes.py:333
+#: app/rooms/routes.py:339
 msgid ""
 "This booking can no longer be cancelled online. Please contact us for "
 "assistance."
@@ -185,53 +196,80 @@ msgstr ""
 "Cette réservation ne peut plus être annulée en ligne. Veuillez nous "
 "contacter pour obtenir de l'aide."
 
-#: app/rooms/routes.py:340
+#: app/rooms/routes.py:346
 msgid "No payment record found for this booking. Please contact us."
-msgstr ""
-"Aucun paiement trouvé pour cette réservation. Veuillez nous contacter."
+msgstr "Aucun paiement trouvé pour cette réservation. Veuillez nous contacter."
 
-#: app/rooms/routes.py:350
+#: app/rooms/routes.py:356
 #, python-format
 msgid "Link to view cancellation summary sent to %(email)s."
 msgstr "Consultez le récapitulatif de l'annulation envoyé à %(email)s."
 
-#: app/rooms/routes.py:369
+#: app/rooms/routes.py:398
+msgid "Only a confirmed booking can be cancelled this way."
+msgstr "Seule une réservation confirmée peut être annulée de cette manière."
+
+#: app/rooms/routes.py:403
+msgid "Please select a valid reason for cancelling this booking."
+msgstr ""
+"Veuillez sélectionner un motif valide pour l'annulation de cette "
+"réservation."
+
+#: app/rooms/routes.py:408
+msgid "Please describe the reason for cancelling this booking."
+msgstr "Veuillez décrire le motif de l'annulation de cette réservation."
+
+#: app/rooms/routes.py:451
+msgid ""
+"Booking cancelled. The guest has been notified and will be refunded. No "
+"penalty applied."
+msgstr ""
+"Réservation annulée. L'invité a été informé et sera remboursé. Aucune "
+"pénalité appliquée."
+
+#: app/rooms/routes.py:453
+#, python-format
+msgid ""
+"Booking cancelled. The guest has been notified and will be refunded. A "
+"15%% fee has been deducted from your earnings."
+msgstr ""
+"Réservation annulée. L'invité a été informé et sera remboursé. Des frais "
+"de 15 %% ont été déduits de vos revenus."
+
+#: app/rooms/routes.py:471
 msgid "Server error or booking already created."
 msgstr "Erreur serveur ou réservation déjà créée."
 
-#: app/rooms/routes.py:376
+#: app/rooms/routes.py:478
 msgid "Invalid booking dates."
 msgstr "Dates de réservation invalides."
 
-#: app/rooms/routes.py:390 app/rooms/routes.py:395
+#: app/rooms/routes.py:492 app/rooms/routes.py:497
 #, python-format
-msgid ""
-"Checkout currently unavailable: missing exchange rate for %(currency)s."
+msgid "Checkout currently unavailable: missing exchange rate for %(currency)s."
 msgstr ""
 "Paiement actuellement indisponible : taux de change manquant pour "
 "%(currency)s."
 
-#: app/rooms/routes.py:493
-#, python-format
+#: app/rooms/routes.py:595
 msgid "Checkout currently unavailable: missing exchange rate for XOF."
-msgstr ""
-"Paiement actuellement indisponible : taux de change manquant pour le XOF."
+msgstr "Paiement actuellement indisponible : taux de change manquant pour le XOF."
 
-#: app/rooms/routes.py:544
+#: app/rooms/routes.py:646
 msgid "We couldn't reach the payment provider. Please try again in a moment."
 msgstr ""
-"Nous n'avons pas pu contacter le prestataire de paiement. Veuillez réessayer"
-" dans un instant."
+"Nous n'avons pas pu contacter le prestataire de paiement. Veuillez "
+"réessayer dans un instant."
 
-#: app/rooms/routes.py:548
+#: app/rooms/routes.py:650
 msgid "Payment could not be started. Please try again."
 msgstr "Le paiement n'a pas pu être initié. Veuillez réessayer."
 
-#: app/rooms/routes.py:572
+#: app/rooms/routes.py:674
 msgid "Missing payment reference."
 msgstr "Référence de paiement manquante."
 
-#: app/rooms/routes.py:581
+#: app/rooms/routes.py:683
 #, python-format
 msgid ""
 "We couldn't confirm your payment. If you were charged, please contact "
@@ -240,19 +278,19 @@ msgstr ""
 "Nous n'avons pas pu confirmer votre paiement. Si vous avez été débité, "
 "veuillez contacter le support avec la référence %(reference)s."
 
-#: app/rooms/routes.py:587
+#: app/rooms/routes.py:689
 msgid "Payment was not completed."
 msgstr "Le paiement n'a pas été finalisé."
 
-#: app/rooms/routes.py:593
+#: app/rooms/routes.py:695
 msgid "Payment reference could not be matched to a booking."
 msgstr "La référence de paiement n'a pas pu être associée à une réservation."
 
-#: app/rooms/routes.py:607
+#: app/rooms/routes.py:709
 msgid "This booking has already been processed."
 msgstr "Cette réservation a déjà été traitée."
 
-#: app/rooms/routes.py:619
+#: app/rooms/routes.py:721
 #, python-format
 msgid ""
 "Payment currency mismatch. Please contact support with reference "
@@ -261,225 +299,233 @@ msgstr ""
 "Devise de paiement incohérente. Veuillez contacter le support avec la "
 "référence %(reference)s."
 
-#: app/rooms/routes.py:784
+#: app/rooms/routes.py:939
 msgid "Server error, summary not sent, contact us now"
 msgstr "Erreur serveur, le résumé n'a pas été envoyé, contactez-nous"
 
-#: app/rooms/routes.py:915
+#: app/rooms/routes.py:1070
 msgid "Please, login or register to review this room!"
 msgstr "Connectez ou s'inscrire pour évaluer cette chambre !"
 
-#: app/rooms/routes.py:932
+#: app/rooms/routes.py:1087
 msgid ""
-"You can only review a room after a completed stay, and each stay can only be"
-" reviewed once."
+"You can only review a room after a completed stay, and each stay can only"
+" be reviewed once."
 msgstr ""
-"Vous ne pouvez laisser un avis sur une chambre qu'après un séjour terminé, "
-"et chaque séjour ne peut être évalué qu'une seule fois."
+"Vous ne pouvez laisser un avis sur une chambre qu'après un séjour "
+"terminé, et chaque séjour ne peut être évalué qu'une seule fois."
 
-#: app/rooms/routes.py:941
+#: app/rooms/routes.py:1096
 msgid "Your review has been submitted successfully!"
 msgstr "Votre avis a été soumis avec succès !"
 
-#: app/rooms/routes.py:974
+#: app/rooms/routes.py:1129
 msgid "Your room extra has been added successfully."
 msgstr "Option supplémentaire ajoutée avec succès."
 
-#: app/rooms/routes.py:1027
+#: app/rooms/routes.py:1182
 msgid "Room details has been successfully updated!"
 msgstr "Détails de la chambre ont été mis à jour avec succès !"
 
-#: app/rooms/routes.py:1091
+#: app/rooms/routes.py:1246
 msgid ""
-"Image 1 and Image 2 are required -- please provide a photo for both before "
-"saving."
+"Image 1 and Image 2 are required -- please provide a photo for both "
+"before saving."
 msgstr ""
 "Les images 1 et 2 sont obligatoires -- veuillez fournir une photo pour "
 "chacune avant d'enregistrer."
 
-#: app/rooms/routes.py:1104
+#: app/rooms/routes.py:1259
 msgid "Room images successfully updated!"
 msgstr "Images de la chambre mises à jour avec succès !"
 
-#: app/rooms/routes.py:1106
+#: app/rooms/routes.py:1261
 msgid "No new images were selected."
 msgstr "Aucune nouvelle image n'a été sélectionnée."
 
-#: app/rooms/routes.py:1141
+#: app/rooms/routes.py:1296
 msgid ""
-"This room has an upcoming guest booking and can't be removed. Please resolve"
-" it first."
+"This room has an upcoming guest booking and can't be removed. Please "
+"resolve it first."
 msgstr ""
 "Cette chambre a une réservation à venir et ne peut pas être supprimée. "
 "Veuillez d'abord la résoudre."
 
-#: app/rooms/routes.py:1156
+#: app/rooms/routes.py:1311
 msgid "Your listing has been removed from search."
 msgstr "Votre annonce a été retirée des résultats de recherche."
 
-#: app/templates/base.html:10 app/templates/base.html:12
+#: app/templates/base.html:11 app/templates/base.html:12
 #: app/templates/userlayout.html:24 app/templates/userlayout.html:26
 msgid "Jambo"
 msgstr "Jambo"
 
+#: app/templates/base.html:18
+msgid ""
+"Book rooms, residences and short stays across Africa. Starting in "
+"Abidjan, Côte d'Ivoire. Pay securely in CFA francs."
+msgstr ""
+"Réservez chambres, résidences et séjours courts partout en Afrique. "
+"Depuis Abidjan, Côte d'Ivoire. Paiement sécurisé en francs CFA."
+
 #: app/templates/adminpanel/admindash.html:10
-#: app/templates/adminpanel/base.html:100 app/templates/base.html:91
-#: app/templates/base.html:285 app/templates/base.html:404
+#: app/templates/adminpanel/base.html:100 app/templates/base.html:118
+#: app/templates/base.html:312 app/templates/base.html:431
 #: app/templates/pages/aboutus.html:10 app/templates/pages/behost.html:10
 #: app/templates/pages/booking.html:10 app/templates/pages/getintouch.html:10
+#: app/templates/pages/payment_policy.html:60
 #: app/templates/pages/paysuccess.html:10
-#: app/templates/pages/roomdetails.html:56 app/templates/pages/rooms.html:9
+#: app/templates/pages/roomdetails.html:116 app/templates/pages/rooms.html:9
 #: app/templates/pages/roomsearched.html:11
-#: app/templates/udashpages/dashboard.html:7 app/templates/userlayout.html:104
+#: app/templates/pages/terms_of_use.html:60
+#: app/templates/udashpages/dashboard.html:7 app/templates/userlayout.html:109
 msgid "Home"
 msgstr "Accueil"
 
 #: app/templates/adminpanel/admindash.html:54
-#: app/templates/adminpanel/base.html:66 app/templates/base.html:94
-#: app/templates/base.html:286 app/templates/base.html:406
+#: app/templates/adminpanel/base.html:66 app/templates/base.html:121
+#: app/templates/base.html:313 app/templates/base.html:433
 #: app/templates/pages/rooms.html:6 app/templates/pages/rooms.html:10
 msgid "Rooms"
 msgstr "Logements"
 
-#: app/templates/base.html:97 app/templates/base.html:287
-#: app/templates/base.html:417 app/templates/pages/behost.html:7
+#: app/templates/base.html:124 app/templates/base.html:314
+#: app/templates/base.html:444 app/templates/pages/behost.html:7
 #: app/templates/pages/behost.html:11
 msgid "Become host"
 msgstr "Devenir hôte"
 
-#: app/templates/base.html:112
+#: app/templates/base.html:139
 msgid "Destination"
 msgstr "Destination"
 
-#: app/templates/base.html:163
+#: app/templates/base.html:190
 msgid "Select Currency"
 msgstr "Choisir la devise"
 
 #: app/templates/adminpanel/admindash.html:22
-#: app/templates/adminpanel/base.html:53
-#: app/templates/adminpanel/blank.html:10 app/templates/base.html:239
-#: app/templates/base.html:337 app/templates/udashpages/dashboard.html:18
-#: app/templates/udashpages/mybookings.html:10
-#: app/templates/udashpages/myearnings.html:10
+#: app/templates/adminpanel/base.html:53 app/templates/adminpanel/blank.html:10
+#: app/templates/base.html:266 app/templates/base.html:364
+#: app/templates/udashpages/dashboard.html:18
+#: app/templates/udashpages/mybookings.html:54
+#: app/templates/udashpages/myearnings.html:7
 #: app/templates/udashpages/mylistings.html:7
-#: app/templates/udashpages/myrefund.html:10
+#: app/templates/udashpages/myrefund.html:7
 #: app/templates/udashpages/reviews.html:10
-#: app/templates/udashpages/usprofile.html:10 app/templates/userlayout.html:57
-#: app/templates/userlayout.html:238
+#: app/templates/udashpages/usprofile.html:8 app/templates/userlayout.html:62
+#: app/templates/userlayout.html:243
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
-#: app/templates/adminpanel/base.html:165 app/templates/base.html:247
-#: app/templates/base.html:338 app/templates/userlayout.html:233
+#: app/templates/adminpanel/base.html:165 app/templates/base.html:274
+#: app/templates/base.html:365 app/templates/userlayout.html:238
 msgid "Profile"
 msgstr "Profil"
 
-#: app/templates/base.html:256 app/templates/base.html:340
-#: app/templates/userlayout.html:254
+#: app/templates/base.html:283 app/templates/base.html:367
+#: app/templates/userlayout.html:259
 msgid "Admin Panel"
 msgstr "Panneau Admin"
 
-#: app/templates/adminpanel/base.html:180 app/templates/base.html:265
-#: app/templates/base.html:342 app/templates/userlayout.html:260
+#: app/templates/adminpanel/base.html:180 app/templates/base.html:292
+#: app/templates/base.html:369 app/templates/userlayout.html:265
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: app/templates/base.html:271 app/templates/base.html:344
-#: app/templates/base.html:414 app/templates/pages/signup.html:11
-#: app/templates/pages/signup.html:22
+#: app/templates/base.html:298 app/templates/base.html:371
+#: app/templates/base.html:441 app/templates/pages/resend_verification.html:47
+#: app/templates/pages/signup.html:11 app/templates/pages/signup.html:22
 msgid "Log in"
 msgstr "Connexion"
 
-#: app/templates/base.html:276 app/templates/base.html:345
-#: app/templates/base.html:415 app/templates/pages/homes.html:228
+#: app/templates/base.html:303 app/templates/base.html:372
+#: app/templates/base.html:442 app/templates/pages/homes.html:263
 msgid "Register"
 msgstr "S'inscrire"
 
-#: app/templates/base.html:312
+#: app/templates/base.html:339
 msgid "Currency"
 msgstr "Devise"
 
-#: app/templates/base.html:316 app/templates/userlayout.html:186
+#: app/templates/base.html:343 app/templates/userlayout.html:191
 msgid "Africa"
 msgstr "Afrique"
 
-#: app/templates/base.html:333
+#: app/templates/base.html:360
 msgid "Account"
 msgstr "Compte"
 
-#: app/templates/base.html:402
+#: app/templates/base.html:429
 msgid "Quick Links"
 msgstr "Liens rapides"
 
-#: app/templates/base.html:405 app/templates/pages/aboutus.html:7
+#: app/templates/base.html:432 app/templates/pages/aboutus.html:7
 #: app/templates/pages/aboutus.html:11
-#: app/templates/udashpages/usprofile.html:37
+#: app/templates/udashpages/usprofile.html:32
 msgid "About"
 msgstr "À propos"
 
-#: app/templates/base.html:407 app/templates/pages/booking.html:7
+#: app/templates/base.html:434 app/templates/pages/booking.html:7
 #: app/templates/pages/booking.html:11
 msgid "Booking"
 msgstr "Réservation"
 
-#: app/templates/base.html:412
+#: app/templates/base.html:439
 msgid "Connect with us"
 msgstr "Contactez-nous"
 
-#: app/templates/adminpanel/base.html:203 app/templates/base.html:416
-#: app/templates/pages/bookcancelmsg.html:2691
-#: app/templates/pages/bookingmsg.html:2681 app/templates/pages/homes.html:178
-#: app/templates/pages/homes.html:836 app/templates/userlayout.html:366
+#: app/templates/adminpanel/base.html:203 app/templates/base.html:443
+#: app/templates/pages/homes.html:213 app/templates/pages/homes.html:871
+#: app/templates/userlayout.html:389
 msgid "Contact us"
 msgstr "Contactez-nous"
 
-#: app/templates/base.html:423
+#: app/templates/base.html:450
 msgid "Useful links"
 msgstr "Liens utiles"
 
-#: app/templates/base.html:425
+#: app/templates/base.html:452
 msgid "Africa tourism"
 msgstr "Afrique Tourisme"
 
-#: app/templates/base.html:426
+#: app/templates/base.html:453
 msgid "Health & Wellbeing"
 msgstr "Santé & bien-être"
 
-#: app/templates/base.html:427
+#: app/templates/base.html:454
 msgid "Visa information"
 msgstr "Informations Visa"
 
-#: app/templates/base.html:428
+#: app/templates/base.html:455
 msgid "Currency Exchange"
 msgstr "Change de devises"
 
-#: app/templates/base.html:434
+#: app/templates/base.html:461
 msgid "Legal"
 msgstr "Mentions légales"
 
-#: app/templates/base.html:436
+#: app/templates/base.html:463
 msgid "Terms of service"
 msgstr "Conditions d'utilisation"
 
-#: app/templates/base.html:437 app/templates/pages/bookcancelmsg.html:2680
-#: app/templates/pages/bookingmsg.html:2670
+#: app/templates/base.html:464
 msgid "Privacy policy"
 msgstr "Confidentialité"
 
-#: app/templates/base.html:438
-msgid "Refund policy"
-msgstr "Remboursement"
+#: app/templates/base.html:465
+msgid "Payment policy"
+msgstr "Politique de paiement"
 
-#: app/templates/base.html:439
+#: app/templates/base.html:466
 msgid "Booking policy"
 msgstr "Réservation"
 
-#: app/templates/adminpanel/base.html:194 app/templates/base.html:452
-#: app/templates/userlayout.html:357
+#: app/templates/adminpanel/base.html:194 app/templates/base.html:479
+#: app/templates/userlayout.html:380
 msgid "All rights reserved"
 msgstr "Tous droits réservés"
 
-#: app/templates/udashpages/usprofile.html:13 app/templates/userlayout.html:64
+#: app/templates/udashpages/usprofile.html:11 app/templates/userlayout.html:69
 msgid "User Profile"
 msgstr "Profil utilisateur"
 
@@ -489,8 +535,7 @@ msgstr "Profil utilisateur"
 #: app/templates/udashpages/dashboard.html:30
 #: app/templates/udashpages/mylistings.html:11
 #: app/templates/udashpages/room_stats.html:25
-#: app/templates/udashpages/roomupdate.html:10
-#: app/templates/userlayout.html:70
+#: app/templates/udashpages/roomupdate.html:10 app/templates/userlayout.html:75
 msgid "Listings"
 msgstr "Annonces"
 
@@ -500,54 +545,53 @@ msgstr "Annonces"
 #: app/templates/adminpanel/base.html:72
 #: app/templates/udashpages/dashboard.html:57
 #: app/templates/udashpages/dashboard.html:181
-#: app/templates/udashpages/mybookings.html:14
-#: app/templates/userlayout.html:76
+#: app/templates/udashpages/mybookings.html:58 app/templates/userlayout.html:81
 msgid "Bookings"
 msgstr "Réservations"
 
-#: app/templates/adminpanel/base.html:174 app/templates/userlayout.html:82
-#: app/templates/userlayout.html:245
+#: app/templates/adminpanel/base.html:174 app/templates/userlayout.html:87
+#: app/templates/userlayout.html:250
 msgid "Piggybank"
 msgstr "Tirelire"
 
 #: app/templates/adminpanel/base.html:84
-#: app/templates/udashpages/myrefund.html:14 app/templates/userlayout.html:88
+#: app/templates/udashpages/myrefund.html:11 app/templates/userlayout.html:93
 msgid "Refunds"
 msgstr "Remboursements"
 
-#: app/templates/adminpanel/base.html:95 app/templates/userlayout.html:99
+#: app/templates/adminpanel/base.html:95 app/templates/userlayout.html:104
 msgid "Go to"
 msgstr "Aller à"
 
-#: app/templates/adminpanel/base.html:137 app/templates/userlayout.html:207
+#: app/templates/adminpanel/base.html:137 app/templates/userlayout.html:212
 msgid "No New Messages"
 msgstr "Aucun nouveau message"
 
-#: app/templates/adminpanel/base.html:144 app/templates/userlayout.html:214
+#: app/templates/adminpanel/base.html:144 app/templates/userlayout.html:219
 msgid "view bookings"
 msgstr "voir les réservations"
 
-#: app/templates/adminpanel/base.html:159 app/templates/userlayout.html:228
+#: app/templates/adminpanel/base.html:159 app/templates/userlayout.html:233
 msgid "Hi"
 msgstr "Salut"
 
-#: app/templates/adminpanel/base.html:178 app/templates/userlayout.html:249
+#: app/templates/adminpanel/base.html:178 app/templates/userlayout.html:254
 msgid "Help Center"
 msgstr "Centre d'aide"
 
-#: app/templates/userlayout.html:325
+#: app/templates/userlayout.html:348
 msgid "Online"
 msgstr "En ligne"
 
-#: app/templates/userlayout.html:342
+#: app/templates/userlayout.html:365
 msgid "Type a message..."
 msgstr "Tapez un message..."
 
-#: app/templates/adminpanel/base.html:206 app/templates/userlayout.html:369
+#: app/templates/adminpanel/base.html:206 app/templates/userlayout.html:392
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: app/templates/adminpanel/base.html:209 app/templates/userlayout.html:372
+#: app/templates/adminpanel/base.html:209 app/templates/userlayout.html:395
 msgid "Terms"
 msgstr "Conditions"
 
@@ -581,8 +625,7 @@ msgstr "30 jours passés"
 
 #: app/templates/adminpanel/admindash.html:125
 #: app/templates/adminpanel/admindash.html:137
-#: app/templates/adminpanel/base.html:60
-#: app/templates/adminpanel/blank.html:13
+#: app/templates/adminpanel/base.html:60 app/templates/adminpanel/blank.html:13
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -607,9 +650,10 @@ msgid "Revenue generated to date"
 msgstr "Revenus générés à ce jour"
 
 #: app/templates/adminpanel/admindash.html:189
+#: app/templates/pages/homes.html:231
 #: app/templates/udashpages/dashboard.html:180
-#: app/templates/udashpages/mybookings.html:39
-#: app/templates/udashpages/mybookings.html:190
+#: app/templates/udashpages/mybookings.html:131
+#: app/templates/udashpages/mybookings.html:329
 #: app/templates/udashpages/reviews.html:37
 msgid "Room"
 msgstr "Chambre"
@@ -641,6 +685,7 @@ msgid "Calendar"
 msgstr "Calendrier"
 
 #: app/templates/adminpanel/base.html:78
+#: app/templates/pages/terms_of_use.html:172
 msgid "Payments"
 msgstr "Paiements"
 
@@ -669,48 +714,51 @@ msgstr "Rédigée en"
 msgid "Room has no review yet!"
 msgstr "Cette chambre n'a pas encore d'avis !"
 
-#: app/templates/pages/aboutus.html:31
+#: app/templates/pages/aboutus.html:25
 msgid "Hotel Exterior"
 msgstr "Extérieur de l'hôtel"
 
-#: app/templates/pages/aboutus.html:38
+#: app/templates/pages/aboutus.html:31
 msgid "5-Star Excellence"
 msgstr "Excellence 5 étoiles"
 
-#: app/templates/pages/aboutus.html:39
+#: app/templates/pages/aboutus.html:32
 msgid "warm-heartedness"
 msgstr "chaleur humaine"
 
-#: app/templates/pages/aboutus.html:45
+#: app/templates/pages/aboutus.html:36
 msgid "Luxury Suite"
 msgstr "Suite de luxe"
 
-#: app/templates/pages/aboutus.html:59
+#: app/templates/pages/aboutus.html:49
 msgid ""
-"Over the years, Jambo has steadily been building a\n"
+"Over the past year, Jambo has steadily been building a\n"
 "            trustworthy and hospitable community step by step."
-msgstr ""
-"Au fil des années, Jambo a bâti pas à pas une communauté fiable et "
-"hospitalière."
+msgstr "Depuis un an, Jambo bâtit pas à pas une communauté fiable et hospitalière."
 
-#: app/templates/pages/aboutus.html:64
+#: app/templates/pages/aboutus.html:54
 msgid ""
-"Jambo was founded in 2020 when the concept of regrouping\n"
-"            individuals with available space and willing to share their homes\n"
-"            was introduced. Next, we broadened our services to encompass guest\n"
-"            houses and small to medium-sized hotels."
+"Jambo was founded in 2025 when the concept of regrouping\n"
+"            individuals with available space and willing to share their "
+"homes\n"
+"            was introduced. Next, we thought that broadening our services"
+" to encompass guest\n"
+"            houses and small to medium-sized hotels will be ideal."
 msgstr ""
-"Jambo a été fondé en 2020 lorsque l'idée de rassembler des personnes "
-"disposant d'espace et souhaitant partager leur logement a été lancée. Par la"
-" suite, nous avons élargi nos services aux maisons d'hôtes ainsi qu'aux "
-"hôtels de petite et moyenne taille."
+"Jambo a été fondé en 2025, lorsque l'idée de rassembler des personnes "
+"disposant d'espace et désireuses de partager leur logement a vu le jour. "
+"Nous avons ensuite pensé qu'il serait idéal d'élargir nos services aux "
+"maisons d'hôtes ainsi qu'aux hôtels de petite et moyenne taille."
 
-#: app/templates/pages/aboutus.html:71
+#: app/templates/pages/aboutus.html:61
 msgid ""
 "The primary objective was to blend traditional African\n"
-"            conviviality into guests' experiences, aiming to forge a lasting\n"
-"            memory. Essentially, the focus was on building a trusted community\n"
-"            where guests feel safe, enjoy a friendly environment while saving\n"
+"            conviviality into guests' experiences, aiming to forge a "
+"lasting\n"
+"            memory. Essentially, the focus was on building a trusted "
+"community\n"
+"            where guests feel safe, enjoy a friendly environment while "
+"saving\n"
 "            money, and cutting down time on the booking process."
 msgstr ""
 "L'objectif principal était d'intégrer la convivialité africaine "
@@ -720,88 +768,93 @@ msgstr ""
 "environnement convivial tout en économisant de l'argent, et réduisent le "
 "temps consacré à la réservation."
 
-#: app/templates/pages/aboutus.html:86
-msgid "Community building"
-msgstr "Construction de communauté"
+#: app/templates/pages/aboutus.html:72
+msgid "The idea was born"
+msgstr "L'idée est née"
 
-#: app/templates/pages/aboutus.html:88
-msgid "Started as a platform where home could generate passive incomes."
-msgstr ""
-"Nous avons débuté comme une plateforme permettant de générer des revenus "
-"passifs grâce à son logement."
+#: app/templates/pages/aboutus.html:74
+msgid "Started working on the idea."
+msgstr "Début du travail sur l'idée."
+
+#: app/templates/pages/aboutus.html:81
+msgid "Platform building"
+msgstr "Construction de la plateforme"
+
+#: app/templates/pages/aboutus.html:83
+msgid "We began digitally transforming all our ideas into reality."
+msgstr "Nous avons commencé à concrétiser numériquement toutes nos idées."
+
+#: app/templates/pages/aboutus.html:90
+msgid "Platform milestone"
+msgstr "Étape clé de la plateforme"
+
+#: app/templates/pages/aboutus.html:92
+msgid "The digital platform is 95 percent completed."
+msgstr "La plateforme numérique est achevée à 95 pour cent."
 
 #: app/templates/pages/aboutus.html:99
-msgid "Extended the community"
-msgstr "Extension de la communauté"
+msgid "Community Building"
+msgstr "Construction de la communauté"
 
-#: app/templates/pages/aboutus.html:100
-msgid "Guest houses and hotel join the Jambo family"
-msgstr "Les maisons d'hôtes et hôtels rejoignent la famille Jambo"
+#: app/templates/pages/aboutus.html:101
+msgid "We began diligently building a trustworthy community."
+msgstr "Nous avons commencé à bâtir avec soin une communauté de confiance."
 
-#: app/templates/pages/aboutus.html:110
-msgid "Big Innovation"
-msgstr "Grande innovation"
-
-#: app/templates/pages/aboutus.html:111
-msgid "Local touch for an unique experience"
-msgstr "Une touche locale pour une expérience unique"
-
-#: app/templates/pages/aboutus.html:140
+#: app/templates/pages/aboutus.html:127
 msgid "Memorable moments"
 msgstr "Moments mémorables"
 
-#: app/templates/pages/aboutus.html:142
+#: app/templates/pages/aboutus.html:129
 msgid ""
 "Here we share some of the Jambo family memorable &\n"
-"            fantastic moments. Happiness never far with Jambo!"
+"            fantastic moments during the community building phase.!"
 msgstr ""
 "Nous partageons ici quelques moments mémorables et fantastiques de la "
-"famille Jambo. Avec Jambo, le bonheur n'est jamais loin !"
+"famille Jambo pendant la phase de construction de la communauté !"
 
-#: app/templates/pages/aboutus.html:165
+#: app/templates/pages/aboutus.html:149
 msgid "Maisonette at Abidjan"
 msgstr "Maisonnette à Abidjan"
 
-#: app/templates/pages/aboutus.html:167
-msgid ""
-"The Diaby's familly occupying their Jambo booked property\n"
-"              for 2 weeks."
+#: app/templates/pages/aboutus.html:151
+msgid "We visited the Diaby's family for for a vetting mission."
 msgstr ""
-"La famille Diaby occupant sa propriété réservée via Jambo pendant 2 "
-"semaines."
+"Nous avons rendu visite à la famille Diaby dans le cadre d'une mission de"
+" vérification."
 
-#: app/templates/pages/aboutus.html:188
-msgid "Flat at Pretoria"
-msgstr "Appartement à Pretoria"
+#: app/templates/pages/aboutus.html:167
+msgid "Flat at Accra"
+msgstr "Appartement à Accra"
 
-#: app/templates/pages/aboutus.html:190
+#: app/templates/pages/aboutus.html:169
 msgid "A host in South Africa welcoming his Guests for 4 days stay."
 msgstr ""
-"Un hôte en Afrique du Sud accueillant ses invités pour un séjour de 4 jours."
+"Un hôte en Afrique du Sud accueillant ses invités pour un séjour de 4 "
+"jours."
 
-#: app/templates/pages/aboutus.html:210
-msgid "Bungalow in Cotonou"
-msgstr "Bungalow à Cotonou"
+#: app/templates/pages/aboutus.html:186
+msgid "Bungalow in Assinie"
+msgstr "Bungalow à Assinie"
 
-#: app/templates/pages/aboutus.html:212
+#: app/templates/pages/aboutus.html:188
 msgid "Couple enjoying sunrise in their Jambo booked bungalow in Cotonou"
 msgstr ""
-"Un couple profitant du lever du soleil dans leur bungalow réservé via Jambo "
-"à Cotonou"
+"Un couple profitant du lever du soleil dans leur bungalow réservé via "
+"Jambo à Cotonou"
 
-#: app/templates/pages/aboutus.html:231
+#: app/templates/pages/aboutus.html:203
 msgid "Number of hosts"
 msgstr "Nombre d'hôtes"
 
-#: app/templates/pages/aboutus.html:243
+#: app/templates/pages/aboutus.html:210
 msgid "Satisfaction Rate"
 msgstr "Taux de satisfaction"
 
-#: app/templates/pages/aboutus.html:254
+#: app/templates/pages/aboutus.html:217
 msgid "Number of Booking"
 msgstr "Nombre de réservations"
 
-#: app/templates/pages/aboutus.html:265 app/templates/pages/homes.html:171
+#: app/templates/pages/aboutus.html:224
 msgid "Years of Excellence"
 msgstr "Années d'excellence"
 
@@ -828,12 +881,13 @@ msgstr "Créez votre compte"
 #: app/templates/pages/behost.html:48
 msgid ""
 "Join our community by registering as a member. Creating\n"
-"            an account allows you to start your hosting journey and access your\n"
+"            an account allows you to start your hosting journey and "
+"access your\n"
 "            host dashboard."
 msgstr ""
-"Rejoignez notre communauté en vous inscrivant. La création d'un compte vous "
-"permet de démarrer votre parcours d'hôte et d'accéder à votre tableau de "
-"bord."
+"Rejoignez notre communauté en vous inscrivant. La création d'un compte "
+"vous permet de démarrer votre parcours d'hôte et d'accéder à votre "
+"tableau de bord."
 
 #: app/templates/pages/behost.html:54
 msgid "Register Now"
@@ -850,12 +904,13 @@ msgstr "Vérification du bien"
 #: app/templates/pages/behost.html:72
 msgid ""
 "Send us your intention to become a host. Our team will\n"
-"            arrange a visit to review your property, verify quality standards,\n"
+"            arrange a visit to review your property, verify quality "
+"standards,\n"
 "            and ensure a safe experience for guests."
 msgstr ""
-"Faites-nous part de votre intention de devenir hôte. Notre équipe organisera"
-" une visite pour examiner votre bien, vérifier les normes de qualité et "
-"garantir une expérience sûre pour les invités."
+"Faites-nous part de votre intention de devenir hôte. Notre équipe "
+"organisera une visite pour examiner votre bien, vérifier les normes de "
+"qualité et garantir une expérience sûre pour les invités."
 
 #: app/templates/pages/behost.html:81
 msgid "Send intent mail"
@@ -872,12 +927,13 @@ msgstr "Publiez votre annonce et accueillez vos invités"
 #: app/templates/pages/behost.html:99
 msgid ""
 "After successful verification, your property will be\n"
-"            published on our platform. Guests can discover your property and you\n"
+"            published on our platform. Guests can discover your property "
+"and you\n"
 "            can start receiving bookings."
 msgstr ""
-"Après vérification réussie, votre bien sera publié sur notre plateforme. Les"
-" invités pourront découvrir votre bien et vous commencerez à recevoir des "
-"réservations."
+"Après vérification réussie, votre bien sera publié sur notre plateforme. "
+"Les invités pourront découvrir votre bien et vous commencerez à recevoir "
+"des réservations."
 
 #: app/templates/pages/behost.html:105
 msgid "Listing Go Live"
@@ -890,200 +946,102 @@ msgstr "En 3 étapes gratifiantes"
 #: app/templates/pages/behost.html:123
 msgid ""
 "Turn your extra space into extra income. Welcome\n"
-"              guests, share your home, and start earning today by signin up."
+"              guests, share your home, and start earning today by signin "
+"up."
 msgstr ""
-"Transformez votre espace inutilisé en revenu supplémentaire. Accueillez des "
-"invités, partagez votre logement et commencez à gagner de l'argent dès "
-"aujourd'hui en vous inscrivant."
+"Transformez votre espace inutilisé en revenu supplémentaire. Accueillez "
+"des invités, partagez votre logement et commencez à gagner de l'argent "
+"dès aujourd'hui en vous inscrivant."
 
 #: app/templates/pages/behost.html:129
 msgid "Sign up now!"
 msgstr "Inscrivez-vous maintenant !"
 
-#: app/templates/pages/bookcancelmsg.html:440
-#: app/templates/pages/bookingmsg.html:439
-msgid "Booking number"
-msgstr "Numéro de réservation"
+#: app/templates/pages/bookcancelmsg.html:7
+msgid "Booking Cancellation"
+msgstr "Annulation de réservation"
 
-#: app/templates/pages/bookcancelmsg.html:504
-#: app/templates/pages/bookingmsg.html:503
-#: app/templates/udashpages/myearnings.html:40
-#: app/templates/udashpages/myrefund.html:38
-#: app/templates/udashpages/reviews.html:35
-msgid "Date"
-msgstr "Date"
-
-#: app/templates/pages/bookcancelmsg.html:601
-#: app/templates/pages/bookingmsg.html:600
+#: app/templates/pages/bookcancelmsg.html:211
+#: app/templates/pages/bookingmsg.html:215
+#: app/templates/pages/joinusmsg.html:104
 msgid "Hello"
 msgstr "Bonjour"
 
-#: app/templates/pages/bookcancelmsg.html:650
+#: app/templates/pages/bookcancelmsg.html:213
 msgid ""
-"We&#39;re contacting to confitm that your booking\n"
-"                                                  has been successfully cancelled. You will receive a complete\n"
-"                                                  refund. Please allow 10 working to receive your payment.\n"
-"                                                  "
+"We're confirming that your booking has been successfully cancelled.\n"
+"          You will receive a full refund -- please allow up to 10 working"
+" days\n"
+"          for the payment to reach you."
 msgstr ""
-"Nous vous contactons pour confirmer que votre réservation a bien été "
-"annulée. Vous recevrez un remboursement complet. Veuillez prévoir 10 jours "
+"Nous vous confirmons que votre réservation a bien été annulée. Vous "
+"recevrez un remboursement intégral -- veuillez prévoir jusqu'à 10 jours "
 "ouvrés pour recevoir votre paiement."
 
-#: app/templates/pages/bookcancelmsg.html:702
-msgid ""
-"We hope to see you soon on the Jambo platform for another\n"
-"                                                  booking"
-msgstr ""
-"Nous espérons vous revoir bientôt sur la plateforme Jambo pour une nouvelle "
-"réservation"
-
-#: app/templates/pages/bookcancelmsg.html:753
-msgid "Stay Blessed"
-msgstr "Prenez soin de vous"
-
-#: app/templates/pages/bookcancelmsg.html:759
-#: app/templates/pages/bookingmsg.html:757
-msgid "Jambo Team"
-msgstr "L'équipe Jambo"
-
-#: app/templates/pages/bookcancelmsg.html:835
-msgid "Room Pool"
-msgstr "Nos chambres"
-
-#: app/templates/pages/bookcancelmsg.html:1038
-#: app/templates/pages/bookingmsg.html:1037
+#: app/templates/pages/bookcancelmsg.html:224
+#: app/templates/pages/bookingmsg.html:233
 msgid "Located at"
 msgstr "Situé à"
 
-#: app/templates/pages/bookcancelmsg.html:1113
-#: app/templates/pages/bookingmsg.html:1112
-msgid "Booked from"
-msgstr "Réservé du"
-
-#: app/templates/pages/bookcancelmsg.html:1120
-#: app/templates/pages/bookingmsg.html:1115
-#: app/templates/udashpages/mybookings.html:189
-msgid "To"
-msgstr "Au"
-
-#: app/templates/pages/bookcancelmsg.html:1128
-#: app/templates/pages/bookingmsg.html:1119
+#: app/templates/pages/bookcancelmsg.html:233
+#: app/templates/pages/bookingmsg.html:242
 #: app/templates/pages/listupdate.html:88
 msgid "Price per night"
 msgstr "Prix par nuit"
 
-#: app/templates/pages/bookcancelmsg.html:1133
-#: app/templates/pages/bookingmsg.html:1124
-msgid "Number of days"
-msgstr "Nombre de jours"
+#: app/templates/pages/bookcancelmsg.html:237
+#: app/templates/pages/bookingmsg.html:246
+msgid "Number of nights"
+msgstr "Nombre de nuits"
 
-#: app/templates/pages/bookcancelmsg.html:1136
-#: app/templates/pages/bookingmsg.html:1133
-#: app/templates/udashpages/myearnings.html:42
+#: app/templates/pages/bookcancelmsg.html:241
+#: app/templates/pages/bookingmsg.html:250
+#: app/templates/udashpages/myearnings.html:39
 #: app/templates/udashpages/roomupdate.html:171
 msgid "Discount"
 msgstr "Remise"
 
-#: app/templates/pages/bookcancelmsg.html:1142
-msgid "Amount Refundable"
+#: app/templates/pages/bookcancelmsg.html:245
+#: app/templates/pages/bookingmsg.html:254
+msgid "Payment method"
+msgstr "Mode de paiement"
+
+#: app/templates/pages/bookcancelmsg.html:251
+msgid "Amount refundable"
 msgstr "Montant remboursable"
 
-#: app/templates/pages/bookcancelmsg.html:1154
-#: app/templates/pages/bookingmsg.html:1150
-#: app/templates/pages/paysuccess.html:89
-msgid "approx."
-msgstr "environ"
+#: app/templates/pages/bookcancelmsg.html:257
+#: app/templates/pages/bookingmsg.html:265
+msgid "Approx. converted in your currency:"
+msgstr "Montant approximatif converti dans votre devise :"
 
-#: app/templates/pages/bookcancelmsg.html:1161
+#: app/templates/pages/bookcancelmsg.html:264
 msgid ""
-"Your refund is being\n"
-"                                                                                    processed. You will receive a\n"
-"                                                                                    separate confirmation once the\n"
-"                                                                                    amount is finalized."
+"Your refund is being processed. You will receive a separate confirmation "
+"once the\n"
+"            amount is finalized."
 msgstr ""
 "Votre remboursement est en cours de traitement. Vous recevrez une "
 "confirmation séparée une fois le montant finalisé."
 
-#: app/templates/pages/bookcancelmsg.html:1315
-#: app/templates/pages/bookingmsg.html:1305
-msgid "Host info"
-msgstr "Informations sur l'hôte"
+#: app/templates/pages/bookcancelmsg.html:270
+#: app/templates/pages/bookingmsg.html:272
+msgid "Host details"
+msgstr "Détails de l'hôte"
 
-#: app/templates/pages/bookcancelmsg.html:1387
-#: app/templates/pages/bookingmsg.html:1377
-#: app/templates/udashpages/mybookings.html:193
-msgid "Host"
-msgstr "Hôte"
+#: app/templates/pages/bookcancelmsg.html:278
+#: app/templates/pages/bookingmsg.html:280
+msgid "Guest details"
+msgstr "Détails de l'invité"
 
-#: app/templates/pages/bookcancelmsg.html:1452
-#: app/templates/pages/bookcancelmsg.html:2012
-#: app/templates/pages/bookingmsg.html:1442
-#: app/templates/pages/bookingmsg.html:2002
-#: app/templates/pages/getintouch.html:103
-msgid "Email"
-msgstr "E-mail"
+#: app/templates/pages/bookcancelmsg.html:285
+#: app/templates/pages/bookingmsg.html:287
+msgid "Booking reference"
+msgstr "Référence de réservation"
 
-#: app/templates/pages/bookcancelmsg.html:1514
-#: app/templates/pages/bookcancelmsg.html:2074
-#: app/templates/pages/bookingmsg.html:1504
-#: app/templates/pages/bookingmsg.html:2064
-msgid "Phone"
-msgstr "Téléphone"
-
-#: app/templates/pages/bookcancelmsg.html:1576
-#: app/templates/pages/bookingmsg.html:1566
-#: app/templates/udashpages/usprofile.html:181
-msgid "Country"
-msgstr "Pays"
-
-#: app/templates/pages/bookcancelmsg.html:1682
-#: app/templates/pages/bookingmsg.html:1672
-msgid ""
-"Host important\n"
-"                                                                                                    note"
-msgstr "Note importante de l'hôte"
-
-#: app/templates/pages/bookcancelmsg.html:1755
-msgid ""
-"Take care &\n"
-"                                                                                                    hope to see you\n"
-"                                                                                                    another time"
-msgstr "Prenez soin de vous et à bientôt"
-
-#: app/templates/pages/bookcancelmsg.html:1876
-#: app/templates/pages/bookingmsg.html:1866
-msgid "Guest info"
-msgstr "Informations sur l'invité"
-
-#: app/templates/pages/bookcancelmsg.html:1949
-#: app/templates/pages/bookingmsg.html:1939
-msgid ""
-"Primary\n"
-"                                                                                                    guest"
-msgstr "Invité principal"
-
-#: app/templates/pages/bookcancelmsg.html:2136
-#: app/templates/pages/bookingmsg.html:2126
-msgid ""
-"Booking\n"
-"                                                                                                    status"
-msgstr "Statut de la réservation"
-
-#: app/templates/pages/bookcancelmsg.html:2241
-msgid ""
-"REFUND\n"
-"                                                                                                    METHOD"
-msgstr "MÉTHODE DE REMBOURSEMENT"
-
-#: app/templates/pages/bookcancelmsg.html:2412
-#: app/templates/pages/bookingmsg.html:2402
-msgid "For more update, follow us on our social media"
-msgstr "Pour plus d'actualités, suivez-nous sur nos réseaux sociaux"
-
-#: app/templates/pages/bookcancelmsg.html:2670
-#: app/templates/pages/bookingmsg.html:2660
-msgid "Unsubscribe"
-msgstr "Se désabonner"
+#: app/templates/pages/bookcancelmsg.html:286
+msgid "Cancelled on"
+msgstr "Date d'annulation"
 
 #: app/templates/pages/booking.html:23
 msgid "Reserve Your Stay"
@@ -1094,8 +1052,8 @@ msgid ""
 "Experience unmatched hospitality with our streamlined booking\n"
 "          process"
 msgstr ""
-"Découvrez une hospitalité inégalée grâce à notre processus de réservation "
-"simplifié"
+"Découvrez une hospitalité inégalée grâce à notre processus de réservation"
+" simplifié"
 
 #: app/templates/pages/booking.html:36
 msgid "Booking Details"
@@ -1170,8 +1128,8 @@ msgid "Flexible Cancellation"
 msgstr "Annulation flexible"
 
 #: app/templates/pages/booking.html:213
-msgid "48h Free cancellation"
-msgstr "Annulation gratuite sous 48h"
+msgid "Free cancellation up to 48h before arrival"
+msgstr "Annulation gratuite jusqu'à 48h avant l'arrivée"
 
 #: app/templates/pages/booking.html:236
 msgid "Urgent Notification"
@@ -1180,13 +1138,16 @@ msgstr "Notification urgente"
 #: app/templates/pages/booking.html:243
 msgid ""
 "By clicking you are agreeing to our terms and\n"
-"                conditions. Please contact the host on the contact provided\n"
-"                before your travel. Do no hesitate to get in touch with us for\n"
+"                conditions. Please contact the host on the contact "
+"provided\n"
+"                before your travel. Do no hesitate to get in touch with "
+"us for\n"
 "                any support. We wish you a pleasant stay."
 msgstr ""
 "En cliquant, vous acceptez nos conditions générales. Veuillez contacter "
-"l'hôte via les coordonnées fournies avant votre voyage. N'hésitez pas à nous"
-" contacter pour toute assistance. Nous vous souhaitons un excellent séjour."
+"l'hôte via les coordonnées fournies avant votre voyage. N'hésitez pas à "
+"nous contacter pour toute assistance. Nous vous souhaitons un excellent "
+"séjour."
 
 #: app/templates/pages/booking.html:249
 msgid "HR Team"
@@ -1196,54 +1157,39 @@ msgstr "Équipe RH"
 msgid "Read our Terms & Conditions"
 msgstr "Lisez nos conditions générales"
 
-#: app/templates/pages/bookingmsg.html:649
+#: app/templates/pages/bookingmsg.html:7
+msgid "Booking Summary"
+msgstr "Récapitulatif de la réservation"
+
+#: app/templates/pages/bookingmsg.html:217
 msgid ""
-"We&#39;re please to confitm that your bookinghas been\n"
-"                                                  successfully completed. Please , make sure to contact your host\n"
-"                                                  before travelling.&nbsp; Be aware, you have 24h for free cancellation.\n"
-"                                                  This can be done through your user dashbord."
+"We're pleased to confirm that your booking has been successfully\n"
+"          completed. Please make sure to contact your host before "
+"travelling.\n"
+"          You have free cancellation up to 48 hours before arrival, "
+"available\n"
+"          any time through your dashboard."
 msgstr ""
 "Nous avons le plaisir de confirmer que votre réservation a bien été "
-"effectuée. Veuillez contacter votre hôte avant votre voyage. Notez que vous "
-"disposez de 24h pour une annulation gratuite, directement depuis votre "
-"tableau de bord."
+"effectuée. Veuillez contacter votre hôte avant votre voyage. Vous "
+"bénéficiez d'une annulation gratuite jusqu'à 48 heures avant l'arrivée, à"
+" tout moment depuis votre tableau de bord."
 
-#: app/templates/pages/bookingmsg.html:701
+#: app/templates/pages/bookingmsg.html:223
 msgid ""
-"We wish you a pleasant stay and share your\n"
-"                                                  experience with the Jambo community."
+"We wish you a pleasant stay, and hope you'll share your\n"
+"          experience with the Jambo community."
 msgstr ""
-"Nous vous souhaitons un excellent séjour et vous invitons à partager votre "
-"expérience avec la communauté Jambo."
+"Nous vous souhaitons un excellent séjour et espérons que vous partagerez "
+"votre expérience avec la communauté Jambo."
 
-#: app/templates/pages/bookingmsg.html:751
-msgid "Best Regards"
-msgstr "Cordialement"
-
-#: app/templates/pages/bookingmsg.html:834
-msgid "Manage booking"
-msgstr "Gérer la réservation"
-
-#: app/templates/pages/bookingmsg.html:1127
-msgid "Subtotal"
-msgstr "Sous-total"
-
-#: app/templates/pages/bookingmsg.html:1138
+#: app/templates/pages/bookingmsg.html:259
 msgid "Your bill"
 msgstr "Votre facture"
 
-#: app/templates/pages/bookingmsg.html:1745
-msgid ""
-"Please contact\n"
-"                                                                                                    me before\n"
-"                                                                                                    travelling"
-msgstr "Merci de me contacter avant votre voyage"
-
-#: app/templates/pages/bookingmsg.html:2231
-msgid ""
-"PAYMENT\n"
-"                                                                                                    METHOD"
-msgstr "MODE DE PAIEMENT"
+#: app/templates/pages/bookingmsg.html:288
+msgid "Booked on"
+msgstr "Date de réservation"
 
 #: app/templates/pages/delete_account.html:5
 msgid "Delete your account"
@@ -1275,91 +1221,109 @@ msgid ""
 "            and payment records are kept for accounting purposes."
 msgstr ""
 "Vos informations de profil seront supprimées, mais l'historique de vos\n"
-"            réservations et paiements seront conservé à des fins comptables."
+"            réservations et paiements seront conservé à des fins "
+"comptables."
 
 #: app/templates/pages/delete_account.html:28
 msgid ""
 "If you have upcoming bookings that cannot be automatically\n"
-"        cancelled, or guests currently booked into your rooms, you will need to\n"
+"        cancelled, or guests currently booked into your rooms, you will "
+"need to\n"
 "        resolve those first before you can delete your account."
 msgstr ""
 "Si vous avez des réservations à venir qui ne peuvent pas être annulées\n"
-"        automatiquement, ou des voyageurs actuellement logés dans vos chambres, vous devrez\n"
-"        d'abord régler ces situations avant de pouvoir supprimer votre compte."
+"        automatiquement, ou des voyageurs actuellement logés dans vos "
+"chambres, vous devrez\n"
+"        d'abord régler ces situations avant de pouvoir supprimer votre "
+"compte."
 
-#: app/templates/pages/getintouch.html:7
-#: app/templates/pages/getintouch.html:11
+#: app/templates/pages/getintouch.html:7 app/templates/pages/getintouch.html:11
+#: app/templates/pages/terms_of_use.html:190
 msgid "Contact"
 msgstr "Contact"
 
-#: app/templates/pages/getintouch.html:51 app/templates/pages/rooms.html:26
+#: app/templates/pages/getintouch.html:46 app/templates/pages/rooms.html:26
 #: app/templates/pages/roomsearched.html:28
-#: app/templates/udashpages/mybookings.html:40
-#: app/templates/udashpages/mybookings.html:191
+#: app/templates/udashpages/mybookings.html:132
+#: app/templates/udashpages/mybookings.html:330
 #: app/templates/udashpages/mylistings.html:305
 msgid "Location"
 msgstr "Emplacement"
 
-#: app/templates/pages/getintouch.html:64
-msgid "Phone & Email"
-msgstr "Téléphone & e-mail"
+#: app/templates/pages/getintouch.html:59
+msgid "WhatsApp & Email"
+msgstr "WhatsApp & e-mail"
 
-#: app/templates/pages/getintouch.html:80
+#: app/templates/pages/getintouch.html:71
 msgid "How can we help?"
 msgstr "Comment pouvons-nous vous aider ?"
 
-#: app/templates/pages/getintouch.html:87
+#: app/templates/pages/getintouch.html:78
 msgid "Name"
 msgstr "Nom"
 
-#: app/templates/pages/getintouch.html:119
+#: app/templates/pages/getintouch.html:94
+msgid "Email"
+msgstr "E-mail"
+
+#: app/templates/pages/getintouch.html:110
 msgid "Subject"
 msgstr "Objet"
 
-#: app/templates/pages/getintouch.html:135
+#: app/templates/pages/getintouch.html:126
 msgid "Add your Message"
 msgstr "Ajoutez votre message"
 
-#: app/templates/pages/homes.html:16
+#: app/templates/pages/homes.html:2
+msgid "Jambo | Rooms and short stays in Abidjan and across Africa"
+msgstr "Jambo | Chambres et séjours courts à Abidjan et en Afrique"
+
+#: app/templates/pages/homes.html:37
+msgid "Under Maintenance"
+msgstr "En maintenance"
+
+#: app/templates/pages/homes.html:51
 msgid "A safer, friendly & affordable stay."
 msgstr "Séjour sûr, convivial & abordable."
 
-#: app/templates/pages/homes.html:18
+#: app/templates/pages/homes.html:53
 msgid ""
 "Experience unparalleled simple comfort and a safer home-like\n"
-"            feeling at an affordable cost. Our carefully hand picked and vetted\n"
-"            hosts are committed to making your stay an unforgettable memory"
+"            feeling at an affordable cost. Our carefully hand picked and "
+"vetted\n"
+"            hosts are committed to making your stay an unforgettable "
+"memory"
 msgstr ""
 "Profitez d'un confort simple et inégalé, avec une sensation de sécurité "
-"proche de celle de votre foyer, à un prix abordable. Nos hôtes soigneusement"
-" sélectionnés et vérifiés s'engagent à faire de votre séjour un souvenir "
-"inoubliable"
+"proche de celle de votre foyer, à un prix abordable. Nos hôtes "
+"soigneusement sélectionnés et vérifiés s'engagent à faire de votre séjour"
+" un souvenir inoubliable"
 
-#: app/templates/pages/homes.html:26
+#: app/templates/pages/homes.html:61
 msgid "Flexible"
 msgstr "Flexible"
 
-#: app/templates/pages/homes.html:30
+#: app/templates/pages/homes.html:65
 msgid "Vetted Hosts"
 msgstr "Hôtes vérifiés"
 
-#: app/templates/pages/homes.html:34
+#: app/templates/pages/homes.html:69
 msgid "You're Protected"
 msgstr "Vous êtes protégé"
 
-#: app/templates/pages/homes.html:38
+#: app/templates/pages/homes.html:73
 msgid "Join us now"
 msgstr "Rejoignez-nous maintenant"
 
-#: app/templates/pages/homes.html:39 app/templates/pages/homes.html:837
+#: app/templates/pages/homes.html:74 app/templates/pages/homes.html:872
 msgid "View Rooms"
 msgstr "Voir les chambres"
 
-#: app/templates/pages/homes.html:59
+#: app/templates/pages/homes.html:94
 msgid "Very useful platform"
 msgstr "Plateforme très utile"
 
-#: app/templates/pages/homes.html:61
+#: app/templates/pages/homes.html:96
 msgid ""
 "Definitely saved my time and money. Flawless booking\n"
 "                process with vetted and trustworthy hosts."
@@ -1367,35 +1331,35 @@ msgstr ""
 "Cela m'a vraiment fait gagner du temps et de l'argent. Un processus de "
 "réservation impeccable avec des hôtes vérifiés et dignes de confiance."
 
-#: app/templates/pages/homes.html:81
+#: app/templates/pages/homes.html:116
 msgid "Host Partners"
 msgstr "Hôtes partenaires"
 
-#: app/templates/pages/homes.html:88
+#: app/templates/pages/homes.html:123
 msgid "Stars Service"
 msgstr "Service 5 étoiles"
 
-#: app/templates/pages/homes.html:95
+#: app/templates/pages/homes.html:130
 msgid "Service & support"
 msgstr "Service & assistance"
 
-#: app/templates/pages/homes.html:102 app/templates/pages/homes.html:167
+#: app/templates/pages/homes.html:137 app/templates/pages/homes.html:202
 msgid "Guest Satisfaction"
 msgstr "Satisfaction des invités"
 
-#: app/templates/pages/homes.html:115
+#: app/templates/pages/homes.html:150
 msgid "Rooms Locations"
 msgstr "Emplacements des chambres"
 
-#: app/templates/pages/homes.html:118
+#: app/templates/pages/homes.html:153
 msgid "Zoom the map to get a clear of the cities."
 msgstr "Zoomez sur la carte pour voir clairement les villes."
 
-#: app/templates/pages/homes.html:144
+#: app/templates/pages/homes.html:179
 msgid "Welcome to Jambo."
 msgstr "Bienvenue sur Jambo."
 
-#: app/templates/pages/homes.html:146
+#: app/templates/pages/homes.html:181
 msgid ""
 "Here, conviviality and comfort fused with affordability and\n"
 "            flexibility to provide peace of mind."
@@ -1403,88 +1367,96 @@ msgstr ""
 "Ici, convivialité et confort se conjuguent à l'accessibilité et à la "
 "flexibilité pour vous offrir une tranquillité d'esprit totale."
 
-#: app/templates/pages/homes.html:150
+#: app/templates/pages/homes.html:185
 msgid ""
 "Jambo is a startup online African marketplace that connects\n"
-"            travelers with hosts offering accommodations. Our platform enables\n"
-"            people, hostels, guest houses to rent out spare rooms or homes."
+"            travelers with hosts offering accommodations. Our platform "
+"enables\n"
+"            people, hostels, guest houses to rent out spare rooms or "
+"homes."
 msgstr ""
-"Jambo est une jeune place de marché africaine en ligne qui met en relation "
-"les voyageurs avec des hôtes proposant des hébergements. Notre plateforme "
-"permet aux particuliers, auberges et maisons d'hôtes de louer des chambres "
-"ou logements disponibles."
+"Jambo est une jeune place de marché africaine en ligne qui met en "
+"relation les voyageurs avec des hôtes proposant des hébergements. Notre "
+"plateforme permet aux particuliers, auberges et maisons d'hôtes de louer "
+"des chambres ou logements disponibles."
 
-#: app/templates/pages/homes.html:155
+#: app/templates/pages/homes.html:190
 msgid ""
 "Even though the platform seek to first vet each host and\n"
-"            guest, however both users can also review each other to helps build\n"
+"            guest, however both users can also review each other to helps"
+" build\n"
 "            trust and create a safer community."
 msgstr ""
-"Bien que la plateforme cherche avant tout à vérifier chaque hôte et chaque "
-"invité, les deux utilisateurs peuvent également s'évaluer mutuellement afin "
-"de renforcer la confiance et de créer une communauté plus sûre."
+"Bien que la plateforme cherche avant tout à vérifier chaque hôte et "
+"chaque invité, les deux utilisateurs peuvent également s'évaluer "
+"mutuellement afin de renforcer la confiance et de créer une communauté "
+"plus sûre."
 
-#: app/templates/pages/homes.html:163
+#: app/templates/pages/homes.html:198
 msgid "Rooms available"
 msgstr "Chambres disponibles"
 
-#: app/templates/pages/homes.html:177
+#: app/templates/pages/homes.html:206
+msgid "Service & Support"
+msgstr "Service & assistance"
+
+#: app/templates/pages/homes.html:212
 msgid "About us"
 msgstr "À propos de nous"
 
-#: app/templates/pages/homes.html:197
-msgid "Years"
-msgstr "Années"
+#: app/templates/pages/homes.html:232
+msgid "Clean"
+msgstr "Propre"
 
-#: app/templates/pages/homes.html:197
-msgid "Experience"
-msgstr "Expérience"
+#: app/templates/pages/homes.html:232
+msgid "Spacious"
+msgstr "Spacieuse"
 
-#: app/templates/pages/homes.html:212
+#: app/templates/pages/homes.html:247
 msgid "How to become a host?"
 msgstr "Comment devenir hôte ?"
 
-#: app/templates/pages/homes.html:214
+#: app/templates/pages/homes.html:249
 msgid ""
 "Become a host in 3 easy and rewarding steps. We will be with you\n"
 "        from the start throughout the grow of your business."
 msgstr ""
-"Devenez hôte en 3 étapes simples et gratifiantes. Nous serons à vos côtés "
-"dès le début et tout au long de la croissance de votre activité."
+"Devenez hôte en 3 étapes simples et gratifiantes. Nous serons à vos côtés"
+" dès le début et tout au long de la croissance de votre activité."
 
-#: app/templates/pages/homes.html:228
+#: app/templates/pages/homes.html:263
 msgid "Be a Member"
 msgstr "Devenir membre"
 
-#: app/templates/pages/homes.html:229
+#: app/templates/pages/homes.html:264
 msgid "Pass vetting"
 msgstr "Vérification"
 
-#: app/templates/pages/homes.html:229
+#: app/templates/pages/homes.html:264
 msgid "Team visit"
 msgstr "Visite de l’équipe"
 
-#: app/templates/pages/homes.html:230
+#: app/templates/pages/homes.html:265
 msgid "Go Live"
 msgstr "Mise en ligne"
 
-#: app/templates/pages/homes.html:230
+#: app/templates/pages/homes.html:265
 msgid "Make Cash"
 msgstr "Faire de l'argent"
 
-#: app/templates/pages/homes.html:251 app/templates/pages/homes.html:672
+#: app/templates/pages/homes.html:286 app/templates/pages/homes.html:707
 msgid "Slide"
 msgstr "Diapositive"
 
-#: app/templates/pages/homes.html:272
+#: app/templates/pages/homes.html:307
 msgid "Learn more"
 msgstr "En savoir plus"
 
-#: app/templates/pages/homes.html:310 app/templates/pages/homes.html:311
+#: app/templates/pages/homes.html:345 app/templates/pages/homes.html:346
 msgid "Spotlight"
 msgstr "Mettre en lumière"
 
-#: app/templates/pages/homes.html:313
+#: app/templates/pages/homes.html:348
 msgid ""
 "We present to you our most popular room listing this week chosen by\n"
 "      the Jambo community."
@@ -1492,144 +1464,179 @@ msgstr ""
 "Nous vous présentons notre annonce la plus populaire de la semaine, "
 "choisie par la communauté Jambo."
 
-#: app/templates/pages/homes.html:327
+#: app/templates/pages/homes.html:362
 msgid "SpotLight"
 msgstr "Mettre en lumière"
 
-#: app/templates/pages/homes.html:333 app/templates/pages/paysuccess.html:63
-#: app/templates/pages/roomdetails.html:298
+#: app/templates/pages/homes.html:368 app/templates/pages/paysuccess.html:63
+#: app/templates/pages/roomdetails.html:360
 msgid "Guests"
 msgstr "Visiteurs"
 
-#: app/templates/pages/homes.html:357
+#: app/templates/pages/homes.html:392
 msgid "Excellence"
 msgstr "Excellence"
 
-#: app/templates/pages/homes.html:364
+#: app/templates/pages/homes.html:399
 msgid "Premium WiFi"
 msgstr "Wifi haut debit"
 
-#: app/templates/pages/homes.html:368 app/templates/pages/roomdetails.html:223
+#: app/templates/pages/homes.html:403 app/templates/pages/roomdetails.html:285
 msgid "Smart TV"
 msgstr "TV intelligent"
 
-#: app/templates/pages/homes.html:372 app/templates/pages/roomdetails.html:323
+#: app/templates/pages/homes.html:407 app/templates/pages/roomdetails.html:385
 msgid "Support"
 msgstr "Soutien"
 
-#: app/templates/pages/homes.html:376
+#: app/templates/pages/homes.html:411
 msgid "Climate Control"
 msgstr "climatiseur"
 
-#: app/templates/pages/homes.html:382 app/templates/pages/homes.html:742
-#: app/templates/pages/roomdetails.html:110
-#: app/templates/pages/roomdetails.html:452
+#: app/templates/pages/homes.html:417 app/templates/pages/homes.html:777
+#: app/templates/pages/roomdetails.html:170
+#: app/templates/pages/roomdetails.html:514
 msgid "per night"
 msgstr "par nuitée"
 
-#: app/templates/pages/homes.html:384
+#: app/templates/pages/homes.html:419
 msgid "Reserve now"
 msgstr "Réservez maintenant"
 
-#: app/templates/pages/homes.html:395
+#: app/templates/pages/homes.html:430
 msgid "No rooms available yet -- check back soon!"
 msgstr "Aucune chambre disponible pour le moment -- revenez bientôt !"
 
-#: app/templates/pages/homes.html:433 app/templates/pages/homes.html:464
-#: app/templates/pages/homes.html:492 app/templates/pages/homes.html:521
-#: app/templates/pages/homes.html:547 app/templates/pages/homes.html:573
-#: app/templates/pages/homes.html:599 app/templates/pages/rooms.html:147
+#: app/templates/pages/homes.html:468 app/templates/pages/homes.html:499
+#: app/templates/pages/homes.html:527 app/templates/pages/homes.html:556
+#: app/templates/pages/homes.html:582 app/templates/pages/homes.html:608
+#: app/templates/pages/homes.html:634 app/templates/pages/rooms.html:147
 #: app/templates/pages/roomsearched.html:153
 msgid "night"
 msgstr "nuit"
 
-#: app/templates/pages/homes.html:435 app/templates/pages/homes.html:466
-#: app/templates/pages/homes.html:494
+#: app/templates/pages/homes.html:470 app/templates/pages/homes.html:501
+#: app/templates/pages/homes.html:529
 msgid "View"
 msgstr "Afficher"
 
-#: app/templates/pages/homes.html:617
+#: app/templates/pages/homes.html:652
 msgid "Explore All Rooms"
 msgstr "Explorer toutes les chambres"
 
-#: app/templates/pages/homes.html:629 app/templates/pages/homes.html:630
+#: app/templates/pages/homes.html:664 app/templates/pages/homes.html:665
 msgid "Testimonials"
 msgstr "Témoignages"
 
-#: app/templates/pages/homes.html:632
+#: app/templates/pages/homes.html:667
 msgid ""
-"At Jambo, our customers stand at the heart of our achievements. Thus, our main goal is not just simply to\n"
-"      satisfy them, but rather to amaze them. Here is what some clients have to say about us."
+"At Jambo, our customers stand at the heart of our achievements. Thus, our"
+" main goal is not just simply to\n"
+"      satisfy them, but rather to amaze them. Here is what some clients "
+"have to say about us."
 msgstr ""
 "Chez Jambo, nos clients sont au cœur de nos réussites. Notre objectif "
 "principal n'est donc pas simplement de les satisfaire, mais de les "
 "surprendre agréablement. Voici ce que certains de nos clients disent de "
 "nous."
 
-#: app/templates/pages/homes.html:712 app/templates/pages/homes.html:713
+#: app/templates/pages/homes.html:747 app/templates/pages/homes.html:748
 msgid "Offers"
 msgstr "Offres"
 
-#: app/templates/pages/homes.html:715
+#: app/templates/pages/homes.html:750
 msgid ""
 "Take advantage now of our deal package to save money and get the\n"
 "      best experience"
 msgstr ""
-"Profitez dès maintenant de nos offres pour économiser et vivre la meilleure "
-"expérience"
+"Profitez dès maintenant de nos offres pour économiser et vivre la "
+"meilleure expérience"
 
-#: app/templates/pages/homes.html:717
+#: app/templates/pages/homes.html:752
 msgid "With Jambo get a safe, friendly and affordable stay"
 msgstr "Avec Jambo, profitez d'un séjour sûr, convivial et abordable"
 
-#: app/templates/pages/homes.html:728
+#: app/templates/pages/homes.html:763
 msgid "OFF"
 msgstr "DE RÉDUCTION"
 
-#: app/templates/pages/homes.html:750
+#: app/templates/pages/homes.html:785
 msgid "Reserve Now"
 msgstr "Réservez maintenant"
 
-#: app/templates/pages/homes.html:807
+#: app/templates/pages/homes.html:842
 msgid "Experience heaven on earth."
 msgstr "Vivez un paradis sur terre."
 
-#: app/templates/pages/homes.html:809
+#: app/templates/pages/homes.html:844
 msgid ""
 "Assinie, a delightful seaside retreat situated on a\n"
-"            breathtaking strand of sand that serves as a natural boundary\n"
-"            separating the lagoon from the ocean. A stunning fishing village,\n"
-"            nestled by the tranquil sea, amidst lush palm trees and powdery\n"
-"            white sands, offers the perfect retreat for a few days of pure\n"
-"            relaxation, where visitors can immerse themselves in the local\n"
+"            breathtaking strand of sand that serves as a natural boundary"
+"\n"
+"            separating the lagoon from the ocean. A stunning fishing "
+"village,\n"
+"            nestled by the tranquil sea, amidst lush palm trees and "
+"powdery\n"
+"            white sands, offers the perfect retreat for a few days of "
+"pure\n"
+"            relaxation, where visitors can immerse themselves in the "
+"local\n"
 "            community."
 msgstr ""
-"Assinie, une charmante retraite balnéaire nichée sur une étendue de sable à "
-"couper le souffle qui sépare naturellement la lagune de l'océan. Ce "
+"Assinie, une charmante retraite balnéaire nichée sur une étendue de sable"
+" à couper le souffle qui sépare naturellement la lagune de l'océan. Ce "
 "magnifique village de pêcheurs, blotti au bord d'une mer paisible, entre "
-"palmiers luxuriants et sable fin, offre le refuge idéal pour quelques jours "
-"de pure détente, où les visiteurs peuvent s'immerger dans la communauté "
-"locale."
+"palmiers luxuriants et sable fin, offre le refuge idéal pour quelques "
+"jours de pure détente, où les visiteurs peuvent s'immerger dans la "
+"communauté locale."
 
-#: app/templates/pages/homes.html:820
+#: app/templates/pages/homes.html:855
 msgid "free guided tourist visit"
 msgstr "visite touristique guidée gratuite"
 
-#: app/templates/pages/homes.html:824
+#: app/templates/pages/homes.html:859
 msgid "24/7 concierge and room service"
 msgstr "Conciergerie et service en chambre 24h/24 et 7j/7"
 
-#: app/templates/pages/homes.html:828
+#: app/templates/pages/homes.html:863
 msgid "Delicious local and international cuisine"
 msgstr "Délicieuse cuisine locale et internationale"
 
-#: app/templates/pages/homes.html:832
+#: app/templates/pages/homes.html:867
 msgid "Prime location with stunning city views"
 msgstr "Emplacement de choix avec vue imprenable sur la ville"
 
-#: app/templates/pages/homes.html:849
-msgid "Visit from"
-msgstr "Visite à partir de"
+#: app/templates/pages/homes.html:884 app/templates/pages/rooms.html:144
+#: app/templates/pages/roomsearched.html:148
+#: app/templates/udashpages/mybookings.html:135
+#: app/templates/udashpages/mybookings.html:327
+msgid "From"
+msgstr "À partir de"
+
+#: app/templates/pages/joinusmsg.html:7 app/templates/pages/login.html:17
+msgid "Welcome to Jambo"
+msgstr "Bienvenue sur Jambo"
+
+#: app/templates/pages/joinusmsg.html:104
+msgid "your account is verified"
+msgstr "votre compte est vérifié"
+
+#: app/templates/pages/joinusmsg.html:106
+msgid ""
+"Once again Welcome to the Jambo community, where you can book short\n"
+"                stays that are safer, happier, and more affordable. "
+"Whenever you're\n"
+"                ready, you can also list a room of your own and start "
+"earning."
+msgstr ""
+"Encore une fois, bienvenue dans la communauté Jambo, où vous pouvez "
+"réserver des séjours courts plus sûrs, plus agréables et plus abordables."
+" Quand vous le souhaitez, vous pouvez aussi proposer une chambre vous "
+"appartenant et commencer à gagner de l'argent."
+
+#: app/templates/pages/joinusmsg.html:110
+msgid "Log in to Jambo"
+msgstr "Se connecter à Jambo"
 
 #: app/templates/pages/listupdate.html:8 app/templates/pages/roomextra.html:8
 #: app/templates/pages/roompicsupdate.html:13
@@ -1666,12 +1673,12 @@ msgid "Max occupancy"
 msgstr "Occupation maximale"
 
 #: app/templates/pages/listupdate.html:101
-#: app/templates/udashpages/mybookings.html:45
-#: app/templates/udashpages/myearnings.html:45
-#: app/templates/udashpages/myearnings.html:109
+#: app/templates/udashpages/mybookings.html:137
+#: app/templates/udashpages/myearnings.html:42
+#: app/templates/udashpages/myearnings.html:101
 #: app/templates/udashpages/mylistings.html:140
 #: app/templates/udashpages/mylistings.html:307
-#: app/templates/udashpages/myrefund.html:41
+#: app/templates/udashpages/myrefund.html:38
 msgid "Status"
 msgstr "Statut"
 
@@ -1696,39 +1703,38 @@ msgstr "Règle de base 3"
 msgid "Description"
 msgstr "Description"
 
-#: app/templates/pages/login.html:28
-msgid "Welcome to Jambo"
-msgstr "Bienvenue sur Jambo"
-
-#: app/templates/pages/login.html:30
+#: app/templates/pages/login.html:19
 msgid "Explore <b class=\"text-success\">great & amazing</b> Stuffs!"
 msgstr ""
 "Découvrez des choses <b class=\"text-success\">incroyables et "
 "fantastiques</b> !"
 
-#: app/templates/pages/login.html:85
+#: app/templates/pages/login.html:51
 msgid "Toggle password visibility"
 msgstr "Afficher/masquer le mot de passe"
 
-#: app/templates/pages/login.html:121
+#: app/templates/pages/login.html:73
 msgid "Forgot password?"
 msgstr "Mot de passe oublié ?"
 
-#: app/templates/pages/login.html:210
+#: app/templates/pages/login.html:74
+msgid "Didn't verify your email?"
+msgstr "Vous n'avez pas vérifié votre adresse e-mail ?"
+
+#: app/templates/pages/login.html:125
 msgid "New to"
 msgstr "Nouveau sur"
 
-#: app/templates/pages/login.html:211
-#: app/templates/pages/reset_request.html:62
-#: app/templates/pages/reset_token.html:118
+#: app/templates/pages/login.html:126 app/templates/pages/reset_request.html:50
+#: app/templates/pages/reset_token.html:70
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: app/templates/pages/login.html:228
+#: app/templates/pages/login.html:137
 msgid "Hooray, you're back!"
 msgstr "Youpi, vous êtes de retour !"
 
-#: app/templates/pages/login.html:229
+#: app/templates/pages/login.html:138
 msgid "Taking you to your Rezerva dashboard..."
 msgstr "Direction votre tableau de bord Rezerva..."
 
@@ -1742,8 +1748,242 @@ msgstr ""
 "Vous allez être redirigé en toute sécurité vers Paystack pour finaliser "
 "votre paiement."
 
-#: app/templates/pages/paysuccess.html:7
-#: app/templates/pages/paysuccess.html:11
+#: app/templates/pages/payment_policy.html:57
+#: app/templates/pages/payment_policy.html:61
+msgid "Payment Policy"
+msgstr "Politique de paiement"
+
+#: app/templates/pages/payment_policy.html:76
+#: app/templates/pages/terms_of_use.html:76
+msgid "operating the Jambo platform"
+msgstr "exploitant la plateforme Jambo"
+
+#: app/templates/pages/payment_policy.html:77
+#: app/templates/pages/terms_of_use.html:77
+msgid "Effective date"
+msgstr "Date d'entrée en vigueur"
+
+#: app/templates/pages/payment_policy.html:77
+#: app/templates/pages/terms_of_use.html:77
+msgid "August"
+msgstr "août"
+
+#: app/templates/pages/payment_policy.html:82
+msgid "Scope"
+msgstr "Champ d'application"
+
+#: app/templates/pages/payment_policy.html:84
+msgid ""
+"This policy explains how payments are processed on Jambo, how host "
+"payouts work, and the terms under which a guest or host may cancel a "
+"confirmed booking. It applies to every booking made through the Jambo "
+"platform."
+msgstr ""
+"La présente politique explique comment les paiements sont traités sur "
+"Jambo, comment fonctionnent les versements aux hôtes, et les conditions "
+"dans lesquelles un invité ou un hôte peut annuler une réservation "
+"confirmée. Elle s'applique à toute réservation effectuée via la "
+"plateforme Jambo."
+
+#: app/templates/pages/payment_policy.html:87
+msgid "How Payment Works"
+msgstr "Fonctionnement du paiement"
+
+#: app/templates/pages/payment_policy.html:89
+msgid ""
+"When a guest books a room, payment is collected in full by Jambo through "
+"our payment processor, Paystack. Jambo does not directly handle or store "
+"card details -- this is managed entirely by Paystack, a licensed payment "
+"service provider."
+msgstr ""
+"Lorsqu'un invité réserve une chambre, le paiement est encaissé "
+"intégralement par Jambo via notre prestataire de paiement, Paystack. "
+"Jambo ne traite ni ne conserve directement les données de carte bancaire "
+"-- celles-ci sont entièrement gérées par Paystack, prestataire de "
+"services de paiement agréé."
+
+#: app/templates/pages/payment_policy.html:92
+msgid ""
+"All bookings are processed and settled in West African CFA Francs (XOF), "
+"regardless of the currency a guest may have been viewing prices in while "
+"browsing the site."
+msgstr ""
+"Toutes les réservations sont traitées et réglées en francs CFA d'Afrique "
+"de l'Ouest (XOF), quelle que soit la devise dans laquelle l'invité "
+"consultait les prix en naviguant sur le site."
+
+#: app/templates/pages/payment_policy.html:95
+msgid "Platform Commission"
+msgstr "Commission de la plateforme"
+
+#: app/templates/pages/payment_policy.html:97
+#, python-format
+msgid ""
+"Jambo retains a 15%% commission on the total booking value. This fee "
+"covers platform operation, payment processing, customer support, and the "
+"trust and safety measures built into the booking process."
+msgstr ""
+"Jambo retient une commission de 15 %% sur le montant total de la "
+"réservation. Ces frais couvrent le fonctionnement de la plateforme, le "
+"traitement des paiements, le service client, ainsi que les mesures de "
+"confiance et de sécurité intégrées au processus de réservation."
+
+#: app/templates/pages/payment_policy.html:100
+msgid "Host Payouts"
+msgstr "Versements aux hôtes"
+
+#: app/templates/pages/payment_policy.html:102
+#, python-format
+msgid ""
+"The remaining 85%% of the booking value is transferred to the host's "
+"agreed payment method within 5 working days of Jambo receiving the "
+"guest's payment."
+msgstr ""
+"Les 85 %% restants du montant de la réservation sont transférés vers le "
+"mode de paiement convenu de l'hôte dans un délai de 5 jours ouvrés après "
+"réception du paiement de l'invité par Jambo."
+
+#: app/templates/pages/payment_policy.html:105
+msgid ""
+"Hosts are responsible for providing accurate, up-to-date payout details. "
+"Jambo is not responsible for delays caused by incorrect or outdated "
+"payment information provided by the host."
+msgstr ""
+"Les hôtes sont responsables de fournir des informations de versement "
+"exactes et à jour. Jambo décline toute responsabilité pour les retards "
+"causés par des informations de paiement incorrectes ou obsolètes fournies"
+" par l'hôte."
+
+#: app/templates/pages/payment_policy.html:108
+msgid "Guest Cancellations & Refunds"
+msgstr "Annulations par l'invité et remboursements"
+
+#: app/templates/pages/payment_policy.html:110
+msgid "Free Cancellation Window"
+msgstr "Délai d'annulation gratuite"
+
+#: app/templates/pages/payment_policy.html:112
+msgid ""
+"A guest may cancel a confirmed booking and receive a full refund, free of"
+" charge, provided the cancellation is made at least 48 hours before the "
+"scheduled arrival date."
+msgstr ""
+"Un invité peut annuler une réservation confirmée et obtenir un "
+"remboursement intégral, sans frais, à condition que l'annulation soit "
+"effectuée au moins 48 heures avant la date d'arrivée prévue."
+
+#: app/templates/pages/payment_policy.html:115
+msgid "Cancellations After the Free Window"
+msgstr "Annulations après le délai gratuit"
+
+#: app/templates/pages/payment_policy.html:117
+msgid ""
+"If a guest wishes to cancel less than 48 hours before arrival, the "
+"booking is no longer eligible for automatic, free cancellation. To "
+"request a refund at this stage, the guest must:"
+msgstr ""
+"Si un invité souhaite annuler moins de 48 heures avant l'arrivée, la "
+"réservation n'est plus éligible à l'annulation gratuite automatique. Pour"
+" demander un remboursement à ce stade, l'invité doit :"
+
+#: app/templates/pages/payment_policy.html:120
+msgid ""
+"Email ropero.app@gmail.com with the booking reference and reason for the "
+"request."
+msgstr ""
+"Envoyer un e-mail à ropero.app@gmail.com en indiquant la référence de la "
+"réservation et le motif de la demande."
+
+#: app/templates/pages/payment_policy.html:121
+#, python-format
+msgid ""
+"A 20%% service charge will be deducted from the refund amount, to cover "
+"processing and administrative costs already incurred."
+msgstr ""
+"Des frais de service de 20 %% seront déduits du montant du remboursement,"
+" afin de couvrir les frais de traitement et d'administration déjà "
+"engagés."
+
+#: app/templates/pages/payment_policy.html:122
+msgid ""
+"The remaining balance will be refunded to the guest's original payment "
+"method."
+msgstr ""
+"Le solde restant sera remboursé sur le mode de paiement d'origine de "
+"l'invité."
+
+#: app/templates/pages/payment_policy.html:125
+msgid "Refund Currency"
+msgstr "Devise du remboursement"
+
+#: app/templates/pages/payment_policy.html:127
+msgid ""
+"Refunds are issued in the same currency the original payment was "
+"processed in (XOF), regardless of the guest's browsing currency "
+"preference."
+msgstr ""
+"Les remboursements sont effectués dans la devise dans laquelle le "
+"paiement initial a été traité (XOF), quelle que soit la devise de "
+"navigation préférée de l'invité."
+
+#: app/templates/pages/payment_policy.html:130
+msgid "Refund Processing Time"
+msgstr "Délai de traitement du remboursement"
+
+#: app/templates/pages/payment_policy.html:132
+msgid "Approved refunds are processed within 10 working days."
+msgstr "Les remboursements approuvés sont traités sous 10 jours ouvrés."
+
+#: app/templates/pages/payment_policy.html:135
+msgid "Host Cancellations"
+msgstr "Annulations par l'hôte"
+
+#: app/templates/pages/payment_policy.html:137
+#, python-format
+msgid ""
+"If a host cancels a confirmed booking before the guest's arrival without "
+"reasonable cause, the host will be charged a fee equal to 15%% of the "
+"total booking amount, deducted from their earnings."
+msgstr ""
+"Si un hôte annule une réservation confirmée avant l'arrivée de l'invité "
+"sans motif raisonnable, des frais égaux à 15 %% du montant total de la "
+"réservation seront facturés à l'hôte et déduits de ses revenus."
+
+#: app/templates/pages/payment_policy.html:140
+msgid ""
+"The guest will receive a full refund for a booking cancelled by the host "
+"under this section."
+msgstr ""
+"L'invité recevra un remboursement intégral pour une réservation annulée "
+"par l'hôte en vertu de la présente section."
+
+#: app/templates/pages/payment_policy.html:143
+msgid "Disputes"
+msgstr "Litiges"
+
+#: app/templates/pages/payment_policy.html:145
+msgid ""
+"Any disputes regarding a charge, refund, or payout should be directed to "
+"ropero.app@gmail.com in the first instance."
+msgstr ""
+"Tout litige concernant un paiement, un remboursement ou un versement doit"
+" être adressé en premier lieu à ropero.app@gmail.com."
+
+#: app/templates/pages/payment_policy.html:148
+msgid "Changes to This Policy"
+msgstr "Modifications de la présente politique"
+
+#: app/templates/pages/payment_policy.html:150
+msgid ""
+"Jambo may update this policy from time to time. Continued use of the "
+"platform after changes are published constitutes acceptance of the "
+"revised terms."
+msgstr ""
+"Jambo peut mettre à jour cette politique de temps à autre. La poursuite "
+"de l'utilisation de la plateforme après la publication des modifications "
+"vaut acceptation des conditions révisées."
+
+#: app/templates/pages/paysuccess.html:7 app/templates/pages/paysuccess.html:11
 msgid "Payment confirmation"
 msgstr "Confirmation de paiement"
 
@@ -1754,8 +1994,8 @@ msgstr "Réservation confirmée !"
 #: app/templates/pages/paysuccess.html:28
 #, python-format
 msgid ""
-"Thank you, %(name)s -- we've sent the details to your email. We wish you a "
-"pleasant stay!"
+"Thank you, %(name)s -- we've sent the details to your email. We wish you "
+"a pleasant stay!"
 msgstr ""
 "Merci, %(name)s -- nous avons envoyé les détails à votre adresse e-mail. "
 "Nous vous souhaitons un excellent séjour !"
@@ -1765,14 +2005,14 @@ msgid "Confirmation Number"
 msgstr "Numéro de confirmation"
 
 #: app/templates/pages/paysuccess.html:55
-#: app/templates/pages/roomdetails.html:313
-#: app/templates/pages/roomdetails.html:315
+#: app/templates/pages/roomdetails.html:375
+#: app/templates/pages/roomdetails.html:377
 msgid "Check-in"
 msgstr "Arrivée"
 
 #: app/templates/pages/paysuccess.html:59
-#: app/templates/pages/roomdetails.html:313
-#: app/templates/pages/roomdetails.html:315
+#: app/templates/pages/roomdetails.html:375
+#: app/templates/pages/roomdetails.html:377
 msgid "Check-out"
 msgstr "Départ"
 
@@ -1784,6 +2024,11 @@ msgstr "Payé via"
 msgid "Total paid"
 msgstr "Total payé"
 
+#: app/templates/pages/paysuccess.html:89
+#: app/templates/udashpages/myrefund.html:48
+msgid "approx."
+msgstr "environ"
+
 #: app/templates/pages/paysuccess.html:99
 msgid "View My Bookings"
 msgstr "Voir mes réservations"
@@ -1792,408 +2037,436 @@ msgstr "Voir mes réservations"
 msgid "Back to Home"
 msgstr "Retour à l'accueil"
 
-#: app/templates/pages/register.html:21
+#: app/templates/pages/register.html:208
 msgid "Greetings from Jambo"
 msgstr "Salutations de Jambo"
 
-#: app/templates/pages/register.html:23
+#: app/templates/pages/register.html:210
 msgid "Join a"
 msgstr "Rejoignez une"
 
-#: app/templates/pages/register.html:24
+#: app/templates/pages/register.html:210
 msgid "great & wonderful"
 msgstr "grande & formidable"
 
-#: app/templates/pages/register.html:25
+#: app/templates/pages/register.html:210
 msgid "community"
 msgstr "communauté"
 
-#: app/templates/pages/register.html:160
+#: app/templates/pages/register.html:332
 msgid "Do you agree to the"
 msgstr "Acceptez-vous les"
 
-#: app/templates/pages/register.html:161
+#: app/templates/pages/register.html:333
 msgid "Terms of use"
 msgstr "Conditions d'utilisation"
 
-#: app/templates/pages/register.html:271
+#: app/templates/pages/register.html:380
 msgid "Already have an account"
 msgstr "Vous avez déjà un compte"
 
-#: app/templates/pages/register.html:272
+#: app/templates/pages/register.html:381
 msgid "Sign in"
 msgstr "Se connecter"
 
-#: app/templates/pages/reset_request.html:14
-#: app/templates/pages/reset_token.html:22
+#: app/templates/pages/resend_verification.html:10
+msgid "Verify"
+msgstr "Vérifiez"
+
+#: app/templates/pages/resend_verification.html:10
+msgid "your email"
+msgstr "votre e-mail"
+
+#: app/templates/pages/resend_verification.html:11
+msgid ""
+"Enter the email you signed up with and we'll send you a fresh "
+"verification link"
+msgstr ""
+"Saisissez l'adresse e-mail utilisée lors de votre inscription et nous "
+"vous enverrons un nouveau lien de vérification"
+
+#: app/templates/pages/resend_verification.html:46
+msgid "Already verified"
+msgstr "Déjà vérifié"
+
+#: app/templates/pages/reset_request.html:10
+#: app/templates/pages/reset_token.html:11
 msgid "Password"
 msgstr "Mot de passe"
 
-#: app/templates/pages/reset_request.html:14
+#: app/templates/pages/reset_request.html:10
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: app/templates/pages/reset_request.html:15
+#: app/templates/pages/reset_request.html:11
 msgid "Let's set you up, please enter your signup email"
 msgstr ""
-"Configurons votre compte, veuillez saisir l'adresse e-mail utilisée lors de "
-"votre inscription"
+"Configurons votre compte, veuillez saisir l'adresse e-mail utilisée lors "
+"de votre inscription"
 
-#: app/templates/pages/reset_request.html:61
+#: app/templates/pages/reset_request.html:49
 msgid "New to Jambo"
 msgstr "Nouveau sur Jambo"
 
-#: app/templates/pages/reset_token.html:22
+#: app/templates/pages/reset_token.html:11
 msgid "Your new"
 msgstr "Votre nouveau"
 
-#: app/templates/pages/reset_token.html:24
+#: app/templates/pages/reset_token.html:13
 msgid "Nearly done, please enter your brand new password"
 msgstr "Presque terminé, veuillez saisir votre tout nouveau mot de passe"
 
-#: app/templates/pages/reset_token.html:117
+#: app/templates/pages/reset_token.html:69
 msgid "New to Rezerva"
 msgstr "Nouveau sur Rezerva"
 
-#: app/templates/pages/roomdetails.html:53
-#: app/templates/pages/roomdetails.html:57
+#: app/templates/pages/roomdetails.html:6
+#, python-format
+msgid "%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo."
+msgstr ""
+"%(room)s à %(place)s : %(desc)s. À partir de %(price)s par nuit. Réservez"
+" sur Jambo."
+
+#: app/templates/pages/roomdetails.html:113
+#: app/templates/pages/roomdetails.html:117
 msgid "Room Details"
 msgstr "Détails de la chambre"
 
-#: app/templates/pages/roomdetails.html:75
+#: app/templates/pages/roomdetails.html:135
 msgid "Located in"
 msgstr "Situé à"
 
-#: app/templates/pages/roomdetails.html:85
+#: app/templates/pages/roomdetails.html:145
 msgid "reviews"
 msgstr "avis"
 
-#: app/templates/pages/roomdetails.html:96 app/templates/pages/rooms.html:137
+#: app/templates/pages/roomdetails.html:156 app/templates/pages/rooms.html:137
 #: app/templates/pages/roomsearched.html:140
 msgid "Up to"
 msgstr "Jusqu'à"
 
-#: app/templates/pages/roomdetails.html:96 app/templates/pages/rooms.html:138
+#: app/templates/pages/roomdetails.html:156 app/templates/pages/rooms.html:138
 #: app/templates/pages/roomsearched.html:141
 msgid "guests"
 msgstr "invités"
 
-#: app/templates/pages/roomdetails.html:101
+#: app/templates/pages/roomdetails.html:161
 msgid "sq ft"
 msgstr "pi²"
 
-#: app/templates/pages/roomdetails.html:115
+#: app/templates/pages/roomdetails.html:176
 msgid "Availability"
 msgstr "Disponibilité"
 
-#: app/templates/pages/roomdetails.html:119
+#: app/templates/pages/roomdetails.html:179
 msgid "Book Now"
 msgstr "Réserver maintenant"
 
-#: app/templates/pages/roomdetails.html:127
+#: app/templates/pages/roomdetails.html:189
 msgid "Room Gallery"
 msgstr "Galerie de la chambre"
 
-#: app/templates/pages/roomdetails.html:166
+#: app/templates/pages/roomdetails.html:228
 msgid "Room Overview"
 msgstr "Aperçu de la chambre"
 
-#: app/templates/pages/roomdetails.html:193
+#: app/templates/pages/roomdetails.html:255
 msgid "Room Amenities & Services"
 msgstr "Équipements et services de la chambre"
 
-#: app/templates/pages/roomdetails.html:197
+#: app/templates/pages/roomdetails.html:259
 msgid "Sleeping"
 msgstr "Couchage"
 
-#: app/templates/pages/roomdetails.html:200
+#: app/templates/pages/roomdetails.html:262
 msgid "Bed size"
 msgstr "Taille du lit"
 
-#: app/templates/pages/roomdetails.html:203
+#: app/templates/pages/roomdetails.html:265
 msgid "Clean towels"
 msgstr "Serviettes propres"
 
-#: app/templates/pages/roomdetails.html:205
+#: app/templates/pages/roomdetails.html:267
 msgid "Kitchen available"
 msgstr "Cuisine disponible"
 
-#: app/templates/pages/roomdetails.html:208
+#: app/templates/pages/roomdetails.html:270
 #: app/templates/pages/roomextra.html:47
 #: app/templates/udashpages/amenities.html:57
 msgid "Hot water"
 msgstr "Eau chaude"
 
-#: app/templates/pages/roomdetails.html:210
+#: app/templates/pages/roomdetails.html:272
 msgid "Clean Bedsheet"
 msgstr "Draps propres"
 
-#: app/templates/pages/roomdetails.html:216
+#: app/templates/pages/roomdetails.html:278
 msgid "Technology"
 msgstr "Technologie"
 
-#: app/templates/pages/roomdetails.html:219
+#: app/templates/pages/roomdetails.html:281
 #: app/templates/pages/roomextra.html:74
 #: app/templates/udashpages/amenities.html:86
 msgid "Internet"
 msgstr "Internet"
 
-#: app/templates/pages/roomdetails.html:227
+#: app/templates/pages/roomdetails.html:289
 msgid "Electric Sockets"
 msgstr "Prises électriques"
 
-#: app/templates/pages/roomdetails.html:229
+#: app/templates/pages/roomdetails.html:291
 #: app/templates/udashpages/amenities.html:258
 msgid "Washing Machine"
 msgstr "Machine à laver"
 
-#: app/templates/pages/roomdetails.html:231
+#: app/templates/pages/roomdetails.html:293
 #: app/templates/pages/roomextra.html:184
 #: app/templates/udashpages/amenities.html:199
 msgid "Car rental"
 msgstr "Location de voiture"
 
-#: app/templates/pages/roomdetails.html:238
+#: app/templates/pages/roomdetails.html:300
 msgid "Comfort"
 msgstr "Confort"
 
-#: app/templates/pages/roomdetails.html:241
+#: app/templates/pages/roomdetails.html:303
 msgid "Climate control"
 msgstr "Climatisation"
 
-#: app/templates/pages/roomdetails.html:244
+#: app/templates/pages/roomdetails.html:306
 #: app/templates/udashpages/amenities.html:242
 msgid "Work Space"
 msgstr "Espace de travail"
 
-#: app/templates/pages/roomdetails.html:248
+#: app/templates/pages/roomdetails.html:310
 #: app/templates/udashpages/amenities.html:229
 msgid "Swimming Pool"
 msgstr "Piscine"
 
-#: app/templates/pages/roomdetails.html:250
+#: app/templates/pages/roomdetails.html:312
 #: app/templates/pages/roomextra.html:143
 #: app/templates/udashpages/amenities.html:157
 msgid "Spa"
 msgstr "Spa"
 
-#: app/templates/pages/roomdetails.html:252
+#: app/templates/pages/roomdetails.html:314
 #: app/templates/pages/roomextra.html:171
 #: app/templates/udashpages/amenities.html:185
 msgid "Concierge"
 msgstr "Conciergerie"
 
-#: app/templates/pages/roomdetails.html:259
+#: app/templates/pages/roomdetails.html:321
 msgid "Service"
 msgstr "Service"
 
-#: app/templates/pages/roomdetails.html:261
+#: app/templates/pages/roomdetails.html:323
 msgid "Sport room"
 msgstr "Salle de sport"
 
-#: app/templates/pages/roomdetails.html:263
+#: app/templates/pages/roomdetails.html:325
 msgid "Car Parking"
 msgstr "Parking"
 
-#: app/templates/pages/roomdetails.html:267
+#: app/templates/pages/roomdetails.html:329
 #: app/templates/pages/roomextra.html:130
 #: app/templates/udashpages/amenities.html:144
 msgid "Bar"
 msgstr "Bar"
 
-#: app/templates/pages/roomdetails.html:270
+#: app/templates/pages/roomdetails.html:332
 #: app/templates/pages/roomextra.html:158
 #: app/templates/udashpages/amenities.html:172
 msgid "Shop"
 msgstr "Boutique"
 
-#: app/templates/pages/roomdetails.html:272
+#: app/templates/pages/roomdetails.html:334
 msgid "Resto"
 msgstr "Restaurant"
 
-#: app/templates/pages/roomdetails.html:286
+#: app/templates/pages/roomdetails.html:348
 msgid "Policies"
 msgstr "Politiques"
 
-#: app/templates/pages/roomdetails.html:292
+#: app/templates/pages/roomdetails.html:354
 msgid "Trust"
 msgstr "Confiance"
 
-#: app/templates/pages/roomdetails.html:304
+#: app/templates/pages/roomdetails.html:366
 msgid "Ground rules"
 msgstr "Règles de base"
 
-#: app/templates/pages/roomdetails.html:319
+#: app/templates/pages/roomdetails.html:381
 msgid "Cancellation"
 msgstr "Annulation"
 
-#: app/templates/pages/roomdetails.html:320
+#: app/templates/pages/roomdetails.html:382
 msgid "Free cancellation up to 48 hours before arrival"
 msgstr "Annulation gratuite jusqu'à 48 heures avant l'arrivée"
 
-#: app/templates/pages/roomdetails.html:324
+#: app/templates/pages/roomdetails.html:386
 msgid "Available 24/7 just contact us."
 msgstr "Disponible 24h/24 et 7j/7, contactez-nous simplement."
 
-#: app/templates/pages/roomdetails.html:333
+#: app/templates/pages/roomdetails.html:395
 msgid "Establishing trust between us"
 msgstr "Établir la confiance entre nous"
 
-#: app/templates/pages/roomdetails.html:335
+#: app/templates/pages/roomdetails.html:397
 msgid "Identities checking is crucial"
 msgstr "La vérification d'identité est essentielle"
 
-#: app/templates/pages/roomdetails.html:336
+#: app/templates/pages/roomdetails.html:398
 msgid "Step-based identity check process"
 msgstr "Processus de vérification d'identité par étapes"
 
-#: app/templates/pages/roomdetails.html:337
+#: app/templates/pages/roomdetails.html:399
 msgid "Ensure that everybody are confident"
 msgstr "S'assurer que chacun se sente en confiance"
 
-#: app/templates/pages/roomdetails.html:339
+#: app/templates/pages/roomdetails.html:401
 msgid "Host, co-host & guest's identity is checked."
 msgstr "L'identité de l'hôte, du co-hôte et de l'invité est vérifiée."
 
-#: app/templates/pages/roomdetails.html:344
+#: app/templates/pages/roomdetails.html:406
 msgid "Why we verify identity"
 msgstr "Pourquoi nous vérifions l'identité"
 
-#: app/templates/pages/roomdetails.html:346
+#: app/templates/pages/roomdetails.html:408
 msgid "Promote trust between guests & hosts"
 msgstr "Favoriser la confiance entre invités et hôtes"
 
-#: app/templates/pages/roomdetails.html:347
+#: app/templates/pages/roomdetails.html:409
 msgid "Reduce fraudulent behaviour"
 msgstr "Réduire les comportements frauduleux"
 
-#: app/templates/pages/roomdetails.html:348
+#: app/templates/pages/roomdetails.html:410
 msgid "Carry out lawfully background checks"
 msgstr "Effectuer des vérifications d'antécédents en toute légalité"
 
-#: app/templates/pages/roomdetails.html:349
+#: app/templates/pages/roomdetails.html:411
 msgid "Investigate safety and security issues"
 msgstr "Enquêter sur les problèmes de sécurité"
 
-#: app/templates/pages/roomdetails.html:359
+#: app/templates/pages/roomdetails.html:421
 msgid "Before you book"
 msgstr "Avant de réserver"
 
-#: app/templates/pages/roomdetails.html:360
+#: app/templates/pages/roomdetails.html:422
 msgid "Any questions about a listing, plz contact us."
 msgstr "Pour toute question concernant une annonce, contactez-nous."
 
-#: app/templates/pages/roomdetails.html:363
+#: app/templates/pages/roomdetails.html:425
 msgid "When reservation is confirmed"
 msgstr "Une fois la réservation confirmée"
 
-#: app/templates/pages/roomdetails.html:364
+#: app/templates/pages/roomdetails.html:426
 msgid "Message your host immediately"
 msgstr "Contactez votre hôte immédiatement"
 
-#: app/templates/pages/roomdetails.html:367
+#: app/templates/pages/roomdetails.html:429
 msgid "After your trip"
 msgstr "Après votre séjour"
 
-#: app/templates/pages/roomdetails.html:368
+#: app/templates/pages/roomdetails.html:430
 msgid "Review trip to help the community"
 msgstr "Évaluez votre séjour pour aider la communauté"
 
-#: app/templates/pages/roomdetails.html:377
+#: app/templates/pages/roomdetails.html:439
 msgid "Rule 1"
 msgstr "Règle 1"
 
-#: app/templates/pages/roomdetails.html:381
+#: app/templates/pages/roomdetails.html:443
 #: app/templates/udashpages/mylistings.html:225
 msgid "Rule 2"
 msgstr "Règle 2"
 
-#: app/templates/pages/roomdetails.html:385
+#: app/templates/pages/roomdetails.html:447
 #: app/templates/udashpages/mylistings.html:241
 msgid "Rule 3"
 msgstr "Règle 3"
 
-#: app/templates/pages/roomdetails.html:442
+#: app/templates/pages/roomdetails.html:504
 msgid "Ready to book your stay?"
 msgstr "Prêt à réserver votre séjour ?"
 
-#: app/templates/pages/roomdetails.html:444
+#: app/templates/pages/roomdetails.html:506
 msgid ""
 "Enjoy comfortable, peaceful, and affordable accommodations\n"
-"              for your short gateway and holidays. Book now with confidence and\n"
+"              for your short gateway and holidays. Book now with "
+"confidence and\n"
 "              create memories that will last forever."
 msgstr ""
 "Profitez d'un hébergement confortable, paisible et abordable pour vos "
-"courtes escapades et vacances. Réservez dès maintenant en toute confiance et"
-" créez des souvenirs inoubliables."
+"courtes escapades et vacances. Réservez dès maintenant en toute confiance"
+" et créez des souvenirs inoubliables."
 
-#: app/templates/pages/roomdetails.html:454
+#: app/templates/pages/roomdetails.html:516
 msgid ""
 "Book\n"
 "              now !"
 msgstr "Réservez maintenant !"
 
-#: app/templates/pages/roomdetails.html:473
+#: app/templates/pages/roomdetails.html:535
 msgid "Review to read"
 msgstr "Avis à lire"
 
-#: app/templates/pages/roomdetails.html:474
+#: app/templates/pages/roomdetails.html:536
 msgid "Reviews to read"
 msgstr "Avis à lire"
 
-#: app/templates/pages/roomdetails.html:481
+#: app/templates/pages/roomdetails.html:543
 msgid "Review for this room."
 msgstr "Avis pour cette chambre."
 
-#: app/templates/pages/roomdetails.html:483
+#: app/templates/pages/roomdetails.html:545
 msgid "Latest user Review"
 msgstr "Dernier avis d'utilisateur"
 
-#: app/templates/pages/roomdetails.html:486
+#: app/templates/pages/roomdetails.html:548
 msgid "Reviews for this room."
 msgstr "Avis pour cette chambre."
 
-#: app/templates/pages/roomdetails.html:488
+#: app/templates/pages/roomdetails.html:550
 msgid "Latest users Reviews"
 msgstr "Derniers avis des utilisateurs"
 
-#: app/templates/pages/roomdetails.html:504
+#: app/templates/pages/roomdetails.html:566
 msgid "Stayed"
 msgstr "A séjourné"
 
-#: app/templates/pages/roomdetails.html:506
+#: app/templates/pages/roomdetails.html:568
 msgid "Verified Stay"
 msgstr "Séjour vérifié"
 
-#: app/templates/pages/roomdetails.html:528
+#: app/templates/pages/roomdetails.html:590
 msgid "Helpful"
 msgstr "Utile"
 
-#: app/templates/pages/roomdetails.html:550
+#: app/templates/pages/roomdetails.html:612
 msgid "Review this Room"
 msgstr "Évaluer cette chambre"
 
-#: app/templates/pages/roomdetails.html:557
+#: app/templates/pages/roomdetails.html:619
 msgid "Select a score"
 msgstr "Sélectionner une note"
 
-#: app/templates/pages/roomdetails.html:573
+#: app/templates/pages/roomdetails.html:635
 msgid "Enter your review message"
 msgstr "Saisissez votre avis"
 
-#: app/templates/pages/roomdetails.html:603
+#: app/templates/pages/roomdetails.html:665
 msgid "Room Availability"
 msgstr "Disponibilité de la chambre"
 
-#: app/templates/pages/roomdetails.html:611
+#: app/templates/pages/roomdetails.html:673
 msgid "Booked"
 msgstr "Réservé"
 
-#: app/templates/pages/roomdetails.html:612
+#: app/templates/pages/roomdetails.html:674
 msgid "Blocked"
 msgstr "Bloqué"
 
-#: app/templates/pages/roomdetails.html:613
+#: app/templates/pages/roomdetails.html:675
 msgid "Available"
 msgstr "Disponible"
 
@@ -2260,17 +2533,9 @@ msgstr "Prix max"
 msgid "Borough"
 msgstr "Commune"
 
-#: app/templates/pages/rooms.html:139
-#: app/templates/pages/roomsearched.html:143
+#: app/templates/pages/rooms.html:139 app/templates/pages/roomsearched.html:143
 msgid "Free WiFi"
 msgstr "Wifi gratuit"
-
-#: app/templates/pages/rooms.html:144
-#: app/templates/pages/roomsearched.html:148
-#: app/templates/udashpages/mybookings.html:43
-#: app/templates/udashpages/mybookings.html:188
-msgid "From"
-msgstr "À partir de"
 
 #: app/templates/pages/rooms.html:149
 msgid ""
@@ -2278,8 +2543,7 @@ msgid ""
 "                  Details"
 msgstr "Voir les détails"
 
-#: app/templates/pages/rooms.html:171
-#: app/templates/pages/roomsearched.html:179
+#: app/templates/pages/rooms.html:171 app/templates/pages/roomsearched.html:179
 msgid "Click to see the next page"
 msgstr "Cliquez pour voir la page suivante"
 
@@ -2318,6 +2582,341 @@ msgstr "Pas encore membre"
 #: app/templates/pages/signup.html:40
 msgid "Sign up now"
 msgstr "Inscrivez-vous maintenant"
+
+#: app/templates/pages/terms_of_use.html:57
+#: app/templates/pages/terms_of_use.html:61
+msgid "Terms of Use"
+msgstr "Conditions d'utilisation"
+
+#: app/templates/pages/terms_of_use.html:82
+msgid "Acceptance of These Terms"
+msgstr "Acceptation des présentes conditions"
+
+#: app/templates/pages/terms_of_use.html:84
+msgid ""
+"By creating an account or using the Jambo platform in any way, you agree "
+"to be bound by these Terms of\n"
+"        Use. If you do not agree, please do not use the platform."
+msgstr ""
+"En créant un compte ou en utilisant la plateforme Jambo de quelque "
+"manière que ce soit, vous acceptez d'être lié par les présentes "
+"Conditions d'utilisation. Si vous n'êtes pas d'accord, veuillez ne pas "
+"utiliser la plateforme."
+
+#: app/templates/pages/terms_of_use.html:88
+msgid "Eligibility"
+msgstr "Éligibilité"
+
+#: app/templates/pages/terms_of_use.html:90
+msgid ""
+"You must be at least 18 years old to register for or use a Jambo account."
+" By registering, you confirm that\n"
+"        you meet this requirement."
+msgstr ""
+"Vous devez avoir au moins 18 ans pour vous inscrire ou utiliser un compte"
+" Jambo. En vous inscrivant, vous confirmez remplir cette condition."
+
+#: app/templates/pages/terms_of_use.html:94
+msgid "Your Account"
+msgstr "Votre compte"
+
+#: app/templates/pages/terms_of_use.html:96
+msgid ""
+"You are responsible for keeping your account credentials secure and for "
+"all activity that occurs under\n"
+"        your account. You agree to provide accurate, current information "
+"when registering, and to keep it up to date."
+msgstr ""
+"Vous êtes responsable de la sécurité de vos identifiants et de toute "
+"activité effectuée depuis votre compte. Vous vous engagez à fournir des "
+"informations exactes et actuelles lors de votre inscription, et à les "
+"maintenir à jour."
+
+#: app/templates/pages/terms_of_use.html:101
+msgid ""
+"Each person may hold only one Jambo account. Creating multiple accounts "
+"to circumvent platform rules,\n"
+"        restrictions, or penalties is prohibited."
+msgstr ""
+"Chaque personne ne peut détenir qu'un seul compte Jambo. La création de "
+"plusieurs comptes pour contourner les règles, restrictions ou sanctions "
+"de la plateforme est interdite."
+
+#: app/templates/pages/terms_of_use.html:105
+msgid "Host Responsibilities"
+msgstr "Responsabilités de l'hôte"
+
+#: app/templates/pages/terms_of_use.html:107
+msgid "If you list a room on Jambo, you confirm that:"
+msgstr "Si vous publiez une chambre sur Jambo, vous confirmez que :"
+
+#: app/templates/pages/terms_of_use.html:110
+msgid "You have the legal right to offer the property for short-term rental."
+msgstr "Vous avez le droit légal de proposer le bien en location de courte durée."
+
+#: app/templates/pages/terms_of_use.html:111
+msgid ""
+"The listing accurately describes the property, its condition, and its "
+"amenities."
+msgstr "L'annonce décrit fidèlement le bien, son état et ses équipements."
+
+#: app/templates/pages/terms_of_use.html:112
+msgid ""
+"The property is safe, habitable, and complies with any applicable local "
+"laws and regulations."
+msgstr ""
+"Le bien est sûr, habitable et conforme aux lois et réglementations "
+"locales applicables."
+
+#: app/templates/pages/terms_of_use.html:114
+msgid ""
+"You will honor confirmed bookings, except as permitted under the Payment "
+"Policy."
+msgstr ""
+"Vous honorerez les réservations confirmées, sauf dans les cas permis par "
+"la Politique de paiement."
+
+#: app/templates/pages/terms_of_use.html:117
+msgid "Guest Responsibilities"
+msgstr "Responsabilités de l'invité"
+
+#: app/templates/pages/terms_of_use.html:119
+msgid "If you book a room on Jambo, you agree to:"
+msgstr "Si vous réservez une chambre sur Jambo, vous vous engagez à :"
+
+#: app/templates/pages/terms_of_use.html:122
+msgid "Provide accurate information when making a booking."
+msgstr "Fournir des informations exactes lors de la réservation."
+
+#: app/templates/pages/terms_of_use.html:123
+msgid ""
+"Respect the property and follow the host's reasonable house rules during "
+"your stay."
+msgstr ""
+"Respecter le bien et suivre les règles raisonnables de l'hôte pendant "
+"votre séjour."
+
+#: app/templates/pages/terms_of_use.html:124
+msgid "Pay for your booking in full through the Jambo platform."
+msgstr "Régler l'intégralité de votre réservation via la plateforme Jambo."
+
+#: app/templates/pages/terms_of_use.html:127
+msgid "Prohibited Conduct"
+msgstr "Comportements interdits"
+
+#: app/templates/pages/terms_of_use.html:129
+msgid "The following are strictly prohibited on Jambo:"
+msgstr "Les éléments suivants sont strictement interdits sur Jambo :"
+
+#: app/templates/pages/terms_of_use.html:132
+msgid ""
+"Listing a property you do not have the legal right to rent out, or that "
+"is used for any illegal\n"
+"          purpose."
+msgstr ""
+"La publication d'un bien que vous n'avez pas le droit légal de louer, ou "
+"qui est utilisé à des fins illégales."
+
+#: app/templates/pages/terms_of_use.html:134
+msgid ""
+"Discrimination against any user on the basis of race, gender, religion, "
+"nationality, disability,\n"
+"          sexual orientation, or any other protected characteristic."
+msgstr ""
+"La discrimination à l'égard d'un utilisateur fondée sur la race, le sexe,"
+" la religion, la nationalité, le handicap, l'orientation sexuelle ou "
+"toute autre caractéristique protégée."
+
+#: app/templates/pages/terms_of_use.html:136
+msgid ""
+"Fraud or misrepresentation, including fake listings, fake reviews, or "
+"false information provided to\n"
+"          another user or to Jambo."
+msgstr ""
+"La fraude ou la fausse déclaration, y compris les fausses annonces, les "
+"faux avis ou les informations erronées fournies à un autre utilisateur ou"
+" à Jambo."
+
+#: app/templates/pages/terms_of_use.html:138
+msgid ""
+"Harassment, threats, or abusive behavior directed at any other user, "
+"including through Jambo's\n"
+"          messaging system."
+msgstr ""
+"Le harcèlement, les menaces ou les comportements abusifs envers tout "
+"autre utilisateur, y compris via la messagerie de Jambo."
+
+#: app/templates/pages/terms_of_use.html:140
+msgid ""
+"Attempting to arrange payment outside the Jambo platform for a booking "
+"made through Jambo."
+msgstr ""
+"La tentative d'organiser un paiement en dehors de la plateforme Jambo "
+"pour une réservation effectuée via Jambo."
+
+#: app/templates/pages/terms_of_use.html:141
+msgid "Creating multiple accounts to evade a suspension, restriction, or penalty."
+msgstr ""
+"La création de plusieurs comptes pour échapper à une suspension, une "
+"restriction ou une sanction."
+
+#: app/templates/pages/terms_of_use.html:142
+msgid ""
+"Uploading content -- photos, descriptions, or messages -- that is "
+"illegal, offensive, or infringes on\n"
+"          the rights of others."
+msgstr ""
+"Le téléversement de contenus -- photos, descriptions ou messages -- "
+"illégaux, offensants ou portant atteinte aux droits d'autrui."
+
+#: app/templates/pages/terms_of_use.html:146
+msgid "Content You Provide"
+msgstr "Contenu que vous fournissez"
+
+#: app/templates/pages/terms_of_use.html:148
+msgid ""
+"When you upload photos, descriptions, or other content to a listing, you "
+"grant Jambo a license to display\n"
+"        that content on the platform for the purpose of operating the "
+"service. You remain responsible for ensuring you\n"
+"        have the right to share it."
+msgstr ""
+"Lorsque vous téléversez des photos, descriptions ou autres contenus dans "
+"une annonce, vous accordez à Jambo une licence d'affichage de ces "
+"contenus sur la plateforme aux fins du fonctionnement du service. Vous "
+"restez responsable de vous assurer que vous avez le droit de les "
+"partager."
+
+#: app/templates/pages/terms_of_use.html:153
+#: app/templates/udashpages/reviews.html:14
+msgid "Reviews"
+msgstr "Avis"
+
+#: app/templates/pages/terms_of_use.html:155
+msgid ""
+"Reviews must reflect your genuine experience as a guest or host. Jambo "
+"may remove a review that violates\n"
+"        this policy or the prohibited conduct rules above."
+msgstr ""
+"Les avis doivent refléter votre expérience réelle en tant qu'invité ou "
+"hôte. Jambo peut supprimer un avis qui enfreint la présente politique ou "
+"les règles relatives aux comportements interdits ci-dessus."
+
+#: app/templates/pages/terms_of_use.html:159
+msgid "Suspension and Termination"
+msgstr "Suspension et résiliation"
+
+#: app/templates/pages/terms_of_use.html:161
+msgid ""
+"Jambo reserves the right to suspend or terminate an account that violates"
+" these Terms of Use, including\n"
+"        the prohibited conduct listed in Section 6."
+msgstr ""
+"Jambo se réserve le droit de suspendre ou de résilier un compte qui "
+"enfreint les présentes Conditions d'utilisation, y compris les "
+"comportements interdits énumérés à la section 6."
+
+#: app/templates/pages/terms_of_use.html:165
+msgid "Jambo's Role and Limitation of Liability"
+msgstr "Rôle de Jambo et limitation de responsabilité"
+
+#: app/templates/pages/terms_of_use.html:167
+msgid ""
+"Jambo is a marketplace that connects hosts and guests. Jambo does not "
+"own, manage, or inspect the\n"
+"        properties listed on the platform, and is not responsible for the"
+" actual condition, safety, or legality of a\n"
+"        listed property. Jambo's role in payment processing is described "
+"separately in the Payment Policy."
+msgstr ""
+"Jambo est une place de marché qui met en relation hôtes et invités. Jambo"
+" ne possède, ne gère ni n'inspecte les biens listés sur la plateforme, et"
+" n'est pas responsable de l'état réel, de la sécurité ou de la légalité "
+"d'un bien listé. Le rôle de Jambo dans le traitement des paiements est "
+"décrit séparément dans la Politique de paiement."
+
+#: app/templates/pages/terms_of_use.html:174
+msgid ""
+"All payments, host payouts, and cancellation terms are governed by "
+"Jambo's Payment Policy, available\n"
+"        separately on the platform."
+msgstr ""
+"Tous les paiements, versements aux hôtes et conditions d'annulation sont "
+"régis par la Politique de paiement de Jambo, disponible séparément sur la"
+" plateforme."
+
+#: app/templates/pages/terms_of_use.html:178
+msgid "Governing Law"
+msgstr "Droit applicable"
+
+#: app/templates/pages/terms_of_use.html:180
+msgid ""
+"These Terms of Use are governed by the laws of Côte d'Ivoire. Any dispute"
+" arising from your use of Jambo\n"
+"        will be subject to the exclusive jurisdiction of the courts of "
+"Côte d'Ivoire."
+msgstr ""
+"Les présentes Conditions d'utilisation sont régies par le droit ivoirien."
+" Tout litige découlant de votre utilisation de Jambo relèvera de la "
+"compétence exclusive des tribunaux de Côte d'Ivoire."
+
+#: app/templates/pages/terms_of_use.html:184
+msgid "Changes to These Terms"
+msgstr "Modifications des présentes conditions"
+
+#: app/templates/pages/terms_of_use.html:186
+msgid ""
+"Jambo may update these Terms of Use from time to time. Continued use of "
+"the platform after changes are\n"
+"        published constitutes acceptance of the revised terms."
+msgstr ""
+"Jambo peut mettre à jour les présentes Conditions d'utilisation de temps "
+"à autre. La poursuite de l'utilisation de la plateforme après la "
+"publication des modifications vaut acceptation des conditions révisées."
+
+#: app/templates/pages/terms_of_use.html:192
+msgid ""
+"Questions about these Terms of Use can be directed to "
+"ropero.app@gmail.com."
+msgstr ""
+"Les questions relatives aux présentes Conditions d'utilisation peuvent "
+"être adressées à ropero.app@gmail.com."
+
+#: app/templates/pages/verify_link_issue.html:7
+msgid "Verification Link"
+msgstr "Lien de vérification"
+
+#: app/templates/pages/verify_link_issue.html:105
+msgid "This link has expired"
+msgstr "Ce lien a expiré"
+
+#: app/templates/pages/verify_link_issue.html:107
+msgid ""
+"Verification links are only valid for 24 hours. No problem\n"
+"                -- request a fresh one below and it'll be with you in a "
+"moment."
+msgstr ""
+"Les liens de vérification ne sont valables que 24 heures. Pas de souci --"
+" demandez-en un nouveau ci-dessous et vous le recevrez dans un instant."
+
+#: app/templates/pages/verify_link_issue.html:111
+msgid "This link isn't valid"
+msgstr "Ce lien n'est pas valide"
+
+#: app/templates/pages/verify_link_issue.html:113
+msgid ""
+"We couldn't verify this link. It may have already been\n"
+"                used, or the address may be incomplete. You can request a"
+" new one\n"
+"                below."
+msgstr ""
+"Nous n'avons pas pu vérifier ce lien. Il a peut-être déjà été utilisé, ou"
+" l'adresse est peut-être incomplète. Vous pouvez en demander un nouveau "
+"ci-dessous."
+
+#: app/templates/pages/verify_link_issue.html:118
+msgid "Send a new verification link"
+msgstr "Envoyer un nouveau lien de vérification"
 
 #: app/templates/udashpages/amenities.html:20
 msgid "Room Extra"
@@ -2366,7 +2965,7 @@ msgstr "Période sélectionnée"
 
 #: app/templates/udashpages/calendar.html:79
 #: app/templates/udashpages/calendar.html:131
-#: app/templates/udashpages/myrefund.html:40
+#: app/templates/udashpages/myrefund.html:37
 msgid "Reason"
 msgstr "Motif"
 
@@ -2387,7 +2986,7 @@ msgid "Notes (optional)"
 msgstr "Notes (facultatif)"
 
 #: app/templates/udashpages/calendar.html:94
-#: app/templates/udashpages/myearnings.html:222
+#: app/templates/udashpages/myearnings.html:203
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -2425,12 +3024,12 @@ msgid "Total host"
 msgstr "Total des hôtes"
 
 #: app/templates/udashpages/dashboard.html:74
-msgid "room bookings"
-msgstr "réservations de chambres"
+msgid "rooms"
+msgstr "chambres"
 
 #: app/templates/udashpages/dashboard.html:84
-#: app/templates/udashpages/myearnings.html:14
-#: app/templates/udashpages/myearnings.html:23
+#: app/templates/udashpages/myearnings.html:11
+#: app/templates/udashpages/myearnings.html:20
 msgid "Earnings"
 msgstr "Revenus"
 
@@ -2447,174 +3046,316 @@ msgstr "Retirer"
 msgid "Withdraw update"
 msgstr "Mise à jour"
 
-#: app/templates/udashpages/mybookings.html:23
+#: app/templates/udashpages/mybookings.html:67
 msgid "My Bookings"
 msgstr "Mes réservations"
 
-#: app/templates/udashpages/mybookings.html:29
+#: app/templates/udashpages/mybookings.html:73
 msgid "Bookings as host"
 msgstr "Réservations en tant qu'hôte"
 
-#: app/templates/udashpages/mybookings.html:34
+#: app/templates/udashpages/mybookings.html:88
+msgid "Add a phone number to your profile to enable booking notifications."
+msgstr ""
+"Ajoutez un numéro de téléphone à votre profil pour activer les "
+"notifications de réservation."
+
+#: app/templates/udashpages/mybookings.html:91
+msgid "Add Phone Number"
+msgstr "Ajouter un numéro de téléphone"
+
+#: app/templates/udashpages/mybookings.html:94
+msgid "Booking Notifications"
+msgstr "Notifications de réservation"
+
+#: app/templates/udashpages/mybookings.html:102
+msgid "Off"
+msgstr "Désactivé"
+
+#: app/templates/udashpages/mybookings.html:107
+msgid "SMS"
+msgstr "SMS"
+
+#: app/templates/udashpages/mybookings.html:113
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: app/templates/udashpages/mybookings.html:118
+msgid "SMS: £0.05 per message"
+msgstr "SMS : 0,05 £ par message"
+
+#: app/templates/udashpages/mybookings.html:118
+msgid "WhatsApp: £0.02 per message"
+msgstr "WhatsApp : 0,02 £ par message"
+
+#: app/templates/udashpages/mybookings.html:119
+msgid "deducted automatically from your earnings when sent."
+msgstr "déduits automatiquement de vos revenus à chaque envoi."
+
+#: app/templates/udashpages/mybookings.html:126
 msgid "Total Host bookings"
 msgstr "Total des réservations hôte"
 
-#: app/templates/udashpages/mybookings.html:41
-#: app/templates/udashpages/mybookings.html:192
+#: app/templates/udashpages/mybookings.html:133
+#: app/templates/udashpages/mybookings.html:331
 #: app/templates/udashpages/mylistings.html:308
 msgid "Price"
 msgstr "Prix"
 
-#: app/templates/udashpages/mybookings.html:42
+#: app/templates/udashpages/mybookings.html:134
 msgid "Guest"
 msgstr "Invité"
 
-#: app/templates/udashpages/mybookings.html:44
+#: app/templates/udashpages/mybookings.html:136
 msgid "Days"
 msgstr "Jours"
 
-#: app/templates/udashpages/mybookings.html:80
-#: app/templates/udashpages/mybookings.html:194
-#: app/templates/udashpages/mybookings.html:234
+#: app/templates/udashpages/mybookings.html:168
+#: app/templates/udashpages/mybookings.html:333
+#: app/templates/udashpages/mybookings.html:366
 #: app/templates/udashpages/mylistings.html:309
 #: app/templates/udashpages/mylistings.html:335
 msgid "Action"
 msgstr "Action"
 
-#: app/templates/udashpages/mybookings.html:86
-#: app/templates/udashpages/mybookings.html:259
+#: app/templates/udashpages/mybookings.html:172
+#: app/templates/udashpages/mybookings.html:378
 msgid "Need help"
 msgstr "Besoin d'aide"
 
-#: app/templates/udashpages/mybookings.html:98
-#: app/templates/udashpages/mybookings.html:273
+#: app/templates/udashpages/mybookings.html:183
+#: app/templates/udashpages/mybookings.html:389
 msgid "Message"
 msgstr "Message"
 
-#: app/templates/udashpages/mybookings.html:121
+#: app/templates/udashpages/mybookings.html:192
+#: app/templates/udashpages/mybookings.html:205
+msgid "Cancel Booking"
+msgstr "Annuler la réservation"
+
+#: app/templates/udashpages/mybookings.html:210
+#, python-format
+msgid ""
+"The guest will be refunded in full. Whether a 15%% fee applies depends on"
+"\n"
+"                                      the reason selected below."
+msgstr ""
+"L'invité sera intégralement remboursé. L'application ou non de frais de "
+"15 %% dépend du motif sélectionné ci-dessous."
+
+#: app/templates/udashpages/mybookings.html:214
+msgid "Reason for cancelling"
+msgstr "Motif de l'annulation"
+
+#: app/templates/udashpages/mybookings.html:217
+msgid "Select a reason"
+msgstr "Sélectionnez un motif"
+
+#: app/templates/udashpages/mybookings.html:218
+msgid "No fee -- reasonable cause"
+msgstr "Sans frais -- motif raisonnable"
+
+#: app/templates/udashpages/mybookings.html:219
+msgid "Property damage or safety issue"
+msgstr "Dommages au bien ou problème de sécurité"
+
+#: app/templates/udashpages/mybookings.html:221
+msgid "Natural disaster / force majeure"
+msgstr "Catastrophe naturelle / force majeure"
+
+#: app/templates/udashpages/mybookings.html:223
+msgid ""
+"Death or serious illness (host or immediate\n"
+"                                          family)"
+msgstr "Décès ou maladie grave (de l'hôte ou de sa famille proche)"
+
+#: app/templates/udashpages/mybookings.html:225
+msgid "Legal issue affecting the property"
+msgstr "Problème juridique affectant le bien"
+
+#: app/templates/udashpages/mybookings.html:227
+msgid ""
+"Guest violated a house rule before\n"
+"                                          arrival"
+msgstr "L'invité a enfreint une règle de la maison avant son arrivée"
+
+#: app/templates/udashpages/mybookings.html:230
+#, python-format
+msgid "15%% fee applies"
+msgstr "Frais de 15 %% applicables"
+
+#: app/templates/udashpages/mybookings.html:231
+msgid "Found a better-paying booking"
+msgstr "J'ai trouvé une réservation mieux rémunérée"
+
+#: app/templates/udashpages/mybookings.html:232
+msgid "Changed my mind about hosting"
+msgstr "J'ai changé d'avis sur l'accueil d'invités"
+
+#: app/templates/udashpages/mybookings.html:233
+msgid ""
+"Accidental double-booking / calendar\n"
+"                                          error"
+msgstr "Double réservation accidentelle / erreur de calendrier"
+
+#: app/templates/udashpages/mybookings.html:235
+msgid "Want to use the property myself"
+msgstr "Je souhaite utiliser le bien moi-même"
+
+#: app/templates/udashpages/mybookings.html:236
+msgid "Other"
+msgstr "Autre"
+
+#: app/templates/udashpages/mybookings.html:241
+msgid "Please describe the reason"
+msgstr "Veuillez décrire le motif"
+
+#: app/templates/udashpages/mybookings.html:247
+msgid "Back"
+msgstr "Retour"
+
+#: app/templates/udashpages/mybookings.html:248
+msgid "Confirm Cancellation"
+msgstr "Confirmer l'annulation"
+
+#: app/templates/udashpages/mybookings.html:267
 msgid "Rate Guest"
 msgstr "Évaluer l'invité"
 
-#: app/templates/udashpages/mybookings.html:132
+#: app/templates/udashpages/mybookings.html:274
 msgid "View reviews"
 msgstr "Voir les avis"
 
-#: app/templates/udashpages/mybookings.html:152
-#: app/templates/udashpages/mybookings.html:317
-#: app/templates/udashpages/myearnings.html:66
-#: app/templates/udashpages/myearnings.html:131
+#: app/templates/udashpages/mybookings.html:293
+#: app/templates/udashpages/mybookings.html:422
+#: app/templates/udashpages/myearnings.html:62
+#: app/templates/udashpages/myearnings.html:122
 #: app/templates/udashpages/mylistings.html:376
-#: app/templates/udashpages/myrefund.html:62
+#: app/templates/udashpages/myrefund.html:68
 msgid "Previous"
 msgstr "Précédent"
 
-#: app/templates/udashpages/mybookings.html:157
-#: app/templates/udashpages/myearnings.html:70
-#: app/templates/udashpages/myearnings.html:136
+#: app/templates/udashpages/mybookings.html:297
+#: app/templates/udashpages/myearnings.html:65
+#: app/templates/udashpages/myearnings.html:126
 #: app/templates/udashpages/mylistings.html:379
-#: app/templates/udashpages/myrefund.html:67
+#: app/templates/udashpages/myrefund.html:72
 msgid "Page"
 msgstr "Page"
 
-#: app/templates/udashpages/mybookings.html:164
-#: app/templates/udashpages/mybookings.html:327
-#: app/templates/udashpages/myearnings.html:77
-#: app/templates/udashpages/myearnings.html:143
+#: app/templates/udashpages/mybookings.html:303
+#: app/templates/udashpages/mybookings.html:429
+#: app/templates/udashpages/myearnings.html:71
+#: app/templates/udashpages/myearnings.html:132
 #: app/templates/udashpages/mylistings.html:384
-#: app/templates/udashpages/myrefund.html:74
+#: app/templates/udashpages/myrefund.html:77
 msgid "Next"
 msgstr "Suivant"
 
-#: app/templates/udashpages/mybookings.html:179
+#: app/templates/udashpages/mybookings.html:318
 msgid "Bookings as Guest"
 msgstr "Réservations Invité"
 
-#: app/templates/udashpages/mybookings.html:184
+#: app/templates/udashpages/mybookings.html:323
 msgid "Total Guest bookings"
 msgstr " Réservations Total Invité"
 
-#: app/templates/udashpages/mybookings.html:252
+#: app/templates/udashpages/mybookings.html:328
+msgid "To"
+msgstr "Au"
+
+#: app/templates/udashpages/mybookings.html:332
+msgid "Host"
+msgstr "Hôte"
+
+#: app/templates/udashpages/mybookings.html:374
 msgid "Cancel booking"
 msgstr "Annuler réservation"
 
-#: app/templates/udashpages/mybookings.html:299
+#: app/templates/udashpages/mybookings.html:406
 msgid "Rate stay"
 msgstr "Évaluer séjour"
 
-#: app/templates/udashpages/mybookings.html:347
+#: app/templates/udashpages/mybookings.html:449
 msgid "Rate your guest"
 msgstr "Évaluer votre invité"
 
-#: app/templates/udashpages/mybookings.html:381
+#: app/templates/udashpages/mybookings.html:468
 msgid "Share what it was like hosting this guest (min. 20 characters)..."
 msgstr ""
 "Partagez votre expérience en tant qu'hôte pour cet invité (min. 20 "
 "caractères)..."
 
-#: app/templates/udashpages/mybookings.html:390
+#: app/templates/udashpages/mybookings.html:476
 msgid "Submit review"
 msgstr "Envoyer l'avis"
 
-#: app/templates/udashpages/mybookings.html:405
+#: app/templates/udashpages/mybookings.html:491
 msgid "Guest reviews"
 msgstr "Avis des invités"
 
-#: app/templates/udashpages/mybookings.html:416
+#: app/templates/udashpages/mybookings.html:497
 msgid "Loading..."
 msgstr "Chargement..."
 
-#: app/templates/udashpages/myearnings.html:30
+#: app/templates/udashpages/myearnings.html:27
 msgid "Earnings per transaction"
 msgstr "Revenus par transaction"
 
-#: app/templates/udashpages/myearnings.html:36
-#: app/templates/udashpages/myearnings.html:103
-#: app/templates/udashpages/myrefund.html:34
+#: app/templates/udashpages/myearnings.html:33
+#: app/templates/udashpages/myearnings.html:95
+#: app/templates/udashpages/myrefund.html:31
 msgid "Total Transactions"
 msgstr "Total des transactions"
 
-#: app/templates/udashpages/myearnings.html:41
+#: app/templates/udashpages/myearnings.html:37
+#: app/templates/udashpages/myrefund.html:35
+#: app/templates/udashpages/reviews.html:35
+msgid "Date"
+msgstr "Date"
+
+#: app/templates/udashpages/myearnings.html:38
 msgid "Gross Amount"
 msgstr "Montant brut"
 
-#: app/templates/udashpages/myearnings.html:43
+#: app/templates/udashpages/myearnings.html:40
 msgid "Fees"
 msgstr "Frais"
 
-#: app/templates/udashpages/myearnings.html:44
+#: app/templates/udashpages/myearnings.html:41
 msgid "Net Earn"
 msgstr "Gain net"
 
-#: app/templates/udashpages/myearnings.html:94
+#: app/templates/udashpages/myearnings.html:88
 msgid "Withdrawal transaction"
 msgstr "Transaction de retrait"
 
-#: app/templates/udashpages/myearnings.html:96
+#: app/templates/udashpages/myearnings.html:89
 msgid "Click the floating button to request a withdrawal"
 msgstr "Cliquez sur le bouton flottant pour demander un retrait"
 
-#: app/templates/udashpages/myearnings.html:107
+#: app/templates/udashpages/myearnings.html:99
 msgid "Request Date"
 msgstr "Date de requête"
 
-#: app/templates/udashpages/myearnings.html:108
-#: app/templates/udashpages/myrefund.html:39
+#: app/templates/udashpages/myearnings.html:100
+#: app/templates/udashpages/myrefund.html:36
 msgid "Amount"
 msgstr "Montant"
 
-#: app/templates/udashpages/myearnings.html:110
+#: app/templates/udashpages/myearnings.html:102
 msgid "Processed Date"
 msgstr "Date de traitement"
 
-#: app/templates/udashpages/myearnings.html:172
+#: app/templates/udashpages/myearnings.html:157
 msgid "Approved Balance"
 msgstr "Solde approuvé"
 
-#: app/templates/udashpages/myearnings.html:186
+#: app/templates/udashpages/myearnings.html:171
 msgid "Request Withdrawal"
 msgstr "Demander un retrait"
 
-#: app/templates/udashpages/myearnings.html:195
+#: app/templates/udashpages/myearnings.html:180
 msgid "Funds Available"
 msgstr "Fonds disponibles"
 
@@ -2703,17 +3444,21 @@ msgstr ""
 msgid "Delete listing"
 msgstr "Supprimer l'annonce"
 
-#: app/templates/udashpages/myrefund.html:23
+#: app/templates/udashpages/myrefund.html:20
 msgid "My Refunds"
 msgstr "Mes remboursements"
 
-#: app/templates/udashpages/myrefund.html:29
+#: app/templates/udashpages/myrefund.html:26
 msgid "Refund tracking"
 msgstr "Suivi des remboursements"
 
-#: app/templates/udashpages/myrefund.html:42
+#: app/templates/udashpages/myrefund.html:39
 msgid "Refunded at"
 msgstr "Remboursé le"
+
+#: app/templates/udashpages/myrefund.html:57
+msgid "Not yet processed"
+msgstr "Pas encore traité"
 
 #: app/templates/udashpages/picsupdate.html:10
 #: app/templates/udashpages/picsupdate.html:20
@@ -2734,12 +3479,8 @@ msgid ""
 "                    Leave any other slot empty to keep its current image\n"
 "                    unchanged."
 msgstr ""
-"Les images 1 et 2 sont obligatoires pour chaque annonce. Laissez les autres "
-"emplacements vides pour conserver leurs images actuelles."
-
-#: app/templates/udashpages/reviews.html:14
-msgid "Reviews"
-msgstr "Avis"
+"Les images 1 et 2 sont obligatoires pour chaque annonce. Laissez les "
+"autres emplacements vides pour conserver leurs images actuelles."
 
 #: app/templates/udashpages/reviews.html:23
 msgid "Rating & Reviews"
@@ -2825,97 +3566,141 @@ msgstr "Prix de la chambre par nuit"
 msgid "Room status"
 msgstr "Statut de la chambre"
 
-#: app/templates/udashpages/usprofile.html:43
+#: app/templates/udashpages/usprofile.html:38
 msgid "Mbsp Status"
 msgstr "Statut Mbsp"
 
-#: app/templates/udashpages/usprofile.html:62
+#: app/templates/udashpages/usprofile.html:57
 msgid "Edit Profile"
 msgstr "Modifier le profil"
 
-#: app/templates/udashpages/usprofile.html:69
+#: app/templates/udashpages/usprofile.html:64
 msgid "Company"
 msgstr "Entreprise"
 
-#: app/templates/udashpages/usprofile.html:84
+#: app/templates/udashpages/usprofile.html:79
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: app/templates/udashpages/usprofile.html:99
+#: app/templates/udashpages/usprofile.html:94
 msgid "Email address"
 msgstr "Adresse e-mail"
 
-#: app/templates/udashpages/usprofile.html:117
+#: app/templates/udashpages/usprofile.html:112
 msgid "Gender"
 msgstr "Genre"
 
-#: app/templates/udashpages/usprofile.html:132
+#: app/templates/udashpages/usprofile.html:127
 msgid "Phone Number"
 msgstr "Numéro de téléphone"
 
-#: app/templates/udashpages/usprofile.html:149
+#: app/templates/udashpages/usprofile.html:144
 msgid "Address"
 msgstr "Adresse"
 
-#: app/templates/udashpages/usprofile.html:166
+#: app/templates/udashpages/usprofile.html:161
 msgid "City"
 msgstr "Ville"
 
-#: app/templates/udashpages/usprofile.html:196
+#: app/templates/udashpages/usprofile.html:176
+msgid "Country"
+msgstr "Pays"
+
+#: app/templates/udashpages/usprofile.html:191
 msgid "Postal Code"
 msgstr "Code postal"
 
-#: app/templates/udashpages/usprofile.html:213
+#: app/templates/udashpages/usprofile.html:208
 msgid "About Me"
 msgstr "À propos de moi"
 
-#: app/templates/udashpages/usprofile.html:261
+#: app/templates/udashpages/usprofile.html:249
 msgid "Points"
 msgstr "Points"
 
-#: app/udashboard/routes.py:203
+#: app/udashboard/routes.py:204
 #, python-format
-msgid ""
-"Withdrawal currently unavailable: missing exchange rate for %(currency)s."
+msgid "Withdrawal currently unavailable: missing exchange rate for %(currency)s."
 msgstr ""
 "Retrait actuellement indisponible : taux de change manquant pour "
 "%(currency)s."
 
-#: app/udashboard/routes.py:213
+#: app/udashboard/routes.py:214
 msgid "Insufficient balance"
 msgstr "Solde insuffisant"
 
-#: app/udashboard/routes.py:229
+#: app/udashboard/routes.py:230
 msgid "Withdrawal request submitted"
 msgstr "Demande de retrait soumise"
 
-#: app/udashboard/routes.py:310
+#: app/udashboard/routes.py:313
 msgid "Your profile has been successfully updated"
 msgstr "Votre profil a été mis à jour avec succès"
 
-#: app/udashboard/routes.py:431
+#: app/udashboard/routes.py:520
+msgid "Cancelled by you"
+msgstr "Annulée par vous"
+
+#: app/udashboard/routes.py:521
+msgid "Cancelled by host"
+msgstr "Annulée par l'hôte"
+
+#: app/udashboard/routes.py:522
+msgid "Account closed"
+msgstr "Compte clôturé"
+
+#: app/udashboard/routes.py:523
+msgid "Cancelled"
+msgstr "Annulée"
+
+#: app/udashboard/routes.py:560
 msgid "You can only rate a guest after their stay has completed."
 msgstr "Vous ne pouvez évaluer un invité qu'une fois son séjour terminé."
 
-#: app/udashboard/routes.py:439
+#: app/udashboard/routes.py:568
 msgid "You've already rated this guest for this stay."
 msgstr "Vous avez déjà évalué cet invité pour ce séjour."
 
-#: app/udashboard/routes.py:456
+#: app/udashboard/routes.py:585
 msgid "Thanks -- your review of the guest has been submitted."
 msgstr "Merci -- votre avis sur l'invité a été envoyé."
 
-#: app/udashboard/routes.py:458
+#: app/udashboard/routes.py:587
 msgid "Rating and a review of at least 20 characters are required."
 msgstr "Une note et un avis d'au moins 20 caractères sont requis."
 
-#: app/udashboard/routes.py:531
+#: app/udashboard/routes.py:600
+msgid "Invalid selection."
+msgstr "Sélection invalide."
+
+#: app/udashboard/routes.py:604
+msgid ""
+"Please add a phone number to your profile before enabling booking "
+"notifications."
+msgstr ""
+"Veuillez ajouter un numéro de téléphone à votre profil avant d'activer "
+"les notifications de réservation."
+
+#: app/udashboard/routes.py:611
+msgid "Booking notifications turned off."
+msgstr "Notifications de réservation désactivées."
+
+#: app/udashboard/routes.py:613
+msgid "SMS booking notifications enabled."
+msgstr "Notifications de réservation par SMS activées."
+
+#: app/udashboard/routes.py:615
+msgid "WhatsApp booking notifications enabled."
+msgstr "Notifications de réservation par WhatsApp activées."
+
+#: app/udashboard/routes.py:688
 msgid "Great! your room listing is now live."
 msgstr "Parfait ! votre annonce est maintenant en ligne."
 
-#: app/udashboard/routes.py:537
+#: app/udashboard/routes.py:694
 msgid ""
-"You need to fully complete your profile before you can make a room listing!"
+"You need to fully complete your profile before you can make a room "
+"listing!"
 msgstr ""
 "Vous devez compléter entièrement votre profil avant de pouvoir créer une "
 "annonce !"
@@ -2923,61 +3708,60 @@ msgstr ""
 #: app/users/routes.py:60 app/users/routes.py:93
 msgid "Login unsuccessful, Please check email and password!"
 msgstr ""
-"Échec de la connexion, veuillez vérifier votre e-mail et votre mot de passe "
-"!"
+"Échec de la connexion, veuillez vérifier votre e-mail et votre mot de "
+"passe !"
 
-#: app/users/routes.py:120 app/users/routes.py:184
+#: app/users/routes.py:121 app/users/routes.py:185
 msgid "Account created! Please check your email to verify your account."
-msgstr ""
-"Compte créé ! Veuillez consulter votre e-mail pour vérifier votre compte."
+msgstr "Compte créé ! Veuillez consulter votre e-mail pour vérifier votre compte."
 
-#: app/users/routes.py:131
+#: app/users/routes.py:132
 msgid "You are now logged out of the system"
 msgstr "Vous êtes maintenant déconnecté du système"
 
-#: app/users/routes.py:162
+#: app/users/routes.py:163
 msgid "That is an invalid or expired token"
 msgstr "Ce jeton est invalide ou a expiré"
 
-#: app/users/routes.py:170
+#: app/users/routes.py:171
 msgid "Your Password has been Updated!. You can now Log in."
 msgstr ""
-"Votre mot de passe a été mis à jour ! Vous pouvez maintenant vous connecter."
-
-#: app/users/routes.py:194
-msgid "That verification link is invalid or has expired."
-msgstr "Ce lien de vérification est invalide ou a expiré."
+"Votre mot de passe a été mis à jour ! Vous pouvez maintenant vous "
+"connecter."
 
 #: app/users/routes.py:198
 msgid "Your email is already verified."
 msgstr "Votre adresse e-mail est déjà vérifiée."
 
-#: app/users/routes.py:205
-msgid "Your email has been verified! You can now log in."
+#: app/users/routes.py:223
+msgid ""
+"If an account with that email exists and needs verifying, a fresh link is"
+" on its way."
 msgstr ""
-"Votre adresse e-mail a été vérifiée ! Vous pouvez maintenant vous connecter."
+"Si un compte existe avec cette adresse e-mail et doit être vérifié, un "
+"nouveau lien est en route."
 
-#: app/users/routes.py:232
+#: app/users/routes.py:252
 msgid ""
 "You have upcoming guests booked into your rooms. Please resolve these "
 "bookings before deleting your account."
 msgstr ""
-"Des invités ont des réservations à venir dans vos chambres. Veuillez régler "
-"ces réservations avant de supprimer votre compte."
+"Des invités ont des réservations à venir dans vos chambres. Veuillez "
+"régler ces réservations avant de supprimer votre compte."
 
-#: app/users/routes.py:249
+#: app/users/routes.py:269
 msgid ""
 "You have an upcoming trip that can no longer be freely cancelled. Please "
 "contact us before deleting your account."
 msgstr ""
-"Vous avez un séjour à venir qui ne peut plus être annulé librement. Veuillez"
-" nous contacter avant de supprimer votre compte."
+"Vous avez un séjour à venir qui ne peut plus être annulé librement. "
+"Veuillez nous contacter avant de supprimer votre compte."
 
-#: app/users/routes.py:254
+#: app/users/routes.py:274
 msgid "Incorrect password. Account not deleted."
 msgstr "Mot de passe incorrect. Le compte n'a pas été supprimé."
 
-#: app/users/routes.py:278
+#: app/users/routes.py:298
 msgid "Your account has been deleted."
 msgstr "Votre compte a été supprimé."
 
@@ -2991,45 +3775,39 @@ msgid "Hello %(name)s,"
 msgstr "Bonjour %(name)s,"
 
 #: app/users/usermails/joinusmail.py:28
-#, python-format
 msgid ""
-"We would like to thank you for your registration received today %(date)s. We"
-" wish you a warm welcome to the \"Jambo community\" where you can reserve "
-"short stays safer, happier and cheaper. Also, you can confidently add a room"
-" to start generating passive income."
+"We would like to thank you for your registration received today. We wish "
+"you a warm welcome to the \"Jambo community\". "
 msgstr ""
-"Nous tenons à vous remercier pour votre inscription reçue aujourd'hui le "
-"%(date)s. Nous vous souhaitons la bienvenue dans la communauté Jambo, où "
-"vous pouvez réserver des séjours courts en toute sécurité, plus sereinement "
-"et à moindre coût. Vous pouvez également ajouter un logement en toute "
-"confiance pour commencer à générer un revenu passif."
+"Nous tenons à vous remercier pour votre inscription reçue aujourd'hui. "
+"Nous vous souhaitons la bienvenue dans la « communauté Jambo ». "
 
-#: app/users/usermails/joinusmail.py:36
+#: app/users/usermails/joinusmail.py:33
 msgid ""
-"Click on the button below to verify and activate your account and start your"
-" Jambo adventure."
+"Click on the button below to verify and activate your account and start "
+"your Jambo adventure."
 msgstr ""
-"Cliquez sur le bouton ci-dessous pour vérifier et activer votre compte et "
-"commencer votre aventure Jambo."
+"Cliquez sur le bouton ci-dessous pour vérifier et activer votre compte et"
+" commencer votre aventure Jambo."
 
-#: app/users/usermails/joinusmail.py:37
+#: app/users/usermails/joinusmail.py:34
 msgid "Verify & Activate your account"
 msgstr "Vérifier et activer votre compte"
 
-#: app/users/usermails/joinusmail.py:38
+#: app/users/usermails/joinusmail.py:35
 msgid "Kind regards"
 msgstr "Cordialement"
 
-#: app/users/usermails/joinusmail.py:39
+#: app/users/usermails/joinusmail.py:36
 msgid "Customer Service."
 msgstr "Service Client."
 
-#: app/users/usermails/joinusmail.py:40
+#: app/users/usermails/joinusmail.py:37
 #, python-format
 msgid "Copyright © %(year)s Jambo. All Rights Reserved."
 msgstr "Copyright © %(year)s Jambo. Tous droits réservés."
 
-#: app/users/usermails/joinusmail.py:41
+#: app/users/usermails/joinusmail.py:38
 msgid "Powered by"
 msgstr "Propulsé par"
 
@@ -3047,6 +3825,9 @@ msgstr "Propulsé par"
 
 #~ msgid "Started as a platform where home could generate passive incomes."
 #~ msgstr ""
+#~ "Nous avons débuté comme une plateforme"
+#~ " permettant de générer des revenus "
+#~ "passifs grâce à son logement."
 
 #~ msgid "Here we share some of the Jambo family memorable &\n"
 #~ msgstr ""
@@ -3085,13 +3866,13 @@ msgstr "Propulsé par"
 #~ msgstr ""
 
 #~ msgid "Jambo Team"
-#~ msgstr ""
+#~ msgstr "L'équipe Jambo"
 
 #~ msgid "Located at"
 #~ msgstr ""
 
 #~ msgid "Booked from"
-#~ msgstr ""
+#~ msgstr "Réservé du"
 
 #~ msgid "Price per night:"
 #~ msgstr ""
@@ -3100,10 +3881,10 @@ msgstr "Propulsé par"
 #~ msgstr ""
 
 #~ msgid "Amount Refundable"
-#~ msgstr ""
+#~ msgstr "Montant remboursable"
 
 #~ msgid "Host info"
-#~ msgstr ""
+#~ msgstr "Informations sur l'hôte"
 
 #~ msgid "Host important note"
 #~ msgstr "Note importante de l'hôte"
@@ -3112,7 +3893,7 @@ msgstr "Propulsé par"
 #~ msgstr ""
 
 #~ msgid "Guest info"
-#~ msgstr ""
+#~ msgstr "Informations sur l'invité"
 
 #~ msgid "Primary guest"
 #~ msgstr "Invité principal"
@@ -3124,7 +3905,7 @@ msgstr "Propulsé par"
 #~ msgstr "MODE DE REMBOURSEMENT"
 
 #~ msgid "For more update, follow us on our social media"
-#~ msgstr ""
+#~ msgstr "Pour plus d'actualités, suivez-nous sur nos réseaux sociaux"
 
 #~ msgid "By clicking you are agreeing to our terms and conditions. Please\\"
 #~ msgstr ""
@@ -3224,24 +4005,34 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "Booking\n"
-#~ "                                                                                      number:"
+#~ ""
+#~ "                                                                                      "
+#~ "number:"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "We&#39;re\n"
-#~ "                                                    contacting to confitm that\n"
-#~ "                                                    your booking has been\n"
-#~ "                                                    successfully cancelled. You\n"
-#~ "                                                    will receive a complete\n"
-#~ "                                                    refund. Please allow 10\n"
-#~ "                                                    working to receive your\n"
+#~ "                                                    contacting"
+#~ " to confitm that\n"
+#~ "                                                    your "
+#~ "booking has been\n"
+#~ "                                                    successfully"
+#~ " cancelled. You\n"
+#~ "                                                    will "
+#~ "receive a complete\n"
+#~ "                                                    refund. "
+#~ "Please allow 10\n"
+#~ "                                                    working "
+#~ "to receive your\n"
 #~ "                                                    payment."
 #~ msgstr ""
 
 #~ msgid ""
 #~ "We hope to see\n"
-#~ "                                                    you soon on Rezerva platform\n"
-#~ "                                                    for another booking."
+#~ "                                                    you "
+#~ "soon on Rezerva platform\n"
+#~ "                                                    for "
+#~ "another booking."
 #~ msgstr ""
 
 #~ msgid "Rezerva Team"
@@ -3249,77 +4040,122 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "Located\n"
-#~ "                                                                                    at"
+#~ ""
+#~ "                                                                                    "
+#~ "at"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Booked\n"
-#~ "                                                                                    from"
+#~ ""
+#~ "                                                                                    "
+#~ "from"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Price\n"
-#~ "                                                                                    per\n"
-#~ "                                                                                    night:"
+#~ ""
+#~ "                                                                                    "
+#~ "per\n"
+#~ ""
+#~ "                                                                                    "
+#~ "night:"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Number\n"
-#~ "                                                                                    of\n"
-#~ "                                                                                    days:"
+#~ ""
+#~ "                                                                                    "
+#~ "of\n"
+#~ ""
+#~ "                                                                                    "
+#~ "days:"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Amount\n"
-#~ "                                                                                      Refundable"
+#~ ""
+#~ "                                                                                      "
+#~ "Refundable"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Host\n"
-#~ "                                                                                                      info"
+#~ ""
+#~ "                                                                                                      "
+#~ "info"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Host\n"
-#~ "                                                                                                      important\n"
-#~ "                                                                                                      note"
+#~ ""
+#~ "                                                                                                      "
+#~ "important\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "note"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Take\n"
-#~ "                                                                                                      care\n"
-#~ "                                                                                                      &\n"
-#~ "                                                                                                      hope\n"
-#~ "                                                                                                      to\n"
-#~ "                                                                                                      see\n"
-#~ "                                                                                                      you\n"
-#~ "                                                                                                      another\n"
-#~ "                                                                                                      time."
+#~ ""
+#~ "                                                                                                      "
+#~ "care\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "&\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "hope\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "to\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "see\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "you\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "another\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "time."
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Guest\n"
-#~ "                                                                                                      info"
+#~ ""
+#~ "                                                                                                      "
+#~ "info"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Primary\n"
-#~ "                                                                                                      guest"
+#~ ""
+#~ "                                                                                                      "
+#~ "guest"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Booking\n"
-#~ "                                                                                                      status"
+#~ ""
+#~ "                                                                                                      "
+#~ "status"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "REFUND\n"
-#~ "                                                                                                      METHOD"
+#~ ""
+#~ "                                                                                                      "
+#~ "METHOD"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "For more update, follow\n"
-#~ "                                                  us on our social media"
+#~ "                                                  us on"
+#~ " our social media"
 #~ msgstr ""
 
 #~ msgid "Hotel luxury showcase"
@@ -3330,9 +4166,15 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "By clicking you are agreeing to our terms and conditions. Please\n"
-#~ "                contact the host on the contact provided before your travel.\n"
-#~ "                Rezerva will follow up your booking to make sure that everything\n"
-#~ "                goes well. Do no hesitate to get in touch with us for any\n"
+#~ "                contact the host on the"
+#~ " contact provided before your travel.\n"
+#~ ""
+#~ "                Rezerva will follow up "
+#~ "your booking to make sure that "
+#~ "everything\n"
+#~ "                goes well. Do no "
+#~ "hesitate to get in touch with us"
+#~ " for any\n"
 #~ "                support. We wish you a pleasant stay."
 #~ msgstr ""
 
@@ -3341,46 +4183,72 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "We&#39;re please\n"
-#~ "                                                    to confitm that your booking\n"
-#~ "                                                    has been successfully\n"
-#~ "                                                    completed. Please , make\n"
-#~ "                                                    sure to contact your host\n"
-#~ "                                                    before travelling.&nbsp; Be\n"
-#~ "                                                    aware, you have 24h for free\n"
-#~ "                                                    cancellation. This can be\n"
-#~ "                                                    done through your user\n"
+#~ "                                                    to "
+#~ "confitm that your booking\n"
+#~ "                                                    has "
+#~ "been successfully\n"
+#~ "                                                    completed."
+#~ " Please , make\n"
+#~ "                                                    sure "
+#~ "to contact your host\n"
+#~ "                                                    before "
+#~ "travelling.&nbsp; Be\n"
+#~ "                                                    aware, "
+#~ "you have 24h for free\n"
+#~ "                                                    "
+#~ "cancellation. This can be\n"
+#~ "                                                    done "
+#~ "through your user\n"
 #~ "                                                    dashbord."
 #~ msgstr ""
 
 #~ msgid ""
 #~ "We wish you a\n"
-#~ "                                                    pleasant stay and share your\n"
-#~ "                                                    experience with the Rezerva\n"
+#~ "                                                    pleasant "
+#~ "stay and share your\n"
+#~ "                                                    experience"
+#~ " with the Rezerva\n"
 #~ "                                                    community."
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Your\n"
-#~ "                                                                                      bill"
+#~ ""
+#~ "                                                                                      "
+#~ "bill"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Please\n"
-#~ "                                                                                                      contact\n"
-#~ "                                                                                                      me\n"
-#~ "                                                                                                      before\n"
-#~ "                                                                                                      travelling"
+#~ ""
+#~ "                                                                                                      "
+#~ "contact\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "me\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "before\n"
+#~ ""
+#~ "                                                                                                      "
+#~ "travelling"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "PAYMENT\n"
-#~ "                                                                                                      METHOD"
+#~ ""
+#~ "                                                                                                      "
+#~ "METHOD"
 #~ msgstr ""
 
 #~ msgid ""
 #~ "Experience unparalleled simple comfort and a safer\n"
-#~ "            home-like feeling at an affordable cost. Our carefully hand picked\n"
-#~ "            and vetted hosts are committed to making your stay an unforgettable\n"
+#~ "            home-like feeling at an "
+#~ "affordable cost. Our carefully hand "
+#~ "picked\n"
+#~ "            and vetted hosts are "
+#~ "committed to making your stay an "
+#~ "unforgettable\n"
 #~ "            memory."
 #~ msgstr ""
 
@@ -3391,8 +4259,11 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "Jambo is a startup online African marketplace that\n"
-#~ "            connects travelers with hosts offering accommodations. Our platform\n"
-#~ "            enables people, hostels, guest houses to rent out spare rooms or\n"
+#~ "            connects travelers with hosts "
+#~ "offering accommodations. Our platform\n"
+#~ "            enables people, hostels, guest "
+#~ "houses to rent out spare rooms or"
+#~ "\n"
 #~ "            homes."
 #~ msgstr ""
 
@@ -3431,8 +4302,12 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "Lorem ipsum dolor sit amet, consectetur adipiscing\n"
-#~ "                elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar\n"
-#~ "                dapibus leo. Sed non mauris vitae erat consequat auctor eu in\n"
+#~ "                elit. Ut elit tellus, "
+#~ "luctus nec ullamcorper mattis, pulvinar\n"
+#~ ""
+#~ "                dapibus leo. Sed non "
+#~ "mauris vitae erat consequat auctor eu"
+#~ " in\n"
 #~ "                elit."
 #~ msgstr ""
 
@@ -3444,8 +4319,11 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "Proin iaculis purus consequat sem cure digni ssim\n"
-#~ "                donec porttitora entum suscipit rhoncus. Accusantium quam,\n"
-#~ "                ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus\n"
+#~ "                donec porttitora entum "
+#~ "suscipit rhoncus. Accusantium quam,\n"
+#~ "                ultricies eget id, aliquam "
+#~ "eget nibh et. Maecen aliquam, risus\n"
+#~ ""
 #~ "                at semper."
 #~ msgstr ""
 
@@ -3639,12 +4517,16 @@ msgstr "Propulsé par"
 
 #~ msgid ""
 #~ "Enjoy comfortable, peaceful, and affordable accommodations\n"
-#~ "              for your short gateway and holidays. Book now with confidence and\n"
+#~ "              for your short gateway and"
+#~ " holidays. Book now with confidence "
+#~ "and\n"
 #~ "              create memories that will last forever."
 #~ msgstr ""
-#~ "Profitez d'hébergements confortables, paisibles et abordables pour vos "
-#~ "courtes escapades et vacances. Réservez dès maintenant en toute confiance et"
-#~ " créez des souvenirs qui dureront toujours."
+#~ "Profitez d'hébergements confortables, paisibles "
+#~ "et abordables pour vos courtes escapades"
+#~ " et vacances. Réservez dès maintenant "
+#~ "en toute confiance et créez des "
+#~ "souvenirs qui dureront toujours."
 
 #~ msgid "Book now !"
 #~ msgstr "Réservez maintenant !"
@@ -3764,11 +4646,274 @@ msgstr "Propulsé par"
 #~ "                    unchanged."
 #~ msgstr ""
 
-msgid "Book rooms, residences and short stays across Africa. Starting in Abidjan, Côte d'Ivoire. Pay securely in CFA francs."
-msgstr "Réservez chambres, résidences et séjours courts partout en Afrique. Depuis Abidjan, Côte d'Ivoire. Paiement sécurisé en francs CFA."
+#~ msgid "Please verify your email before booking or listing a room."
+#~ msgstr ""
+#~ "Veuillez vérifier votre adresse e-mail "
+#~ "avant de réserver ou passez une "
+#~ "annonce."
 
-msgid "Jambo | Rooms and short stays in Abidjan and across Africa"
-msgstr "Jambo | Chambres et séjours courts à Abidjan et en Afrique"
+#~ msgid "Refund policy"
+#~ msgstr "Remboursement"
 
-msgid "%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo."
-msgstr "%(room)s à %(place)s : %(desc)s. À partir de %(price)s par nuit. Réservez sur Jambo."
+#~ msgid ""
+#~ "Over the years, Jambo has steadily been building a\n"
+#~ "            trustworthy and hospitable community step by step."
+#~ msgstr ""
+#~ "Au fil des années, Jambo a bâti"
+#~ " pas à pas une communauté fiable "
+#~ "et hospitalière."
+
+#~ msgid ""
+#~ "Jambo was founded in 2020 when the concept of regrouping\n"
+#~ "            individuals with available space"
+#~ " and willing to share their homes"
+#~ "\n"
+#~ "            was introduced. Next, we "
+#~ "broadened our services to encompass "
+#~ "guest\n"
+#~ "            houses and small to medium-sized hotels."
+#~ msgstr ""
+#~ "Jambo a été fondé en 2020 lorsque"
+#~ " l'idée de rassembler des personnes "
+#~ "disposant d'espace et souhaitant partager "
+#~ "leur logement a été lancée. Par la"
+#~ " suite, nous avons élargi nos "
+#~ "services aux maisons d'hôtes ainsi "
+#~ "qu'aux hôtels de petite et moyenne "
+#~ "taille."
+
+#~ msgid "Community building"
+#~ msgstr "Construction de communauté"
+
+#~ msgid "Extended the community"
+#~ msgstr "Extension de la communauté"
+
+#~ msgid "Guest houses and hotel join the Jambo family"
+#~ msgstr "Les maisons d'hôtes et hôtels rejoignent la famille Jambo"
+
+#~ msgid "Big Innovation"
+#~ msgstr "Grande innovation"
+
+#~ msgid "Local touch for an unique experience"
+#~ msgstr "Une touche locale pour une expérience unique"
+
+#~ msgid ""
+#~ "Here we share some of the Jambo family memorable &\n"
+#~ "            fantastic moments. Happiness never far with Jambo!"
+#~ msgstr ""
+#~ "Nous partageons ici quelques moments "
+#~ "mémorables et fantastiques de la famille"
+#~ " Jambo. Avec Jambo, le bonheur n'est"
+#~ " jamais loin !"
+
+#~ msgid ""
+#~ "The Diaby's familly occupying their Jambo booked property\n"
+#~ "              for 2 weeks."
+#~ msgstr ""
+#~ "La famille Diaby occupant sa propriété"
+#~ " réservée via Jambo pendant 2 "
+#~ "semaines."
+
+#~ msgid "Flat at Pretoria"
+#~ msgstr "Appartement à Pretoria"
+
+#~ msgid "Bungalow in Cotonou"
+#~ msgstr "Bungalow à Cotonou"
+
+#~ msgid "Booking number"
+#~ msgstr "Numéro de réservation"
+
+#~ msgid ""
+#~ "We&#39;re contacting to confitm that your booking\n"
+#~ "                                                  has been"
+#~ " successfully cancelled. You will receive"
+#~ " a complete\n"
+#~ "                                                  refund. "
+#~ "Please allow 10 working to receive "
+#~ "your payment.\n"
+#~ "                                                  "
+#~ msgstr ""
+#~ "Nous vous contactons pour confirmer que"
+#~ " votre réservation a bien été "
+#~ "annulée. Vous recevrez un remboursement "
+#~ "complet. Veuillez prévoir 10 jours "
+#~ "ouvrés pour recevoir votre paiement."
+
+#~ msgid ""
+#~ "We hope to see you soon on the Jambo platform for another\n"
+#~ "                                                  booking"
+#~ msgstr ""
+#~ "Nous espérons vous revoir bientôt sur"
+#~ " la plateforme Jambo pour une "
+#~ "nouvelle réservation"
+
+#~ msgid "Stay Blessed"
+#~ msgstr "Prenez soin de vous"
+
+#~ msgid "Room Pool"
+#~ msgstr "Nos chambres"
+
+#~ msgid "Number of days"
+#~ msgstr "Nombre de jours"
+
+#~ msgid ""
+#~ "Your refund is being\n"
+#~ ""
+#~ "                                                                                    "
+#~ "processed. You will receive a\n"
+#~ ""
+#~ "                                                                                    "
+#~ "separate confirmation once the\n"
+#~ ""
+#~ "                                                                                    "
+#~ "amount is finalized."
+#~ msgstr ""
+#~ "Votre remboursement est en cours de "
+#~ "traitement. Vous recevrez une confirmation "
+#~ "séparée une fois le montant finalisé."
+
+#~ msgid "Phone"
+#~ msgstr "Téléphone"
+
+#~ msgid ""
+#~ "Host important\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "note"
+#~ msgstr "Note importante de l'hôte"
+
+#~ msgid ""
+#~ "Take care &\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "hope to see you\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "another time"
+#~ msgstr "Prenez soin de vous et à bientôt"
+
+#~ msgid ""
+#~ "Primary\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "guest"
+#~ msgstr "Invité principal"
+
+#~ msgid ""
+#~ "Booking\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "status"
+#~ msgstr "Statut de la réservation"
+
+#~ msgid ""
+#~ "REFUND\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "METHOD"
+#~ msgstr "MÉTHODE DE REMBOURSEMENT"
+
+#~ msgid "Unsubscribe"
+#~ msgstr "Se désabonner"
+
+#~ msgid "48h Free cancellation"
+#~ msgstr "Annulation gratuite sous 48h"
+
+#~ msgid ""
+#~ "We&#39;re please to confitm that your bookinghas been\n"
+#~ "                                                  successfully"
+#~ " completed. Please , make sure to "
+#~ "contact your host\n"
+#~ "                                                  before "
+#~ "travelling.&nbsp; Be aware, you have 24h"
+#~ " for free cancellation.\n"
+#~ "                                                  This can"
+#~ " be done through your user dashbord."
+#~ msgstr ""
+#~ "Nous avons le plaisir de confirmer "
+#~ "que votre réservation a bien été "
+#~ "effectuée. Veuillez contacter votre hôte "
+#~ "avant votre voyage. Notez que vous "
+#~ "disposez de 24h pour une annulation "
+#~ "gratuite, directement depuis votre tableau "
+#~ "de bord."
+
+#~ msgid ""
+#~ "We wish you a pleasant stay and share your\n"
+#~ "                                                  experience "
+#~ "with the Jambo community."
+#~ msgstr ""
+#~ "Nous vous souhaitons un excellent séjour"
+#~ " et vous invitons à partager votre"
+#~ " expérience avec la communauté Jambo."
+
+#~ msgid "Best Regards"
+#~ msgstr "Cordialement"
+
+#~ msgid "Manage booking"
+#~ msgstr "Gérer la réservation"
+
+#~ msgid "Subtotal"
+#~ msgstr "Sous-total"
+
+#~ msgid ""
+#~ "Please contact\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "me before\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "travelling"
+#~ msgstr "Merci de me contacter avant votre voyage"
+
+#~ msgid ""
+#~ "PAYMENT\n"
+#~ ""
+#~ "                                                                                                    "
+#~ "METHOD"
+#~ msgstr "MODE DE PAIEMENT"
+
+#~ msgid "Phone & Email"
+#~ msgstr "Téléphone & e-mail"
+
+#~ msgid "Years"
+#~ msgstr "Années"
+
+#~ msgid "Experience"
+#~ msgstr "Expérience"
+
+#~ msgid "Visit from"
+#~ msgstr "Visite à partir de"
+
+#~ msgid "room bookings"
+#~ msgstr "réservations de chambres"
+
+#~ msgid "That verification link is invalid or has expired."
+#~ msgstr "Ce lien de vérification est invalide ou a expiré."
+
+#~ msgid "Your email has been verified! You can now log in."
+#~ msgstr ""
+#~ "Votre adresse e-mail a été vérifiée "
+#~ "! Vous pouvez maintenant vous connecter."
+
+#~ msgid ""
+#~ "We would like to thank you for "
+#~ "your registration received today %(date)s. "
+#~ "We wish you a warm welcome to "
+#~ "the \"Jambo community\" where you can"
+#~ " reserve short stays safer, happier "
+#~ "and cheaper. Also, you can confidently"
+#~ " add a room to start generating "
+#~ "passive income."
+#~ msgstr ""
+#~ "Nous tenons à vous remercier pour "
+#~ "votre inscription reçue aujourd'hui le "
+#~ "%(date)s. Nous vous souhaitons la "
+#~ "bienvenue dans la communauté Jambo, où"
+#~ " vous pouvez réserver des séjours "
+#~ "courts en toute sécurité, plus "
+#~ "sereinement et à moindre coût. Vous "
+#~ "pouvez également ajouter un logement en"
+#~ " toute confiance pour commencer à "
+#~ "générer un revenu passif."
+
