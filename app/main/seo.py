@@ -27,6 +27,7 @@ STATIC_PAGES = [
     ("/contact", "0.4", "yearly"),
     ("/payment-policy", "0.3", "yearly"),
     ("/terms-of-use", "0.3", "yearly"),
+    ("/booking-policy", "0.3", "yearly"),
 ]
 
 # Everything private, transactional or state-changing. Crawling these

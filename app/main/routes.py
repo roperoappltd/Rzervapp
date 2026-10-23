@@ -238,6 +238,12 @@ def payment_policy():
 
     return render_template('pages/payment_policy.html', title='Terms of Use')
 
+@main.route("/booking-policy")
+def booking_policy():
+    '''This function create a route to render the booking policy page'''
+
+    return render_template('pages/booking_policy.html', title='Booking Policy')
+
 @main.route("/behost") 
 def behost():
     '''This function create a route to render the Be host page'''

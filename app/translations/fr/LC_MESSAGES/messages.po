@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2026-08-24 08:52+0100\n"
-"PO-Revision-Date: 2026-10-23 20:50+0100\n"
+"PO-Revision-Date: 2026-10-23 23:20+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -472,7 +472,7 @@ msgstr "Remboursement"
 
 #: app/templates/base.html:439
 msgid "Booking policy"
-msgstr "Réservation"
+msgstr "Politique de réservation"
 
 #: app/templates/adminpanel/base.html:194 app/templates/base.html:452
 #: app/templates/userlayout.html:357
@@ -1489,8 +1489,8 @@ msgid ""
 "We present to you our most popular room listing this week chosen by\n"
 "      the Jambo community."
 msgstr ""
-"Nous vous présentons notre annonce la plus populaire de la semaine, "
-"choisie par la communauté Jambo."
+"Nous vous présentons notre annonce la plus populaire de la semaine, choisie "
+"par la communauté Jambo."
 
 #: app/templates/pages/homes.html:327
 msgid "SpotLight"
@@ -3052,9 +3052,9 @@ msgid ""
 "Unverified email. Please use the link provided in your email to verify. "
 "Alternatively, enter your email to obtain a new verification link."
 msgstr ""
-"Adresse e-mail non vérifiée. Veuillez utiliser le lien reçu par e-mail "
-"pour la vérifier. Vous pouvez aussi saisir votre adresse e-mail pour "
-"obtenir un nouveau lien de vérification."
+"Adresse e-mail non vérifiée. Veuillez utiliser le lien reçu par e-mail pour "
+"la vérifier. Vous pouvez aussi saisir votre adresse e-mail pour obtenir un "
+"nouveau lien de vérification."
 
 #: app/rooms/routes.py:398
 msgid "Only a confirmed booking can be cancelled this way."
@@ -3081,11 +3081,11 @@ msgstr ""
 #: app/rooms/routes.py:453
 #, python-format
 msgid ""
-"Booking cancelled. The guest has been notified and will be refunded. A "
-"15%% fee has been deducted from your earnings."
+"Booking cancelled. The guest has been notified and will be refunded. A 15%% "
+"fee has been deducted from your earnings."
 msgstr ""
-"Réservation annulée. L'invité a été informé et sera remboursé. Des frais "
-"de 15 %% ont été déduits de vos revenus."
+"Réservation annulée. L'invité a été informé et sera remboursé. Des frais de "
+"15 %% ont été déduits de vos revenus."
 
 #: app/templates/base.html:446
 msgid "Payment policy"
@@ -3174,9 +3174,9 @@ msgid ""
 "          You will receive a full refund -- please allow up to 10 working days\n"
 "          for the payment to reach you."
 msgstr ""
-"Nous vous confirmons que votre réservation a bien été annulée. Vous "
-"recevrez un remboursement intégral -- veuillez prévoir jusqu'à 10 jours "
-"ouvrés pour recevoir votre paiement."
+"Nous vous confirmons que votre réservation a bien été annulée. Vous recevrez"
+" un remboursement intégral -- veuillez prévoir jusqu'à 10 jours ouvrés pour "
+"recevoir votre paiement."
 
 #: app/templates/pages/bookcancelmsg.html:237
 #: app/templates/pages/bookingmsg.html:246
@@ -3240,9 +3240,9 @@ msgid ""
 "          any time through your dashboard."
 msgstr ""
 "Nous avons le plaisir de confirmer que votre réservation a bien été "
-"effectuée. Veuillez contacter votre hôte avant votre voyage. Vous "
-"bénéficiez d'une annulation gratuite jusqu'à 48 heures avant l'arrivée, à "
-"tout moment depuis votre tableau de bord."
+"effectuée. Veuillez contacter votre hôte avant votre voyage. Vous bénéficiez"
+" d'une annulation gratuite jusqu'à 48 heures avant l'arrivée, à tout moment "
+"depuis votre tableau de bord."
 
 #: app/templates/pages/bookingmsg.html:223
 msgid ""
@@ -3286,10 +3286,10 @@ msgid ""
 "                stays that are safer, happier, and more affordable. Whenever you're\n"
 "                ready, you can also list a room of your own and start earning."
 msgstr ""
-"Encore une fois, bienvenue dans la communauté Jambo, où vous pouvez "
-"réserver des séjours courts plus sûrs, plus agréables et plus abordables. "
-"Quand vous le souhaitez, vous pouvez aussi proposer une chambre vous "
-"appartenant et commencer à gagner de l'argent."
+"Encore une fois, bienvenue dans la communauté Jambo, où vous pouvez réserver"
+" des séjours courts plus sûrs, plus agréables et plus abordables. Quand vous"
+" le souhaitez, vous pouvez aussi proposer une chambre vous appartenant et "
+"commencer à gagner de l'argent."
 
 #: app/templates/pages/joinusmsg.html:110
 msgid "Log in to Jambo"
@@ -3325,15 +3325,14 @@ msgstr "Champ d'application"
 
 #: app/templates/pages/payment_policy.html:84
 msgid ""
-"This policy explains how payments are processed on Jambo, how host payouts"
-" work, and the terms under which a guest or host may cancel a confirmed "
+"This policy explains how payments are processed on Jambo, how host payouts "
+"work, and the terms under which a guest or host may cancel a confirmed "
 "booking. It applies to every booking made through the Jambo platform."
 msgstr ""
-"La présente politique explique comment les paiements sont traités sur "
-"Jambo, comment fonctionnent les versements aux hôtes, et les conditions "
-"dans lesquelles un invité ou un hôte peut annuler une réservation "
-"confirmée. Elle s'applique à toute réservation effectuée via la plateforme"
-" Jambo."
+"La présente politique explique comment les paiements sont traités sur Jambo,"
+" comment fonctionnent les versements aux hôtes, et les conditions dans "
+"lesquelles un invité ou un hôte peut annuler une réservation confirmée. Elle"
+" s'applique à toute réservation effectuée via la plateforme Jambo."
 
 #: app/templates/pages/payment_policy.html:87
 msgid "How Payment Works"
@@ -3341,16 +3340,15 @@ msgstr "Fonctionnement du paiement"
 
 #: app/templates/pages/payment_policy.html:89
 msgid ""
-"When a guest books a room, payment is collected in full by Jambo through "
-"our payment processor, Paystack. Jambo does not directly handle or store "
-"card details -- this is managed entirely by Paystack, a licensed payment "
-"service provider."
+"When a guest books a room, payment is collected in full by Jambo through our"
+" payment processor, Paystack. Jambo does not directly handle or store card "
+"details -- this is managed entirely by Paystack, a licensed payment service "
+"provider."
 msgstr ""
-"Lorsqu'un invité réserve une chambre, le paiement est encaissé "
-"intégralement par Jambo via notre prestataire de paiement, Paystack. Jambo"
-" ne traite ni ne conserve directement les données de carte bancaire -- "
-"celles-ci sont entièrement gérées par Paystack, prestataire de services de"
-" paiement agréé."
+"Lorsqu'un invité réserve une chambre, le paiement est encaissé intégralement"
+" par Jambo via notre prestataire de paiement, Paystack. Jambo ne traite ni "
+"ne conserve directement les données de carte bancaire -- celles-ci sont "
+"entièrement gérées par Paystack, prestataire de services de paiement agréé."
 
 #: app/templates/pages/payment_policy.html:92
 msgid ""
@@ -3358,9 +3356,9 @@ msgid ""
 "regardless of the currency a guest may have been viewing prices in while "
 "browsing the site."
 msgstr ""
-"Toutes les réservations sont traitées et réglées en francs CFA d'Afrique "
-"de l'Ouest (XOF), quelle que soit la devise dans laquelle l'invité "
-"consultait les prix en naviguant sur le site."
+"Toutes les réservations sont traitées et réglées en francs CFA d'Afrique de "
+"l'Ouest (XOF), quelle que soit la devise dans laquelle l'invité consultait "
+"les prix en naviguant sur le site."
 
 #: app/templates/pages/payment_policy.html:95
 msgid "Platform Commission"
@@ -3369,9 +3367,9 @@ msgstr "Commission de la plateforme"
 #: app/templates/pages/payment_policy.html:97
 #, python-format
 msgid ""
-"Jambo retains a 15%% commission on the total booking value. This fee "
-"covers platform operation, payment processing, customer support, and the "
-"trust and safety measures built into the booking process."
+"Jambo retains a 15%% commission on the total booking value. This fee covers "
+"platform operation, payment processing, customer support, and the trust and "
+"safety measures built into the booking process."
 msgstr ""
 "Jambo retient une commission de 15 %% sur le montant total de la "
 "réservation. Ces frais couvrent le fonctionnement de la plateforme, le "
@@ -3385,24 +3383,22 @@ msgstr "Versements aux hôtes"
 #: app/templates/pages/payment_policy.html:102
 #, python-format
 msgid ""
-"The remaining 85%% of the booking value is transferred to the host's "
-"agreed payment method within 5 working days of Jambo receiving the guest's"
-" payment."
+"The remaining 85%% of the booking value is transferred to the host's agreed "
+"payment method within 5 working days of Jambo receiving the guest's payment."
 msgstr ""
-"Les 85 %% restants du montant de la réservation sont transférés vers le "
-"mode de paiement convenu de l'hôte dans un délai de 5 jours ouvrés après "
+"Les 85 %% restants du montant de la réservation sont transférés vers le mode"
+" de paiement convenu de l'hôte dans un délai de 5 jours ouvrés après "
 "réception du paiement de l'invité par Jambo."
 
 #: app/templates/pages/payment_policy.html:105
 msgid ""
 "Hosts are responsible for providing accurate, up-to-date payout details. "
-"Jambo is not responsible for delays caused by incorrect or outdated "
-"payment information provided by the host."
+"Jambo is not responsible for delays caused by incorrect or outdated payment "
+"information provided by the host."
 msgstr ""
-"Les hôtes sont responsables de fournir des informations de versement "
-"exactes et à jour. Jambo décline toute responsabilité pour les retards "
-"causés par des informations de paiement incorrectes ou obsolètes fournies "
-"par l'hôte."
+"Les hôtes sont responsables de fournir des informations de versement exactes"
+" et à jour. Jambo décline toute responsabilité pour les retards causés par "
+"des informations de paiement incorrectes ou obsolètes fournies par l'hôte."
 
 #: app/templates/pages/payment_policy.html:108
 msgid "Guest Cancellations & Refunds"
@@ -3418,9 +3414,9 @@ msgid ""
 "charge, provided the cancellation is made at least 48 hours before the "
 "scheduled arrival date."
 msgstr ""
-"Un invité peut annuler une réservation confirmée et obtenir un "
-"remboursement intégral, sans frais, à condition que l'annulation soit "
-"effectuée au moins 48 heures avant la date d'arrivée prévue."
+"Un invité peut annuler une réservation confirmée et obtenir un remboursement"
+" intégral, sans frais, à condition que l'annulation soit effectuée au moins "
+"48 heures avant la date d'arrivée prévue."
 
 #: app/templates/pages/payment_policy.html:115
 msgid "Cancellations After the Free Window"
@@ -3428,9 +3424,9 @@ msgstr "Annulations après le délai gratuit"
 
 #: app/templates/pages/payment_policy.html:117
 msgid ""
-"If a guest wishes to cancel less than 48 hours before arrival, the booking"
-" is no longer eligible for automatic, free cancellation. To request a "
-"refund at this stage, the guest must:"
+"If a guest wishes to cancel less than 48 hours before arrival, the booking "
+"is no longer eligible for automatic, free cancellation. To request a refund "
+"at this stage, the guest must:"
 msgstr ""
 "Si un invité souhaite annuler moins de 48 heures avant l'arrivée, la "
 "réservation n'est plus éligible à l'annulation gratuite automatique. Pour "
@@ -3467,12 +3463,12 @@ msgstr "Devise du remboursement"
 
 #: app/templates/pages/payment_policy.html:127
 msgid ""
-"Refunds are issued in the same currency the original payment was processed"
-" in (XOF), regardless of the guest's browsing currency preference."
+"Refunds are issued in the same currency the original payment was processed "
+"in (XOF), regardless of the guest's browsing currency preference."
 msgstr ""
-"Les remboursements sont effectués dans la devise dans laquelle le paiement"
-" initial a été traité (XOF), quelle que soit la devise de navigation "
-"préférée de l'invité."
+"Les remboursements sont effectués dans la devise dans laquelle le paiement "
+"initial a été traité (XOF), quelle que soit la devise de navigation préférée"
+" de l'invité."
 
 #: app/templates/pages/payment_policy.html:130
 msgid "Refund Processing Time"
@@ -3490,11 +3486,11 @@ msgstr "Annulations par l'hôte"
 #, python-format
 msgid ""
 "If a host cancels a confirmed booking before the guest's arrival without "
-"reasonable cause, the host will be charged a fee equal to 15%% of the "
-"total booking amount, deducted from their earnings."
+"reasonable cause, the host will be charged a fee equal to 15%% of the total "
+"booking amount, deducted from their earnings."
 msgstr ""
-"Si un hôte annule une réservation confirmée avant l'arrivée de l'invité "
-"sans motif raisonnable, des frais égaux à 15 %% du montant total de la "
+"Si un hôte annule une réservation confirmée avant l'arrivée de l'invité sans"
+" motif raisonnable, des frais égaux à 15 %% du montant total de la "
 "réservation seront facturés à l'hôte et déduits de ses revenus."
 
 #: app/templates/pages/payment_policy.html:140
@@ -3502,8 +3498,8 @@ msgid ""
 "The guest will receive a full refund for a booking cancelled by the host "
 "under this section."
 msgstr ""
-"L'invité recevra un remboursement intégral pour une réservation annulée "
-"par l'hôte en vertu de la présente section."
+"L'invité recevra un remboursement intégral pour une réservation annulée par "
+"l'hôte en vertu de la présente section."
 
 #: app/templates/pages/payment_policy.html:143
 msgid "Disputes"
@@ -3524,12 +3520,12 @@ msgstr "Modifications de la présente politique"
 #: app/templates/pages/payment_policy.html:150
 msgid ""
 "Jambo may update this policy from time to time. Continued use of the "
-"platform after changes are published constitutes acceptance of the revised"
-" terms."
+"platform after changes are published constitutes acceptance of the revised "
+"terms."
 msgstr ""
-"Jambo peut mettre à jour cette politique de temps à autre. La poursuite de"
-" l'utilisation de la plateforme après la publication des modifications "
-"vaut acceptation des conditions révisées."
+"Jambo peut mettre à jour cette politique de temps à autre. La poursuite de "
+"l'utilisation de la plateforme après la publication des modifications vaut "
+"acceptation des conditions révisées."
 
 #: app/templates/pages/resend_verification.html:10
 msgid "Verify"
@@ -3541,11 +3537,11 @@ msgstr "votre e-mail"
 
 #: app/templates/pages/resend_verification.html:11
 msgid ""
-"Enter the email you signed up with and we'll send you a fresh verification"
-" link"
+"Enter the email you signed up with and we'll send you a fresh verification "
+"link"
 msgstr ""
-"Saisissez l'adresse e-mail utilisée lors de votre inscription et nous vous"
-" enverrons un nouveau lien de vérification"
+"Saisissez l'adresse e-mail utilisée lors de votre inscription et nous vous "
+"enverrons un nouveau lien de vérification"
 
 #: app/templates/pages/resend_verification.html:46
 msgid "Already verified"
@@ -3565,8 +3561,8 @@ msgid ""
 "By creating an account or using the Jambo platform in any way, you agree to be bound by these Terms of\n"
 "        Use. If you do not agree, please do not use the platform."
 msgstr ""
-"En créant un compte ou en utilisant la plateforme Jambo de quelque manière"
-" que ce soit, vous acceptez d'être lié par les présentes Conditions "
+"En créant un compte ou en utilisant la plateforme Jambo de quelque manière "
+"que ce soit, vous acceptez d'être lié par les présentes Conditions "
 "d'utilisation. Si vous n'êtes pas d'accord, veuillez ne pas utiliser la "
 "plateforme."
 
@@ -3602,8 +3598,8 @@ msgid ""
 "        restrictions, or penalties is prohibited."
 msgstr ""
 "Chaque personne ne peut détenir qu'un seul compte Jambo. La création de "
-"plusieurs comptes pour contourner les règles, restrictions ou sanctions de"
-" la plateforme est interdite."
+"plusieurs comptes pour contourner les règles, restrictions ou sanctions de "
+"la plateforme est interdite."
 
 #: app/templates/pages/terms_of_use.html:105
 msgid "Host Responsibilities"
@@ -3614,8 +3610,7 @@ msgid "If you list a room on Jambo, you confirm that:"
 msgstr "Si vous publiez une chambre sur Jambo, vous confirmez que :"
 
 #: app/templates/pages/terms_of_use.html:110
-msgid ""
-"You have the legal right to offer the property for short-term rental."
+msgid "You have the legal right to offer the property for short-term rental."
 msgstr ""
 "Vous avez le droit légal de proposer le bien en location de courte durée."
 
@@ -3627,19 +3622,19 @@ msgstr "L'annonce décrit fidèlement le bien, son état et ses équipements."
 
 #: app/templates/pages/terms_of_use.html:112
 msgid ""
-"The property is safe, habitable, and complies with any applicable local "
-"laws and regulations."
+"The property is safe, habitable, and complies with any applicable local laws"
+" and regulations."
 msgstr ""
-"Le bien est sûr, habitable et conforme aux lois et réglementations locales"
-" applicables."
+"Le bien est sûr, habitable et conforme aux lois et réglementations locales "
+"applicables."
 
 #: app/templates/pages/terms_of_use.html:114
 msgid ""
 "You will honor confirmed bookings, except as permitted under the Payment "
 "Policy."
 msgstr ""
-"Vous honorerez les réservations confirmées, sauf dans les cas permis par "
-"la Politique de paiement."
+"Vous honorerez les réservations confirmées, sauf dans les cas permis par la "
+"Politique de paiement."
 
 #: app/templates/pages/terms_of_use.html:117
 msgid "Guest Responsibilities"
@@ -3658,8 +3653,8 @@ msgid ""
 "Respect the property and follow the host's reasonable house rules during "
 "your stay."
 msgstr ""
-"Respecter le bien et suivre les règles raisonnables de l'hôte pendant "
-"votre séjour."
+"Respecter le bien et suivre les règles raisonnables de l'hôte pendant votre "
+"séjour."
 
 #: app/templates/pages/terms_of_use.html:124
 msgid "Pay for your booking in full through the Jambo platform."
@@ -3678,16 +3673,16 @@ msgid ""
 "Listing a property you do not have the legal right to rent out, or that is used for any illegal\n"
 "          purpose."
 msgstr ""
-"La publication d'un bien que vous n'avez pas le droit légal de louer, ou "
-"qui est utilisé à des fins illégales."
+"La publication d'un bien que vous n'avez pas le droit légal de louer, ou qui"
+" est utilisé à des fins illégales."
 
 #: app/templates/pages/terms_of_use.html:134
 msgid ""
 "Discrimination against any user on the basis of race, gender, religion, nationality, disability,\n"
 "          sexual orientation, or any other protected characteristic."
 msgstr ""
-"La discrimination à l'égard d'un utilisateur fondée sur la race, le sexe, "
-"la religion, la nationalité, le handicap, l'orientation sexuelle ou toute "
+"La discrimination à l'égard d'un utilisateur fondée sur la race, le sexe, la"
+" religion, la nationalité, le handicap, l'orientation sexuelle ou toute "
 "autre caractéristique protégée."
 
 #: app/templates/pages/terms_of_use.html:136
@@ -3695,25 +3690,25 @@ msgid ""
 "Fraud or misrepresentation, including fake listings, fake reviews, or false information provided to\n"
 "          another user or to Jambo."
 msgstr ""
-"La fraude ou la fausse déclaration, y compris les fausses annonces, les "
-"faux avis ou les informations erronées fournies à un autre utilisateur ou "
-"à Jambo."
+"La fraude ou la fausse déclaration, y compris les fausses annonces, les faux"
+" avis ou les informations erronées fournies à un autre utilisateur ou à "
+"Jambo."
 
 #: app/templates/pages/terms_of_use.html:138
 msgid ""
 "Harassment, threats, or abusive behavior directed at any other user, including through Jambo's\n"
 "          messaging system."
 msgstr ""
-"Le harcèlement, les menaces ou les comportements abusifs envers tout autre"
-" utilisateur, y compris via la messagerie de Jambo."
+"Le harcèlement, les menaces ou les comportements abusifs envers tout autre "
+"utilisateur, y compris via la messagerie de Jambo."
 
 #: app/templates/pages/terms_of_use.html:140
 msgid ""
-"Attempting to arrange payment outside the Jambo platform for a booking "
-"made through Jambo."
+"Attempting to arrange payment outside the Jambo platform for a booking made "
+"through Jambo."
 msgstr ""
-"La tentative d'organiser un paiement en dehors de la plateforme Jambo pour"
-" une réservation effectuée via Jambo."
+"La tentative d'organiser un paiement en dehors de la plateforme Jambo pour "
+"une réservation effectuée via Jambo."
 
 #: app/templates/pages/terms_of_use.html:141
 msgid ""
@@ -3740,19 +3735,19 @@ msgid ""
 "        that content on the platform for the purpose of operating the service. You remain responsible for ensuring you\n"
 "        have the right to share it."
 msgstr ""
-"Lorsque vous téléversez des photos, descriptions ou autres contenus dans "
-"une annonce, vous accordez à Jambo une licence d'affichage de ces contenus"
-" sur la plateforme aux fins du fonctionnement du service. Vous restez "
-"responsable de vous assurer que vous avez le droit de les partager."
+"Lorsque vous téléversez des photos, descriptions ou autres contenus dans une"
+" annonce, vous accordez à Jambo une licence d'affichage de ces contenus sur "
+"la plateforme aux fins du fonctionnement du service. Vous restez responsable"
+" de vous assurer que vous avez le droit de les partager."
 
 #: app/templates/pages/terms_of_use.html:155
 msgid ""
 "Reviews must reflect your genuine experience as a guest or host. Jambo may remove a review that violates\n"
 "        this policy or the prohibited conduct rules above."
 msgstr ""
-"Les avis doivent refléter votre expérience réelle en tant qu'invité ou "
-"hôte. Jambo peut supprimer un avis qui enfreint la présente politique ou "
-"les règles relatives aux comportements interdits ci-dessus."
+"Les avis doivent refléter votre expérience réelle en tant qu'invité ou hôte."
+" Jambo peut supprimer un avis qui enfreint la présente politique ou les "
+"règles relatives aux comportements interdits ci-dessus."
 
 #: app/templates/pages/terms_of_use.html:159
 msgid "Suspension and Termination"
@@ -3763,9 +3758,9 @@ msgid ""
 "Jambo reserves the right to suspend or terminate an account that violates these Terms of Use, including\n"
 "        the prohibited conduct listed in Section 6."
 msgstr ""
-"Jambo se réserve le droit de suspendre ou de résilier un compte qui "
-"enfreint les présentes Conditions d'utilisation, y compris les "
-"comportements interdits énumérés à la section 6."
+"Jambo se réserve le droit de suspendre ou de résilier un compte qui enfreint"
+" les présentes Conditions d'utilisation, y compris les comportements "
+"interdits énumérés à la section 6."
 
 #: app/templates/pages/terms_of_use.html:165
 msgid "Jambo's Role and Limitation of Liability"
@@ -3777,11 +3772,11 @@ msgid ""
 "        properties listed on the platform, and is not responsible for the actual condition, safety, or legality of a\n"
 "        listed property. Jambo's role in payment processing is described separately in the Payment Policy."
 msgstr ""
-"Jambo est une place de marché qui met en relation hôtes et invités. Jambo "
-"ne possède, ne gère ni n'inspecte les biens listés sur la plateforme, et "
-"n'est pas responsable de l'état réel, de la sécurité ou de la légalité "
-"d'un bien listé. Le rôle de Jambo dans le traitement des paiements est "
-"décrit séparément dans la Politique de paiement."
+"Jambo est une place de marché qui met en relation hôtes et invités. Jambo ne"
+" possède, ne gère ni n'inspecte les biens listés sur la plateforme, et n'est"
+" pas responsable de l'état réel, de la sécurité ou de la légalité d'un bien "
+"listé. Le rôle de Jambo dans le traitement des paiements est décrit "
+"séparément dans la Politique de paiement."
 
 #: app/templates/pages/terms_of_use.html:174
 msgid ""
@@ -3814,17 +3809,16 @@ msgid ""
 "Jambo may update these Terms of Use from time to time. Continued use of the platform after changes are\n"
 "        published constitutes acceptance of the revised terms."
 msgstr ""
-"Jambo peut mettre à jour les présentes Conditions d'utilisation de temps à"
-" autre. La poursuite de l'utilisation de la plateforme après la "
-"publication des modifications vaut acceptation des conditions révisées."
+"Jambo peut mettre à jour les présentes Conditions d'utilisation de temps à "
+"autre. La poursuite de l'utilisation de la plateforme après la publication "
+"des modifications vaut acceptation des conditions révisées."
 
 #: app/templates/pages/terms_of_use.html:192
 msgid ""
-"Questions about these Terms of Use can be directed to "
-"ropero.app@gmail.com."
+"Questions about these Terms of Use can be directed to ropero.app@gmail.com."
 msgstr ""
-"Les questions relatives aux présentes Conditions d'utilisation peuvent "
-"être adressées à ropero.app@gmail.com."
+"Les questions relatives aux présentes Conditions d'utilisation peuvent être "
+"adressées à ropero.app@gmail.com."
 
 #: app/templates/pages/verify_link_issue.html:7
 msgid "Verification Link"
@@ -3867,8 +3861,8 @@ msgstr "chambres"
 #: app/templates/udashpages/mybookings.html:88
 msgid "Add a phone number to your profile to enable booking notifications."
 msgstr ""
-"Ajoutez un numéro de téléphone à votre profil pour activer les "
-"notifications de réservation."
+"Ajoutez un numéro de téléphone à votre profil pour activer les notifications"
+" de réservation."
 
 #: app/templates/udashpages/mybookings.html:91
 msgid "Add Phone Number"
@@ -3913,8 +3907,8 @@ msgid ""
 "The guest will be refunded in full. Whether a 15%% fee applies depends on\n"
 "                                      the reason selected below."
 msgstr ""
-"L'invité sera intégralement remboursé. L'application ou non de frais de 15"
-" %% dépend du motif sélectionné ci-dessous."
+"L'invité sera intégralement remboursé. L'application ou non de frais de 15 "
+"%% dépend du motif sélectionné ci-dessous."
 
 #: app/templates/udashpages/mybookings.html:214
 msgid "Reason for cancelling"
@@ -4020,8 +4014,8 @@ msgid ""
 "Please add a phone number to your profile before enabling booking "
 "notifications."
 msgstr ""
-"Veuillez ajouter un numéro de téléphone à votre profil avant d'activer les"
-" notifications de réservation."
+"Veuillez ajouter un numéro de téléphone à votre profil avant d'activer les "
+"notifications de réservation."
 
 #: app/udashboard/routes.py:611
 msgid "Booking notifications turned off."
@@ -4037,19 +4031,19 @@ msgstr "Notifications de réservation par WhatsApp activées."
 
 #: app/users/routes.py:223
 msgid ""
-"If an account with that email exists and needs verifying, a fresh link is "
-"on its way."
+"If an account with that email exists and needs verifying, a fresh link is on"
+" its way."
 msgstr ""
 "Si un compte existe avec cette adresse e-mail et doit être vérifié, un "
 "nouveau lien est en route."
 
 #: app/users/usermails/joinusmail.py:28
 msgid ""
-"We would like to thank you for your registration received today. We wish "
-"you a warm welcome to the \"Jambo community\". "
+"We would like to thank you for your registration received today. We wish you"
+" a warm welcome to the \"Jambo community\". "
 msgstr ""
-"Nous tenons à vous remercier pour votre inscription reçue aujourd'hui. "
-"Nous vous souhaitons la bienvenue dans la « communauté Jambo ». "
+"Nous tenons à vous remercier pour votre inscription reçue aujourd'hui. Nous "
+"vous souhaitons la bienvenue dans la « communauté Jambo ». "
 
 #: app/models/usermodel.py:177
 msgid "You must be at least 18 years old to register."
@@ -4153,6 +4147,344 @@ msgstr "Supprimer définitivement mon compte"
 #: app/users/forms.py:59 app/users/forms.py:141
 msgid "Passwords do not match."
 msgstr "Les mots de passe ne correspondent pas."
+
+#: app/templates/pages/booking_policy.html:57
+#: app/templates/pages/booking_policy.html:61
+msgid "Booking Policy"
+msgstr "Politique de réservation"
+
+#: app/templates/pages/booking_policy.html:77
+msgid "October"
+msgstr "octobre"
+
+#: app/templates/pages/booking_policy.html:84
+msgid ""
+"This policy explains how booking a room on Jambo works: who can book, how a "
+"booking is made and confirmed, check-in and check-out, changes, "
+"cancellations and reviews. It applies to every booking made through the "
+"Jambo platform."
+msgstr ""
+"La présente politique explique le fonctionnement de la réservation d'une "
+"chambre sur Jambo : qui peut réserver, comment une réservation est effectuée"
+" et confirmée, l'arrivée et le départ, les modifications, les annulations et"
+" les avis. Elle s'applique à toute réservation effectuée via la plateforme "
+"Jambo."
+
+#: app/templates/pages/booking_policy.html:87
+msgid "See also"
+msgstr "Voir aussi"
+
+#: app/templates/pages/booking_policy.html:92
+msgid "Who Can Book"
+msgstr "Qui peut réserver"
+
+#: app/templates/pages/booking_policy.html:94
+msgid ""
+"To book a room you must be at least 18 years old and have a Jambo account. "
+"Before you can book, you need to:"
+msgstr ""
+"Pour réserver une chambre, vous devez avoir au moins 18 ans et posséder un "
+"compte Jambo. Avant de pouvoir réserver, vous devez :"
+
+#: app/templates/pages/booking_policy.html:97
+msgid ""
+"Verify your email address using the link we send you after registration."
+msgstr ""
+"Vérifier votre adresse e-mail à l'aide du lien que nous vous envoyons après "
+"votre inscription."
+
+#: app/templates/pages/booking_policy.html:98
+msgid ""
+"Complete your profile, including your address, postal code and phone number."
+msgstr ""
+"Compléter votre profil, y compris votre adresse, votre code postal et votre "
+"numéro de téléphone."
+
+#: app/templates/pages/booking_policy.html:99
+msgid ""
+"Provide the name, email address and phone number of the primary guest who "
+"will stay in the room."
+msgstr ""
+"Indiquer le nom, l'adresse e-mail et le numéro de téléphone de l'invité "
+"principal qui séjournera dans la chambre."
+
+#: app/templates/pages/booking_policy.html:102
+msgid "Making a Booking"
+msgstr "Effectuer une réservation"
+
+#: app/templates/pages/booking_policy.html:104
+msgid "Dates and Availability"
+msgstr "Dates et disponibilité"
+
+#: app/templates/pages/booking_policy.html:106
+msgid ""
+"Choose your arrival and departure dates on the room page. The arrival date "
+"cannot be in the past and the departure date must be after the arrival date."
+" A room can only be booked for dates that are not already booked or blocked "
+"by the host."
+msgstr ""
+"Choisissez vos dates d'arrivée et de départ sur la page de la chambre. La "
+"date d'arrivée ne peut pas être passée et la date de départ doit être "
+"postérieure à la date d'arrivée. Une chambre ne peut être réservée que pour "
+"des dates qui ne sont pas déjà réservées ou bloquées par l'hôte."
+
+#: app/templates/pages/booking_policy.html:109
+msgid "When Your Dates Are Secured"
+msgstr "Quand vos dates sont garanties"
+
+#: app/templates/pages/booking_policy.html:114
+msgid "Unfinished Bookings"
+msgstr "Réservations non terminées"
+
+#: app/templates/pages/booking_policy.html:116
+msgid ""
+"If you leave checkout without paying, you can resume your unfinished booking"
+" for 30 minutes. After that it expires and you will need to start again, "
+"subject to availability."
+msgstr ""
+"Si vous quittez la page de paiement sans payer, vous pouvez reprendre votre "
+"réservation non terminée pendant 30 minutes. Passé ce délai, elle expire et "
+"vous devrez recommencer, sous réserve de disponibilité."
+
+#: app/templates/pages/booking_policy.html:119
+msgid "Confirmation and Booking Reference"
+msgstr "Confirmation et référence de réservation"
+
+#: app/templates/pages/booking_policy.html:121
+msgid ""
+"Once your payment is confirmed, you receive a booking reference and a "
+"confirmation email at the primary guest email address. Keep your booking "
+"reference: you will need it for any request to us."
+msgstr ""
+"Une fois votre paiement confirmé, vous recevez une référence de réservation "
+"et un e-mail de confirmation à l'adresse e-mail de l'invité principal. "
+"Conservez votre référence de réservation : elle vous sera demandée pour "
+"toute demande adressée à nos services."
+
+#: app/templates/pages/booking_policy.html:124
+msgid "Prices, Discounts and Vouchers"
+msgstr "Prix, remises et bons de réduction"
+
+#: app/templates/pages/booking_policy.html:126
+msgid ""
+"The price per night is set by the host. Prices are shown in your chosen "
+"currency for convenience; how payments are settled is explained in the "
+"Payment Policy."
+msgstr ""
+"Le prix par nuit est fixé par l'hôte. Les prix sont affichés dans la devise "
+"de votre choix à titre indicatif ; le mode de règlement des paiements est "
+"expliqué dans la Politique de paiement."
+
+#: app/templates/pages/booking_policy.html:129
+msgid ""
+"A discount set by the host for a room is applied automatically when it is "
+"active. A voucher can be used once per account and cannot be combined with a"
+" discount: if a discount applies to your booking, the voucher is not "
+"applied."
+msgstr ""
+"Une remise définie par l'hôte pour une chambre est appliquée automatiquement"
+" lorsqu'elle est active. Un bon de réduction peut être utilisé une seule "
+"fois par compte et ne peut pas être cumulé avec une remise : si une remise "
+"s'applique à votre réservation, le bon n'est pas appliqué."
+
+#: app/templates/pages/booking_policy.html:132
+msgid "Guests and Occupancy"
+msgstr "Invités et occupation"
+
+#: app/templates/pages/booking_policy.html:134
+msgid ""
+"The number of guests must not exceed the maximum occupancy shown on the room"
+" listing. Jambo verifies the identity of hosts and guests, and you may be "
+"asked to provide identification."
+msgstr ""
+"Le nombre d'invités ne doit pas dépasser l'occupation maximale indiquée sur "
+"l'annonce de la chambre. Jambo vérifie l'identité des hôtes et des invités, "
+"et il peut vous être demandé de présenter une pièce d'identité."
+
+#: app/templates/pages/booking_policy.html:137
+msgid "Check-in and Check-out"
+msgstr "Arrivée et départ"
+
+#: app/templates/pages/booking_policy.html:139
+msgid ""
+"Unless the listing states otherwise, check-in is from 3:00 PM and check-out "
+"is by 12:00 noon."
+msgstr ""
+"Sauf indication contraire dans l'annonce, l'arrivée se fait à partir de "
+"15h00 et le départ avant 12h00."
+
+#: app/templates/pages/booking_policy.html:142
+msgid ""
+"Contact your host through Jambo before you travel to agree your arrival time"
+" and how to access the property, and follow any house rules shown on the "
+"listing."
+msgstr ""
+"Contactez votre hôte via Jambo avant votre voyage pour convenir de votre "
+"heure d'arrivée et des modalités d'accès au logement, et respectez les "
+"règles de la maison indiquées dans l'annonce."
+
+#: app/templates/pages/booking_policy.html:145
+msgid "Changing a Booking"
+msgstr "Modifier une réservation"
+
+#: app/templates/pages/booking_policy.html:147
+msgid ""
+"Bookings cannot currently be modified online. To change your dates, cancel "
+"your booking if it is still eligible for free cancellation and make a new "
+"booking, subject to availability."
+msgstr ""
+"Les réservations ne peuvent pas être modifiées en ligne pour le moment. Pour"
+" changer vos dates, annulez votre réservation si elle est encore éligible à "
+"l'annulation gratuite, puis effectuez une nouvelle réservation, sous réserve"
+" de disponibilité."
+
+#: app/templates/pages/booking_policy.html:150
+msgid "Cancellations and Refunds"
+msgstr "Annulations et remboursements"
+
+#: app/templates/pages/booking_policy.html:152
+msgid "Cancelling as a Guest"
+msgstr "Annulation par l'invité"
+
+#: app/templates/pages/booking_policy.html:154
+msgid ""
+"You can cancel a confirmed booking for free from your dashboard up to 48 "
+"hours before arrival. After that, the conditions in section 5.2 of the "
+"Payment Policy apply."
+msgstr ""
+"Vous pouvez annuler gratuitement une réservation confirmée depuis votre "
+"tableau de bord jusqu'à 48 heures avant l'arrivée. Passé ce délai, les "
+"conditions de la section 5.2 de la Politique de paiement s'appliquent."
+
+#: app/templates/pages/booking_policy.html:157
+msgid "No-Show and Early Departure"
+msgstr "Absence et départ anticipé"
+
+#: app/templates/pages/booking_policy.html:159
+msgid ""
+"A guest who does not arrive, or who leaves earlier than booked, is treated "
+"as cancelling after the free cancellation window."
+msgstr ""
+"Un invité qui ne se présente pas, ou qui part plus tôt que prévu, est "
+"considéré comme annulant après la période d'annulation gratuite."
+
+#: app/templates/pages/booking_policy.html:162
+msgid "Cancellations by the Host"
+msgstr "Annulations par l'hôte"
+
+#: app/templates/pages/booking_policy.html:164
+msgid ""
+"If a host cancels a confirmed booking, the guest is notified by email and "
+"refunded in full. The conditions that apply to hosts are set out in section "
+"6 of the Payment Policy."
+msgstr ""
+"Si un hôte annule une réservation confirmée, l'invité en est informé par "
+"e-mail et remboursé intégralement. Les conditions applicables aux hôtes sont"
+" énoncées à la section 6 de la Politique de paiement."
+
+#: app/templates/pages/booking_policy.html:167
+msgid "Host Responsibilities for Confirmed Bookings"
+msgstr "Responsabilités de l'hôte pour les réservations confirmées"
+
+#: app/templates/pages/booking_policy.html:170
+msgid ""
+"Keep the availability calendar up to date by blocking dates on which the "
+"room cannot be offered."
+msgstr ""
+"Tenir à jour le calendrier de disponibilité en bloquant les dates auxquelles"
+" la chambre ne peut pas être proposée."
+
+#: app/templates/pages/booking_policy.html:171
+msgid "Have the room ready on arrival and as described in the listing."
+msgstr ""
+"Avoir la chambre prête à l'arrivée et conforme à la description de "
+"l'annonce."
+
+#: app/templates/pages/booking_policy.html:172
+msgid "Answer guest messages sent through Jambo."
+msgstr "Répondre aux messages des invités envoyés via Jambo."
+
+#: app/templates/pages/booking_policy.html:177
+msgid ""
+"After a completed stay, the guest can review the room and the host can rate "
+"the guest. Each stay can be reviewed once, and a review needs a rating and a"
+" written comment of at least 20 characters."
+msgstr ""
+"Après un séjour terminé, l'invité peut évaluer la chambre et l'hôte peut "
+"noter l'invité. Chaque séjour ne peut être évalué qu'une seule fois, et un "
+"avis nécessite une note et un commentaire écrit d'au moins 20 caractères."
+
+#: app/templates/pages/booking_policy.html:182
+msgid ""
+"If something is wrong with your booking, first contact your host through "
+"Jambo. If it cannot be resolved, email ropero.app@gmail.com with your "
+"booking reference."
+msgstr ""
+"En cas de problème avec votre réservation, contactez d'abord votre hôte via "
+"Jambo. Si le problème ne peut pas être résolu, envoyez un e-mail à "
+"ropero.app@gmail.com en indiquant votre référence de réservation."
+
+msgid ""
+"Book rooms, residences and short stays across Africa. Starting in Abidjan, "
+"Côte d'Ivoire. Pay securely in CFA francs."
+msgstr ""
+"Réservez chambres, résidences et séjours courts partout en Afrique. Depuis "
+"Abidjan, Côte d'Ivoire. Paiement sécurisé en francs CFA."
+
+msgid "Jambo | Rooms and short stays in Abidjan and across Africa"
+msgstr "Jambo | Chambres et séjours courts à Abidjan et en Afrique"
+
+msgid ""
+"%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo."
+msgstr ""
+"%(room)s à %(place)s : %(desc)s. À partir de %(price)s par nuit. Réservez "
+"sur Jambo."
+
+#: app/templates/pages/booking_policy.html:0
+msgid ""
+"A booking holds the room only once your payment is completed and the booking"
+" shows as Confirmed. Hosts do not accept or decline bookings: every paid "
+"booking is confirmed automatically. Starting a booking or reaching the "
+"checkout page does not reserve the dates."
+msgstr ""
+"Une réservation ne bloque la chambre qu'une fois votre paiement finalisé et "
+"la réservation confirmée. Les hôtes n'acceptent ni ne refusent les "
+"réservations : toute réservation payée est confirmée automatiquement. "
+"Commencer une réservation ou accéder à la page de paiement ne réserve pas "
+"les dates."
+
+#: app/templates/pages/booking_policy.html:0
+msgid ""
+"Hosts do not accept or decline bookings. Every paid booking is confirmed "
+"automatically, so it is up to the host to keep the status and availability "
+"of each room up to date."
+msgstr ""
+"Les hôtes n'acceptent ni ne refusent les réservations. Toute réservation "
+"payée est confirmée automatiquement ; il appartient donc à l'hôte de tenir à"
+" jour le statut et la disponibilité de chaque chambre."
+
+#: app/templates/pages/booking_policy.html:0
+msgid "The host agrees to:"
+msgstr "L'hôte s'engage à :"
+
+#: app/templates/pages/booking_policy.html:0
+msgid ""
+"Keep the room status accurate: leave a room as Available only when it can be"
+" booked, and set it to Maintenance or Hidden when it cannot. Rooms that are "
+"not Available are not shown in the room listings."
+msgstr ""
+"Maintenir le statut de la chambre exact : ne laisser une chambre sur « "
+"Disponible » que lorsqu'elle peut être réservée, et la passer en « "
+"Maintenance » ou « Masquée » lorsqu'elle ne le peut pas. Les chambres qui ne"
+" sont pas disponibles ne figurent pas dans les listes de chambres."
+
+#: app/templates/pages/booking_policy.html:0
+msgid ""
+"If a host has to cancel a confirmed booking because the room was not "
+"actually available, section 8.3 applies."
+msgstr ""
+"Si un hôte doit annuler une réservation confirmée parce que la chambre "
+"n'était en réalité pas disponible, la section 8.3 s'applique."
 
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
@@ -4884,12 +5216,3 @@ msgstr "Les mots de passe ne correspondent pas."
 #~ "Leave a slot empty to keep its current image\n"
 #~ "                    unchanged."
 #~ msgstr ""
-
-msgid "Book rooms, residences and short stays across Africa. Starting in Abidjan, Côte d'Ivoire. Pay securely in CFA francs."
-msgstr "Réservez chambres, résidences et séjours courts partout en Afrique. Depuis Abidjan, Côte d'Ivoire. Paiement sécurisé en francs CFA."
-
-msgid "Jambo | Rooms and short stays in Abidjan and across Africa"
-msgstr "Jambo | Chambres et séjours courts à Abidjan et en Afrique"
-
-msgid "%(room)s in %(place)s: %(desc)s. From %(price)s per night. Book on Jambo."
-msgstr "%(room)s à %(place)s : %(desc)s. À partir de %(price)s par nuit. Réservez sur Jambo."
