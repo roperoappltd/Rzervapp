@@ -93,6 +93,9 @@ def home():
     spotlight =  (Rooms.query.order_by(
                   Rooms.updated_at.desc()).first())
 
+    # Number of rooms guests can actually book right now ("Rooms available" stat).
+    rooms_available = Rooms.query.filter_by(status='Available').count()
+
     # Featured row (under "Explore All Rooms"): up to 4 Available rooms, newest
     # first. Rooms not already shown in the spotlight / side cards come first;
     # if that leaves fewer than 4, top up with the others so the row is as full
@@ -214,7 +217,8 @@ def home():
 
     return render_template('pages/homes.html',  title='Home', spotlight=spotlight, 
                             image1=image1, latest_rooms=latest_rooms, featured_rooms=featured_rooms,
-                            deal_cards=deal_cards, testimonials=testimonials)
+                            deal_cards=deal_cards, testimonials=testimonials,
+                            rooms_available=rooms_available)
 
 @main.route("/about") 
 def about():
