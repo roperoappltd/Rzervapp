@@ -335,6 +335,38 @@ head_css %} {% block content %}
   .host-steps-mobile-carousel .carousel-indicators .active {
     background-color: #003366;
   }
+
+  /* Spotlight section: on desktop the side cards share the full height of the
+     spotlight card, whether 1, 2 or 3 rooms are shown (no empty white space).
+     With 1 or 2 rooms the card stacks image over text so the image can grow. */
+  @media (min-width: 1200px) {
+    .rooms-showcase .room-list-container .standard-room-card {
+      flex: 1 1 0;
+    }
+
+    .rooms-showcase .room-list-container.rooms-count-1 .standard-room-card,
+    .rooms-showcase .room-list-container.rooms-count-2 .standard-room-card {
+      flex-direction: column;
+    }
+
+    .rooms-showcase .room-list-container.rooms-count-1 .standard-room-card .card-image,
+    .rooms-showcase .room-list-container.rooms-count-2 .standard-room-card .card-image {
+      width: 100%;
+      flex: 1 1 auto;
+      min-height: 160px;
+    }
+
+    .rooms-showcase .room-list-container.rooms-count-1 .standard-room-card .card-image img,
+    .rooms-showcase .room-list-container.rooms-count-2 .standard-room-card .card-image img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .rooms-showcase .room-list-container.rooms-count-1 .standard-room-card .card-content,
+    .rooms-showcase .room-list-container.rooms-count-2 .standard-room-card .card-content {
+      flex: 0 0 auto;
+    }
+  }
 </style>
 
 <!-------------------------------------------------------------------------------------->
@@ -434,63 +466,20 @@ head_css %} {% block content %}
       {% endif %}
 
       <div class="col-xl-4">
-        <div class="room-list-container">
+        <div class="room-list-container rooms-count-{{ latest_rooms|length }}">
           {% for spot in latest_rooms %}
-          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="250">
-            {% if loop.index == 1 %}
+          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="{{ 200 + loop.index * 50 }}">
             <div class="card-image">
-              <img src="{{ get_room_image_url(spot.image1) }}" alt="Executive Room" class="img-fluid" />
-              <!-- src="{{url_for('static', filename='img/hotel/room-6.webp')}}" -->
+              <img src="{{ get_room_image_url(spot.image1) }}" alt="{{ spot.room_name }}" class="img-fluid" />
               <div class="view-link">
                 <i class="bi bi-arrow-up-right"></i>
               </div>
             </div>
             <div class="card-content">
-              <!-- <h4>Executive Business Room</h4> -->
-              <h4>{{spot.room_name}}</h4>
-              <p>
-                <!--Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                aut fugit, sed quia consequuntur magni dolores.-->
-                {{spot.short_desc}}
-              </p>
-              <div class="features-list">
-                <!--Work Space-->
-                <span><i class="bi bi-building"></i>{{spot.status}}</span>
-                &nbsp; &nbsp; &nbsp;
-                <!--City Views-->
-                <span><i class="bi bi-geo-alt"></i>
-                  {{spot.room_location}}
-                </span>
-              </div>
-              <div class="booking-row">
-                <div class="price">
-                  <!-- $329-->
-                  {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
-                </div>
-                <a href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}" class="book-link">{{ _('View') }}</a>
-              </div>
-            </div>
-          </div>
-          <!-- End Standard Room -->
-          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="300">
-            {% elif loop.index == 2 %}
-            <div class="card-image">
-              <!-- {{url_for('static', filename='img/hotel/room-19.webp')}} -->
-              <img src="{{ get_room_image_url(spot.image1) }}" alt="Garden View" class="img-fluid" />
-              <div class="view-link">
-                <i class="bi bi-arrow-up-right"></i>
-              </div>
-            </div>
-            <div class="card-content">
-              <!-- Garden View Deluxe -->
-              <h4>{{spot.room_name}}</h4>
-              <!-- At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque. -->
+              <h4>{{ spot.room_name }}</h4>
               <p>{{ spot.short_desc }}</p>
               <div class="features-list">
-                <!-- Garden View -->
                 <span><i class="bi bi-building"></i>{{ spot.status }}</span>
-                <!-- Private Terrace -->
                 &nbsp; &nbsp; &nbsp;
                 <span><i class="bi bi-geo-alt"></i>{{ spot.room_location }}</span>
               </div>
@@ -503,49 +492,26 @@ head_css %} {% block content %}
             </div>
           </div>
           <!-- End Standard Room -->
-          <div class="standard-room-card" data-aos="slide-left" data-aos-delay="350">
-            {% elif loop.index == 3 %}
-            <div class="card-image">
-              <!--src="{{url_for('static', filename='img/hotel/room-12.webp')}}"-->
-              <img src="{{ get_room_image_url(spot.image1) }}" alt="Family Suite" class="img-fluid" />
-              <div class="view-link">
-                <i class="bi bi-arrow-up-right"></i>
-              </div>
-            </div>
-            <div class="card-content">
-              <!-- Family Comfort Suite -->
-              <h4>{{ spot.room_name }}</h4>
-              <p>{{ spot.short_desc }}</p>
-              <div class="features-list">
-                <span><i class="bi bi-building"></i>{{ spot.status }}</span>
-                &nbsp; &nbsp; &nbsp;
-                <span><i class="bi bi-geo-alt"></i><!--Kids Area-->
-                  {{ spot.room_location }}</span>
-              </div>
-              <div class="booking-row">
-                <div class="price">
-                  {{ format_room_price(spot) }}<small> /{{ _('night') }}</small>
-                </div>
-                <a href="{{ url_for('bedrooms.roomdetail', room_id=spot.id ) }}" class="book-link">{{ _('View') }}</a>
-              </div>
-              {% endif %}
-            </div>
-            {% endfor %}
-          </div>
-          <!-- End Standard Room -->
+          {% endfor %}
         </div>
       </div>
     </div>
 
-    <div class="row mt-6">
-      <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
-        {% for feature in featured_rooms %}
+    <div class="row mt-6 gy-4 justify-content-center">
+      {# One block for every featured room; centred so fewer than 4 rooms never leaves the row lopsided. #}
+      {% set icon_sets = [
+        ['bi-wifi', 'bi-tv', 'bi-telephone'],
+        ['bi-wifi', 'bi-cup-hot', 'bi-snow'],
+        ['bi-water', 'bi-door-open', 'bi-award'],
+        ['bi-star', 'bi-house', 'bi-gem']
+      ] %}
+      {% for feature in featured_rooms %}
+      <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="{{ 350 + loop.index * 50 }}">
         <div class="minimal-room-card">
-          {% if loop.index == 1 %}
           <div class="room-image">
-            <img src="{{ get_room_image_url(feature.image1) }}" alt="Classic Room" class="img-fluid" />
+            <img src="{{ get_room_image_url(feature.image1) }}" alt="{{ feature.room_name }}" class="img-fluid" />
             <div class="hover-overlay">
-              <a href="#" class="view-room">
+              <a href="{{ url_for('bedrooms.roomdetail', room_id=feature.id) }}" class="view-room">
                 <i class="bi bi-eye"></i>
               </a>
             </div>
@@ -556,95 +522,14 @@ head_css %} {% block content %}
               {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
             </div>
             <div class="basic-amenities">
-              <i class="bi bi-wifi"></i>
-              <i class="bi bi-tv"></i>
-              <i class="bi bi-telephone"></i>
+              {% for icon in icon_sets[loop.index0 % 4] %}
+              <i class="bi {{ icon }}"></i>
+              {% endfor %}
             </div>
           </div>
         </div>
       </div>
-      <!-- End Minimal Room -->
-
-      <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="450">
-        <div class="minimal-room-card">
-          {% elif loop.index == 2 %}
-          <div class="room-image">
-            <img src="{{ get_room_image_url(feature.image1) }}" alt="Superior Room" class="img-fluid" />
-            <div class="hover-overlay">
-              <a href="#" class="view-room">
-                <i class="bi bi-eye"></i>
-              </a>
-            </div>
-          </div>
-          <div class="room-summary">
-            <h5>{{ feature.room_category }}</h5>
-            <div class="price-tag">
-              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
-            </div>
-            <div class="basic-amenities">
-              <i class="bi bi-wifi"></i>
-              <i class="bi bi-cup-hot"></i>
-              <i class="bi bi-snow"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- End Minimal Room -->
-
-      <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="500">
-        <div class="minimal-room-card">
-          {% elif loop.index == 3 %}
-          <div class="room-image">
-            <img src="{{ get_room_image_url(feature.image1) }}" alt="Premium Room" class="img-fluid" />
-            <div class="hover-overlay">
-              <a href="#" class="view-room">
-                <i class="bi bi-eye"></i>
-              </a>
-            </div>
-          </div>
-          <div class="room-summary">
-            <h5>{{ feature.room_category }}</h5>
-            <div class="price-tag">
-              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
-            </div>
-            <div class="basic-amenities">
-              <i class="bi bi-water"></i>
-              <i class="bi bi-door-open"></i>
-              <i class="bi bi-award"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- End Minimal Room -->
-
-      <div class="col-lg-3 col-sm-6" data-aos="fade-up" data-aos-delay="550">
-        <div class="minimal-room-card">
-          {% elif loop.index == 4 %}
-          <div class="room-image">
-            <img src="{{ get_room_image_url(feature.image1) }}" alt="Luxury Suite" class="img-fluid" />
-            <div class="hover-overlay">
-              <a href="#" class="view-room">
-                <i class="bi bi-eye"></i>
-              </a>
-            </div>
-          </div>
-          <div class="room-summary">
-            <h5>{{ feature.room_category }}</h5>
-            <div class="price-tag">
-              {{ format_room_price(feature) }}<span> /{{ _('night') }}</span>
-            </div>
-            <div class="basic-amenities">
-              <i class="bi bi-star"></i>
-              <i class="bi bi-house"></i>
-              <i class="bi bi-gem"></i>
-            </div>
-          </div>
-          {% endif %}
-        </div>
-        {% endfor %}
-      </div>
-
-      <!-- End Minimal Room -->
+      {% endfor %}
     </div>
 
     <div class="text-center" data-aos="fade-up" data-aos-delay="600">

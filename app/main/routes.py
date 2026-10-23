@@ -89,13 +89,25 @@ def home():
     '''This function create a route to render the home page'''
     # Randomly query the fourth latest available rooms
     latest_rooms = get_random_rooms(n=3, status='Available')
-    # Every 4 rooms  
-    featured_rooms = (Rooms.query.order_by(
-                      Rooms.created_at.desc())
-                     .offset(4).limit(4).all())
     # Latest room available
     spotlight =  (Rooms.query.order_by(
                   Rooms.updated_at.desc()).first())
+
+    # Featured row (under "Explore All Rooms"): up to 4 Available rooms, newest
+    # first. Rooms not already shown in the spotlight / side cards come first;
+    # if that leaves fewer than 4, top up with the others so the row is as full
+    # as the catalogue allows. (Was .offset(4).limit(4) over ALL rooms: it skipped
+    # the 4 newest, so a small catalogue showed 0-1 rooms, and it also listed
+    # Hidden / Maintenance rooms.)
+    shown_ids = {room.id for room in latest_rooms}
+    if spotlight:
+        shown_ids.add(spotlight.id)
+    available = (Rooms.query.filter_by(status='Available')
+                 .order_by(Rooms.created_at.desc()))
+    featured_rooms = available.filter(~Rooms.id.in_(list(shown_ids))).limit(4).all()
+    if len(featured_rooms) < 4:
+        featured_rooms += (available.filter(Rooms.id.in_(list(shown_ids)))
+                           .limit(4 - len(featured_rooms)).all())
  
     # AMENDED: on a fresh/empty database (no rooms seeded yet), every
     # .first() below can return None -- previously this crashed
