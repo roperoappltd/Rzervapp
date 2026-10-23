@@ -2,6 +2,7 @@ from datetime import datetime, date
 from app import db, login_manager
 from flask_login import UserMixin, current_user
 from flask import current_app, render_template
+from flask_babel import gettext as _
 from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired
 from wtforms.validators import ValidationError
 #from .bookmodel import Bookings
@@ -173,7 +174,7 @@ class User(db.Model, UserMixin):
         today = date.today()
         age = today.year - field.data.year - ((today.month, today.day) < (field.data.month, field.data.day))
         if age < 18:
-            raise ValidationError('You must be at least 18 years old to register.')
+            raise ValidationError(_('You must be at least 18 years old to register.'))
  
     def __repr__(self):
         return f"User('{self.first_name}','{self.last_name}','{self.gender}','{self.dob}'\
