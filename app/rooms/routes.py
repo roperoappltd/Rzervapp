@@ -331,20 +331,20 @@ def cancel_booking(booking_id):
     # Prevent double cancellation
     if booking.status == "Cancelled":
         flash(_("Booking already cancelled."), "warning")
-        return redirect(url_for('bedrooms.bookings'))
+        return redirect(url_for('udash.mybookings'))
  
     # Single source of truth for whether self-service cancellation is
     # currently allowed (must be Confirmed AND within the 48h window).
     if not can_cancel(booking.status, booking.arrival):
         flash(_("This booking can no longer be cancelled online. Please contact us for assistance."), "warning")
-        return redirect(url_for('bedrooms.bookings'))
+        return redirect(url_for('udash.mybookings'))
  
     payment = Payments.query.filter_by(booking_id=booking.id).first()
     if payment is None:
         # Shouldn't happen if "Confirmed" always implies a completed
         # payment -- guarding against it rather than crashing.
         flash(_("No payment record found for this booking. Please contact us."), "danger")
-        return redirect(url_for('bedrooms.bookings'))
+        return redirect(url_for('udash.mybookings'))
  
     # Cancel booking + create refund (shared logic, also used by
     # delete_account() when a user's own upcoming trip gets auto-cancelled)
@@ -355,7 +355,7 @@ def cancel_booking(booking_id):
     book_cancellation_email(booking, room_id)
     flash(_('Link to view cancellation summary sent to %(email)s.', email=booking.pguest_email), 'success')  # FIXED: f-string inside _() silently broke translation
  
-    return redirect(url_for('bedrooms.bookings'))
+    return redirect(url_for('udash.mybookings'))
     
  
 HOST_CANCELLATION_PENALTY_RATE = Decimal('0.15')  # matches the Payment Policy's Section 6 -- keep these in sync if either changes
@@ -462,10 +462,16 @@ TWO_DP = Decimal('0.01')
 def checkout(room_id):
     '''This function create a route to handle checkout''' 
     room = Rooms.query.get_or_404(room_id)
+    # SECURITY/INTEGRITY: must only ever pick the CURRENT user's own
+    # pending booking. Without the user_id filter, two guests with a
+    # pending booking on the same room could be handed each other's
+    # booking, and one would pay for the other's dates. Newest first, so
+    # a stale leftover never wins over the booking just made.
     book = db.session.query(Bookings).with_for_update().filter(
         Bookings.room_id == room.id,
+        Bookings.user_id == current_user.id,
         Bookings.status == "Pending",
-        ).first()
+        ).order_by(Bookings.created_at.desc()).first()
  
     if not book:
         flash(_('Server error or booking already created.'), 'warning')
@@ -980,12 +986,29 @@ def room_calendar(room_id):
 @bedrooms.route("/api/room/<int:room_id>/block", methods=["POST"])
 @login_required
 def block_dates(room_id):
-    data = request.get_json()
-    block = RoomBlock(room_id=room_id,
-                start_date=datetime.strptime(data["start"], "%Y-%m-%d").date(),
-                end_date=datetime.strptime(data["end"], "%Y-%m-%d").date(),
-                reason=data.get("reason", "Blocked"),
-                notes=data.get("notes")
+    # SECURITY: @login_required only proves someone is logged in. Without
+    # this ownership check, any user could block dates on any host's room.
+    room = Rooms.query.get_or_404(room_id)
+    if room.user_id != current_user.id:
+        abort(403)
+
+    data = request.get_json(silent=True) or {}
+    try:
+        start = datetime.strptime(data["start"], "%Y-%m-%d").date()
+        end = datetime.strptime(data["end"], "%Y-%m-%d").date()
+    except (KeyError, TypeError, ValueError):
+        return jsonify({"success": False, "message": "Invalid or missing dates."}), 400
+
+    # FullCalendar sends an exclusive end date, so a valid block always
+    # ends strictly after it starts.
+    if end <= start:
+        return jsonify({"success": False, "message": "End date must be after the start date."}), 400
+
+    block = RoomBlock(room_id=room.id,
+                start_date=start,
+                end_date=end,
+                reason=sanitize_input(str(data.get("reason") or "Blocked"))[:100],
+                notes=sanitize_input(str(data.get("notes"))) if data.get("notes") else None
             )
     db.session.add(block)
     db.session.commit()
@@ -996,8 +1019,13 @@ def block_dates(room_id):
 @bedrooms.route( "/api/room/<int:room_id>/block/<int:block_id>", methods=["DELETE"])
 @login_required
 def unblock_dates(room_id, block_id):
+    # SECURITY: same ownership check as block_dates() -- without it any
+    # logged-in user could delete another host's blocked dates.
+    room = Rooms.query.get_or_404(room_id)
+    if room.user_id != current_user.id:
+        abort(403)
 
-    block = RoomBlock.query.filter_by(id=block_id, room_id=room_id).first_or_404()
+    block = RoomBlock.query.filter_by(id=block_id, room_id=room.id).first_or_404()
 
     db.session.delete(block)
     db.session.commit()

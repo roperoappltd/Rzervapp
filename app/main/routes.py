@@ -1,7 +1,7 @@
 from flask import (Blueprint, render_template, flash, redirect, url_for, session, 
-                   current_app, request) 
+                   current_app, request, abort) 
 from decimal import Decimal
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app import db
 from app.models.roommodel import Rooms, Deals
 from app.models.bookmodel import Bookings
@@ -278,26 +278,34 @@ def set_currency(currency):
 
 #================================================
 
-@main.route("/bookconfirm/<int:booking_id>", methods=['GET', 'POST']) 
-def bookconfirm(booking_id):
-    '''This function create a route to render booking summary page'''
+def _booking_for_summary_or_403(booking_id):
+    '''SECURITY: booking summaries show the guest's name, email, phone and
+    dates, and booking ids are sequential. Only the guest who made the
+    booking (or an admin) may open them -- before this, anyone could walk
+    /bookconfirm/1, /2, /3... and read every guest's details.'''
     booking = (Bookings.query
                 .filter_by(id=booking_id)
                 .first_or_404()
                 )
+    if booking.user_id != current_user.id and not current_user.is_admin:
+        abort(403)
+    return booking
+
+
+@main.route("/bookconfirm/<int:booking_id>", methods=['GET', 'POST']) 
+@login_required
+def bookconfirm(booking_id):
+    '''This function create a route to render booking summary page'''
+    booking = _booking_for_summary_or_403(booking_id)
     
     return render_template('pages/bookingmsg.html', title='Booking Summary',
                             booking=booking)
 
 @main.route("/bookcancel:/<int:booking_id>", methods=['GET', 'POST']) 
-#@login_required
+@login_required
 def bookcancel(booking_id):
     '''This function create a route to render cancellation summary page'''
-    booking = (
-                Bookings.query
-                .filter_by(id=booking_id)
-                .first_or_404()
-            )
+    booking = _booking_for_summary_or_403(booking_id)
     
     return render_template('pages/bookcancelmsg.html', title='Cancellation',
                             booking=booking)

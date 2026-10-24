@@ -63,6 +63,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// SECURITY: user-controlled text (usernames, room names) must be escaped
+// before it goes into innerHTML, otherwise it runs as markup (stored XSS).
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"'`]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c];
+  });
+}
+
 function showRoomCard(room) {
   const detailUrl = roomDetailUrl.replace('0', room.id);
 
@@ -71,17 +79,17 @@ function showRoomCard(room) {
 <div class="map-room-popup">
 
     <h6>
-      ${room.name}
+      ${escapeHtml(room.name)}
     </h6>
 
     <p>
       <i class="bi bi-geo-alt text-danger"></i>
-      ${room.city}, ${room.country}
+      ${escapeHtml(room.city)}, ${escapeHtml(room.country)}
     </p>
 
     <p>
       <strong>
-      ${room.price_display}
+      ${escapeHtml(room.price_display)}
       </strong>
       per night
     </p>

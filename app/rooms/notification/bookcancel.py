@@ -77,7 +77,7 @@ def book_cancellation_email(booking, room_id):
             booking cancelation request received on {date}. Please click the 
             button below to view your cancellation summary. </p>
             <div>&nbsp;</div>
-            <a href="{ url_for('main.bookcancel',room_id=room.id, _external=True) }">
+            <a href="{ url_for('main.bookcancel', booking_id=booking.id, _external=True) }">
             <button class="favorite styled" type="button">Cancellation summary</button></a>
 
             <div>&nbsp;</div>

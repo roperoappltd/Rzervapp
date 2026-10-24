@@ -18,6 +18,8 @@ import anthropic
 from flask import Blueprint, request, jsonify, session, current_app, url_for
 from flask_login import current_user
 
+from app.helpers.rate_limit import check_rate_limit, client_ip
+
 from app.helpers.booking import create_booking         # the shared function from booking.py
 from app.models.roommodel import Rooms                 # adjust import path to your app structure
 #from ..rooms.routes import roomsearch                  # <- point this at your existing search logic
@@ -26,7 +28,33 @@ agent = Blueprint('agent', __name__)
 
 
 def get_anthropic_client():
-    return anthropic.Anthropic(api_key=current_app.config["ANTHROPIC_API_KEY"])
+    # timeout/max_retries bound how long one request can hang or cost.
+    return anthropic.Anthropic(api_key=current_app.config["ANTHROPIC_API_KEY"],
+                               timeout=40.0, max_retries=1)
+
+# ---------------------------------------------------------------------------
+# Abuse limits -- this endpoint is public and every call spends real money
+# (up to 6 Anthropic requests per message). Tune these numbers freely.
+# ---------------------------------------------------------------------------
+AGENT_MAX_MESSAGE_CHARS = 500          # longest single user message accepted
+AGENT_MAX_HISTORY_ITEMS = 24           # messages kept in the session cookie
+AGENT_LIMIT_ANON = (15, 600)           # 15 messages per 10 min per visitor IP
+AGENT_LIMIT_USER = (40, 600)           # 40 messages per 10 min per logged-in user
+AGENT_LIMIT_GLOBAL = (600, 3600)       # 600 messages per hour for the whole site (spend ceiling)
+
+
+def _trim_history(history):
+    '''Keeps the session small and the API call cheap. Cuts from the front,
+    then drops items until the list starts with a plain user text message,
+    so a tool_use is never separated from its tool_result (the API rejects
+    that).'''
+    if len(history) <= AGENT_MAX_HISTORY_ITEMS:
+        return history
+    trimmed = history[-AGENT_MAX_HISTORY_ITEMS:]
+    while trimmed and not (trimmed[0].get("role") == "user"
+                           and isinstance(trimmed[0].get("content"), str)):
+        trimmed = trimmed[1:]
+    return trimmed
 
 MODEL = "claude-sonnet-4-6"
 
@@ -349,7 +377,7 @@ def _confirm_booking_impl():
         "status": "booked",
         "booking_num": bookinfo.booking_num,
         "room_id": room.id,
-        "checkout_url": url_for('rooms.checkout', room_id=room.id),
+        "checkout_url": url_for('bedrooms.checkout', room_id=room.id),  # FIXED: blueprint is 'bedrooms', 'rooms.checkout' raised BuildError right after the booking was created
     }
  
  
@@ -371,14 +399,35 @@ def agent_chat():
     always has the full context (previous search results, staged draft,
     etc.) without the client needing to resend it.
     '''
-    client = get_anthropic_client()
     data = request.get_json(silent=True) or {}
     user_message = (data.get("message") or "").strip()
 
     if not user_message:
         return jsonify(error="Empty message."), 400
- 
-    history = session.get('agent_messages', [])
+
+    if len(user_message) > AGENT_MAX_MESSAGE_CHARS:
+        return jsonify(reply=f"Please keep your message under {AGENT_MAX_MESSAGE_CHARS} characters.",
+                       rooms=None, checkout_url=None), 400
+
+    # ---- abuse protection: checked BEFORE any paid API call is made ----
+    if current_user.is_authenticated:
+        ok, retry = check_rate_limit("agent_user", current_user.id, *AGENT_LIMIT_USER)
+    else:
+        ok, retry = check_rate_limit("agent_ip", client_ip(), *AGENT_LIMIT_ANON)
+    if ok:
+        ok, retry = check_rate_limit("agent_global", "all", *AGENT_LIMIT_GLOBAL)
+        if not ok:
+            current_app.logger.warning("Agent global rate limit reached")
+    if not ok:
+        resp = jsonify(reply="The assistant is getting a lot of requests right now. "
+                             "Please wait a few minutes and try again.",
+                       rooms=None, checkout_url=None)
+        resp.status_code = 429
+        resp.headers["Retry-After"] = str(retry)
+        return resp
+
+    client = get_anthropic_client()
+    history = _trim_history(session.get('agent_messages', []))
     history.append({"role": "user", "content": user_message})
 
     rooms_shown = None       # populated if show_room_photo is called this turn

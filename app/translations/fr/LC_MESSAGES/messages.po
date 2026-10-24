@@ -4486,6 +4486,17 @@ msgstr ""
 "Si un hôte doit annuler une réservation confirmée parce que la chambre "
 "n'était en réalité pas disponible, la section 8.3 s'applique."
 
+#: app/users/forms.py:0
+msgid ""
+"Username can only contain letters, numbers, dots, dashes and underscores."
+msgstr ""
+"Le nom d'utilisateur ne peut contenir que des lettres, des chiffres, des "
+"points, des tirets et des tirets bas."
+
+#: app/rooms/forms.py:0
+msgid "The characters < and > are not allowed here."
+msgstr "Les caractères < et > ne sont pas autorisés ici."
+
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
 

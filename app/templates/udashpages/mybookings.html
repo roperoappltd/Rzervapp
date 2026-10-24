@@ -289,7 +289,7 @@ head_css %} {% block content %}
                   <div class="pagination">
                     {% if bookhost.has_prev %}
                     <a
-                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.prev_num) }}">
+                      href="{{ url_for('udash.mybookings', guest_page=bookguest.page, host_page=bookhost.prev_num) }}">
                       {{ _('Previous') }}
                       <i class="now-ui-icons arrows-1_minimal-left"></i></a>
                     {% endif %}
@@ -299,7 +299,7 @@ head_css %} {% block content %}
                     </span>
                     {% if bookhost.has_next %}
                     <a
-                      href="{{ url_for('bedrooms.bookings', guest_page=bookguest.page, host_page=bookhost.next_num) }}">
+                      href="{{ url_for('udash.mybookings', guest_page=bookguest.page, host_page=bookhost.next_num) }}">
                       {{ _('Next') }}
                       <i class="now-ui-icons arrows-1_minimal-right"></i>
                     </a>

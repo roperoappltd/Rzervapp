@@ -1,5 +1,6 @@
 from app import db
-from app.models.bookmodel import Refund, Payments
+from decimal import Decimal
+from app.models.bookmodel import Refund, Payments, HostEarning
 
 def cancel_and_refund_if_paid(booking, reason='guest_cancelled'):
     '''
@@ -16,6 +17,9 @@ def cancel_and_refund_if_paid(booking, reason='guest_cancelled'):
     reasoning as Bookings.status_reason on the Expired path: one status
     value, multiple real causes worth distinguishing for audit.
 
+    Also voids the host's earning for this booking (status 'Refunded', zero
+    amounts) so refunded money cannot be withdrawn by the host.
+
     Does NOT commit -- caller controls the transaction.
     '''
     booking.status = "Cancelled"
@@ -27,6 +31,20 @@ def cancel_and_refund_if_paid(booking, reason='guest_cancelled'):
         return  # was Pending / never paid -- nothing to refund
 
     payment.status = "Refundable"
+
+    # SECURITY/MONEY: the guest is being refunded in full, so the host
+    # must not keep this booking's earning. get_host_balance() counts
+    # every HostEarning row that is not 'Refunded', so leaving it
+    # untouched meant the host could still withdraw money that went back
+    # to the guest. Voided the same way host_cancel_booking() voids a
+    # waived cancellation. host_cancel_booking() then overrides this row
+    # itself when a penalty applies, which is why this stays a plain
+    # in-place change on the same session object.
+    earning = HostEarning.query.filter_by(booking_id=booking.id).first()
+    if earning is not None:
+        earning.host_earning_gbp = Decimal('0.00')
+        earning.host_earning_host = Decimal('0.00')
+        earning.status = 'Refunded'
 
     refund = Refund(
         booking_id=booking.id,

@@ -1,3 +1,11 @@
+// SECURITY: user-controlled text (usernames, room names) must be escaped
+// before it goes into innerHTML, otherwise it runs as markup (stored XSS).
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"'`]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c];
+  });
+}
+
 // =======================================
 // RECEIVE MESSAGE
 // =======================================
@@ -32,7 +40,7 @@ function displayMessage(data) {
   messageDiv.innerHTML = `
 
         <div class="message-user">
-            ${data.user || ''}
+            ${escapeHtml(data.user)}
         </div>
 
 

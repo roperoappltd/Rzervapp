@@ -45,6 +45,14 @@
   const reviewsSubtitle = document.getElementById('guestReviewsSubtitle');
   const reviewsBody = document.getElementById('guestReviewsBody');
  
+  // SECURITY: user-controlled text (usernames, room names) must be escaped
+  // before it goes into innerHTML, otherwise it runs as markup (stored XSS).
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/[&<>"'`]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c];
+    });
+  }
+
   function starsHtml(rating){
     let html = '';
     for(let i = 1; i <= 5; i++){
@@ -76,8 +84,8 @@
         reviewsBody.innerHTML = reviews.map(r => `
           <div class="jw-review-card">
             <div class="jw-review-stars">${starsHtml(r.rate_us)}</div>
-            <div>${r.message}</div>
-            <div class="jw-review-meta">${r.host} &middot; ${r.date_posted}</div>
+            <div>${escapeHtml(r.message)}</div>
+            <div class="jw-review-meta">${escapeHtml(r.host)} &middot; ${escapeHtml(r.date_posted)}</div>
           </div>
         `).join('');
       })

@@ -1,3 +1,11 @@
+// SECURITY: user-controlled text (usernames, room names) must be escaped
+// before it goes into innerHTML, otherwise it runs as markup (stored XSS).
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"'`]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c];
+  });
+}
+
 // ==========================================
 // GLOBAL CHAT NOTIFICATION SYSTEM
 // ==========================================
@@ -124,7 +132,7 @@ async function loadUnreadMessages() {
                     <div class="col-10">
 
                         <div class="text-dark">
-                            ${message.sender}
+                            ${escapeHtml(message.sender)}
                         </div>
 
                         <div class="text-muted small">

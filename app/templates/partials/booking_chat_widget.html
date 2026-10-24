@@ -564,9 +564,9 @@
     {% if current_user.is_authenticated %}
     <script>
       window.JAMBO_CURRENT_USER = {
-        name: '{{ current_user.username }}',
+        name: {{ current_user.username|tojson }},
         avatarUrl:
-          "{{ url_for('static', filename='userpics/' + current_user.image_file) }}",
+          {{ url_for('static', filename='userpics/' + current_user.image_file)|tojson }},
       };
     </script>
     {% endif %}
@@ -589,9 +589,9 @@
         function userAvatarHtml() {
           const user = getCurrentUser();
           if (user.avatarUrl) {
-            return `<img src="${user.avatarUrl}" alt="${user.name}">`;
+            return `<img src="${escapeHtml(user.avatarUrl)}" alt="${escapeHtml(user.name)}">`;
           }
-          return initials(user.name);
+          return escapeHtml(initials(user.name));
         }
 
         const AVATAR_SVG = `
@@ -682,16 +682,24 @@
             closeChat();
         });
 
+        // SECURITY: room names come from hosts, so escape them before they
+        // go into innerHTML (stored XSS otherwise).
+        function escapeHtml(value) {
+          return String(value == null ? '' : value).replace(/[&<>"'`]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c];
+          });
+        }
+
         function roomCardsHtml(rooms) {
           if (!rooms || !rooms.length) return '';
           const cards = rooms
             .map(
               (r) => `
       <a class="jw-room-card" href="/roomsearch?location=${encodeURIComponent(r.location || '')}" target="_blank" rel="noopener">
-        <img src="${r.image_url || ''}" alt="${r.name || 'Room'}" onerror="this.style.visibility='hidden'">
+        <img src="${escapeHtml(r.image_url || '')}" alt="${escapeHtml(r.name || 'Room')}" onerror="this.style.visibility='hidden'">
         <div class="jw-rc-body">
-          <div class="jw-rc-name">${r.name || 'Room'}</div>
-          <div class="jw-rc-price">${r.price != null ? r.price + ' / night' : ''}</div>
+          <div class="jw-rc-name">${escapeHtml(r.name || 'Room')}</div>
+          <div class="jw-rc-price">${r.price != null ? escapeHtml(r.price) + ' / night' : ''}</div>
         </div>
       </a>`,
             )
@@ -773,7 +781,8 @@
             },
             body: JSON.stringify({ message }),
           }).then((r) => {
-            if (!r.ok) throw new Error('Agent request failed: ' + r.status);
+            // 400 (message too long) and 429 (rate limited) carry a readable reply: show it.
+            if (!r.ok && r.status !== 429 && r.status !== 400) throw new Error('Agent request failed: ' + r.status);
             return r.json();
           });
         }

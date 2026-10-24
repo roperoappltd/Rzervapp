@@ -3,13 +3,19 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField, 
                      SelectField, DateField, RadioField, TextAreaField, IntegerField)
 from wtforms.validators import (DataRequired, Optional, Length, Email, EqualTo, 
-                                ValidationError, NoneOf)
+                                ValidationError, NoneOf, Regexp)
 from flask_login import current_user
 from flask_babel import gettext as _, lazy_gettext as _l, get_locale
 from app.models.usermodel import User
 import gettext as _pygettext
 import unicodedata
 import pycountry
+import re
+
+
+# SECURITY: usernames are shown in chat, notifications and review pop-ups,
+# so they are restricted to a safe character set instead of free text.
+USERNAME_PATTERN = r'^[A-Za-z0-9_.\-]+\Z'
 
 
 def _country_choices():
@@ -48,7 +54,8 @@ class RegistrationForm(FlaskForm):
     first_name = StringField(_l('First Name'), validators=[DataRequired(), Length(max=40)])
     last_name = StringField(_l('Surname'), validators=[DataRequired(), Length(max=40)])
     #gender = SelectField("Gender", choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
-    username = StringField(_l('Username'), validators=[DataRequired(), Length(min=5, max=20)]) 
+    username = StringField(_l('Username'), validators=[DataRequired(), Length(min=5, max=20),
+                           Regexp(USERNAME_PATTERN, message=_l('Username can only contain letters, numbers, dots, dashes and underscores.'))]) 
     dob = DateField(_l('Date of birth'), validators=[DataRequired(), User.validate_dob_minimum_age])
     # choices are filled in __init__ below so the names follow the visitor's language
     country = SelectField(_l('Country'), validators=[DataRequired()], choices=[])
@@ -101,6 +108,10 @@ class UpdateAccountForm(FlaskForm):
     def validate_username(self, username):
         '''This function validate the user username if username update different from the previous'''
         if username.data != current_user.username:
+            # Only enforced when the username actually changes, so existing
+            # accounts with an older username can still save other fields.
+            if not re.match(USERNAME_PATTERN, username.data or ''):
+                raise ValidationError(_('Username can only contain letters, numbers, dots, dashes and underscores.'))
             user = User.query.filter_by(username=username.data).first()
             if user:
                 raise ValidationError(_('Username is taken. Please change.'))

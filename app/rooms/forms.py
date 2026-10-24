@@ -8,22 +8,31 @@ from app import db
 from wtforms.validators import (DataRequired, Optional, Length, Email, EqualTo, 
                                 ValidationError, NumberRange, NoneOf)
 from flask_login import current_user
+from flask_babel import lazy_gettext as _l
 from app.models.usermodel import User 
 from app.models.roommodel import Rooms, Roomextra, Roomreviews
 from app.models.bookmodel import Bookings, Vouchers
 from datetime import date
 #import pycountry
 
+def no_angle_brackets(form, field):
+    '''SECURITY: room name, location and short description are shown by
+    JavaScript on the map and in the booking assistant, so markup
+    characters are rejected up front (output is escaped as well).'''
+    if field.data and ('<' in field.data or '>' in field.data):
+        raise ValidationError(_l('The characters < and > are not allowed here.'))
+
+
 # Create a room listing form class 
 class AddRoomForm(FlaskForm):
     '''This class enable to model the room listing process'''
     # Defining some fields that can be updated with necessary validators
-    room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30)])
-    room_location =  StringField('', validators=[DataRequired(), Length(max=30)])
-    borough = StringField('', validators=[DataRequired(), Length(max=50)])
+    room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30), no_angle_brackets])
+    room_location =  StringField('', validators=[DataRequired(), Length(max=30), no_angle_brackets])
+    borough = StringField('', validators=[DataRequired(), Length(max=50), no_angle_brackets])
     room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
-    short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100)]) 
+    short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100), no_angle_brackets]) 
     room_size = SelectField('',choices=[('', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
                                ('30–45', '30–45'), ('40–60+', '40–60+')], validators=[DataRequired()]) 
     max_occupancy = SelectField('', choices=[('', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 
@@ -86,7 +95,7 @@ class RoomExtraForm(FlaskForm):
 class UpdateRoomForm(FlaskForm):
     '''This class enable to model the room listing update process'''
     # Defining some fields that can be updated with necessary validators
-    room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30)])
+    room_name =  StringField('', validators=[DataRequired(), Length(min=5, max=30), no_angle_brackets])
     #room_location =  StringField('', validators=[DataRequired(), Length(max=30)])
     #borough = StringField('', validators=[DataRequired(), Length(max=50)])  
     # LOCKED: same reasoning as room_location -- a room's physical location, 
@@ -94,7 +103,7 @@ class UpdateRoomForm(FlaskForm):
     # goes through RoomAdmin instead, not routine self-service editing.
     room_category = SelectField('',choices=[('', ' '), ('Single Room', 'Single Room'), ('Double Room', 'Double Room'), 
                                ('Twin Room', 'Twin Room'), ('Family Room', 'Family Room')], validators=[DataRequired()])
-    short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100)]) 
+    short_desc = StringField('', validators=[DataRequired(), Length(min=10, max=100), no_angle_brackets]) 
     #room_size = SelectField('',choices=[(' ', ' '), ('14–23', '14–23'), ('20–35', '20–35'), 
     #                          ('30–45', '30–45'), ('40–60', '40–60')], validators=[DataRequired()]) 
     #max_occupancy = SelectField('',choices=[(' ', ' '), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), 

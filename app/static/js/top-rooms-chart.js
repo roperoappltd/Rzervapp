@@ -1,3 +1,11 @@
+// SECURITY: user-controlled text (usernames, room names) must be escaped
+// before it goes into innerHTML, otherwise it runs as markup (stored XSS).
+function escapeHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"'`]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c];
+  });
+}
+
 // ==========================================
 // TOP 3 ROOMS REVENUE PIE CHART
 // ==========================================
@@ -91,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <tr>
 
           <td>
-          ${room.room}
+          ${escapeHtml(room.room)}
           </td>
 
           <td class="text-center">
