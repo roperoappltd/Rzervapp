@@ -26,7 +26,6 @@ def booking_confirm_email(booking, booking_id):
     date = now.strftime("%d/%m/%Y %H:%M")
     # message
     msg = Message('Hooray! Successful Booking.', 
-                  sender=('Jambo Booking', 'ropero.app@gmail.com'), #'dmc.partners@yahoo.com',
                   recipients=[booking.pguest_email])
     msg.html = f'''\
     <!DOCTYPE html>

@@ -9,7 +9,6 @@ def send_reset_email(user):
     token = user.get_reset_token()
     # sending the password reset message
     msg = Message('Password reset request', 
-                  sender=('Jambo Booking', 'ropero.app@gmail.com'),
                   recipients=[user.email])
     msg.html = f'''\
 <!DOCTYPE html>

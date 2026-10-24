@@ -328,7 +328,6 @@ def contact():
             # send the email
             # karibu_contact(form)
             msg = Message( f"Contact Form: {form.subject.data}",
-                           sender=os.getenv("EMAIL_USER"), #'dmc.partners@yahoo.com',
                            recipients=['dmc.partners1@gmail.com'])
             msg.body = f"""
 Sender Name: { form.name.data}

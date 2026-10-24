@@ -17,7 +17,6 @@ def book_cancellation_email(booking, room_id):
     date = now.strftime("%d/%m/%Y %H:%M")
     # message
     msg = Message('Booking Cancellation.', 
-                  sender=('Jambo Booking', 'ropero.app@gmail.com'),
                   recipients=[booking.pguest_email])
     msg.html = f'''\
     <!DOCTYPE html>

@@ -79,6 +79,9 @@ class Config :
     MAIL_USE_SSL = False
     MAIL_USERNAME = os.getenv("EMAIL_USER")   # your Brevo login email
     MAIL_PASSWORD = os.getenv("EMAIL_PASS")   # the SMTP key, not your account password
+    # Visible From address for every outgoing email. Must be a validated
+    # sender in Brevo (and its domain authenticated with DKIM/SPF).
+    MAIL_DEFAULT_SENDER = ("Jambo Booking", os.getenv("MAIL_FROM", "jambo@tbossci.com"))
     #-------------------------------------------
     ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
     XCHANGE_RATE_API_KEY = os.getenv("XCHANGE_RATE_API_KEY")
