@@ -25,6 +25,22 @@ SERVICE_CHARGE_RATE = Decimal('0.00')
 PENDING_BOOKING_EXPIRY_MINUTES = 30
 
 
+def deal_applies_to_room(deal, room_id):
+    '''True if this deal may be used for a booking of `room_id` today:
+    it is active, inside its date window (if any), and is either a
+    platform-wide campaign (room_id NULL) or the room's own deal.'''
+    if deal is None or not deal.active:
+        return False
+    if deal.room_id is not None and deal.room_id != room_id:
+        return False
+    today = date.today()
+    if deal.start_date and today < deal.start_date:
+        return False
+    if deal.end_date and today > deal.end_date:
+        return False
+    return True
+
+
 def get_room_active_deal(room_id):
     '''Returns this room's own host-set Deal if one exists, is active,
     and (if scheduled) is currently within its date window. Returns None
@@ -53,6 +69,12 @@ def create_booking(room, arrival, departure, primary_guest, pguest_email,
     rate). Raises nothing on expected failure paths so callers don't
     need try/except for them.
     '''
+    # Basic date sanity, independent of the web form (the agent route
+    # and any future caller go through here too).
+    if arrival and departure:
+        if departure <= arrival or arrival < date.today():
+            return None, _("Please choose valid dates: check-in cannot be in the past and check-out must be after check-in.")
+
     if arrival and departure:
         if not is_available(room.id, arrival, departure):
             return None, _("Sorry, this room is not available for selected dates.")
@@ -60,6 +82,13 @@ def create_booking(room, arrival, departure, primary_guest, pguest_email,
     deal = None
     if deal_id:
         deal = Deals.query.get_or_404(deal_id)
+        # SECURITY/MONEY: deal_id comes from a URL parameter, so it must
+        # be proven to apply to THIS room and to be live today. Otherwise
+        # a guest can attach any deal (another host's, an expired or
+        # switched-off one) to any room by editing ?deal_id=. An invalid
+        # id is ignored and the room's own current deal, if any, applies.
+        if not deal_applies_to_room(deal, room.id):
+            deal = get_room_active_deal(room.id)
     else:
         # AMENDED: no deal was explicitly passed (i.e. this booking isn't
         # coming through a platform campaign link like the homepage deal

@@ -4497,6 +4497,32 @@ msgstr ""
 msgid "The characters < and > are not allowed here."
 msgstr "Les caractères < et > ne sont pas autorisés ici."
 
+msgid "Too many attempts. Please try again in a few minutes."
+msgstr "Trop de tentatives. Veuillez réessayer dans quelques minutes."
+
+msgid "If an account with that email exists, instructions to reset your password have been sent."
+msgstr "Si un compte existe avec cet e-mail, les instructions pour réinitialiser votre mot de passe ont été envoyées."
+
+msgid "Your email address was changed. Please check your inbox to verify the new address."
+msgstr "Votre adresse e-mail a été modifiée. Veuillez consulter votre boîte de réception pour vérifier la nouvelle adresse."
+
+msgid "A booking can only be cancelled before the guest's arrival date."
+msgstr "Une réservation ne peut être annulée qu'avant la date d'arrivée du voyageur."
+
+msgid "Please choose valid dates: check-in cannot be in the past and check-out must be after check-in."
+msgstr "Veuillez choisir des dates valides : l'arrivée ne peut pas être dans le passé et le départ doit être après l'arrivée."
+
+#, python-format
+msgid "Payment amount or currency mismatch. Please contact support with reference %(reference)s."
+msgstr "Le montant ou la devise du paiement ne correspond pas. Veuillez contacter le support avec la référence %(reference)s."
+
+#, python-format
+msgid "Your payment was received, but those dates were taken a moment earlier. A full refund has been queued. Reference: %(reference)s."
+msgstr "Votre paiement a été reçu, mais ces dates venaient d'être réservées. Un remboursement intégral a été programmé. Référence : %(reference)s."
+
+msgid "That upload is too large. Please use smaller files (25 MB in total)."
+msgstr "Ce fichier est trop volumineux. Veuillez utiliser des fichiers plus petits (25 Mo au total)."
+
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
 

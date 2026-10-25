@@ -2,6 +2,7 @@
 # Standard library
 # ============================================================
 import mimetypes
+import os
 import click
 from datetime import timedelta
 
@@ -48,10 +49,15 @@ bcrypt = Bcrypt()
 csrf = CSRFProtect()
 babel = Babel()
 
-# TODO (production): tighten this to your real domain before deploying --
-# "*" allows any origin to open a WebSocket connection to this server.
-socketio = SocketIO(cors_allowed_origins="*")
-# socketio = SocketIO(cors_allowed_origins=["https://yourdomain.com"])
+# SECURITY: was cors_allowed_origins="*", which lets a page on ANY website
+# open a WebSocket to this server using the visitor's logged-in session.
+# With None, python-engineio only accepts the site's own origin (it also
+# honours the proxy's X-Forwarded-Proto/Host headers, so https behind
+# Nginx Proxy Manager works). To pin explicit origins instead, set
+# SOCKETIO_ALLOWED_ORIGINS="https://jambo.tbossci.com,https://www.example.com"
+# in the .env file.
+_ws_origins = [o.strip() for o in os.getenv("SOCKETIO_ALLOWED_ORIGINS", "").split(",") if o.strip()]
+socketio = SocketIO(cors_allowed_origins=_ws_origins or None)
 
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'   # require login to view the account page
@@ -166,6 +172,30 @@ def create_app(config_name='default'):
         except OperationalError as e:
             if not (e.orig and getattr(e.orig, "args", [None])[0] == 1050):
                 raise
+
+    # ---------------- Reverse proxy + security headers ----------------
+    # The app runs behind Nginx Proxy Manager (and possibly Cloudflare).
+    # ProxyFix makes Flask trust ONE proxy hop's X-Forwarded-For/-Proto,
+    # so request.is_secure and url_for(_external=True) produce https
+    # links (reset/verify emails, Paystack callback) and remote_addr is
+    # the real client rather than the proxy.
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=0)
+
+    @app.after_request
+    def set_security_headers(response):
+        h = response.headers
+        h.setdefault('X-Content-Type-Options', 'nosniff')
+        h.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
+        h.setdefault('X-Frame-Options', 'SAMEORIGIN')
+        h.setdefault('Permissions-Policy', 'camera=(), microphone=(), payment=(), geolocation=(self)')
+        # Safe subset of CSP: blocks framing by other sites, plugins and
+        # <base> hijacking. Does not restrict scripts/styles, so nothing
+        # on the existing pages (inline scripts, CDNs) is affected.
+        h.setdefault('Content-Security-Policy', "frame-ancestors 'self'; object-src 'none'; base-uri 'self'")
+        if request.is_secure:
+            h.setdefault('Strict-Transport-Security', 'max-age=31536000')
+        return response
 
     # ---------------- Context processors ----------------
     @app.context_processor

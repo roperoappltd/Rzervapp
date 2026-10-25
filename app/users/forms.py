@@ -138,12 +138,9 @@ class RequestResetForm(FlaskForm):
     '''This class enable to generate request password reset form'''
     email = StringField(_l('Email'), validators=[DataRequired(), Email()])
     submit = SubmitField(_l('Request Password Reset'))
-     # defining a form validation function for email
-    def validate_email(self, email):
-        '''This function validate the user email'''
-        user = User.query.filter_by(email=email.data).first()
-        if user is None:
-            raise ValidationError(_('No account with that email. Please, Register Now!'))
+    # SECURITY: deliberately NO check that the email has an account. The
+    # old validator ("No account with that email") let anyone test which
+    # addresses are registered. The route answers the same either way.
 
 # Create a reset password form 
 class ResetPasswordForm(FlaskForm):

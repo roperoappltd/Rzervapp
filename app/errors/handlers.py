@@ -30,6 +30,12 @@ def error_404(error):
 def error_500(error):
     return render_template('errors/500.html'), 500
 
+# Request body larger than MAX_CONTENT_LENGTH (e.g. oversized photo upload)
+@errors.app_errorhandler(413)
+def error_413(error):
+    flash(_('That upload is too large. Please use smaller files (25 MB in total).'), 'danger')
+    return redirect(request.referrer or url_for('main.home')), 303
+
 # error handler for CSRF 
 @errors.app_errorhandler(CSRFError)
 def error_csrf(e):

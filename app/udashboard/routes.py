@@ -9,7 +9,7 @@ from app.models.chatmodel import Message, Conversation
 from ..users.forms import (UpdateAccountForm)
 from app.rooms.forms import AddRoomForm, WithdrawalForm, GuestReviewForm
 # from ..users.usermails.resetrequest import send_reset_email
-# from ..users.usermails.joinusmail import member_regismail
+from ..users.usermails.joinusmail import member_regismail
 from ..users.utils import save_picture
 from app.services.location_service import get_location
 from app.services.image_storage import get_room_image_url
@@ -296,7 +296,17 @@ def profile():
         # allow update if username & email is valid
         current_user.company_name = form.company_name.data
         current_user.username = form.username.data
-        current_user.email = form.email.data
+        # SECURITY: an email change is not trusted until the new address
+        # is proven. Otherwise a hijacked session could point the account
+        # (and its password-reset mail) at an attacker's inbox. The
+        # account goes back to "unverified", which also blocks booking
+        # until the new address is confirmed via the emailed link.
+        new_email = (form.email.data or '').strip()
+        email_changed = new_email != current_user.email
+        if email_changed:
+            current_user.email = new_email
+            current_user.email_verified = False
+            current_user.email_verified_at = None
         # current_user.first_name = form.first_name.data
         # current_user.last_name = form.last_name.data
         current_user.gender = form.gender.data
@@ -309,6 +319,9 @@ def profile():
        
         # save the db entry
         db.session.commit()
+        if email_changed:
+            member_regismail(current_user._get_current_object())  # sends the verification link to the NEW address
+            flash(_('Your email address was changed. Please check your inbox to verify the new address.'), 'info')
         # Displaying an update message
         flash(_('Your profile has been successfully updated'), 'success')
         # redirect after update to the account page

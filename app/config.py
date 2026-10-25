@@ -9,6 +9,22 @@ load_dotenv()
 class Config :
     # Setting a secret key 
     SECRET_KEY =  os.getenv("APP_SECRET_KEY") 
+
+    # Cookie hardening. Secure = browsers only send the cookie over https
+    # (the live site is https only). Chrome/Edge/Firefox still accept it
+    # on http://localhost for local development; if your local browser
+    # does not, put COOKIE_SECURE=0 in your local .env.
+    _COOKIE_SECURE = os.getenv("COOKIE_SECURE", "1") != "0"
+    SESSION_COOKIE_SECURE = _COOKIE_SECURE
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = "Lax"
+    REMEMBER_COOKIE_SECURE = _COOKIE_SECURE
+    REMEMBER_COOKIE_HTTPONLY = True
+    REMEMBER_COOKIE_SAMESITE = "Lax"
+
+    # Reject any request body above 25 MB before it is read (room photo
+    # uploads are several images per request; this stops memory abuse).
+    MAX_CONTENT_LENGTH = 25 * 1024 * 1024
     # Setting the DB location -- FIXED: was hardcoded to SQLite always,
     # meaning production would silently keep using a local SQLite file
     # inside the container regardless of any MySQL/MariaDB setup.

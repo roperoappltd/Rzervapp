@@ -16,12 +16,26 @@ from .utils import save_picture
 from ..rooms.roomutils import sanitize_input
 from flask_babel import _
 from datetime import datetime, timedelta
+from app.helpers.rate_limit import check_rate_limit, client_ip
 from app.helpers.login_security import (is_safe_redirect_url, MAX_FAILED_ATTEMPTS, 
                                         LOCKOUT_DURATION_MINUTES)
 # import cv2
 from datetime import date, timedelta
 
 users = Blueprint('users', __name__)
+
+_DUMMY_HASH = None
+
+
+def _dummy_hash():
+    '''A real bcrypt hash of a throwaway string, built once. The old
+    hand-written string ("$2b$12$" + "x"*53) is not a valid bcrypt salt
+    for current bcrypt releases ("Invalid salt"), which turned every
+    login attempt with an unknown email into a 500 error.'''
+    global _DUMMY_HASH
+    if _DUMMY_HASH is None:
+        _DUMMY_HASH = bcrypt.generate_password_hash('jambo-dummy-password').decode('utf-8')
+    return _DUMMY_HASH
 
 
 @users.route("/login" , methods=['GET', 'POST']) 
@@ -31,7 +45,16 @@ def login():
         return redirect(url_for('main.home'))
     
     form = LoginForm()
- 
+
+    # Per-IP throttle on top of the per-account lockout below: the
+    # lockout only protects accounts that exist, this slows password
+    # guessing across many accounts from one source.
+    if request.method == 'POST':
+        allowed, _retry = check_rate_limit('login', client_ip(), 20, 600)
+        if not allowed:
+            flash(_('Too many attempts. Please try again in a few minutes.'), 'danger')
+            return render_template('pages/login.html', title='Log in', form=form), 429
+
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
  
@@ -67,7 +90,7 @@ def login():
         if user:
             password_valid = bcrypt.check_password_hash(user.password, form.password.data)
         else:
-            bcrypt.check_password_hash('$2b$12$' + 'x' * 53, form.password.data)  # dummy-cost check, result discarded
+            bcrypt.check_password_hash(_dummy_hash(), form.password.data)  # dummy-cost check, result discarded
             password_valid = False
  
         if user and password_valid:
@@ -102,6 +125,11 @@ def signup():
         return redirect(url_for('main.home'))  # redirect already authenticated users to the home
     
     form = RegistrationForm()
+    if request.method == 'POST':
+        allowed, _retry = check_rate_limit('signup', client_ip(), 10, 3600)
+        if not allowed:
+            flash(_('Too many attempts. Please try again in a few minutes.'), 'danger')
+            return render_template('pages/register.html', title='Sign up', form=form), 429
     if form.validate_on_submit():                                                          # form validation
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")    # Hashing user password
         user = User(first_name=form.first_name.data, last_name=form.last_name.data,
@@ -140,14 +168,21 @@ def reset_request():
         return redirect(url_for('main.home'))
     # Creating a request password reset form
     form = RequestResetForm() 
+    if request.method == 'POST':
+        allowed, _retry = check_rate_limit('reset', client_ip(), 5, 3600)
+        if not allowed:
+            flash(_('Too many attempts. Please try again in a few minutes.'), 'danger')
+            return render_template('pages/reset_request.html', title='Reset Password', form=form), 429
     if form.validate_on_submit():
-        # validate if user email enter in form is same email in record
-        user = User.query.filter_by(email=form.email.data).first()
-        # call funtion that send a reset email to the user 
-        send_reset_email(user)
-        # get current user email
-       
-        flash(_(f'An email has been sent to {user.email} with instructions to reset your password!'), 'info')
+        email = (form.email.data or '').strip()
+        user = User.query.filter_by(email=email).first()
+        if user is not None and user.deleted_at is None:
+            # also cap per address so one victim's inbox cannot be flooded
+            allowed, _retry = check_rate_limit('reset_email', email.lower(), 3, 3600)
+            if allowed:
+                send_reset_email(user)
+        # Same answer whether or not the account exists (no enumeration).
+        flash(_('If an account with that email exists, instructions to reset your password have been sent.'), 'info')
         return redirect(url_for('users.login'))
     return render_template('pages/reset_request.html', title='Reset Password', form=form)
 
@@ -167,6 +202,8 @@ def reset_token(token):
     if form.validate_on_submit():                                                          # form validation
         hashed_pass = bcrypt.generate_password_hash(form.password.data).decode("utf-8")    # Hashing user password
         user.password = hashed_pass                                                        # setting the user new password
+        user.failed_login_attempts = 0
+        user.locked_until = None
         db.session.commit()                                                                # saving the changes 
         flash(_("Your Password has been Updated!. You can now Log in.") , 'success')         # display validation message [ f'Account created for {form.username.data}!' ]
         return redirect(url_for('users.login'))
@@ -217,7 +254,8 @@ def resend_verification():
     form = ResendVerificationForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and not user.email_verified:
+        allowed, _retry = check_rate_limit('resend_verify', client_ip(), 5, 3600)
+        if user and not user.email_verified and allowed:
             member_regismail(user)  # generates a fresh token internally, so the expired/lost one is simply superseded
 
         flash(_('If an account with that email exists and needs verifying, a fresh link is on its way.'), 'info')

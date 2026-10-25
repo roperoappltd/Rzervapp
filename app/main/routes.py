@@ -11,6 +11,7 @@ from .forms import ContactForm
 # from ..rooms.roomutils import current_date
 from flask_mail import Message
 from app import mail
+from app.helpers.rate_limit import check_rate_limit, client_ip
 from app.rooms.notification.contactmail import karibu_contact
 from app.services.image_storage import get_room_image_url
 from app.services.currency import convert_and_format, get_exchange_rates
@@ -314,6 +315,11 @@ def bookcancel(booking_id):
 def contact():
     # creating contact form object 
     form = ContactForm()
+    if request.method == 'POST':
+        allowed, _retry = check_rate_limit('contact', client_ip(), 5, 3600)
+        if not allowed:
+            flash(_('Too many attempts. Please try again in a few minutes.'), 'danger')
+            return render_template('pages/getintouch.html', title='Contact us', form=form), 429
     try:
         if form.validate_on_submit():    
             # Sanitize user msg

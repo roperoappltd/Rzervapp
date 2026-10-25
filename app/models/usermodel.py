@@ -119,7 +119,17 @@ class User(db.Model, UserMixin):
     def get_reset_token(self, max_age=1800):
         '''Generates a password-reset token.'''
         s = Serializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'user_id': self.id, 'purpose': 'reset_password'})
+        # 'fp' ties the token to the password and email as they are NOW:
+        # once the password is changed (by using this very link, or any
+        # other way) or the email changes, the link stops working. This
+        # makes reset links single-use.
+        return s.dumps({'user_id': self.id, 'purpose': 'reset_password',
+                        'fp': self._token_fingerprint()})
+
+    def _token_fingerprint(self):
+        import hashlib
+        raw = f"{self.password}|{self.email}".encode()
+        return hashlib.sha256(raw).hexdigest()[:20]
  
     @staticmethod
     def verify_reset_token(token):
@@ -130,15 +140,23 @@ class User(db.Model, UserMixin):
             if data.get('purpose') != 'reset_password':  # rejects a verify-email token replayed here
                 return None
             user_id = data['user_id']
-        except:
+        except Exception:
             return None
-        return User.query.get(user_id)
+        user = User.query.get(user_id)
+        if user is None or user.deleted_at is not None:
+            return None
+        import hmac
+        if not hmac.compare_digest(str(data.get('fp', '')), user._token_fingerprint()):
+            return None  # already used, or password/email changed since it was issued
+        return user
  
     def get_verification_token(self, max_age=86400):
         '''Generates an email-verification token. 24h default -- less
         time-sensitive than a password reset, so a longer window is fine.'''
         s = Serializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'user_id': self.id, 'purpose': 'verify_email'})
+        # 'email' binds the link to the address it was sent to, so a link
+        # mailed to an OLD address cannot verify a newly set one.
+        return s.dumps({'user_id': self.id, 'purpose': 'verify_email', 'email': self.email})
  
     @staticmethod
     def verify_verification_token(token, max_age=86400):
@@ -159,6 +177,9 @@ class User(db.Model, UserMixin):
 
         user = User.query.get(data['user_id'])
         if user is None:
+            return None, 'invalid'
+        # Links issued before this check existed carry no email; accept those.
+        if 'email' in data and data['email'] != user.email:
             return None, 'invalid'
         return user, 'ok'
  

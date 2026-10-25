@@ -1,7 +1,7 @@
 from flask import (Blueprint, render_template, flash, abort, redirect, request, jsonify,
                    session, url_for, current_app)
 from flask_login import current_user, login_required
-from app import db
+from app import db, csrf
 from wtforms.validators import ValidationError
 from app.models.usermodel import User
 from app.models.roommodel import (Rooms, Roomextra, Roomreviews, Deals, RoomBlock, 
@@ -19,7 +19,7 @@ from .notification.bookcancel import book_cancellation_email
 from datetime import datetime, date, timedelta
 # from sqlalchemy import or_
 from app.helpers.populate_search import populate_search_choices
-# from app.helpers.is_avail import is_available
+from app.helpers.is_avail import is_available
 from app.helpers.booking import create_booking, get_room_active_deal, PENDING_BOOKING_EXPIRY_MINUTES
 from app.helpers.searches import build_room_query
 from app.helpers.email_verify import email_verified_required
@@ -31,6 +31,8 @@ from app.services.paystack_service import initialize_transaction, verify_transac
 from app.services.sms_service import send_sms, build_booking_notification
 from app.services.whatsapp_service import send_whatsapp
 from flask_babel import _
+import hashlib
+import hmac
 import json
 import uuid
 import requests
@@ -398,6 +400,13 @@ def host_cancel_booking(booking_id):
         flash(_("Only a confirmed booking can be cancelled this way."), "warning")
         return redirect(url_for('udash.mybookings'))
 
+    # Per the docstring and the Payment Policy this only works BEFORE the
+    # guest's arrival. Without this a host could cancel a stay that is
+    # already under way or over and have the guest refunded.
+    if booking.arrival <= date.today():
+        flash(_("A booking can only be cancelled before the guest's arrival date."), "warning")
+        return redirect(url_for('udash.mybookings'))
+
     reason_code = request.form.get('reason_code', '')
     if reason_code not in HOST_CANCELLATION_REASONS:
         flash(_("Please select a valid reason for cancelling this booking."), "warning")
@@ -634,6 +643,9 @@ def checkout(room_id):
             "transac_fee_host": str(transac_fee_host),
             "points": points,
             "user_id": current_user.id,
+            # Amount we asked Paystack to charge (XOF, whole units). Compared
+            # against what was actually paid before a booking is confirmed.
+            "expected_xof": str(total_paid_xof),
         }
 
         try:
@@ -668,70 +680,82 @@ def checkout(room_id):
                           guest_currency=guest_currency)
 
 
-@bedrooms.route("/payment/callback")
-@login_required
-def payment_callback():
-    '''Paystack redirects here after the guest completes (or abandons)
-    checkout on their side. This is the ONLY place a payment is ever
-    trusted as genuine -- never the redirect itself, always a fresh,
-    server-side verify call to Paystack directly.'''
-    reference = request.args.get('reference')
-    if not reference:
-        flash(_("Missing payment reference."), "danger")
-        return redirect(url_for('bedrooms.room'))
+def _finalize_paystack_payment(reference, data, expected_user_id=None):
+    """
+    Turns a verified Paystack transaction into a confirmed booking.
+    Shared by the browser callback and the server-to-server webhook, so
+    a guest who pays and then closes the tab still gets their booking.
 
-    try:
-        verify_response = verify_transaction(reference)
-    except requests.exceptions.RequestException as e:
-        current_app.logger.error(f"Paystack verify failed: {e}")
-        if hasattr(e, 'response') and e.response is not None:
-            current_app.logger.error(f"Paystack response body: {e.response.text}")
-        flash(_("We couldn't confirm your payment. If you were charged, please contact support with reference %(reference)s.", reference=reference), "danger")
-        return redirect(url_for('bedrooms.room'))
+    `data` is the "data" object of a fresh verify_transaction() reply
+    (never a browser parameter). Idempotent: a reference that already
+    produced a Payments row is never processed twice.
 
-    data = verify_response.get("data", {})
-
+    Returns (outcome, booking_or_None); outcome is one of:
+      "ok"          booking confirmed
+      "already"     reference or booking was already processed
+      "not_success" Paystack says the payment did not succeed
+      "mismatch"    amount/currency/reference/owner do not match
+      "conflict"    paid, but the dates were taken meanwhile; a full
+                    refund record is queued and the booking cancelled
+      "invalid"     cannot be matched to a booking
+    """
     if data.get("status") != "success":
-        flash(_("Payment was not completed."), "warning")
-        return redirect(url_for('bedrooms.room'))
+        return "not_success", None
+    if data.get("reference") and data.get("reference") != reference:
+        current_app.logger.error(f"Paystack reference mismatch: asked {reference}, got {data.get('reference')}")
+        return "mismatch", None
 
-    metadata = data.get("metadata", {})
-    booking_id = metadata.get("booking_id")
-    if not booking_id:
-        flash(_("Payment reference could not be matched to a booking."), "danger")
-        return redirect(url_for('bedrooms.room'))
+    metadata = data.get("metadata") or {}
+    if isinstance(metadata, str):
+        try:
+            metadata = json.loads(metadata)
+        except ValueError:
+            metadata = {}
+    try:
+        booking_id = int(metadata.get("booking_id"))
+    except (TypeError, ValueError):
+        return "invalid", None
 
-    # AMENDED: Paystack's metadata is documented as "a stringified JSON
-    # object" -- values sent as real ints (e.g. points=3) come back as
-    # strings ("3") in the verify response, regardless of their
-    # original type in the initialize call. Every value expected to be
-    # an int is explicitly cast here rather than trusted to have
-    # survived the round trip as-is.
-    book = Bookings.query.get(int(booking_id))
-    if not book or book.status != "Pending":
-        # Already processed (guest hit back/refresh and landed here twice)
-        # or the booking expired in the meantime -- either way, don't
-        # create a second Payments record for the same transaction.
-        flash(_("This booking has already been processed."), "info")
-        return redirect(url_for('bedrooms.room'))
+    # Row lock: two simultaneous callbacks/webhooks for the same booking
+    # must not both pass the status check below.
+    book = Bookings.query.filter_by(id=booking_id).with_for_update().first()
+    if book is None:
+        return "invalid", None
+    if expected_user_id is not None and book.user_id != expected_user_id:
+        return "invalid", None
+
+    if Payments.query.filter_by(gateway_reference=reference).first():
+        return "already", book
+    # An abandoned (Expired) booking whose guest nevertheless paid is
+    # still honoured when the dates are free -- see availability check.
+    if book.status not in ("Pending", "Expired"):
+        return "already", book
+
+    # The reference is generated by us as "<booking_num>-<random>" and the
+    # stored owner must match; anything else is not our transaction.
+    if not str(reference).startswith(f"{book.booking_num}-"):
+        current_app.logger.error(f"Paystack reference {reference} does not belong to booking {book.id}")
+        return "mismatch", book
+    if str(metadata.get("user_id")) != str(book.user_id):
+        current_app.logger.error(f"Paystack metadata user mismatch on booking {book.id}")
+        return "mismatch", book
 
     # Security check, per Paystack's own guidance: confirm the amount
     # actually paid matches what was expected, not just that *a*
-    # payment succeeded. A mismatch is a sign of tampering, not
-    # something to wave through. Checked against XOF specifically --
-    # the merchant account's only enabled currency, and therefore the
-    # only currency Paystack could have actually charged in, regardless
-    # of what guest_currency the guest was browsing in.
-    total_paid_xof = Decimal(str(data["amount"])) / 100
+    # payment succeeded. XOF is the merchant account's only currency.
     if data.get("currency") != "XOF":
-        flash(_("Payment currency mismatch. Please contact support with reference %(reference)s.", reference=reference), "danger")
-        return redirect(url_for('bedrooms.room'))
+        current_app.logger.error(f"Paystack currency mismatch on {reference}: {data.get('currency')}")
+        return "mismatch", book
+    total_paid_xof = Decimal(str(data["amount"])) / 100
+    expected_xof = metadata.get("expected_xof")
+    if expected_xof is not None and total_paid_xof < Decimal(str(expected_xof)):
+        current_app.logger.error(f"Paystack underpayment on {reference}: paid {total_paid_xof}, expected {expected_xof}")
+        return "mismatch", book
 
     rate_host = Decimal(metadata["rate_host"])
     rate_xof = Decimal(metadata["rate_xof"])
     host_currency = metadata["host_currency"]
 
-    transac_fee_guest = Decimal(metadata["transac_fee_guest"])
     transac_fee_gbp = Decimal(metadata["transac_fee_gbp"])
     transac_fee_host = Decimal(metadata["transac_fee_host"])
 
@@ -778,30 +802,34 @@ def payment_callback():
         gateway_channel=gateway_channel, gateway_reference=reference,
     )
     db.session.add(payment)
+    db.session.flush()
+
+    # Availability is re-checked at payment time: a Pending booking does
+    # not hold the dates, so another guest (or a host block) may have
+    # taken them while this guest was on Paystack's page. The money was
+    # taken, so record the payment and queue a full refund instead of
+    # double-booking the room.
+    if not is_available(book.room_id, book.arrival, book.departure):
+        cancel_and_refund_if_paid(book, reason='unavailable_after_payment')
+        db.session.commit()
+        current_app.logger.warning(f"Paid but unavailable: booking {book.id}, reference {reference}; refund queued")
+        return "conflict", book
+
     # FIXED: was current_user.rzerv_points, which awards points to
-    # whoever is currently logged in when this callback runs -- not
-    # necessarily the original booker. If the guest closes their
-    # browser right after paying and someone else later visits this
-    # same callback URL (e.g. a stolen/logged reference) while logged
-    # into their own account, points would go to the wrong person. The
-    # Payments record itself was already correctly attributed via
-    # user_id from metadata; this makes the points award consistent
-    # with that.
+    # whoever is currently logged in when this runs -- not necessarily
+    # the original booker. Points go to the user recorded at checkout.
     points_user = User.query.get(user_id)
     if points_user:
         points_user.rzerv_points = (points_user.rzerv_points or 0) + points
-    db.session.flush()
 
     host_discount_host = discount_host if discount_funded_by == 'host' else Decimal('0.00')
     host_discount_gbp = discount_gbp if discount_funded_by == 'host' else Decimal('0.00')
     voucher_amount_host = discount_host if voucher else Decimal('0.00')
     voucher_amount_gbp = discount_gbp if voucher else Decimal('0.00')
 
-    # NEW: booking notification (SMS or WhatsApp), for hosts who've
-    # paid to opt into one. Deliberately only charges the fee if the
-    # notification actually sent -- never charge for one that failed
-    # to deliver. A failed or skipped send never blocks booking
-    # confirmation itself.
+    # Booking notification (SMS or WhatsApp) for hosts who opted in.
+    # The fee is only charged if the notification actually sent; a
+    # failed or skipped send never blocks confirmation.
     notification_fee_host = Decimal('0.00')
     notification_fee_gbp = Decimal('0.00')
     notification_channel_used = None
@@ -846,17 +874,97 @@ def payment_callback():
     )
     db.session.add(earning)
     book.status = 'Confirmed'
+    book.status_reason = None
     book.active = True
-    db.session.commit()
-
     if voucher:
-        db.session.flush()
-        usage = VoucherUsage(voucher_id=voucher.id, user_id=user_id,
-                         payment_id=payment.id)
-        db.session.add(usage)
-        db.session.commit()
+        db.session.add(VoucherUsage(voucher_id=voucher.id, user_id=user_id,
+                                    payment_id=payment.id))
+    db.session.commit()
+    return "ok", book
 
-    return redirect(url_for('bedrooms.paysuccess', booking_id=book.id))
+
+@bedrooms.route("/payment/callback")
+@login_required
+def payment_callback():
+    '''Paystack redirects here after the guest completes (or abandons)
+    checkout on their side. A payment is only ever trusted after a
+    fresh, server-side verify call to Paystack -- never the redirect.'''
+    reference = request.args.get('reference') or request.args.get('trxref')
+    if not reference:
+        flash(_("Missing payment reference."), "danger")
+        return redirect(url_for('bedrooms.room'))
+
+    try:
+        verify_response = verify_transaction(reference)
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f"Paystack verify failed: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            current_app.logger.error(f"Paystack response body: {e.response.text}")
+        flash(_("We couldn't confirm your payment. If you were charged, please contact support with reference %(reference)s.", reference=reference), "danger")
+        return redirect(url_for('bedrooms.room'))
+
+    outcome, book = _finalize_paystack_payment(
+        reference, verify_response.get("data", {}), expected_user_id=current_user.id)
+
+    if outcome == "ok":
+        return redirect(url_for('bedrooms.paysuccess', booking_id=book.id))
+    if outcome == "already":
+        # The webhook may have confirmed it first -- send the guest on.
+        if book is not None and book.status == "Confirmed" and book.user_id == current_user.id:
+            return redirect(url_for('bedrooms.paysuccess', booking_id=book.id))
+        flash(_("This booking has already been processed."), "info")
+    elif outcome == "not_success":
+        flash(_("Payment was not completed."), "warning")
+    elif outcome == "mismatch":
+        flash(_("Payment amount or currency mismatch. Please contact support with reference %(reference)s.", reference=reference), "danger")
+    elif outcome == "conflict":
+        flash(_("Your payment was received, but those dates were taken a moment earlier. A full refund has been queued. Reference: %(reference)s.", reference=reference), "danger")
+    else:
+        flash(_("Payment reference could not be matched to a booking."), "danger")
+    return redirect(url_for('bedrooms.room'))
+
+
+@bedrooms.route("/payment/webhook", methods=["POST"])
+@csrf.exempt
+def payment_webhook():
+    '''Server-to-server Paystack notification. Confirms the booking even
+    if the guest paid and closed the tab before the callback ran. The
+    request must carry a valid HMAC-SHA512 signature of the raw body,
+    made with our secret key; the transaction is then verified again
+    with Paystack before anything is written.
+    Set the URL in the Paystack dashboard: Settings > API Keys & Webhooks.'''
+    secret = current_app.config.get("PAYSTACK_SECRET_KEY") or ""
+    raw = request.get_data()
+    signature = request.headers.get("X-Paystack-Signature", "")
+    expected = hmac.new(secret.encode(), raw, hashlib.sha512).hexdigest() if secret else ""
+    if not secret or not hmac.compare_digest(expected, signature):
+        return "", 401
+
+    try:
+        event = json.loads(raw)
+    except ValueError:
+        return "", 400
+    if event.get("event") != "charge.success":
+        return "", 200
+    reference = (event.get("data") or {}).get("reference")
+    if not reference:
+        return "", 200
+
+    try:
+        verify_response = verify_transaction(reference)
+        outcome, book = _finalize_paystack_payment(reference, verify_response.get("data", {}))
+    except Exception as e:
+        # 500 makes Paystack retry later.
+        db.session.rollback()
+        current_app.logger.error(f"Paystack webhook failed for {reference}: {e}")
+        return "", 500
+
+    if outcome == "ok" and book is not None:
+        try:
+            booking_confirm_email(book, book.id)
+        except Exception as e:
+            current_app.logger.error(f"Webhook confirmation email failed for booking {book.id}: {e}")
+    return "", 200
 
 # Voucher checker helper function 
 @bedrooms.route("/check-voucher", methods=["POST"])
@@ -1107,6 +1215,7 @@ def roomdetail(room_id):
             .filter(
                 Bookings.user_id == current_user.id,
                 Bookings.room_id == room.id,
+                Bookings.status == 'Confirmed',  # paid and not cancelled/expired
                 Bookings.departure < datetime.utcnow().date(),
                 Roomreviews.id.is_(None),  # excludes bookings already reviewed
             ).order_by(Bookings.departure.desc()).first())
