@@ -20,6 +20,7 @@ from datetime import datetime, date, timedelta
 # from sqlalchemy import or_
 from app.helpers.populate_search import populate_search_choices
 from app.helpers.is_avail import is_available
+from app.helpers.rate_limit import check_rate_limit
 from app.helpers.booking import create_booking, get_room_active_deal, PENDING_BOOKING_EXPIRY_MINUTES
 from app.helpers.searches import build_room_query
 from app.helpers.email_verify import email_verified_required
@@ -970,6 +971,10 @@ def payment_webhook():
 @bedrooms.route("/check-voucher", methods=["POST"])
 @login_required  # AMENDED: was commented out, but current_user.id is used unconditionally below -- would crash for an anonymous visitor
 def checkvoucher():
+    # Codes can be guessed by trial and error; cap attempts per user.
+    allowed, _retry = check_rate_limit('voucher', str(current_user.id), 20, 600)
+    if not allowed:
+        return jsonify({"message": "<span style='color:red'>too many attempts, try again later</span>"}), 429
     data = request.get_json(force=True)  
     
     if not data:
@@ -1047,8 +1052,13 @@ def paysuccess(booking_id):
     if booking.user_id != current_user.id:
         abort(403)
     if booking:
-        booking_confirm_email(booking, booking.id)
-        flash(_(f'Link to view booking summary sent to {booking.pguest_email}'), 'success')
+        # Send the confirmation once per browser session: refreshing this
+        # page used to send the same email again each time.
+        sent_key = f"conf_mail_{booking.id}"
+        if not session.get(sent_key):
+            booking_confirm_email(booking, booking.id)
+            session[sent_key] = True
+            flash(_(f'Link to view booking summary sent to {booking.pguest_email}'), 'success')
     else:
         flash(_('Server error, summary not sent, contact us now'), 'warning' )
   

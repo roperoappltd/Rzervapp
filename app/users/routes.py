@@ -17,6 +17,7 @@ from ..rooms.roomutils import sanitize_input
 from flask_babel import _
 from datetime import datetime, timedelta
 from app.helpers.rate_limit import check_rate_limit, client_ip
+from app.helpers.request_guard import is_same_origin_request
 from app.helpers.login_security import (is_safe_redirect_url, MAX_FAILED_ATTEMPTS, 
                                         LOCKOUT_DURATION_MINUTES)
 # import cv2
@@ -156,6 +157,9 @@ def signup():
 @users.route("/logout")                           
 def logout():
     '''This function enable users to logout from their account'''
+    if not is_same_origin_request():
+        # a link/image on another website must not be able to log people out
+        return redirect(url_for('main.home'))
     logout_user()
     flash(_('You are now logged out of the system'), 'success' )
     return redirect(url_for('users.login')) 
@@ -209,20 +213,6 @@ def reset_token(token):
         return redirect(url_for('users.login'))
     return render_template('pages/reset_token.html', title='Reset Password', form=form)
 
-
-# Add this inside your existing registration/signup route, right after
-# the new User row is committed to the database:
-
-    verify_url = url_for('users.verify_email', token=user.get_verification_token(), _external=True)
-    msg = Message('Verify your Jambo account', recipients=[user.email])
-    msg.body = f"Welcome to Jambo! Please verify your email by visiting: {verify_url}"
-    # or msg.html = render_template('email/verify_email.html', verify_url=verify_url)
-    mail.send(msg)
-
-    flash(_('Account created! Please check your email to verify your account.'), 'info')
-
-
-# New route -- add this alongside your other users.routes:
 
 @users.route("/verify-email/<token>")
 def verify_email(token):

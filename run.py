@@ -19,7 +19,13 @@ def before_request():
     g.user = current_user
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    # The Werkzeug debugger lets anyone who reaches it run code on the
+    # machine, so it is OFF inside Docker (the VPS) and when FLASK_DEBUG=0.
+    # Locally it stays on as before; FLASK_DEBUG=1/0 overrides either way.
+    import os
+    _flag = os.getenv("FLASK_DEBUG")
+    _debug = (_flag == "1") if _flag is not None else not os.path.exists("/.dockerenv")
+    socketio.run(app, debug=_debug, allow_unsafe_werkzeug=True)
 
 # if __name__ == '__main__':
 #     app.run(debug=True) 

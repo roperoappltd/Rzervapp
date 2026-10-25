@@ -10,9 +10,11 @@ from flask_login import current_user
 
 
 class ContactForm(FlaskForm):
-    name = StringField("", validators=[DataRequired()])
-    email = EmailField("", validators=[DataRequired(), Email()])
-    subject = StringField( "", validators=[DataRequired()])
-    message = TextAreaField("", validators=[DataRequired()])
+    # limits match the ContactMsg columns (100) and keep one message from
+    # being an unbounded email to the inbox
+    name = StringField("", validators=[DataRequired(), Length(max=100)])
+    email = EmailField("", validators=[DataRequired(), Email(), Length(max=100)])
+    subject = StringField( "", validators=[DataRequired(), Length(max=100)])
+    message = TextAreaField("", validators=[DataRequired(), Length(max=2000)])
 
     submit = SubmitField("Send")

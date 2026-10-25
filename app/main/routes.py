@@ -12,6 +12,7 @@ from .forms import ContactForm
 from flask_mail import Message
 from app import mail
 from app.helpers.rate_limit import check_rate_limit, client_ip
+from app.helpers.request_guard import is_same_origin_request
 from app.rooms.notification.contactmail import karibu_contact
 from app.services.image_storage import get_room_image_url
 from app.services.currency import convert_and_format, get_exchange_rates
@@ -254,6 +255,8 @@ def behost():
 # Language Switcher api
 @main.route("/set-language/<lang>")
 def set_language(lang):
+    if not is_same_origin_request():
+        return redirect(url_for("main.home"))
     if lang in ["en", "fr"]:
         session["language"] = lang
     
@@ -262,6 +265,8 @@ def set_language(lang):
 # Currency selector 
 @main.route("/set-currency/<currency>")
 def set_currency(currency):
+    if not is_same_origin_request():
+        return redirect(url_for("main.home"))
 
     allowed = ["GBP","EUR","USD","XOF","XAF","NGN","GHS","KES",
                "UGX","RWF","TZS","MAD","EGP","ZAR","JPY"]

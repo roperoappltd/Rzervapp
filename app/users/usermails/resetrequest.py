@@ -1,6 +1,7 @@
 from flask_mail import Message
 from app import mail
 from flask import url_for
+from markupsafe import escape
 
 #-----------------------------------------------------------------------------------------------------
 def send_reset_email(user):
@@ -50,12 +51,12 @@ def send_reset_email(user):
     </head>
     <body>
 
-        <h2>Hello {user.username},</h2>
+        <h2>Hello {escape(user.username)},</h2>
 
         <p style="font-size: 18px; text-align:justify;">A request has been made for a password reset. 
         Please, click on the button below to reset your password. if the request was not been made by you, 
         please contact us so that we can investigate further. Please, be informed that the link is 
-        only valid for 10 minutes.</p>
+        only valid for 30 minutes.</p>
 
         <div>&nbsp; &nbsp;</div>
         

@@ -1,3 +1,4 @@
+import os
 from flask import request
 
 COUNTRY_LANGUAGE = {
@@ -33,6 +34,12 @@ COUNTRY_LANGUAGE = {
 
 
 
+def _clean_country(value):
+    '''Two-letter ISO code only (upper-cased); anything else is ignored.'''
+    value = (value or "").strip().upper()
+    return value if len(value) == 2 and value.isalpha() else None
+
+
 def detect_country():
     """
     Detect the visitor's country.
@@ -43,16 +50,19 @@ def detect_country():
     """
 
     # Cloudflare (recommended in production)
-    country = request.headers.get("CF-IPCountry")
+    country = _clean_country(request.headers.get("CF-IPCountry"))
 
     if country:
         return country
 
-    # Optional reverse proxy header
-    country = request.headers.get("X-Country-Code")
+    # Optional reverse proxy header. Any visitor can send this header
+    # themselves, so it is only honoured when you explicitly say your
+    # proxy sets/overwrites it (TRUST_COUNTRY_HEADER=1 in .env).
+    if os.getenv("TRUST_COUNTRY_HEADER") == "1":
+        country = _clean_country(request.headers.get("X-Country-Code"))
 
-    if country:
-        return country
+        if country:
+            return country
 
     # Local development
 

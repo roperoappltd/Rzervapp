@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from decimal import Decimal
 from dotenv import load_dotenv
 
@@ -21,6 +22,7 @@ class Config :
     REMEMBER_COOKIE_SECURE = _COOKIE_SECURE
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_SAMESITE = "Lax"
+    REMEMBER_COOKIE_DURATION = timedelta(days=30)  # Flask-Login default is 365 days
 
     # Reject any request body above 25 MB before it is read (room photo
     # uploads are several images per request; this stops memory abuse).
