@@ -4523,6 +4523,18 @@ msgstr "Votre paiement a été reçu, mais ces dates venaient d'être réservée
 msgid "That upload is too large. Please use smaller files (25 MB in total)."
 msgstr "Ce fichier est trop volumineux. Veuillez utiliser des fichiers plus petits (25 Mo au total)."
 
+msgid "Deal discount"
+msgstr "Remise promotionnelle"
+
+msgid "A promotional discount has been applied to this booking. Vouchers cannot be combined with a deal."
+msgstr "Une remise promotionnelle a été appliquée à cette réservation. Les bons de réduction ne peuvent pas être cumulés avec une offre."
+
+msgid "Enter a voucher code (optional)"
+msgstr "Saisissez un code promo (facultatif)"
+
+msgid "Voucher code"
+msgstr "Code promo"
+
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
 

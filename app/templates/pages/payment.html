@@ -87,7 +87,7 @@ block content %}
             <tr>
               <td colspan="2">Subtotal</td>
               <td class="text-end">
-                {{ subtotal }} {{ guest_currency }}
+                <span id="subtotal" data-value="{{ subtotal }}">{{ ("%.0f"|format(subtotal)) if zero_decimal else subtotal }}</span> {{ guest_currency }}
               </td>
             </tr>
             <tr>
@@ -101,14 +101,14 @@ block content %}
             <tr>
               <td colspan="2">Discount</td>
               <td class="text-danger text-end">
-                -{{ discount }} {{ guest_currency }}
+                -<span id="discount" data-value="{{ discount }}">{{ ("%.0f"|format(discount)) if zero_decimal else discount }}</span> {{ guest_currency }}
               </td>
             </tr>
 
             <tr class="fw-bold">
               <td colspan="2">TOTAL</td>
               <td class="text-end">
-                {{ total_paid }} {{ guest_currency }}
+                <span id="final-total" data-value="{{ total_paid }}">{{ ("%.0f"|format(total_paid)) if zero_decimal else total_paid }}</span> {{ guest_currency }}
               </td>
             </tr>
           </tfoot>
@@ -116,36 +116,31 @@ block content %}
       </div>
     </div>
     <!----------------------APPLY VOUCHER-------->
-    {#
+    {% if deal_booking %}
     <div class="col-md-12 pb-3">
       <div class="contact-info-card">
         <div class="info-content">
-          <form method="POST" action="">
-            {{ form2.hidden_tag() }} {{ form2.csrf_token }}
-            <div class="row g-3">
-              <div class="col-md-12">
-                <div class="form-group1">
-                  {{ form2.code.label(class="form2-control-label") }} {% if
-                  form2.code.errors %} {{ form2.code(class="form2-control
-                  form2-control-lg is-invalid") }}
-                  <div class="invalid-feedback">
-                    {% for error in form2.code.errors %}
-                    <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                  {% else %} {{ form2.code(class="form2-control
-                  form2-control-lg") }} {% endif %}
-                </div>
-                <div class="pt-2 text-end">
-                  {{ form2.submit2(class="btn btn-outline-secondary") }}
-                </div>
-              </div>
-            </div>
-          </form>
+          <strong>{{ _('Deal discount') }}:</strong>
+          {{ _('A promotional discount has been applied to this booking. Vouchers cannot be combined with a deal.') }}
         </div>
       </div>
     </div>
-    #}
+    {% else %}
+    <div class="col-md-12 pb-3">
+      <div class="contact-info-card">
+        <div class="info-content">
+          <!-- Outside the payment form on purpose: pressing Enter here
+               must never submit the payment. voucher.js checks the code
+               with /check-voucher and updates the totals above. -->
+          <label for="voucher_code" class="pb-1">{{ _('Enter a voucher code (optional)') }}:</label>
+          <input type="text" id="voucher_code" class="form-control" maxlength="10"
+                 autocomplete="off" autocapitalize="characters" spellcheck="false"
+                 value="{{ voucher_code }}" placeholder="{{ _('Voucher code') }}" />
+          <div id="msg" class="small pt-2" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
     <!-------------------------END APPLY VOUNCHER-->
     <!----CHECKOUT--------------------------------->
     <div class="col-md-12 pb-3">
@@ -200,7 +195,7 @@ block content %}
           </div>
 
           <div class="form-group1 form-actions text-end">
-            {{ payform.submit(class="btn btn-primary paystack-submit-btn") }}
+            {{ payform.submit(class="btn btn-primary paystack-submit-btn", id="submit-btn") }}
           </div>
         </form>
       </div>
@@ -209,6 +204,12 @@ block content %}
   </div>
 </section>
 <!-- /Confirmation Section -->
+
+<!-- Carries data for voucher.js -- avoids mixing Jinja syntax directly
+     inside a <script> tag. -->
+<div id="checkoutMeta" data-currency-symbol="{{ currency_symbol }}"
+     data-decimals="{{ 0 if zero_decimal else 2 }}" style="display:none;"></div>
+<script src="{{ url_for('static', filename='js/voucher.js') }}"></script>
 
 <style>
   /* Premium-styled single-provider payment panel, replacing what was

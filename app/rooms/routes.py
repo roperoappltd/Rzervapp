@@ -21,12 +21,13 @@ from datetime import datetime, date, timedelta
 from app.helpers.populate_search import populate_search_choices
 from app.helpers.is_avail import is_available
 from app.helpers.rate_limit import check_rate_limit
+from app.helpers.vouchers import voucher_is_usable
 from app.helpers.booking import create_booking, get_room_active_deal, PENDING_BOOKING_EXPIRY_MINUTES
 from app.helpers.searches import build_room_query
 from app.helpers.email_verify import email_verified_required
 from app.helpers.cancel_checks import cancel_and_refund_if_paid
 from decimal import Decimal
-from app.services.currency import get_exchange_rates, get_symbol 
+from app.services.currency import get_exchange_rates, get_symbol, ZERO_DECIMAL_CURRENCIES 
 from app.services.preference_service import VisitorPreferences
 from app.services.paystack_service import initialize_transaction, verify_transaction
 from app.services.sms_service import send_sms, build_booking_notification
@@ -561,7 +562,11 @@ def checkout(room_id):
         voucher_id = session.get("voucher_id")
         if voucher_id:
             voucher = Vouchers.query.get(voucher_id)
-            if voucher:
+            if voucher and not voucher_is_usable(voucher):
+                # expired / switched off since it was previewed
+                session.pop("voucher_id", None)
+                voucher = None
+            elif voucher:
                 existing_usage = VoucherUsage.query.filter_by(voucher_id=voucher.id,
                                                 user_id=current_user.id).first()
                 if not existing_usage:
@@ -672,7 +677,12 @@ def checkout(room_id):
         return redirect(init_response["data"]["authorization_url"])
     # Pass text to submit button    
     payform.submit.label.text = f"Pay now {total_paid_guest} {guest_currency}"
+    # code to pre-fill the voucher box when a voucher is already applied
+    # (e.g. the guest reloads this page)
+    applied_voucher_code = voucher.code if (voucher and discount_gbp > 0 and not deal_booking) else ''
     return render_template('pages/payment.html',  title='Checkout', 
+                          voucher_code=applied_voucher_code,
+                          zero_decimal=guest_currency in ZERO_DECIMAL_CURRENCIES,
                           room=room, room_id=room.id, book=book, discount=discount_guest,
                           subtotal=subtotal_guest, total_paid=total_paid_guest, payform=payform,
                           voucher_id=voucher_id, deal_booking=deal_booking,
@@ -971,28 +981,32 @@ def payment_webhook():
 @bedrooms.route("/check-voucher", methods=["POST"])
 @login_required  # AMENDED: was commented out, but current_user.id is used unconditionally below -- would crash for an anonymous visitor
 def checkvoucher():
-    # Codes can be guessed by trial and error; cap attempts per user.
-    allowed, _retry = check_rate_limit('voucher', str(current_user.id), 20, 600)
-    if not allowed:
-        return jsonify({"message": "<span style='color:red'>too many attempts, try again later</span>"}), 429
-    data = request.get_json(force=True)  
+    data = request.get_json(force=True, silent=True)  
     
     if not data:
         return jsonify({
             "message": "❌ Invalid request format"
         })
-    code = data.get("voucher_code", "").strip()
+    code = str(data.get("voucher_code", "") or "").strip()
  
     if not code:
+        # box emptied: forget any voucher applied earlier, otherwise the
+        # page would show no discount while checkout still applied one
+        session.pop("voucher_id", None)
         return jsonify({
             "message": " ", #"❌ No voucher code provided"
             "discount": 0
         })
+    # Codes can be guessed by trial and error; cap attempts per user.
+    # (Emptying the box above does not count.)
+    allowed, _retry = check_rate_limit('voucher', str(current_user.id), 20, 600)
+    if not allowed:
+        return jsonify({"message": "<span style='color:red'>too many attempts, try again later</span>", "discount": 0}), 429
     voucher = Vouchers.query.filter_by(code=code).first()
-    # invalid
-    if not voucher:
+    # invalid, switched off, not started yet or expired
+    if not voucher or not voucher_is_usable(voucher):
         session.pop("voucher_id", None)
-        return jsonify({"message": "<span style='color:red'>invalid code</span>"})
+        return jsonify({"message": "<span style='color:red'>invalid code</span>", "discount": 0})
     
      # Check if CURRENT USER already used voucher
     existing_usage = VoucherUsage.query.filter_by(voucher_id=voucher.id,

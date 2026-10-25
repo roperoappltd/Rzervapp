@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // as "£" before, which was wrong for any guest not paying in GBP.
   const metaEl = document.getElementById('checkoutMeta');
   const currencySymbol = metaEl ? metaEl.dataset.currencySymbol : '£';
+  // 0 for currencies without cents (XOF...), otherwise 2
+  const decimals = metaEl && metaEl.dataset.decimals === '0' ? 0 : 2;
+  const symbolSpace = currencySymbol.length > 1 ? ' ' : '';
+
+  function fmt(n) {
+    return Number(n).toFixed(decimals);
+  }
 
   const csrfMeta = document.querySelector('meta[name="csrf-token"]');
   const csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : null;
@@ -31,9 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const discount = Number(discountEl.dataset.value) || 0;
     const finalTotal = Number(finalEl.dataset.value) || 0;
 
-    discountEl.innerText = discount.toFixed(2);
-    finalEl.innerText = finalTotal.toFixed(2);
-    submitBtn.value = `Pay now ${currencySymbol}${finalTotal.toFixed(2)}`;
+    discountEl.innerText = fmt(discount);
+    finalEl.innerText = fmt(finalTotal);
+    subtotalEl.innerText = fmt(subtotal);
+    submitBtn.value = `Pay now ${currencySymbol}${symbolSpace}${fmt(finalTotal)}`;
   }
 
   input.addEventListener('input', function () {
@@ -43,17 +51,14 @@ document.addEventListener('DOMContentLoaded', function () {
       const code = input.value.trim();
       const subtotal = Number(subtotalEl.dataset.value) || 0;
 
-      // RESET STATE (empty input)
-      if (!code) {
-        msg.innerHTML = '';
-        updateUI(subtotal, 0);
-        return;
-      }
-
-      // skip short input
+      // RESET STATE (empty or too short to be a code). The server is told
+      // as well: it remembers an applied voucher in the session, and
+      // without this the checkout would still charge the discount that
+      // this page no longer shows.
       if (code.length < 5) {
         msg.innerHTML = '';
         updateUI(subtotal, 0);
+        clearVoucherOnServer();
         return;
       }
 
@@ -70,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify({ voucher_code: code }),
       })
         .then((response) => {
-          if (!response.ok) {
+          // 429 = too many attempts; the body still carries a message
+          if (!response.ok && response.status !== 429) {
             throw new Error('Server error');
           }
           return response.json();
@@ -93,6 +99,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 400);
   });
 
+  function clearVoucherOnServer() {
+    fetch('/check-voucher', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(csrfToken && { 'X-CSRFToken': csrfToken }),
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({ voucher_code: '' }),
+    }).catch((err) => console.error(err));
+  }
+
   function updateUI(subtotal, discount) {
     const safeSubtotal = Number(subtotal) || 0;
     const safeDiscount = Number(discount) || 0;
@@ -100,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const finalTotal = Math.max(safeSubtotal - safeDiscount, 0);
 
     // update UI fields
-    discountEl.innerText = safeDiscount.toFixed(2);
-    finalEl.innerText = finalTotal.toFixed(2);
+    discountEl.innerText = fmt(safeDiscount);
+    finalEl.innerText = fmt(finalTotal);
 
     // update button text
-    submitBtn.value = `Pay ${currencySymbol}${finalTotal.toFixed(2)}`;
+    submitBtn.value = `Pay ${currencySymbol}${symbolSpace}${fmt(finalTotal)}`;
   }
 });
