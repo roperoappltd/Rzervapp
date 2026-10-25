@@ -41,6 +41,7 @@ def host_earnings_chart():
     today = datetime.today()
     months = []
     earnings = []
+    currency = current_user.preferred_currency
  
     # Last 12 months
     for i in range(11, -1, -1):
@@ -61,9 +62,11 @@ def host_earnings_chart():
         total = convert_currency(float(total), "GBP", current_user.preferred_currency)
  
         months.append( month_date.strftime("%b"))
-        earnings.append(float(total))
+        earnings.append(round(float(total), 0 if currency in ZERO_DECIMAL_CURRENCIES else 2))
  
-    return jsonify({"labels": months, "values": earnings})
+    return jsonify({"labels": months, "values": earnings, "currency": currency,
+                    "symbol": get_symbol(currency),
+                    "decimals": 0 if currency in ZERO_DECIMAL_CURRENCIES else 2})
  
 # Top three most performing room
 @udash.route("/host/top-rooms-revenue")
@@ -268,6 +271,11 @@ def udashboard():
     # keep working -- pass current_user.preferred_currency to the
     # template too if you want the currency code/symbol shown alongside it.
     total_earnings = convert_currency(float(total_earnings), "GBP", current_user.preferred_currency)
+    # Rounded for display: whole numbers for zero-decimal currencies
+    # (XOF, XAF...), two decimals otherwise. A raw float like
+    # 152000.12345679 should never reach the page.
+    _decimals = 0 if current_user.preferred_currency in ZERO_DECIMAL_CURRENCIES else 2
+    total_earnings = f"{total_earnings:.{_decimals}f}"
     
     # amount_gbp, not amount_host -- same cross-currency aggregation
     # reasoning as total_earnings above. Withdrawal.amount was never a
@@ -281,6 +289,7 @@ def udashboard():
     # total_earnings' treatment -- kept as a plain number, not a
     # formatted string.
     total_withdrawals = convert_currency(float(total_withdrawals), "GBP", current_user.preferred_currency)
+    total_withdrawals = f"{total_withdrawals:.{_decimals}f}"
     
     # available_balance = get_host_balance(current_user.id) 
     earnings_state = calculate_monthly_earnings_change(current_user.id)
