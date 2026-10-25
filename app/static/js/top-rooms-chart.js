@@ -6,6 +6,24 @@ function escapeHtml(value) {
   });
 }
 
+// Formats an amount in the host's own currency. Zero-decimal currencies
+// (XOF, XAF...) are whole numbers grouped with a space and no comma
+// ("1 250 000"); others keep two decimals with the usual comma grouping.
+function formatMoney(amount, symbol, decimals) {
+  const n = Number(amount) || 0;
+  let text;
+  if (decimals === 0) {
+    text = Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0');
+  } else {
+    text = n.toLocaleString('en-GB', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
+  }
+  const sym = symbol || '';
+  return sym + (sym.length > 1 ? '\u00A0' : '') + text;
+}
+
 // ==========================================
 // TOP 3 ROOMS REVENUE PIE CHART
 // ==========================================
@@ -74,8 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
             tooltip: {
               callbacks: {
                 label: function (context) {
+                  const row = data[context.dataIndex] || {};
                   return (
-                    context.label + ': £' + context.parsed.toLocaleString()
+                    context.label + ': ' +
+                    formatMoney(context.parsed, row.symbol, row.decimals)
                   );
                 },
               },
@@ -107,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
           </td>
 
           <td class="text-end">
-          £${room.revenue.toLocaleString()}
+          ${escapeHtml(formatMoney(room.revenue, room.symbol, room.decimals))}
           </td>
 
           <td class="text-end">

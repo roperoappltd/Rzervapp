@@ -102,11 +102,20 @@ def top_rooms_revenue():
         # (a ratio is unaffected by which currency it's expressed in, so
         # this stays correct regardless of conversion). Only the display
         # value itself is converted, and only after the ratio math is done.
-        revenue = convert_currency(revenue, "GBP", current_user.preferred_currency)
- 
+        currency = current_user.preferred_currency
+        revenue = convert_currency(revenue, "GBP", currency)
+        decimals = 0 if currency in ZERO_DECIMAL_CURRENCIES else 2
+        revenue = round(revenue, decimals)
+
+        # currency/symbol/decimals travel with every row so the chart and
+        # table label the amount in the host's own currency instead of a
+        # hardcoded pound sign.
         rooms.append({"room": room, "revenue": revenue,
                         "percentage": percentage, 
                         "booking_count": booking_count,
+                        "currency": currency,
+                        "symbol": get_symbol(currency),
+                        "decimals": decimals,
                     })
  
     return jsonify(rooms)
