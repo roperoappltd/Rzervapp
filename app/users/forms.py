@@ -54,7 +54,7 @@ class RegistrationForm(FlaskForm):
     first_name = StringField(_l('First Name'), validators=[DataRequired(), Length(max=40)])
     last_name = StringField(_l('Surname'), validators=[DataRequired(), Length(max=40)])
     #gender = SelectField("Gender", choices=[(' ', ' '), ('Male', 'Male'), ('Female', 'Female')])
-    username = StringField(_l('Username'), validators=[DataRequired(), Length(min=5, max=20),
+    username = StringField(_l('Username'), render_kw={'maxlength': 9}, validators=[DataRequired(), Length(min=5, max=9),
                            Regexp(USERNAME_PATTERN, message=_l('Username can only contain letters, numbers, dots, dashes and underscores.'))]) 
     dob = DateField(_l('Date of birth'), validators=[DataRequired(), User.validate_dob_minimum_age])
     # choices are filled in __init__ below so the names follow the visitor's language
