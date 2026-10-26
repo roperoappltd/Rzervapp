@@ -4544,6 +4544,9 @@ msgstr "Ce fichier image semble endommagé et n'a pas pu être lu."
 msgid "Your room amenities have been updated."
 msgstr "Les équipements de votre chambre ont été mis à jour."
 
+msgid "Username must be between 5 and 9 characters long."
+msgstr "Le nom d'utilisateur doit contenir entre 5 et 9 caractères."
+
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
 

@@ -89,7 +89,10 @@ class UpdateAccountForm(FlaskForm):
     '''This class enable to model the user account update forms'''
     # Defining some field that can be updated with necessary validators
     company_name =  StringField('', validators=[Length(min=3, max=30)])
-    username = StringField('', validators=[DataRequired(), Length(min=5, max=15)]) 
+    # Length is checked in validate_username() below, and only when the name
+    # is actually changed, so older accounts with longer names can still save
+    # the rest of their profile.
+    username = StringField('', validators=[DataRequired()]) 
     email = StringField('', validators=[DataRequired(), Email()]) 
     #first_name = StringField('', validators=[DataRequired(), Length(max=40)])
     #last_name = StringField('', validators=[DataRequired(), Length(max=40)])
@@ -110,6 +113,8 @@ class UpdateAccountForm(FlaskForm):
         if username.data != current_user.username:
             # Only enforced when the username actually changes, so existing
             # accounts with an older username can still save other fields.
+            if not 5 <= len(username.data or '') <= 9:
+                raise ValidationError(_('Username must be between 5 and 9 characters long.'))
             if not re.match(USERNAME_PATTERN, username.data or ''):
                 raise ValidationError(_('Username can only contain letters, numbers, dots, dashes and underscores.'))
             user = User.query.filter_by(username=username.data).first()
