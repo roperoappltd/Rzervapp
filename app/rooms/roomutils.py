@@ -5,6 +5,7 @@ from flask_login import current_user
 from flask_mail import Message
 from app import mail
 from app.services.image_storage import upload_room_image
+from app.helpers.images import open_clean_image, ImageError
 from app import db
 from app.models.roommodel import Roomreviews
 
@@ -45,9 +46,13 @@ def save_picture(form_picture):
     # combine with the username to build a unique key for this upload
     key_hint = f'{current_user.username}' + random_hex
     # Resizing the picture before saving
+    # Larger photos are scaled down to fit inside 960x640, keeping their
+    # proportions (the pages crop with object-fit). Smaller ones are
+    # kept as they are, never enlarged. Raises ImageError for files that
+    # are not usable photos -- callers show that message to the host.
     img_sizer = (960, 640)
-    new_img = Image.open(form_picture)
-    new_img.thumbnail(img_sizer)
+    new_img = open_clean_image(form_picture, decode_hint=img_sizer)
+    new_img.thumbnail(img_sizer, Image.LANCZOS)
     # Store via the active backend (local disk in dev, Cloudinary in
     # production) -- returns the key, not a full URL.
     return upload_room_image(new_img, key_hint)

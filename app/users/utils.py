@@ -1,7 +1,8 @@
 import logging
 import os
 import secrets
-from PIL import Image
+from PIL import Image, ImageOps
+from app.helpers.images import open_clean_image, ImageError
 from flask import url_for, current_app
 from flask_login import current_user
 from flask_mail import Message
@@ -16,18 +17,20 @@ def save_picture(form_picture):
     '''This function add random hex byte & extension to a file a save to a location '''
     # create a random hex of 8 bytes
     random_hex = secrets.token_hex(8)
-    # slice the file name and file extension of the picture update
-    _, file_ext = os.path.splitext(form_picture.filename)
-    # combine the random hex with the file extension in order set the name of the new uploaded file
-    uploaded_PicName = random_hex + file_ext 
+    # Always stored as JPEG: whatever was uploaded (jpg/png, with or
+    # without transparency) is converted to a plain RGB photo first.
+    uploaded_PicName = random_hex + '.jpg'
     # extract and define the path where to save the file
     picture_path = os.path.join(current_app.root_path, 'static/userpics/profile', uploaded_PicName)
-    # Resizing the  picture before saving
+    # Avatars are shown in square frames, so the photo is centre-cropped
+    # to a 125x125 square. (The old thumbnail() kept the original
+    # proportions, e.g. 125x94, and the page then stretched it.)
+    # Raises ImageError for files that are not usable photos.
     img_sizer = (125, 125)
-    new_img = Image.open(form_picture)
-    new_img.thumbnail(img_sizer)
+    new_img = open_clean_image(form_picture, decode_hint=img_sizer)
+    new_img = ImageOps.fit(new_img, img_sizer, method=Image.LANCZOS)
     # Saving the picture
-    new_img.save(picture_path)
+    new_img.save(picture_path, format='JPEG', quality=85, optimize=True)
     return uploaded_PicName
 
 

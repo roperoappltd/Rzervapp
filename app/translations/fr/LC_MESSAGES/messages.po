@@ -4535,6 +4535,12 @@ msgstr "Saisissez un code promo (facultatif)"
 msgid "Voucher code"
 msgstr "Code promo"
 
+msgid "This file is not a readable image, or it is too large."
+msgstr "Ce fichier n'est pas une image lisible, ou il est trop volumineux."
+
+msgid "This image file looks damaged and could not be read."
+msgstr "Ce fichier image semble endommagé et n'a pas pu être lu."
+
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
 

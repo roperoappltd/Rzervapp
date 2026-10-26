@@ -22,6 +22,7 @@ from app.helpers.populate_search import populate_search_choices
 from app.helpers.is_avail import is_available
 from app.helpers.rate_limit import check_rate_limit
 from app.helpers.vouchers import voucher_is_usable
+from app.helpers.images import ImageError
 from app.helpers.booking import create_booking, get_room_active_deal, PENDING_BOOKING_EXPIRY_MINUTES
 from app.helpers.searches import build_room_query
 from app.helpers.email_verify import email_verified_required
@@ -1408,12 +1409,25 @@ def update_roompics(room_id):
                 return redirect(url_for('bedrooms.update_roompics', room_id=room.id))
 
         updated_any = False
+        bad_images = []
         for field_name in image_fields:
             file = getattr(form, field_name).data
             if file and file.filename != '':
-                filename = save_picture(file)
+                try:
+                    filename = save_picture(file)
+                except ImageError as e:
+                    # unreadable / damaged / oversized file: tell the host
+                    # which slot, instead of a server error
+                    bad_images.append(f"{getattr(form, field_name).label.text}: {_(str(e))}")
+                    continue
                 setattr(room, field_name, filename)
                 updated_any = True
+
+        if bad_images:
+            db.session.rollback()  # nothing is saved if any photo was refused
+            for problem in bad_images:
+                flash(problem, 'danger')
+            return redirect(url_for('bedrooms.update_roompics', room_id=room.id))
  
         if updated_any:
             db.session.commit()

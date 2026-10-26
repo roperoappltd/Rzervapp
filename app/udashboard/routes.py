@@ -11,6 +11,7 @@ from app.rooms.forms import AddRoomForm, WithdrawalForm, GuestReviewForm
 # from ..users.usermails.resetrequest import send_reset_email
 from ..users.usermails.joinusmail import member_regismail
 from ..users.utils import save_picture
+from app.helpers.images import ImageError
 from app.services.location_service import get_location
 from app.services.image_storage import get_room_image_url
 from app.services.preference_service import VisitorPreferences
@@ -308,7 +309,11 @@ def profile():
     
     if form.validate_on_submit():
         if form.picture.data:    # check if profile picture has been uploaded
-            picture_file = save_picture(form.picture.data)
+            try:
+                picture_file = save_picture(form.picture.data)
+            except ImageError as e:
+                flash(_(str(e)), 'danger')
+                return redirect(url_for('udash.profile'))
             # set the profile image file
             current_user.image_file = picture_file
         # allow update if username & email is valid
