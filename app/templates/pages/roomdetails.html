@@ -250,7 +250,8 @@ totalrev}}) %}
       </div> -->
     </div>
 
-    <!-- Amenities and Features -->
+    <!-- Amenities and Features: only shown once the host has saved them -->
+    {% if roomextra %}
     <div class="room-amenities mb-5" data-aos="fade-up" data-aos-delay="200">
       <h3 class="section-subtitle mb-4">{{ _("Room Amenities & Services") }}</h3>
       <div class="row">
@@ -269,7 +270,6 @@ totalrev}}) %}
               </li>
               <li><i class="bi bi-check2"></i> {{ _("Hot water") }}:
                 {{roomextra.hot_water}}</li>
-              <i class="bi bi-check2"></i> {{ _("Clean Bedsheet")}}: Yes
             </ul>
           </div>
         </div>
@@ -284,9 +284,6 @@ totalrev}}) %}
               <li>
                 <i class="bi bi-check2"></i> {{ _("Smart TV")}}:
                 {{roomextra.smart_tv}}
-              </li>
-              <li>
-                <i class="bi bi-check2"></i> {{ _("Electric Sockets")}}: Yes
               </li>
               <li><i class="bi bi-check2"></i> {{ _("Washing Machine")}}:
                 {{roomextra.washing}}</li>
@@ -338,6 +335,8 @@ totalrev}}) %}
         </div>
       </div>
     </div>
+
+    {% endif %}
 
     <!-- Tabbed Information -->
     <div class="room-tabs mb-5" data-aos="fade-up" data-aos-delay="200">

@@ -4541,6 +4541,9 @@ msgstr "Ce fichier n'est pas une image lisible, ou il est trop volumineux."
 msgid "This image file looks damaged and could not be read."
 msgstr "Ce fichier image semble endommagé et n'a pas pu être lu."
 
+msgid "Your room amenities have been updated."
+msgstr "Les équipements de votre chambre ont été mis à jour."
+
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"
 

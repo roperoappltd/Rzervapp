@@ -1186,7 +1186,10 @@ def roomdetail(room_id):
     room = Rooms.query.get_or_404(room_id)
     # Query someinfo from the db
     roominfo = Rooms.query.filter_by(id=room_id).first()
-    roomextra = Roomextra.query.filter_by(id=room_id).first()
+    # FIXED: was filter_by(id=room_id), which compared the room's number with
+    # the amenities row's OWN primary key -- two unrelated sequences. A host's
+    # amenities were invisible on their own page and could show on another room.
+    roomextra = Roomextra.query.filter_by(room_id=room_id).first()
 
     # FIXED: was 3 separate queries (reviews, totalrev via .count(),
     # ratetot via a separate SUM query fed into get_total()) for numbers
@@ -1272,24 +1275,29 @@ def roomextra(room_id):
     # Check if the user is the author of the post first 
     if room.user_id != current_user.id:
         abort(403)
-    # Create an instance of room form
-    form = RoomExtraForm()
+    # A room has at most ONE amenities row (Roomextra.room_id is unique):
+    # the first save creates it, later saves edit it. The form opens with
+    # the saved values filled in.
+    existing = Roomextra.query.filter_by(room_id=room.id).first()
+    form = RoomExtraForm(obj=existing) if request.method == 'GET' else RoomExtraForm()
 
     if form.validate_on_submit():
-        # room listing info   
-        room_extra = Roomextra(sleeping=form.sleeping.data, hot_water=form.hot_water.data,
-                        smart_tv=form.smart_tv.data, internet=form.internet.data, kitchen=form.kitchen.data, 
-                        towels=form.towels.data, resto=form.resto.data, bar=form.bar.data, 
-                        spa=form.spa.data, car=form.car.data, shop=form.shop.data, 
-                        concierge=form.concierge.data, aircon=form.aircon.data, pool=form.pool.data,
-                        workspace=form.workspace.data, washing=form.washing.data, sport=form.sport.data,
-                        parking=form.parking.data, room_id=room.id)
-
-        db.session.add(room_extra)                                          # adding data to the database
-        db.session.commit()                                                 # saving the changes                                                               
-        flash(
-            _("Your room extra has been added successfully."), 'success'
-            )   # display validation message 
+        values = dict(sleeping=form.sleeping.data, hot_water=form.hot_water.data,
+                      smart_tv=form.smart_tv.data, internet=form.internet.data, kitchen=form.kitchen.data,
+                      towels=form.towels.data, resto=form.resto.data, bar=form.bar.data,
+                      spa=form.spa.data, car=form.car.data, shop=form.shop.data,
+                      concierge=form.concierge.data, aircon=form.aircon.data, pool=form.pool.data,
+                      workspace=form.workspace.data, washing=form.washing.data, sport=form.sport.data,
+                      parking=form.parking.data)
+        if existing:
+            for field_name, value in values.items():
+                setattr(existing, field_name, value)
+            message = _("Your room amenities have been updated.")
+        else:
+            db.session.add(Roomextra(room_id=room.id, **values))
+            message = _("Your room extra has been added successfully.")
+        db.session.commit()                                                 # saving the changes
+        flash(message, 'success')
 
         return redirect(url_for('udash.mylistings', room_id=room.id))
     
