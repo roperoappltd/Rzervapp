@@ -1,0 +1,264 @@
+{% extends "base.html" %} {% block head_css %} {{ super() }}
+<style>
+  .policy-logo-wrap {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .policy-logo-wrap img {
+    max-width: 160px;
+    height: auto;
+  }
+
+  .policy-content {
+    max-width: 820px;
+    margin: 0 auto;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  .policy-content h2 {
+    font-size: 1.35rem;
+    color: #003366;
+    margin-top: 34px;
+    margin-bottom: 12px;
+  }
+
+  .policy-content h3 {
+    font-size: 1.1rem;
+    color: #003366;
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+
+  .policy-content p {
+    margin-bottom: 14px;
+  }
+
+  .policy-content ol,
+  .policy-content ul {
+    margin-bottom: 14px;
+    padding-left: 22px;
+  }
+
+  .policy-effective-date {
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+  }
+</style>
+{% endblock
+head_css %} {% block content %}
+
+<!-- Page Title -->
+<div class="page-title light-background">
+  <div class="container d-lg-flex justify-content-between align-items-center">
+    <h1 class="mb-2 mb-lg-0">{{ _('Privacy Policy') }}</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{{ url_for('main.home') }}">{{ _('Home') }}</a></li>
+        <li class="current">{{ _('Privacy Policy') }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- End Page Title -->
+
+<section id="privacy-policy" class="section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="policy-logo-wrap">
+      <img src="{{ url_for('static', filename='userpics/pics/logojam.png') }}" alt="Jambo" />
+    </div>
+
+    <p class="policy-effective-date">
+      Techno|BOSS Ltd — {{ _('operating the Jambo platform') }}<br />
+      {{ _('Effective date') }}: 28 {{ _('October') }} 2026
+    </p>
+
+    <div class="policy-content">
+
+      <h2>1. {{ _("Who We Are") }}</h2>
+
+      <p>
+        {{ _("Jambo is operated by Techno|BOSS Ltd, based in Côte d'Ivoire. Techno|BOSS Ltd decides how and why your personal data is used on Jambo and is responsible for protecting it.") }}
+      </p>
+
+      <p>
+        {{ _("This policy explains what personal data we collect, why we use it, who receives it, how long we keep it and what rights you have. It applies to the Jambo website, to the Jambo web app if you add it to your home screen, and to the Asseta assistant.") }}
+      </p>
+
+      <p>
+        {{ _("See also") }}:
+        <a href="{{ url_for('main.terms_of_use') }}">{{ _("Terms of Use") }}</a> &middot;
+        <a href="{{ url_for('main.payment_policy') }}">{{ _("Payment Policy") }}</a> &middot;
+        <a href="{{ url_for('main.booking_policy') }}">{{ _("Booking Policy") }}</a>
+      </p>
+
+      <h2>2. {{ _("Personal Data We Collect") }}</h2>
+
+      <h3>2.1 {{ _("Data you give us") }}</h3>
+
+      <ul>
+        <li>{{ _("Account and profile: first and last name, username, email address, password (stored only as a one-way hash, never in readable form), date of birth, gender, address, city, postal code, country, phone number, company name, a short bio and a profile photo.") }}</li>
+        <li>{{ _("Bookings: the name, email address and phone number of the primary guest, the number of guests and any special requests you add.") }}</li>
+        <li>{{ _("Hosts: listing details, photos, location, prices, availability and, when you request a withdrawal, your payout method and account or mobile money number.") }}</li>
+        <li>{{ _("Messages you send to a host or a guest through Jambo, the reviews and ratings you write, and the emails you send us.") }}</li>
+      </ul>
+
+      <h3>2.2 {{ _("Data created when you use Jambo") }}</h3>
+
+      <ul>
+        <li>{{ _("Booking, payment, refund, earnings and withdrawal records: amounts, currency, status, dates, the payment reference and payment channel, vouchers used and points earned.") }}</li>
+        <li>{{ _("Account activity: the time of your last login, failed login attempts (used to lock an account under attack) and the time you accepted the Terms of Use.") }}</li>
+        <li>{{ _("Your preferences: language, currency and how you want to be notified about bookings.") }}</li>
+      </ul>
+
+      <h3>2.3 {{ _("Data collected automatically") }}</h3>
+
+      <ul>
+        <li>{{ _("Your approximate country, taken from the network request, used only to choose a default language and currency.") }}</li>
+        <li>{{ _("An anonymous count of views for each listing: the room and the time, not linked to you.") }}</li>
+        <li>{{ _("Standard technical logs kept by our servers, such as your IP address, the pages requested and errors, used for security and troubleshooting.") }}</li>
+      </ul>
+
+      <h3>2.4 {{ _("Data we do not hold") }}</h3>
+
+      <p>
+        {{ _("Your card or mobile money details are entered on the Paystack payment page and never reach Jambo. We only receive the result of the payment and its reference.") }}
+      </p>
+
+      <h2>3. {{ _("Why We Use Your Data") }}</h2>
+
+      <ul>
+        <li>{{ _("To provide the service you asked for: creating and securing your account, processing bookings and payments, enabling chat between guests and hosts, paying hosts and issuing refunds.") }}</li>
+        <li>{{ _("To send service emails: email verification, password reset, booking confirmations and cancellations. These are not marketing emails.") }}</li>
+        <li>{{ _("To keep Jambo safe: preventing fraud and abuse, limiting repeated login attempts and investigating incidents.") }}</li>
+        <li>{{ _("To meet our legal, tax and accounting obligations and to handle disputes.") }}</li>
+        <li>{{ _("To improve Jambo, using the anonymous listing view counts and your language and currency preferences.") }}</li>
+      </ul>
+
+      <p>
+        {{ _("We do not sell your personal data and we do not use it for advertising or profiling. Optional features, such as SMS or WhatsApp booking notifications, only run if you turn them on.") }}
+      </p>
+
+      <h2>4. {{ _("Who Receives Your Data") }}</h2>
+
+      <h3>4.1 {{ _("Hosts and guests") }}</h3>
+
+      <p>
+        {{ _("When a booking is made, the host sees the primary guest's name, email address, phone number, number of guests and requests so the stay can be prepared. The guest sees the listing and can contact the host through Jambo chat. A review you write is shown on the listing with your first name and profile photo.") }}
+      </p>
+
+      <h3>4.2 {{ _("Service providers") }}</h3>
+
+      <p>
+        {{ _("We share only what each provider needs to do its job:") }}
+      </p>
+
+      <ul>
+        <li>{{ _("Paystack processes payments and receives the payer's payment details, the amount and your email address.") }}</li>
+        <li>{{ _("Brevo sends our service emails and receives the recipient's email address and the content of the message.") }}</li>
+        <li>{{ _("Anthropic powers the Asseta assistant, as explained below.") }}</li>
+        <li>{{ _("Our hosting provider stores the platform and its database. If image hosting or an SMS or WhatsApp provider is enabled, it receives the photos you upload or the phone number and notification text needed to deliver the message.") }}</li>
+      </ul>
+
+      <h3>4.3 {{ _("Maps, fonts and scripts") }}</h3>
+
+      <p>
+        {{ _("To display maps, fonts and some page features, your browser loads files directly from OpenStreetMap, Google Fonts, unpkg and jsDelivr. These services see your IP address and browser details, as with any website that uses them.") }}
+      </p>
+
+      <h3>4.4 {{ _("Legal and business reasons") }}</h3>
+
+      <p>
+        {{ _("We may disclose data when the law requires it, to protect our rights or the safety of users, or to a successor if Jambo is sold or merged. In that case this policy continues to apply to your data.") }}
+      </p>
+
+      <h2>5. {{ _("The Asseta Assistant") }}</h2>
+
+      <p>
+        {{ _("When you chat with Asseta, your messages are sent to Anthropic, which generates the replies. Asseta can also run a web search for travel information. If you ask it to prepare a booking, the guest name, email address and phone number you give in the chat are used to prepare that booking.") }}
+      </p>
+
+      <p>
+        {{ _("The conversation history is kept in your browser session, not in the Jambo database. Never type a password, a card number or any other secret into the chat. Anthropic handles the messages under its own privacy terms.") }}
+      </p>
+
+      <h2>6. {{ _("Cookies") }}</h2>
+
+      <p>
+        {{ _("Jambo uses only the cookies it needs to work: a session cookie that keeps you logged in and remembers your language, currency, booking in progress and security token, and, if you tick Remember me, a login cookie that lasts up to 30 days. You can clear both in your browser at any time.") }}
+      </p>
+
+      <p>
+        {{ _("We do not use advertising or analytics cookies. If that changes, we will update this policy first.") }}
+      </p>
+
+      <h2>7. {{ _("International Transfers") }}</h2>
+
+      <p>
+        {{ _("Some of our providers process data outside Côte d'Ivoire, including in Europe and the United States. We choose providers that protect personal data and we share only what they need.") }}
+      </p>
+
+      <h2>8. {{ _("How Long We Keep Your Data") }}</h2>
+
+      <ul>
+        <li>{{ _("Account data is kept while your account is active.") }}</li>
+        <li>{{ _("When you delete your account, your name, email, phone, address, date of birth, bio and photo are removed from your profile straight away.") }}</li>
+        <li>{{ _("Booking and payment records, including the guest contact details entered on a booking and the related messages, are kept after deletion for as long as accounting, tax and dispute rules require.") }}</li>
+        <li>{{ _("A booking you start but do not pay for expires after 30 minutes.") }}</li>
+      </ul>
+
+      <h2>9. {{ _("Your Rights") }}</h2>
+
+      <p>
+        {{ _("You can ask to access your data, correct it, delete it, restrict or object to how we use it, receive a copy of it, or withdraw a consent you gave. You can edit most of your details yourself from your profile, and change your notification choice from your dashboard.") }}
+      </p>
+
+      <p>
+        {{ _("To delete your account while logged in, use the account deletion page:") }}
+        <a href="{{ url_for('users.delete_account') }}">{{ _("Delete your account") }}</a>.
+      </p>
+
+      <p>
+        {{ _("For any other request, email us at") }}
+        <a href="mailto:jambo@tbossci.com">jambo@tbossci.com</a>.
+        {{ _("We may ask you to confirm your identity and we aim to reply within 30 days.") }}
+      </p>
+
+      <p>
+        {{ _("If you think your data has not been handled properly, you can complain to the Côte d'Ivoire data protection authority, the ARTCI, in addition to contacting us.") }}
+      </p>
+
+      <h2>10. {{ _("Security") }}</h2>
+
+      <p>
+        {{ _("Jambo is served over HTTPS, passwords are stored as one-way hashes, login attempts are rate-limited and accounts lock after repeated failures, and access to the database is restricted. No online service is perfectly secure, so please choose a strong, unique password and keep it private.") }}
+      </p>
+
+      <h2>11. {{ _("Children") }}</h2>
+
+      <p>
+        {{ _("Jambo is for adults. You must be at least 18 to create an account, and we do not knowingly collect data from anyone under 18. If you believe a minor has registered, tell us and we will remove the account.") }}
+      </p>
+
+      <h2>12. {{ _("Changes to This Policy") }}</h2>
+
+      <p>
+        {{ _("We may update this policy as Jambo changes. The effective date at the top shows the latest version, and for significant changes we will tell you by email or with a notice on the site.") }}
+      </p>
+
+      <h2>13. {{ _("Contact") }}</h2>
+
+      <p>
+        Techno|BOSS Ltd, Cité Arcade 2, Angré, 8e Tranche<br />
+        {{ _("Email") }}: <a href="mailto:jambo@tbossci.com">jambo@tbossci.com</a>
+      </p>
+
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

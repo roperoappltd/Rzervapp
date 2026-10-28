@@ -464,7 +464,7 @@ msgstr "Conditions d'utilisation"
 #: app/templates/base.html:437 app/templates/pages/bookcancelmsg.html:2680
 #: app/templates/pages/bookingmsg.html:2670
 msgid "Privacy policy"
-msgstr "Confidentialité"
+msgstr "Politique de confidentialité"
 
 #: app/templates/base.html:438
 msgid "Refund policy"
@@ -4546,6 +4546,265 @@ msgstr "Les équipements de votre chambre ont été mis à jour."
 
 msgid "Username must be between 5 and 9 characters long."
 msgstr "Le nom d'utilisateur doit contenir entre 5 et 9 caractères."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Who We Are"
+msgstr "Qui sommes-nous"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Jambo is operated by Techno|BOSS Ltd, based in Côte d'Ivoire. Techno|BOSS Ltd decides how and why your personal data is used on Jambo and is responsible for protecting it."
+msgstr "Jambo est exploitée par Techno|BOSS Ltd, basée en Côte d'Ivoire. Techno|BOSS Ltd décide de la manière et des raisons pour lesquelles vos données personnelles sont utilisées sur Jambo, et est responsable de leur protection."
+
+#: app/templates/pages/privacy_policy.html
+msgid "This policy explains what personal data we collect, why we use it, who receives it, how long we keep it and what rights you have. It applies to the Jambo website, to the Jambo web app if you add it to your home screen, and to the Asseta assistant."
+msgstr "La présente politique explique quelles données personnelles nous collectons, pourquoi nous les utilisons, qui les reçoit, combien de temps nous les conservons et quels droits vous avez. Elle s'applique au site web Jambo, à l'application web Jambo si vous l'ajoutez à votre écran d'accueil, et à l'assistant Asseta."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Personal Data We Collect"
+msgstr "Données personnelles que nous collectons"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Data you give us"
+msgstr "Données que vous nous fournissez"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Account and profile: first and last name, username, email address, password (stored only as a one-way hash, never in readable form), date of birth, gender, address, city, postal code, country, phone number, company name, a short bio and a profile photo."
+msgstr "Compte et profil : nom et prénom, nom d'utilisateur, adresse email, mot de passe (conservé uniquement sous forme de hachage irréversible, jamais en clair), date de naissance, genre, adresse, ville, code postal, pays, numéro de téléphone, nom de société, courte biographie et photo de profil."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Bookings: the name, email address and phone number of the primary guest, the number of guests and any special requests you add."
+msgstr "Réservations : le nom, l'adresse email et le numéro de téléphone du client principal, le nombre de personnes et les demandes particulières que vous ajoutez."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Hosts: listing details, photos, location, prices, availability and, when you request a withdrawal, your payout method and account or mobile money number."
+msgstr "Hôtes : les informations de l'annonce, les photos, la localisation, les prix, les disponibilités et, lorsque vous demandez un retrait, votre mode de paiement et votre numéro de compte ou de mobile money."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Messages you send to a host or a guest through Jambo, the reviews and ratings you write, and the emails you send us."
+msgstr "Les messages que vous envoyez à un hôte ou à un client via Jambo, les avis et notes que vous rédigez, et les emails que vous nous adressez."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Data created when you use Jambo"
+msgstr "Données créées lorsque vous utilisez Jambo"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Booking, payment, refund, earnings and withdrawal records: amounts, currency, status, dates, the payment reference and payment channel, vouchers used and points earned."
+msgstr "Les enregistrements de réservations, paiements, remboursements, gains et retraits : montants, devise, statut, dates, référence et canal de paiement, bons utilisés et points gagnés."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Account activity: the time of your last login, failed login attempts (used to lock an account under attack) and the time you accepted the Terms of Use."
+msgstr "L'activité du compte : l'heure de votre dernière connexion, les tentatives de connexion échouées (utilisées pour verrouiller un compte attaqué) et l'heure à laquelle vous avez accepté les Conditions d'utilisation."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Your preferences: language, currency and how you want to be notified about bookings."
+msgstr "Vos préférences : la langue, la devise et la manière dont vous souhaitez être averti des réservations."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Data collected automatically"
+msgstr "Données collectées automatiquement"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Your approximate country, taken from the network request, used only to choose a default language and currency."
+msgstr "Votre pays approximatif, déduit de la requête réseau, utilisé uniquement pour choisir une langue et une devise par défaut."
+
+#: app/templates/pages/privacy_policy.html
+msgid "An anonymous count of views for each listing: the room and the time, not linked to you."
+msgstr "Un comptage anonyme des consultations de chaque annonce : la chambre et l'heure, sans lien avec vous."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Standard technical logs kept by our servers, such as your IP address, the pages requested and errors, used for security and troubleshooting."
+msgstr "Les journaux techniques standard conservés par nos serveurs, tels que votre adresse IP, les pages demandées et les erreurs, utilisés pour la sécurité et le dépannage."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Data we do not hold"
+msgstr "Données que nous ne détenons pas"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Your card or mobile money details are entered on the Paystack payment page and never reach Jambo. We only receive the result of the payment and its reference."
+msgstr "Les données de votre carte bancaire ou de votre mobile money sont saisies sur la page de paiement de Paystack et n'arrivent jamais jusqu'à Jambo. Nous recevons uniquement le résultat du paiement et sa référence."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Why We Use Your Data"
+msgstr "Pourquoi nous utilisons vos données"
+
+#: app/templates/pages/privacy_policy.html
+msgid "To provide the service you asked for: creating and securing your account, processing bookings and payments, enabling chat between guests and hosts, paying hosts and issuing refunds."
+msgstr "Pour fournir le service que vous avez demandé : créer et sécuriser votre compte, traiter les réservations et les paiements, permettre la discussion entre clients et hôtes, payer les hôtes et effectuer les remboursements."
+
+#: app/templates/pages/privacy_policy.html
+msgid "To send service emails: email verification, password reset, booking confirmations and cancellations. These are not marketing emails."
+msgstr "Pour envoyer des emails de service : vérification de l'adresse email, réinitialisation du mot de passe, confirmations et annulations de réservation. Il ne s'agit pas d'emails publicitaires."
+
+#: app/templates/pages/privacy_policy.html
+msgid "To keep Jambo safe: preventing fraud and abuse, limiting repeated login attempts and investigating incidents."
+msgstr "Pour assurer la sécurité de Jambo : prévenir la fraude et les abus, limiter les tentatives de connexion répétées et enquêter sur les incidents."
+
+#: app/templates/pages/privacy_policy.html
+msgid "To meet our legal, tax and accounting obligations and to handle disputes."
+msgstr "Pour respecter nos obligations légales, fiscales et comptables et pour traiter les litiges."
+
+#: app/templates/pages/privacy_policy.html
+msgid "To improve Jambo, using the anonymous listing view counts and your language and currency preferences."
+msgstr "Pour améliorer Jambo, à l'aide des comptages anonymes de consultations et de vos préférences de langue et de devise."
+
+#: app/templates/pages/privacy_policy.html
+msgid "We do not sell your personal data and we do not use it for advertising or profiling. Optional features, such as SMS or WhatsApp booking notifications, only run if you turn them on."
+msgstr "Nous ne vendons pas vos données personnelles et nous ne les utilisons ni pour la publicité ni pour le profilage. Les fonctions facultatives, comme les notifications de réservation par SMS ou WhatsApp, ne fonctionnent que si vous les activez."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Who Receives Your Data"
+msgstr "Qui reçoit vos données"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Hosts and guests"
+msgstr "Hôtes et clients"
+
+#: app/templates/pages/privacy_policy.html
+msgid "When a booking is made, the host sees the primary guest's name, email address, phone number, number of guests and requests so the stay can be prepared. The guest sees the listing and can contact the host through Jambo chat. A review you write is shown on the listing with your first name and profile photo."
+msgstr "Lorsqu'une réservation est effectuée, l'hôte voit le nom, l'adresse email, le numéro de téléphone, le nombre de personnes et les demandes du client principal afin de préparer le séjour. Le client voit l'annonce et peut contacter l'hôte via la discussion Jambo. Un avis que vous rédigez est affiché sur l'annonce avec votre prénom et votre photo de profil."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Service providers"
+msgstr "Prestataires de services"
+
+#: app/templates/pages/privacy_policy.html
+msgid "We share only what each provider needs to do its job:"
+msgstr "Nous ne partageons que ce dont chaque prestataire a besoin pour accomplir sa mission :"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Paystack processes payments and receives the payer's payment details, the amount and your email address."
+msgstr "Paystack traite les paiements et reçoit les données de paiement du payeur, le montant et votre adresse email."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Brevo sends our service emails and receives the recipient's email address and the content of the message."
+msgstr "Brevo envoie nos emails de service et reçoit l'adresse email du destinataire ainsi que le contenu du message."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Anthropic powers the Asseta assistant, as explained below."
+msgstr "Anthropic fait fonctionner l'assistant Asseta, comme expliqué ci-dessous."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Our hosting provider stores the platform and its database. If image hosting or an SMS or WhatsApp provider is enabled, it receives the photos you upload or the phone number and notification text needed to deliver the message."
+msgstr "Notre hébergeur stocke la plateforme et sa base de données. Si un hébergement d'images ou un prestataire SMS ou WhatsApp est activé, il reçoit les photos que vous téléversez ou le numéro de téléphone et le texte de notification nécessaires à l'envoi du message."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Maps, fonts and scripts"
+msgstr "Cartes, polices et scripts"
+
+#: app/templates/pages/privacy_policy.html
+msgid "To display maps, fonts and some page features, your browser loads files directly from OpenStreetMap, Google Fonts, unpkg and jsDelivr. These services see your IP address and browser details, as with any website that uses them."
+msgstr "Pour afficher les cartes, les polices et certaines fonctions des pages, votre navigateur charge des fichiers directement depuis OpenStreetMap, Google Fonts, unpkg et jsDelivr. Ces services voient votre adresse IP et les informations de votre navigateur, comme sur tout site qui les utilise."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Legal and business reasons"
+msgstr "Raisons légales et commerciales"
+
+#: app/templates/pages/privacy_policy.html
+msgid "We may disclose data when the law requires it, to protect our rights or the safety of users, or to a successor if Jambo is sold or merged. In that case this policy continues to apply to your data."
+msgstr "Nous pouvons divulguer des données lorsque la loi l'exige, pour protéger nos droits ou la sécurité des utilisateurs, ou à un successeur si Jambo est vendue ou fusionnée. Dans ce cas, la présente politique continue de s'appliquer à vos données."
+
+#: app/templates/pages/privacy_policy.html
+msgid "The Asseta Assistant"
+msgstr "L'assistant Asseta"
+
+#: app/templates/pages/privacy_policy.html
+msgid "When you chat with Asseta, your messages are sent to Anthropic, which generates the replies. Asseta can also run a web search for travel information. If you ask it to prepare a booking, the guest name, email address and phone number you give in the chat are used to prepare that booking."
+msgstr "Lorsque vous discutez avec Asseta, vos messages sont envoyés à Anthropic, qui génère les réponses. Asseta peut aussi effectuer une recherche web pour des informations de voyage. Si vous lui demandez de préparer une réservation, le nom, l'adresse email et le numéro de téléphone du client que vous indiquez dans la discussion servent à préparer cette réservation."
+
+#: app/templates/pages/privacy_policy.html
+msgid "The conversation history is kept in your browser session, not in the Jambo database. Never type a password, a card number or any other secret into the chat. Anthropic handles the messages under its own privacy terms."
+msgstr "L'historique de la conversation est conservé dans la session de votre navigateur, et non dans la base de données de Jambo. Ne saisissez jamais de mot de passe, de numéro de carte ou d'autre secret dans la discussion. Anthropic traite les messages selon ses propres conditions de confidentialité."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Cookies"
+msgstr "Cookies"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Jambo uses only the cookies it needs to work: a session cookie that keeps you logged in and remembers your language, currency, booking in progress and security token, and, if you tick Remember me, a login cookie that lasts up to 30 days. You can clear both in your browser at any time."
+msgstr "Jambo utilise uniquement les cookies nécessaires à son fonctionnement : un cookie de session qui vous maintient connecté et mémorise votre langue, votre devise, votre réservation en cours et votre jeton de sécurité, et, si vous cochez Se souvenir de moi, un cookie de connexion valable jusqu'à 30 jours. Vous pouvez effacer les deux à tout moment depuis votre navigateur."
+
+#: app/templates/pages/privacy_policy.html
+msgid "We do not use advertising or analytics cookies. If that changes, we will update this policy first."
+msgstr "Nous n'utilisons ni cookies publicitaires ni cookies d'analyse. Si cela change, nous mettrons d'abord à jour la présente politique."
+
+#: app/templates/pages/privacy_policy.html
+msgid "International Transfers"
+msgstr "Transferts internationaux"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Some of our providers process data outside Côte d'Ivoire, including in Europe and the United States. We choose providers that protect personal data and we share only what they need."
+msgstr "Certains de nos prestataires traitent des données en dehors de la Côte d'Ivoire, notamment en Europe et aux États-Unis. Nous choisissons des prestataires qui protègent les données personnelles et nous ne partageons que ce dont ils ont besoin."
+
+#: app/templates/pages/privacy_policy.html
+msgid "How Long We Keep Your Data"
+msgstr "Durée de conservation de vos données"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Account data is kept while your account is active."
+msgstr "Les données du compte sont conservées tant que votre compte est actif."
+
+#: app/templates/pages/privacy_policy.html
+msgid "When you delete your account, your name, email, phone, address, date of birth, bio and photo are removed from your profile straight away."
+msgstr "Lorsque vous supprimez votre compte, votre nom, votre email, votre téléphone, votre adresse, votre date de naissance, votre biographie et votre photo sont immédiatement retirés de votre profil."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Booking and payment records, including the guest contact details entered on a booking and the related messages, are kept after deletion for as long as accounting, tax and dispute rules require."
+msgstr "Les enregistrements de réservations et de paiements, y compris les coordonnées du client saisies lors d'une réservation et les messages associés, sont conservés après la suppression aussi longtemps que l'exigent les règles comptables, fiscales et de gestion des litiges."
+
+#: app/templates/pages/privacy_policy.html
+msgid "A booking you start but do not pay for expires after 30 minutes."
+msgstr "Une réservation que vous commencez sans la payer expire après 30 minutes."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Your Rights"
+msgstr "Vos droits"
+
+#: app/templates/pages/privacy_policy.html
+msgid "You can ask to access your data, correct it, delete it, restrict or object to how we use it, receive a copy of it, or withdraw a consent you gave. You can edit most of your details yourself from your profile, and change your notification choice from your dashboard."
+msgstr "Vous pouvez demander à accéder à vos données, à les corriger, à les supprimer, à limiter leur utilisation ou à vous y opposer, à en recevoir une copie, ou à retirer un consentement donné. Vous pouvez modifier vous-même la plupart de vos informations depuis votre profil et changer votre choix de notification depuis votre tableau de bord."
+
+#: app/templates/pages/privacy_policy.html
+msgid "If you think your data has not been handled properly, you can complain to the Côte d'Ivoire data protection authority, the ARTCI, in addition to contacting us."
+msgstr "Si vous estimez que vos données n'ont pas été traitées correctement, vous pouvez, en plus de nous contacter, saisir l'autorité ivoirienne de protection des données, l'ARTCI."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Security"
+msgstr "Sécurité"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Jambo is served over HTTPS, passwords are stored as one-way hashes, login attempts are rate-limited and accounts lock after repeated failures, and access to the database is restricted. No online service is perfectly secure, so please choose a strong, unique password and keep it private."
+msgstr "Jambo est servie en HTTPS, les mots de passe sont stockés sous forme de hachages irréversibles, les tentatives de connexion sont limitées et les comptes se verrouillent après des échecs répétés, et l'accès à la base de données est restreint. Aucun service en ligne n'est parfaitement sûr : choisissez donc un mot de passe fort et unique, et gardez-le secret."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Children"
+msgstr "Enfants"
+
+#: app/templates/pages/privacy_policy.html
+msgid "Jambo is for adults. You must be at least 18 to create an account, and we do not knowingly collect data from anyone under 18. If you believe a minor has registered, tell us and we will remove the account."
+msgstr "Jambo s'adresse aux adultes. Vous devez avoir au moins 18 ans pour créer un compte, et nous ne collectons pas sciemment de données concernant des personnes de moins de 18 ans. Si vous pensez qu'un mineur s'est inscrit, signalez-le-nous et nous supprimerons le compte."
+
+#: app/templates/pages/privacy_policy.html
+msgid "We may update this policy as Jambo changes. The effective date at the top shows the latest version, and for significant changes we will tell you by email or with a notice on the site."
+msgstr "Nous pouvons mettre à jour cette politique à mesure que Jambo évolue. La date d'entrée en vigueur en haut de la page indique la dernière version, et pour les changements importants nous vous informerons par email ou par un avis sur le site."
+
+#: app/templates/pages/privacy_policy.html
+msgid "Privacy Policy"
+msgstr "Politique de confidentialité"
+
+#: app/templates/pages/privacy_policy.html
+msgid "To delete your account while logged in, use the account deletion page:"
+msgstr "Pour supprimer votre compte lorsque vous êtes connecté, utilisez la page de suppression de compte :"
+
+#: app/templates/pages/privacy_policy.html
+msgid "For any other request, email us at"
+msgstr "Pour toute autre demande, écrivez-nous à l'adresse"
+
+#: app/templates/pages/privacy_policy.html
+msgid "We may ask you to confirm your identity and we aim to reply within 30 days."
+msgstr "Nous pouvons vous demander de confirmer votre identité et nous visons à répondre sous 30 jours."
+
+msgid "and"
+msgstr "et"
 
 #~ msgid "Log out"
 #~ msgstr "Déconnexion"

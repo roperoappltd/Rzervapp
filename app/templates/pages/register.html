@@ -330,7 +330,9 @@ head_css %} {% block content %}
 
       <div class="jambo-terms">
         {{ _('Do you agree to the') }} <b>Jambo</b>
-        <a href="#">{{ _('Terms of use') }}</a>?
+        <a href="{{ url_for('main.terms_of_use') }}" target="_blank" rel="noopener">{{ _('Terms of use') }}</a>
+        {{ _('and') }}
+        <a href="{{ url_for('main.privacy_policy') }}" target="_blank" rel="noopener">{{ _('Privacy policy') }}</a>?
         <div class="form-check d-inline-block ms-2">
           {{ form.terms(class="form-check-input") }} {{ form.terms.label(class="form-check-label") }}
         </div>

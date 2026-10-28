@@ -240,6 +240,12 @@ def payment_policy():
 
     return render_template('pages/payment_policy.html', title='Terms of Use')
 
+@main.route("/privacy-policy")
+def privacy_policy():
+    '''This function create a route to render the privacy policy page'''
+
+    return render_template('pages/privacy_policy.html', title='Privacy Policy')
+
 @main.route("/booking-policy")
 def booking_policy():
     '''This function create a route to render the booking policy page'''
